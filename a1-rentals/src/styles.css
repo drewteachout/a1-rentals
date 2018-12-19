@@ -1,1 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
+h1 {
+    font-family: "Mosk"; 
+    font-size: 70px;
+    margin: 15px;
+}
+
+h2 {
+    font-family: "Mosk";
+    font-size: 16px;
+    margin: 5px;
+}
+
+img {
+    margin: 5px;
+}
+
+/* 
+    All global classes go here
+*/
+.resize-height {
+    height: 90px;
+    width: auto;
+}
+
+.resize-width {
+    height: auto;
+    width: 256px;
+}

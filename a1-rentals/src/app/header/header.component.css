@@ -1,21 +1,32 @@
 #parent {
     display: flex;
+    margin: 15px;
 }
 
 #title {
-    width: 25%;
+    width: 40%;
+    display: inline-block;
 }
 
 #contact {
-    width: 50%;
+    width: 40%;
+    display: flex;
+    text-align: center;
+}
+
+#contact-details {
+    display: inline-block;
+    text-align: left;
+    margin: auto 20% auto 1%;
 }
 
 #contact-icon {
-    /* 
-        TODO: Fix the centering of the contact icon
-    */
+    display: inline-block;
+    margin: auto 1% auto 0;
 }
 
 #cart {
-    width: 25%;
+    width: 20%;
+    margin: auto;
+    padding-left: 40%;
 }

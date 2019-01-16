@@ -8,22 +8,28 @@ h1 {
 h2 {
     font-family: "Mosk";
     font-size: 16px;
-    margin: 5px;
+    margin: 10px;
 }
 
 img {
-    margin: 5px;
+    margin: 10px;
 }
 
 /* 
     All global classes go here
 */
-.resize-height {
-    height: 90px;
-    width: auto;
+.button-std {
+    background-color:#3f2b96;
+    border: 1px solid #3e4c96;
+    /* box-shadow:inset 0px 34px 0px -15px #3e2b96; */
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 15px;
+    font-family: "Mosk";
+    font-weight: bold;
+    padding: 15px 50px;
 }
 
-.resize-width {
-    height: auto;
-    width: 256px;
+.button-std:hover {
+    background-color: 1px solid #f0f0f0;
 }

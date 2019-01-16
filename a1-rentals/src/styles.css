@@ -1,1 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
+h1 {
+    font-family: "Mosk"; 
+    font-size: 70px;
+    margin: 15px;
+}
+
+h2 {
+    font-family: "Mosk";
+    font-size: 16px;
+    margin: 10px;
+}
+
+img {
+    margin: 10px;
+}
+
+/* 
+    All global classes go here
+*/
+.button-std {
+    background-color:#3f2b96;
+    border: 1px solid #3e4c96;
+    /* box-shadow:inset 0px 34px 0px -15px #3e2b96; */
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 15px;
+    font-family: "Mosk";
+    font-weight: bold;
+    padding: 15px 50px;
+}
+
+.button-std:hover {
+    background-color: 1px solid #f0f0f0;
+}

@@ -1,0 +1,10 @@
+
+.tile {
+    background-color: #ededee;
+    border: 5px black;
+    color: #3f2b96;
+    display: inline-block;
+    min-height: 20%;
+    text-align: center;
+    width: 25%;
+}

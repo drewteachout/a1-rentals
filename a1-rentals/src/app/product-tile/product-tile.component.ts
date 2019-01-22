@@ -8,6 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class ProductTileComponent implements OnInit {
 
   @Input() productName: string;
+  @Input() productSource: string;
 
   constructor() { }
 

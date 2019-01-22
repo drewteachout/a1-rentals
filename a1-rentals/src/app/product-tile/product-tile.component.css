@@ -1,22 +1,17 @@
 h2 {
-    vertical-align: middle;
-}
-
-img {
-    vertical-align: middle;
+    margin-top: 56px;
 }
 
 .tile {
     align-items: center;
     background-color: #ededee;
-    border: 5px black;
+    border: 20px black;
     color: #3f2b96;
-    display: inline-block;
+    display: table-cell;
     height: 400px;
-    left: 50%;
-    /* margin: -200px 0px 0px -250px; */
-    position: absolute;
+    max-height: 400px;
+    max-width: 500px;
     text-align: center;
-    top: 50%;
+    vertical-align: middle;
     width: 500px;
 }

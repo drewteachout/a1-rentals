@@ -8,8 +8,8 @@ import { Component, OnInit } from '@angular/core';
 export class MapComponent implements OnInit {
 
   title: string = 'Our Location';
-  lat = 33.939;
-  lng = -84.539;
+  lat = 33.938514;
+  lng = -84.539387;
 
   latCenter = 33.953;
   lngCenter = -84.550;

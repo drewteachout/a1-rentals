@@ -1,12 +1,38 @@
 <div class="rectangle">
-  <div class="tab">
+  <div class="tab" *ngFor="let tabName of tabs">
+    <button class="button-tab">{{tabName[0]}}</button>
+    <div *ngIf="tabName[1].length > 0">
+      <div class="tab-content" *ngFor="let subTab of tabName[1]">
+        <a class="button-tab">
+          {{subTab}}
+        </a>
+      </div>
+    </div>
+    
+  </div>
+</div>
+  <!-- <div class="tab">
     <button class="button-tab">{{tab1}}</button>
   </div>
   <div class="tab">
     <button class="button-tab">{{tab2}}</button>
     <div class="tab-content">
-      <a class="button-tab" href="#">Chairs</a>
-      <a class="button-tab" href="#">Tents</a>
+      <a class="button-tab" href="#">
+        Chairs
+        <div class="tab-content-sub">
+          <a class="button-tab-sub" href="#">Small Chairs</a>
+          <a class="button-tab-sub" href="#">Medium Chairs</a>
+          <a class="button-tab-sub" href="#">Large Chairs</a>
+        </div>
+      </a>
+      <a class="button-tab" href="#">
+        Tents
+        <div class="tab-content-sub">
+          <a class="button-tab" href="#">Little Tent</a>
+          <a class="button-tab" href="#">Big Tent</a>
+          <a class="button-tab" href="#">Mary's Tent</a>
+        </div>
+      </a>
       <a class="button-tab" href="#">Lights</a>
     </div>
   </div>
@@ -16,4 +42,38 @@
   <div class="tab">
     <button class="button-tab">{{tab4}}</button>
   </div>
-</div>
+</div> -->
+
+<!-- <div class="rectangle">
+  <div class="tab">
+    <button class="button-tab">{{tab1}}</button>
+  </div>
+  <div class="tab">
+    <button class="button-tab">{{tab2}}</button>
+    <div class="tab-content">
+      <a class="button-tab" href="#">
+        Chairs
+        <div class="tab-content-sub">
+          <a class="button-tab-sub" href="#">Small Chairs</a>
+          <a class="button-tab-sub" href="#">Medium Chairs</a>
+          <a class="button-tab-sub" href="#">Large Chairs</a>
+        </div>
+      </a>
+      <a class="button-tab" href="#">
+        Tents
+        <div class="tab-content-sub">
+          <a class="button-tab" href="#">Little Tent</a>
+          <a class="button-tab" href="#">Big Tent</a>
+          <a class="button-tab" href="#">Mary's Tent</a>
+        </div>
+      </a>
+      <a class="button-tab" href="#">Lights</a>
+    </div>
+  </div>
+  <div class="tab">
+    <button class="button-tab">{{tab3}}</button>
+  </div>
+  <div class="tab">
+    <button class="button-tab">{{tab4}}</button>
+  </div>
+</div> -->

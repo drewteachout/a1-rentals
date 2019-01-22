@@ -7,16 +7,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TabsComponent implements OnInit {
 
-  tab1: String;
-  tab2: String;
-  tab3: String;
-  tab4: String;
+  tab1: any[];
+  tab2: any[];
+  tab3: any[];
+  tab4: any[];
+  tabs: any[];
 
-  constructor() { 
-    this.tab1 = "Popular Products"
-    this.tab2 = "Rental Products"
-    this.tab3 = "Packages"
-    this.tab4 = "Contact Us"
+  constructor() {
+    this.tab1 = ['Popular Products', []];
+    this.tab2 = ['Rental Products', [['Chairs', ['Big Chair', 'Little Chair', 'Our Chair']], ['Tents', []],
+    ['Lights', []]]];
+    this.tab3 = ['Packages', []];
+    this.tab4 = ['Contact Us', []];
+    this.tabs = [this.tab1, this.tab2, this.tab3, this.tab4];
   }
 
   ngOnInit() {

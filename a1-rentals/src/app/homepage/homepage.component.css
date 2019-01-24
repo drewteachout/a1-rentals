@@ -3,6 +3,8 @@
 }
 
 .tile {
-    display: inline-block;
-    margin: 16px;
+    float: left;
+    margin-left: 68px;
+    margin-right: 68px;
+    margin-top: 56px
 }

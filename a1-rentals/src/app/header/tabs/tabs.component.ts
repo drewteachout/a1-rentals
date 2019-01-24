@@ -27,8 +27,8 @@ export class TabsComponent implements OnInit {
 
   // Calculates appropriate padding necessary based on where we are in the list
   setSubTabStyle(index, list) {
-    let percentage = (100/list.length * index).toString() + '%';
-    let styles = {
+    const percentage = (100 / list.length * index).toString() + '%';
+    const styles = {
       'top': percentage
     };
     return styles;

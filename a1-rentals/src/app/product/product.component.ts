@@ -8,15 +8,22 @@ import { Component, OnInit } from '@angular/core';
 export class ProductComponent implements OnInit {
 
   columnDefs = [
-    {headerName: 'Make', field: 'make' },
-    {headerName: 'Model', field: 'model' },
-    {headerName: 'Price', field: 'price'}
+    {headerName: 'Item Name', field: 'name' },
+    {headerName: 'Price ($)', field: 'price' },
+    {headerName: 'Quantity', field: 'quantity'}
   ];
 
   rowData = [
-    { make: 'Toyota', model: 'Celica', price: 35000 },
-    { make: 'Ford', model: 'Mondeo', price: 32000 },
-    { make: 'Porsche', model: 'Boxter', price: 72000 }
+    { name: 'Poly/metal chair rental - black', price: '1.25', quantity: '0'},
+    { name: 'Poly/metal chair rental - black', price: '1.25', quantity: '0'},
+    { name: 'Poly/metal chair rental - black', price: '1.25', quantity: '0'}
+    { name: 'Poly/metal chair rental - black', price: '1.25', quantity: '0'}
+    { name: 'Poly/metal chair rental - black', price: '1.25', quantity: '0'}
+    { name: 'Poly/metal chair rental - black', price: '1.25', quantity: '0'}
+    { name: 'Poly/metal chair rental - black', price: '1.25', quantity: '0'}
+    { name: 'Poly/metal chair rental - black', price: '1.25', quantity: '0'}
+    { name: 'Poly/metal chair rental - black', price: '1.25', quantity: '0'}
+    { name: 'Poly/metal chair rental - black', price: '1.25', quantity: '0'}
   ];
 
   constructor() { }

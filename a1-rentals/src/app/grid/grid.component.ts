@@ -8,19 +8,20 @@ import { Column } from 'ag-grid-community';
 })
 export class GridComponent implements OnInit {
 
-  @Input() columnDefs: any[];
-  @Input() rowData: any[];
+  @Input() columnDefs: JSON;
+  @Input() rowData: JSON;
   @Input() height: number;
   @Input() width: number;
 
   style: any;
 
-  constructor() { 
+  constructor() {
   }
 
   ngOnInit() {
-    this.style = "width: " + this.width + "; height: " + this.height + ";"
+    this.style = 'width: ' + this.width + '; height: ' + this.height + ';';
     console.log(this.style);
+    console.log('ColumnDefs: ' + this.columnDefs);
   }
 
 }

@@ -7,7 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomepageComponent implements OnInit {
 
-  constructor() { }
+  products: any[];
+
+  constructor() { 
+    this.products = [['Elite Pole Tents', '../../assets/images/ElitePollTent.jpg'],
+      ['Tables', '../../assets/images/RectangleTables.jpg'], ['Chairs', '../../assets/images/PlasticChair.jpg']]
+  }
 
   ngOnInit() {
   }

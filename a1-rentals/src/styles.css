@@ -1,4 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+    margin: 0px;
+}
+
 h1 {
     font-family: "Mosk"; 
     font-size: 70px;
@@ -6,6 +10,11 @@ h1 {
 }
 
 h2 {
+    font-family: "Mosk";
+    font-size: 28px;
+}
+
+h3 {
     font-family: "Mosk";
     font-size: 16px;
     margin: 10px;

@@ -1,32 +1,36 @@
-#parent {
+h1 {
+    cursor: pointer;
+}
+
+.parent {
     display: flex;
     margin: 15px;
 }
 
-#title {
-    width: 60%;
+.title {
     display: inline-block;
+    width: 60%;
 }
 
-#contact {
-    width: 40%;
+.contact {
     display: flex;
     text-align: center;
+    width: 40%;
 }
 
-#contact-details {
+.contact-details {
     display: inline-block;
-    text-align: left;
     margin: auto 20% auto 1%;
+    text-align: left;
 }
 
-#contact-icon {
+.contact-icon {
     display: inline-block;
     margin: auto 1% auto 0;
 }
 
-#cart {
-    width: 20%;
+.cart {
     margin: auto;
     padding-left: 40%;
+    width: 20%;
 }

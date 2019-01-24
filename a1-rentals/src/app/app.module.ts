@@ -8,7 +8,8 @@ import { TabsComponent } from './header/tabs/tabs.component';
 import { ProductTileComponent } from './product-tile/product-tile.component';
 import { ProductComponent } from './product/product.component';
 
-import {AgGridModule} from 'ag-grid-angular';
+import { AgGridModule } from 'ag-grid-angular';
+import { NgImageSliderModule} from 'ng-image-slider';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {AgGridModule} from 'ag-grid-angular';
   ],
   imports: [
     BrowserModule,
-    AgGridModule.withComponents([])
+    AgGridModule.withComponents([]),
+    NgImageSliderModule
   ],
   providers: [],
   bootstrap: [AppComponent]

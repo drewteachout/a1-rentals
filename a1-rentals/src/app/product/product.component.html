@@ -1,12 +1,22 @@
 <app-header></app-header>
 <div class="product">
   <h2 class="title">{{productName}}</h2>
-  <div class="product-grid">
-    <ag-grid-angular
-      class="ag-theme-balham"
-      [rowData]="rowData"
-      [columnDefs]="columnDefs"
-      >
-    </ag-grid-angular>
+  <div class="left">
+    <ng-image-slider class="carousel" [images]="imageObject" #nav></ng-image-slider>
+    <h3 class="description">Product Description</h3>
+    <p>{{productDescription}}</p>
+  </div>
+  <div class="right">
+    <div class="product-grid">
+      <ag-grid-angular
+        class="ag-theme-balham"
+        [rowData]="rowData"
+        [columnDefs]="columnDefs"
+        >
+      </ag-grid-angular>
+    </div>
+  </div>
+  <div class="total">
+    <button class="button-std">Add Selection to Quote</button>
   </div>
 </div>

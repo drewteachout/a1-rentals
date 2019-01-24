@@ -1,4 +1,30 @@
+.carousel {
+    margin: 24px;
+}
+
+.description {
+    text-align: center;
+    margin: 48px;
+}
+
+.left {
+    float: left;
+    width: 50%
+}
+
+.right {
+    float: right;
+    text-align: center;
+}
+
+.product {
+    text-align: center;
+}
+
 .product-grid {
+    float: center;
+    padding-right: 96px;
+    position: relative;
     width: 700px;
 }
 

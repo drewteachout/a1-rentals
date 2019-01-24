@@ -7,7 +7,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductComponent implements OnInit {
 
+  imageObject: Array<object> = [
+    { image: 'assets/images/blackChair.jpg', thumbImage: 'assets/images/blackChair.jpg', title: 'Poly/metal chair rental - black'},
+    { image: 'assets/images/whiteChair.jpg', thumbImage: 'assets/images/whiteChair.jpg'},
+    { image: 'assets/images/resinChair.jpg', thumbImage: 'assets/images/resinChair.jpg'},
+    { image: 'assets/images/ledBarStool.jpg', thumbImage: 'assets/images/ledBarStool.jpg'},
+    { image: 'assets/images/ledBeanBagChair.jpg', thumbImage: 'assets/images/ledBeanBagChair.jpg'},
+    { image: 'assets/images/ledBench.jpg', thumbImage: 'assets/images/ledBench.jpg'},
+    { image: 'assets/images/ledCube1.png', thumbImage: 'assets/images/ledCube1.png'},
+    { image: 'assets/images/ledCube2.jpg', thumbImage: 'assets/images/ledCube2.jpg'},
+  ];
+
   productName: string;
+  productDescription = 'Our sturdy poly/metal chair rentals feature vinyl seats and back with a metal frame.' +
+    'The resin padded chair rentals are designed to be more comfortable and they look great for that traditional' +
+    ' wedding look.  Both styles resist sinking into lawns. ';
 
   columnDefs = [
     {headerName: 'Item Name', field: 'name', width: 438},
@@ -29,7 +43,7 @@ export class ProductComponent implements OnInit {
   ];
 
   constructor() {
-    this.productName = "Chairs"
+    this.productName = 'Chairs';
    }
 
   ngOnInit() {

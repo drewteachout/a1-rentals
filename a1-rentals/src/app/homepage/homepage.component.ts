@@ -11,7 +11,7 @@ export class HomepageComponent implements OnInit {
 
   constructor() {
     this.products = [['Elite Pole Tents', '../../assets/images/ElitePollTent.jpg'],
-      ['Tables', '../../assets/images/RectangleTables.jpg'], ['Chairs', '../../assets/images/PlasticChair.jpg']];
+      ['Tables', '../../assets/images/RectangleTables.jpg'], ['Chairs', '../../assets/images/whiteChair.jpg']];
   }
 
   ngOnInit() {

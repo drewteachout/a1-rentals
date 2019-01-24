@@ -1,0 +1,9 @@
+.product-grid {
+    width: 700px;
+}
+
+.title {
+    display: block;
+    position: relative;
+    text-align: center
+}

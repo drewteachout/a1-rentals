@@ -1,16 +1,12 @@
 <app-header></app-header>
 <div class="product">
-  <ag-grid-angular
-    style="width: 500px; height: 500px"
-    class="ag-theme-balham"
-    [rowData]="rowData" 
-    [columnDefs]="columnDefs"
-    >
-  </ag-grid-angular>
-  <!-- <app-grid
-    columnDefs="{{columnDefs}}"
-    rowData="{{rowData}}"
-    height="500"
-    width="500"
-  ></app-grid> -->
+  <h2 class="title">{{productName}}</h2>
+  <div class="product-grid">
+    <ag-grid-angular
+      class="ag-theme-balham"
+      [rowData]="rowData"
+      [columnDefs]="columnDefs"
+      >
+    </ag-grid-angular>
+  </div>
 </div>

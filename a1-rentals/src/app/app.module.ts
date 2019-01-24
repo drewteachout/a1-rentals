@@ -7,7 +7,6 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { TabsComponent } from './header/tabs/tabs.component';
 import { ProductTileComponent } from './product-tile/product-tile.component';
 import { ProductComponent } from './product/product.component';
-import { GridComponent } from './grid/grid.component';
 
 import {AgGridModule} from 'ag-grid-angular';
 
@@ -19,7 +18,6 @@ import {AgGridModule} from 'ag-grid-angular';
     TabsComponent,
     ProductTileComponent,
     ProductComponent,
-    GridComponent
   ],
   imports: [
     BrowserModule,

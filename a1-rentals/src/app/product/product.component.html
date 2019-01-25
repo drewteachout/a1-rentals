@@ -1,6 +1,6 @@
 <app-header></app-header>
-<div class="product">
-  <h2 class="title">{{productName}}</h2>
+<h2 class="title">{{productName}}</h2>
+<div class="product-info">
   <div class="left">
     <ng-image-slider class="carousel" [images]="imageObject" #nav></ng-image-slider>
     <h3 class="description">Product Description</h3>
@@ -16,7 +16,8 @@
       </ag-grid-angular>
     </div>
   </div>
-  <div class="total">
-    <button class="button-std">Add Selection to Quote</button>
-  </div>
+</div>
+<div class="quote">
+  <h3>Selected Item Total: ${{quoteTotal}}</h3>
+  <button class="button-std">Add Selection to Quote</button>
 </div>

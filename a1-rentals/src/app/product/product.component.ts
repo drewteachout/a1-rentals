@@ -21,7 +21,11 @@ export class ProductComponent implements OnInit {
   productName: string;
   productDescription = 'Our sturdy poly/metal chair rentals feature vinyl seats and back with a metal frame.' +
     'The resin padded chair rentals are designed to be more comfortable and they look great for that traditional' +
-    ' wedding look.  Both styles resist sinking into lawns. ';
+    ' wedding look. Both styles resist sinking into lawns. A-1 Rentals also have chair rentals designed for ' +
+    'the little ones. They can be used with our children\'s tables. They are good for children up to ' +
+    'approximately 6 or 7 years old. The solid resin chairs are red or blue. The metal framed children\'s chair' +
+    ' rentals feature a blue vinyl seat.';
+  quoteTotal: string;
 
   columnDefs = [
     {headerName: 'Item Name', field: 'name', width: 438},
@@ -44,6 +48,7 @@ export class ProductComponent implements OnInit {
 
   constructor() {
     this.productName = 'Chairs';
+    this.quoteTotal = '0.00';
    }
 
   ngOnInit() {

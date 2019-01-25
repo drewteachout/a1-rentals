@@ -1,23 +1,35 @@
+button {
+    display: inline-block;
+    margin-left: 5%;
+}
+
+h3 {
+    display: inline-block;
+    margin-left: 60%;
+}
+
+p {
+    text-align: center;
+}
+
 .carousel {
     margin: 24px;
 }
 
 .description {
-    text-align: center;
-    margin: 48px;
+    display: inline-block;
+    text-decoration: underline;
+    margin: 24px;
 }
 
 .left {
     float: left;
-    width: 50%
+    width: 50%;
+    text-align: center;
 }
 
 .right {
     float: right;
-    text-align: center;
-}
-
-.product {
     text-align: center;
 }
 
@@ -26,6 +38,16 @@
     padding-right: 96px;
     position: relative;
     width: 700px;
+}
+
+.product-info {
+    overflow: auto;
+}
+
+.quote {
+    display: block;
+    margin-top: 24px;
+    margin-right: 0px;
 }
 
 .title {

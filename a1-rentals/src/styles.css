@@ -1,3 +1,6 @@
+@import "~ag-grid-community/dist/styles/ag-grid.css";
+@import "~ag-grid-community/dist/styles/ag-theme-balham.css";
+
 /* You can add global styles to this file, and also import other style files */
 body {
     margin: 0px;
@@ -11,10 +14,16 @@ h1 {
 
 h2 {
     font-family: "Mosk";
-    font-size: 28px;
+    font-size: 44px;
 }
 
 h3 {
+    font-family: "Mosk";
+    font-size: 22px;
+    margin: 10px;
+}
+
+h4 {
     font-family: "Mosk";
     font-size: 16px;
     margin: 10px;
@@ -22,6 +31,12 @@ h3 {
 
 img {
     margin: 10px;
+}
+
+p {
+    font-family: "Mosk";
+    font-size: 16px;
+    margin: 16px;
 }
 
 /* 
@@ -36,7 +51,7 @@ img {
     font-size: 15px;
     font-family: "Mosk";
     font-weight: bold;
-    padding: 15px 50px;
+    padding: 15px 40px;
 }
 
 .button-std:hover {

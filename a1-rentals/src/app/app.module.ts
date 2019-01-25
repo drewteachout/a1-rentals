@@ -6,6 +6,10 @@ import { HeaderComponent } from './header/header.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { TabsComponent } from './header/tabs/tabs.component';
 import { ProductTileComponent } from './product-tile/product-tile.component';
+import { ProductComponent } from './product/product.component';
+
+import { AgGridModule } from 'ag-grid-angular';
+import { NgImageSliderModule} from 'ng-image-slider';
 
 @NgModule({
   declarations: [
@@ -13,10 +17,13 @@ import { ProductTileComponent } from './product-tile/product-tile.component';
     HeaderComponent,
     HomepageComponent,
     TabsComponent,
-    ProductTileComponent
+    ProductTileComponent,
+    ProductComponent,
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    AgGridModule.withComponents([]),
+    NgImageSliderModule
   ],
   providers: [],
   bootstrap: [AppComponent]

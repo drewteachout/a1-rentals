@@ -1,0 +1,57 @@
+button {
+    display: inline-block;
+    margin-left: 5%;
+}
+
+h3 {
+    display: inline-block;
+    margin-left: 60%;
+}
+
+p {
+    text-align: center;
+}
+
+.carousel {
+    margin: 24px;
+}
+
+.description {
+    display: inline-block;
+    text-decoration: underline;
+    margin: 24px;
+}
+
+.left {
+    float: left;
+    width: 50%;
+    text-align: center;
+}
+
+.right {
+    float: right;
+    text-align: center;
+}
+
+.product-grid {
+    float: center;
+    padding-right: 96px;
+    position: relative;
+    width: 700px;
+}
+
+.product-info {
+    overflow: auto;
+}
+
+.quote {
+    display: block;
+    margin-top: 24px;
+    margin-right: 0px;
+}
+
+.title {
+    display: block;
+    position: relative;
+    text-align: center
+}

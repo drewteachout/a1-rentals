@@ -1,3 +1,4 @@
+
 h1 {
     cursor: pointer;
 }
@@ -31,6 +32,6 @@ h1 {
 
 .cart {
     margin: auto;
-    padding-left: 40%;
+    padding-left: 5%;
     width: 20%;
 }

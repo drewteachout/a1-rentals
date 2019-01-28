@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MapComponent implements OnInit {
 
-  title: string = 'Our Location';
+  title = 'Our Location';
   lat = 33.938514;
   lng = -84.539387;
 

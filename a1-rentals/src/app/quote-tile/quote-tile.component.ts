@@ -5,21 +5,29 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './quote-tile.component.html',
   styleUrls: ['./quote-tile.component.css']
 })
+
 export class QuoteTileComponent implements OnInit {
 
+  // get from parent component
+  // use name to get other info from database
+  name = "NAME GOES HERE";
+  quant = "";
+
   // deletes this tile
+  // edit parent component?
   deleteTile() {}
 
   // gets product name
-  getProductName() {}
+  getName() { return name; }
 
   // gets product image
-  getProductImage() {}
+  getProductImage() { return "assets/images/temp.jpg" }
 
   // gets price quote
   getPrice() { return "$69.69"}
 
   // gets quantity
+  // 
   getQuant() {}
 
 

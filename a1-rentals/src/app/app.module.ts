@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { AgmCoreModule } from '@agm/core';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -12,6 +13,7 @@ import { ProductComponent } from './product/product.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { NgImageSliderModule} from 'ng-image-slider';
 import { FormComponent } from './form/form.component';
+import { MapComponent } from './map/map.component';
 
 @NgModule({
   declarations: [
@@ -21,13 +23,17 @@ import { FormComponent } from './form/form.component';
     TabsComponent,
     ProductTileComponent,
     ProductComponent,
-    FormComponent
+    FormComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
     AgGridModule.withComponents([]),
     NgImageSliderModule,
-    FormsModule
+    FormsModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'YOUR_KEY'
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

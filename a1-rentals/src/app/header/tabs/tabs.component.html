@@ -1,19 +1,14 @@
 <div class="rectangle">
-  <div class="tab">
-    <button class="button-tab">{{tab1}}</button>
-  </div>
-  <div class="tab">
-    <button class="button-tab">{{tab2}}</button>
-    <div class="tab-content">
-      <a class="button-tab" href="#">Chairs</a>
-      <a class="button-tab" href="#">Tents</a>
-      <a class="button-tab" href="#">Lights</a>
+  <div class="tab" *ngFor="let tabName of tabs">
+    <button class="button-tab">{{tabName[0]}}</button>
+    <div class="tab-content" *ngIf="tabName[1].length > 0">
+      <a class="button-tab" *ngFor="let subTabName of tabName[1]; index as i">
+        {{subTabName[0]}}
+        <div class="tab-content-sub" *ngIf="subTabName[1].length > 0" [ngStyle]="setSubTabStyle(i, tabName[1])">
+          <a class="button-tab-sub" *ngFor="let title of subTabName[1];">
+            {{title}}</a>
+        </div>
+      </a>
     </div>
-  </div>
-  <div class="tab">
-    <button class="button-tab">{{tab3}}</button>
-  </div>
-  <div class="tab">
-    <button class="button-tab">{{tab4}}</button>
   </div>
 </div>

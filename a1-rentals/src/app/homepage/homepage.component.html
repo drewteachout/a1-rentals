@@ -1,1 +1,4 @@
-<app-header id="header"></app-header>
+<app-header class="header"></app-header>
+<div class="tiles" *ngFor="let product of products">
+    <app-product-tile productName={{product[0]}} productSource={{product[1]}}></app-product-tile>
+</div>

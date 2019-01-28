@@ -11,6 +11,7 @@
   },
   "private": true,
   "dependencies": {
+    "@agm/core": "^1.0.0-beta.5",
     "@angular/animations": "~7.0.0",
     "@angular/common": "~7.0.0",
     "@angular/compiler": "~7.0.0",
@@ -20,7 +21,12 @@
     "@angular/platform-browser": "~7.0.0",
     "@angular/platform-browser-dynamic": "~7.0.0",
     "@angular/router": "~7.0.0",
+    "ag-grid": "^18.1.2",
+    "ag-grid-angular": "^20.0.0",
+    "ag-grid-community": "^20.0.0",
     "core-js": "^2.5.4",
+    "firebase": "^5.8.0",
+    "ng-image-slider": "^1.0.7",
     "rxjs": "~6.3.3",
     "zone.js": "~0.8.26"
   },

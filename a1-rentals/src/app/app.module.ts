@@ -15,6 +15,7 @@ import { QuoteTileComponent } from './quote-tile/quote-tile.component';
 
 import { AgGridModule } from 'ag-grid-angular';
 import { NgImageSliderModule} from 'ng-image-slider';
+import { ContactComponent } from './contact/contact.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { NgImageSliderModule} from 'ng-image-slider';
     ProductComponent,
     FormComponent,
     MapComponent,
-    QuoteTileComponent
+    QuoteTileComponent,
+    ContactComponent
   ],
   imports: [
     BrowserModule,

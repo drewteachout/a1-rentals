@@ -11,20 +11,16 @@ import { Contact } from './contact';
 export class FormComponent implements OnInit {
 
   model = new Contact(18, '', '', '', '', '');
+  submitted = false;
+
+  constructor() { }
+
+  ngOnInit() {  }
 
   newContact() {
     this.model = new Contact(42, '', '', '', '', '');
   }
 
-  submitted = false;
-
   // i think this is where we put the stuff to deal with the form data
   onSubmit() {this.submitted = true; }
-  
-
-  
-  constructor() { }
-
-  ngOnInit() {  }
-
 }

@@ -9,11 +9,12 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { TabsComponent } from './header/tabs/tabs.component';
 import { ProductTileComponent } from './product-tile/product-tile.component';
 import { ProductComponent } from './product/product.component';
+import { FormComponent } from './form/form.component';
+import { MapComponent } from './map/map.component';
+import { QuoteTileComponent } from './quote-tile/quote-tile.component';
 
 import { AgGridModule } from 'ag-grid-angular';
 import { NgImageSliderModule} from 'ng-image-slider';
-import { FormComponent } from './form/form.component';
-import { MapComponent } from './map/map.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { MapComponent } from './map/map.component';
     ProductTileComponent,
     ProductComponent,
     FormComponent,
-    MapComponent
+    MapComponent,
+    QuoteTileComponent
   ],
   imports: [
     BrowserModule,

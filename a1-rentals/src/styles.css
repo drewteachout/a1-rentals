@@ -1,5 +1,6 @@
 @import "~ag-grid-community/dist/styles/ag-grid.css";
 @import "~ag-grid-community/dist/styles/ag-theme-balham.css";
+@import url('https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css');
 
 /* You can add global styles to this file, and also import other style files */
 body {

@@ -1,6 +1,6 @@
 <div class="rectangle">
   <div class="tab" *ngFor="let tabName of tabs">
-    <button class="button-tab">{{tabName[0]}}</button>
+    <button class="button-tab" [routerLink]="'/' + tabName[0]">{{tabName[0]}}</button>
     <div class="tab-content" *ngIf="tabName[1].length > 0">
       <a class="button-tab" *ngFor="let subTabName of tabName[1]; index as i">
         {{subTabName[0]}}

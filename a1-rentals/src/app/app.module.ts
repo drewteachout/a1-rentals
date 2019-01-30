@@ -24,6 +24,7 @@ const appRoutes: Routes = [
   { path: 'Popular Products', component: HomepageComponent},
   { path: 'Contact Us', component: ContactComponent},
   { path: 'Quote Cart', component: QuoteCartComponent},
+  { path: 'Rental Products', component: ProductComponent},
   { path: '',
     redirectTo: '/Popular Products',
     pathMatch: 'full'

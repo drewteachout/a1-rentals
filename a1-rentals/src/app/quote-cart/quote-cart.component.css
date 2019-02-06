@@ -1,0 +1,25 @@
+.cart {
+    overflow-y: scroll;
+    float: left;
+    width: 40%;
+    max-height: 800px;
+    min-height: 800px;
+}
+
+.quote-tile {
+    padding-left: 8%;
+    float:left;
+    width: 100%;
+}
+
+.right {
+    float: right;
+    width: 60%;
+}
+
+.break {
+    width: 100%;
+}
+.left {
+    float: left;
+}

@@ -1,0 +1,9 @@
+<ngb-carousel>
+  <template *ngFor="let slide of slides" [id]="slide.id" ngbSlide>
+    <img [src]="'assets/images/blackChair.jpg'" [alt]="slide.title">
+    <div class="carousel-caption">
+      <h3>{{slide.title}}</h3>
+      <p>{{slide.title}}</p>
+    </div>
+  </template>
+<ngb-carousel>

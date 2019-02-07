@@ -12,13 +12,16 @@ import { ProductComponent } from './product/product.component';
 import { FormComponent } from './form/form.component';
 import { MapComponent } from './map/map.component';
 import { QuoteTileComponent } from './quote-tile/quote-tile.component';
+import { QuoteCartComponent } from './quote-cart/quote-cart.component';
+import { ContactComponent } from './contact/contact.component';
 
 import { AgGridModule } from 'ag-grid-angular';
 import { NgImageSliderModule} from 'ng-image-slider';
-import { ContactComponent } from './contact/contact.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { RouterModule, Routes } from '@angular/router';
-import { QuoteCartComponent } from './quote-cart/quote-cart.component';
+import { CarouselComponent } from './carousel/carousel.component';
+
 
 const appRoutes: Routes = [
   { path: 'Popular Products', component: HomepageComponent},
@@ -44,7 +47,8 @@ const appRoutes: Routes = [
     MapComponent,
     QuoteTileComponent,
     ContactComponent,
-    QuoteCartComponent
+    QuoteCartComponent,
+    CarouselComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -57,7 +61,8 @@ const appRoutes: Routes = [
     FormsModule,
     AgmCoreModule.forRoot({
       apiKey: 'YOUR_KEY'
-    })
+    }),
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

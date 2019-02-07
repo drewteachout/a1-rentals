@@ -17,7 +17,7 @@ export class QuoteTileComponent implements OnInit {
   getProductImage() {}
 
   // gets price quote
-  getPrice() { return "$69.69"}
+  getPrice() { return '$69.69'; }
 
   // gets quantity
   getQuant() {}

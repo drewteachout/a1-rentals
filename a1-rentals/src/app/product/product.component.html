@@ -1,14 +1,15 @@
 <h2 class="title">{{productName}}</h2>
 <div class="product-info">
   <div class="left">
-    <ng-image-slider class="carousel" [images]="imageObject" #nav></ng-image-slider>
+    <!-- <ng-image-slider class="carousel" [images]="imageObject" #nav></ng-image-slider> -->
+    <app-carousel productKey="chairs"></app-carousel>
     <h3 class="description">Product Description</h3>
     <p>{{productDescription}}</p>
   </div>
   <div class="right">
     <div class="product-grid">
       <ag-grid-angular
-        class="ag-theme-balham"
+        class="ag-theme-material"
         [rowData]="rowData"
         [columnDefs]="columnDefs"
         >

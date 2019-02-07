@@ -8,17 +8,6 @@ import { IImage } from 'ng-simple-slideshow';
 })
 export class ProductComponent implements OnInit {
 
-  imageObject: Array<object> = [
-    { image: 'assets/images/blackChair.jpg', thumbImage: 'assets/images/blackChair.jpg', title: 'Poly/metal chair rental - black'},
-    { image: 'assets/images/whiteChair.jpg', thumbImage: 'assets/images/whiteChair.jpg'},
-    { image: 'assets/images/resinChair.jpg', thumbImage: 'assets/images/resinChair.jpg'},
-    { image: 'assets/images/ledBarStool.jpg', thumbImage: 'assets/images/ledBarStool.jpg'},
-    { image: 'assets/images/ledBeanBagChair.jpg', thumbImage: 'assets/images/ledBeanBagChair.jpg'},
-    { image: 'assets/images/ledBench.jpg', thumbImage: 'assets/images/ledBench.jpg'},
-    { image: 'assets/images/ledCube1.png', thumbImage: 'assets/images/ledCube1.png'},
-    { image: 'assets/images/ledCube2.jpg', thumbImage: 'assets/images/ledCube2.jpg'},
-  ];
-
   images: (string | IImage)[] = [
     { url: 'assets/images/blackChair.jpg', caption: 'Poly/metal chair rental - black'},
     { url: 'assets/images/whiteChair.jpg', caption: 'Poly/metal chair rental - WEDDING white'},
@@ -29,7 +18,6 @@ export class ProductComponent implements OnInit {
     { url: 'assets/images/ledCube1.png', caption: 'L.E.D. Cube, 16" x 16"'},
     { url: 'assets/images/ledCube2.jpg', caption: 'L.E.D. Cube, 20" x 20"'},
   ];
-  // images: Map<string, string>;
 
   productName: string;
   productDescription = 'Our sturdy poly/metal chair rentals feature vinyl seats and back with a metal frame.' +
@@ -39,20 +27,6 @@ export class ProductComponent implements OnInit {
     'approximately 6 or 7 years old. The solid resin chairs are red or blue. The metal framed children\'s chair' +
     ' rentals feature a blue vinyl seat.';
   quoteTotal: string;
-  urls: string[] = [
-    'assets/images/blackChair.jpg',
-    'assets/images/whiteChair.jpg',
-    'assets/images/resinChair.jpg',
-    'assets/images/ledBarStool.jpg',
-    'assets/images/ledBeanBagChair.jpg'
-  ];
-  titles: string[] = [
-    'Poly/metal chair rental - black',
-    'Poly/metal chair rental - WEDDING white',
-    'Resin padded chair rental - white',
-    // 'L.E.D. Bar stool',
-    // 'L.E.D. Beanbag chair'
-  ];
 
   columnDefs = [
     {headerName: 'Item Name', field: 'name', width: 438},
@@ -74,36 +48,16 @@ export class ProductComponent implements OnInit {
   ];
 
   constructor() {
-    this.productName = 'Chairs';
-    this.quoteTotal = '0.00';
-    // this.images = [];
-    this.titles = [];
-    this.urls = [];
-    this.loadData();
-    // this.images = new Map<string, string>();
    }
 
   ngOnInit() {
-    // this.rowData = this.http.get('url');
-    // this.images['assets/images/blackChair.jpg'] = 'Poly/metal chair rental - black';
-    // this.images['assets/images/whiteChair.jpg'] = 'Poly/metal chair rental - WEDDING white';
-    // this.images['assets/images/resinChair.jpg'] = 'Resin padded chair rental - white';
-    // this.images['assets/images/ledBarStool.jpg'] = 'L.E.D. Bar stool';
-    // this.images['assets/images/ledBeanBagChair.jpg'] = 'L.E.D. Beanbag chair';
-    // this.images['assets/images/ledBench.jpg'] = 'L.E.D. Bench';
-    // this.images['assets/images/ledCube1.png'] = 'L.E.D. Cube, 16" x 16"';
-    // this.images['assets/images/ledCube2.jpg'] = 'L.E.D. Cube, 20" x 20"';
+    this.productName = 'Chairs';
+    this.quoteTotal = '0.00';
+    this.loadData();
   }
 
   loadData() {
-    // console.log(this.images[0].title);
-    // for (let i = 0; i < this.images.length; i++) {
-    //   this.urls.push(this.images[i].url);
-    //   this.titles.push(this.images[i].title);
-    //   console.log('looping');
-    // }
-    // console.log(this.titles);
-    // console.log(this.urls);
+
   }
 
 }

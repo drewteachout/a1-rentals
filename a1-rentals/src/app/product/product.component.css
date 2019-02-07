@@ -19,6 +19,7 @@ p {
 
 .description {
     display: inline-block;
+
     text-decoration: underline;
     margin: 24px;
 }
@@ -52,7 +53,11 @@ p {
 }
 
 .slideshow {
-    padding: 10px;
+    display: inline-block;
+    margin: 10px;
+    position: relative;
+    text-align: center;
+    width: 800px;
 }
 
 .title {

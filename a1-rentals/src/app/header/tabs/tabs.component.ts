@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 
 @Component({
   selector: 'app-tabs',
   templateUrl: './tabs.component.html',
   styleUrls: ['./tabs.component.css']
 })
-export class TabsComponent implements OnInit {
+export class TabsComponent implements OnInit, AfterViewInit {
 
   tab1: any[];
   tab2: any[];
   tab3: any[];
   tab4: any[];
   tabs: any[];
+  previousTab: string = "Popular Products";
 
   constructor() {
     this.tab1 = ['Popular Products', []];
@@ -25,6 +26,11 @@ export class TabsComponent implements OnInit {
   ngOnInit() {
   }
 
+  ngAfterViewInit() {
+    let clickedButton = document.getElementById(this.previousTab);
+    clickedButton.className = "button-tab accent";
+  }
+
   // Calculates appropriate padding necessary based on where we are in the list
   setSubTabStyle(index, list) {
     const percentage = (100 / list.length * index).toString() + '%';
@@ -32,5 +38,13 @@ export class TabsComponent implements OnInit {
       'top': percentage
     };
     return styles;
+  }
+
+  toggleButton(buttonName: string) {
+    let previousButton = document.getElementById(this.previousTab);
+    let clickedButton = document.getElementById(buttonName);
+    previousButton.className = clickedButton.className;
+    clickedButton.className = "button-tab accent";
+    this.previousTab = buttonName;
   }
 }

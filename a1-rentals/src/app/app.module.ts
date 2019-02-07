@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AgmCoreModule } from '@agm/core';
 
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireModule } from '@angular/fire';
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { HomepageComponent } from './homepage/homepage.component';
@@ -12,13 +15,16 @@ import { ProductComponent } from './product/product.component';
 import { FormComponent } from './form/form.component';
 import { MapComponent } from './map/map.component';
 import { QuoteTileComponent } from './quote-tile/quote-tile.component';
+import { QuoteCartComponent } from './quote-cart/quote-cart.component';
+import { ContactComponent } from './contact/contact.component';
 
 import { AgGridModule } from 'ag-grid-angular';
 import { NgImageSliderModule} from 'ng-image-slider';
-import { ContactComponent } from './contact/contact.component';
 
 import { RouterModule, Routes } from '@angular/router';
-import { QuoteCartComponent } from './quote-cart/quote-cart.component';
+import { environment } from 'src/environments/environment.prod';
+import { QuoteCartServiceService } from './services/quote-cart-service.service';
+
 
 const appRoutes: Routes = [
   { path: 'Popular Products', component: HomepageComponent},
@@ -57,9 +63,11 @@ const appRoutes: Routes = [
     FormsModule,
     AgmCoreModule.forRoot({
       apiKey: 'YOUR_KEY'
-    })
+    }),
+    AngularFirestoreModule,
+    AngularFireModule.initializeApp(environment.firebase),
   ],
-  providers: [],
+  providers: [QuoteCartServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

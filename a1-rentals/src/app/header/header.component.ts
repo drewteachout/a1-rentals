@@ -12,4 +12,10 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
   }
 
+  unhighlightTabs() {
+    document.getElementById("Popular Products").className = "button-tab primary";
+    document.getElementById("Rental Products").className = "button-tab primary";
+    document.getElementById("Packages").className = "button-tab primary";
+    document.getElementById("Contact Us").className = "button-tab primary";
+  }
 }

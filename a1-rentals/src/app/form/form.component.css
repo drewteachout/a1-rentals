@@ -20,3 +20,7 @@
     width: 100%;
     min-height: 60%;
 }
+
+.container {
+    position: relative;
+}

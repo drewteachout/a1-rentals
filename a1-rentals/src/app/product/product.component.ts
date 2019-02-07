@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { IImage } from 'ng-simple-slideshow';
 
 @Component({
   selector: 'app-product',
@@ -18,15 +19,15 @@ export class ProductComponent implements OnInit {
     { image: 'assets/images/ledCube2.jpg', thumbImage: 'assets/images/ledCube2.jpg'},
   ];
 
-  images: Array<object> = [
-    { url: 'assets/images/blackChair.jpg', title: 'Poly/metal chair rental - black'},
-    { url: 'assets/images/whiteChair.jpg', title: 'Poly/metal chair rental - WEDDING white'},
-    { url: 'assets/images/resinChair.jpg', title: 'Resin padded chair rental - white'},
-    { url: 'assets/images/ledBarStool.jpg', title: 'L.E.D. Bar stool'},
-    { url: 'assets/images/ledBeanBagChair.jpg', title: 'L.E.D. Beanbag chair'},
-    { url: 'assets/images/ledBench.jpg', title: 'L.E.D. Bench'},
-    { url: 'assets/images/ledCube1.png', title: 'L.E.D. Cube, 16" x 16"'},
-    { url: 'assets/images/ledCube2.jpg', title: 'L.E.D. Cube, 20" x 20"'},
+  images: (string | IImage)[] = [
+    { url: 'assets/images/blackChair.jpg', caption: 'Poly/metal chair rental - black'},
+    { url: 'assets/images/whiteChair.jpg', caption: 'Poly/metal chair rental - WEDDING white'},
+    { url: 'assets/images/resinChair.jpg', caption: 'Resin padded chair rental - white'},
+    { url: 'assets/images/ledBarStool.jpg', caption: 'L.E.D. Bar stool'},
+    { url: 'assets/images/ledBeanBagChair.jpg', caption: 'L.E.D. Beanbag chair'},
+    { url: 'assets/images/ledBench.jpg', caption: 'L.E.D. Bench'},
+    { url: 'assets/images/ledCube1.png', caption: 'L.E.D. Cube, 16" x 16"'},
+    { url: 'assets/images/ledCube2.jpg', caption: 'L.E.D. Cube, 20" x 20"'},
   ];
   // images: Map<string, string>;
 
@@ -38,8 +39,20 @@ export class ProductComponent implements OnInit {
     'approximately 6 or 7 years old. The solid resin chairs are red or blue. The metal framed children\'s chair' +
     ' rentals feature a blue vinyl seat.';
   quoteTotal: string;
-  titles: Array<string>;
-  urls: Array<string>;
+  urls: string[] = [
+    'assets/images/blackChair.jpg',
+    'assets/images/whiteChair.jpg',
+    'assets/images/resinChair.jpg',
+    'assets/images/ledBarStool.jpg',
+    'assets/images/ledBeanBagChair.jpg'
+  ];
+  titles: string[] = [
+    'Poly/metal chair rental - black',
+    'Poly/metal chair rental - WEDDING white',
+    'Resin padded chair rental - white',
+    // 'L.E.D. Bar stool',
+    // 'L.E.D. Beanbag chair'
+  ];
 
   columnDefs = [
     {headerName: 'Item Name', field: 'name', width: 438},

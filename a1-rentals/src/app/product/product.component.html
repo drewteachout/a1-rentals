@@ -2,7 +2,13 @@
 <div class="product-info">
   <div class="left">
     <!-- <ng-image-slider class="carousel" [images]="imageObject" #nav></ng-image-slider> -->
-    <app-carousel productKey="chairs"></app-carousel>
+    <div class="slideshow">
+      <slideshow [imageUrls]="images"
+                 [height]="'400px'"
+                 [autoPlay]="false"
+                 [showArrows]="true">
+      </slideshow>
+    </div>
     <h3 class="description">Product Description</h3>
     <p>{{productDescription}}</p>
   </div>

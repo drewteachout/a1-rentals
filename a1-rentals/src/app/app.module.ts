@@ -14,7 +14,6 @@ import { MapComponent } from './map/map.component';
 import { QuoteTileComponent } from './quote-tile/quote-tile.component';
 import { QuoteCartComponent } from './quote-cart/quote-cart.component';
 import { ContactComponent } from './contact/contact.component';
-import { CarouselComponent } from './carousel/carousel.component';
 
 import { QuoteCartServiceService } from './services/quote-cart-service.service';
 import { environment } from 'src/environments/environment.prod';
@@ -25,6 +24,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule, Routes } from '@angular/router';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireModule } from '@angular/fire';
+import { SlideshowModule } from 'ng-simple-slideshow';
 
 const appRoutes: Routes = [
   { path: 'Popular Products', component: HomepageComponent},
@@ -51,7 +51,6 @@ const appRoutes: Routes = [
     QuoteTileComponent,
     ContactComponent,
     QuoteCartComponent,
-    CarouselComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -68,6 +67,7 @@ const appRoutes: Routes = [
     NgbModule,
     AngularFirestoreModule,
     AngularFireModule.initializeApp(environment.firebase),
+    SlideshowModule
   ],
   providers: [QuoteCartServiceService],
   bootstrap: [AppComponent]

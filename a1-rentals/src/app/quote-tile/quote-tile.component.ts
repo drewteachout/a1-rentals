@@ -13,7 +13,7 @@ export class QuoteTileComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.cartItem.productName)
+    console.log(this.cartItem.productName);
   }
 
   getPrice() { return this.cartItem.getTotalCost(); }

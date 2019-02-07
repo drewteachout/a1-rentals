@@ -65,7 +65,7 @@ const appRoutes: Routes = [
     AgmCoreModule.forRoot({
       apiKey: 'YOUR_KEY'
     }),
-    NgbModule
+    NgbModule,
     AngularFirestoreModule,
     AngularFireModule.initializeApp(environment.firebase),
   ],

@@ -1,9 +1,12 @@
 .left {
     float: left;
-    width: 50%;
+    width: 60%;
 }
 
 .right {
     float: right;
-    width: 50%;
+    width: 40%;
+}
+.centered {
+    text-align: center;
 }

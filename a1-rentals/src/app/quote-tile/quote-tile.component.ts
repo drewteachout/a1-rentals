@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Cart_Item } from '../util/Cart_Item';
+
 
 @Component({
   selector: 'app-quote-tile',
@@ -7,25 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class QuoteTileComponent implements OnInit {
 
-  // deletes this tile
-  deleteTile() {}
+  @Input() cartItem: Cart_Item
+  
+  getPrice() { return this.cartItem.getTotalCost()}
 
-  // gets product name
-  getProductName() {}
+  getProductDescription() { return this.cartItem.productDescription}
 
-  // gets product image
-  getProductImage() {}
+  getQuantity() { return this.cartItem.quantity}
 
-  // gets price quote
-  getPrice() { return "$69.69"}
-
-  // gets quantity
-  getQuant() {}
-
+  updateQuantity(value: number) {
+    this.cartItem.quantity = value;
+  }
 
   constructor() { }
 
   ngOnInit() {
+    console.log(this.cartItem.productName)
   }
 
 }

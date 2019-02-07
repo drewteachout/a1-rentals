@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Contact } from './contact';
 
 
@@ -9,6 +9,8 @@ import { Contact } from './contact';
 })
 
 export class FormComponent implements OnInit {
+
+  @Input() submitLocation: String
 
   model = new Contact(18, '', '', '', '', '');
   submitted = false;
@@ -21,6 +23,11 @@ export class FormComponent implements OnInit {
     this.model = new Contact(42, '', '', '', '', '');
   }
 
-  // i think this is where we put the stuff to deal with the form data
-  onSubmit() {this.submitted = true; }
+  onSubmit() {
+    if(this.submitLocation == "qoute") {
+      console.log("Quote")
+    } else {
+      console.log("Contact Us")
+    }
+    this.submitted = true; }
 }

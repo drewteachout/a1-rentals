@@ -1,10 +1,10 @@
-<div class="rectangle">
+<div class="rectangle primary">
   <div class="tab" *ngFor="let tabName of tabs">
-    <button class="button-tab" [routerLink]="'/' + tabName[0]">{{tabName[0]}}</button>
-    <div class="tab-content" *ngIf="tabName[1].length > 0">
+    <button class="button-tab primary" [routerLink]="'/' + tabName[0]" (click)="toggleButton(tabName[0])" id="{{tabName[0]}}">{{tabName[0]}}</button>
+    <div class="tab-content primary" *ngIf="tabName[1].length > 0">
       <a class="button-tab" *ngFor="let subTabName of tabName[1]; index as i">
         {{subTabName[0]}}
-        <div class="tab-content-sub" *ngIf="subTabName[1].length > 0" [ngStyle]="setSubTabStyle(i, tabName[1])">
+        <div class="tab-content-sub primary" *ngIf="subTabName[1].length > 0" [ngStyle]="setSubTabStyle(i, tabName[1])">
           <a class="button-tab-sub" *ngFor="let title of subTabName[1];">
             {{title}}</a>
         </div>

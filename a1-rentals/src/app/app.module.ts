@@ -14,14 +14,17 @@ import { MapComponent } from './map/map.component';
 import { QuoteTileComponent } from './quote-tile/quote-tile.component';
 import { QuoteCartComponent } from './quote-cart/quote-cart.component';
 import { ContactComponent } from './contact/contact.component';
+import { CarouselComponent } from './carousel/carousel.component';
+
+import { QuoteCartServiceService } from './services/quote-cart-service.service';
+import { environment } from 'src/environments/environment.prod';
 
 import { AgGridModule } from 'ag-grid-angular';
 import { NgImageSliderModule} from 'ng-image-slider';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
 import { RouterModule, Routes } from '@angular/router';
-import { CarouselComponent } from './carousel/carousel.component';
-
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireModule } from '@angular/fire';
 
 const appRoutes: Routes = [
   { path: 'Popular Products', component: HomepageComponent},
@@ -53,7 +56,7 @@ const appRoutes: Routes = [
   imports: [
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: true } // <-- debugging purposes only
+      //{ enableTracing: true } // <-- debugging purposes only
     ),
     BrowserModule,
     AgGridModule.withComponents([]),
@@ -63,8 +66,10 @@ const appRoutes: Routes = [
       apiKey: 'YOUR_KEY'
     }),
     NgbModule
+    AngularFirestoreModule,
+    AngularFireModule.initializeApp(environment.firebase),
   ],
-  providers: [],
+  providers: [QuoteCartServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

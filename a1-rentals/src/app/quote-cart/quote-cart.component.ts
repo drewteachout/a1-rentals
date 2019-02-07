@@ -7,7 +7,7 @@ import { QuoteCartServiceService } from '../services/quote-cart-service.service'
   templateUrl: './quote-cart.component.html',
   styleUrls: ['./quote-cart.component.css']
 })
-export class QuoteCartComponent implements OnInit, AfterViewInit{
+export class QuoteCartComponent implements OnInit, AfterViewInit {
 
   cartService: QuoteCartServiceService;
   cart: Cart_Item[] = [];

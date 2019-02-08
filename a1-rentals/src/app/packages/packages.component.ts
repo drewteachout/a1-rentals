@@ -27,7 +27,10 @@ export class PackagesComponent implements OnInit {
             for(let i = 0; i < nestedArray.length; i++) {
               this.db.collection(key.replace('/', '-'))
               .doc(docTitle.replace('/', '-'))
-              .set({array: true})
+              .set({
+                array: true,
+                name: docTitle
+              })
               .then((res) => {
                   console.log("Document successfully written!");
                   this.db.collection(key.replace('/', '-'))

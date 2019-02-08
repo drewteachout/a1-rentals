@@ -1,4 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Product } from 'src/app/util/Product';
+import { ProductsService } from 'src/app/services/products.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tabs',
@@ -14,7 +17,7 @@ export class TabsComponent implements OnInit, AfterViewInit {
   tabs: any[];
   previousTab: string = "Popular Products";
 
-  constructor() {
+  constructor(private prodServ: ProductsService, private router: Router) {
     this.tab1 = ['Popular Products', []];
     this.tab2 = ['Rental Products', [['Chairs', []], ['Tents', ['Elite Pole Tents', 'Frame Tents']],
       ['Lights', ['L.E.D. Dance Floor Lights', 'Lighted Tables', 'LED Furniture Rentals', 'Uplighting Rentals']]]];
@@ -46,5 +49,12 @@ export class TabsComponent implements OnInit, AfterViewInit {
     previousButton.className = clickedButton.className;
     clickedButton.className = "button-tab accent";
     this.previousTab = buttonName;
+  }
+
+  subtabClicked(previous: string, name: string, event: MouseEvent) {
+    event.stopPropagation();
+    let prod = new Product(name, previous);
+    this.prodServ.update(prod);
+    this.router.navigateByUrl('/Rental Products');
   }
 }

@@ -1,6 +1,6 @@
 <div class="rectangle primary">
   <div class="tab" *ngFor="let tabName of tabs">
-    <button class="button-tab primary" [routerLink]="'/' + tabName[0]" (click)="toggleButton(tabName[0])" id="{{tabName[0]}}">{{tabName[0]}}</button>
+    <button class="button-tab primary" [routerLink]="'/' + tabName[0]" id="{{tabName[0]}}">{{tabName[0]}}</button>
     <div class="tab-content primary" *ngIf="tabName[1].length > 0">
       <a class="button-tab" *ngFor="let subTabName of tabName[1]; index as i" (click)="subtabClicked('', subTabName[0], $event)">
         {{subTabName[0]}}

@@ -24,6 +24,7 @@ import { NgImageSliderModule} from 'ng-image-slider';
 import { RouterModule, Routes } from '@angular/router';
 import { environment } from 'src/environments/environment.prod';
 import { QuoteCartServiceService } from './services/quote-cart-service.service';
+import { PackagesComponent } from './packages/packages.component';
 
 
 const appRoutes: Routes = [
@@ -31,6 +32,7 @@ const appRoutes: Routes = [
   { path: 'Contact Us', component: ContactComponent},
   { path: 'Quote Cart', component: QuoteCartComponent},
   { path: 'Rental Products', component: ProductComponent},
+  { path: 'Packages', component: PackagesComponent},
   { path: '',
     redirectTo: '/Popular Products',
     pathMatch: 'full'
@@ -50,7 +52,8 @@ const appRoutes: Routes = [
     MapComponent,
     QuoteTileComponent,
     ContactComponent,
-    QuoteCartComponent
+    QuoteCartComponent,
+    PackagesComponent
   ],
   imports: [
     RouterModule.forRoot(

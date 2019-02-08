@@ -14,8 +14,21 @@ export class PackagesComponent implements OnInit {
   }
 
   buttonClicked() {
+    let count: number = 0;
     const jsonContent = require("./products.json")['product'];
     Object.keys(jsonContent).forEach(key => {
+        //add key to product list
+      this.db.collection('/products')
+      .doc(key.replace('/', '-'))
+      .set({
+        collection_name: key.replace('/', '-'),
+        hidden: true,
+        display_name: key,
+        display_order: count
+      }).then(() => {
+        console.log("Wrote into /products")
+        count++;
+      })
       const nestedContent = jsonContent[key];
       if (!(nestedContent instanceof Array)) {
         console.log("No arrays here");
@@ -25,6 +38,7 @@ export class PackagesComponent implements OnInit {
             const nestedArray = nestedContent[docTitle];
             console.log("found an array " + nestedArray);
             for(let i = 0; i < nestedArray.length; i++) {
+              //create new collection with doc in it with the name of the sub category
               this.db.collection(key.replace('/', '-'))
               .doc(docTitle.replace('/', '-'))
               .set({
@@ -33,7 +47,7 @@ export class PackagesComponent implements OnInit {
                 name: docTitle
               })
               .then((res) => {
-                  console.log("Document successfully written!");
+                  console.log("First Document successfully written!");
                   this.db.collection(key.replace('/', '-'))
                   .doc(docTitle.replace('/', '-')).collection(docTitle.replace('/', '-')).doc(i.toString())
                   .set(nestedArray[i])

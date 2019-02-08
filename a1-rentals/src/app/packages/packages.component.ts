@@ -29,6 +29,7 @@ export class PackagesComponent implements OnInit {
               .doc(docTitle.replace('/', '-'))
               .set({
                 array: true,
+                hidden: true,
                 name: docTitle
               })
               .then((res) => {

@@ -55,3 +55,11 @@
 .tab:hover .button-tab:hover .tab-content-sub {
     display: block;
 }
+
+.button-tab:hover{
+    background-color: #813772;
+}
+
+.button-tab-sub:hover{
+    background-color: #813772;
+}

@@ -2,10 +2,10 @@
   <div class="tab" *ngFor="let tabName of tabs">
     <button class="button-tab primary" [routerLink]="'/' + tabName[0]" (click)="toggleButton(tabName[0])" id="{{tabName[0]}}">{{tabName[0]}}</button>
     <div class="tab-content primary" *ngIf="tabName[1].length > 0">
-      <a class="button-tab" *ngFor="let subTabName of tabName[1]; index as i">
+      <a class="button-tab" *ngFor="let subTabName of tabName[1]; index as i" (click)="subtabClicked('', subTabName[0], $event)">
         {{subTabName[0]}}
         <div class="tab-content-sub primary" *ngIf="subTabName[1].length > 0" [ngStyle]="setSubTabStyle(i, tabName[1])">
-          <a class="button-tab-sub" *ngFor="let title of subTabName[1];">
+          <a class="button-tab-sub" *ngFor="let title of subTabName[1];" (click)="subtabClicked(subTabName[0], title, $event)">
             {{title}}</a>
         </div>
       </a>

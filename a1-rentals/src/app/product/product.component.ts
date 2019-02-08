@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ProductsService } from '../services/products.service';
+import { Product } from '../util/Product';
 
 @Component({
   selector: 'app-product',
@@ -46,12 +49,16 @@ export class ProductComponent implements OnInit {
     { name: 'L.E.D. Furniture', price: 'See L.E.D. Furniture Page', quantity: '0'},
   ];
 
-  constructor() {
+  constructor(private prodServ: ProductsService) {
     this.productName = 'Chairs';
     this.quoteTotal = '0.00';
+    this.prodServ.get().subscribe((product: Product) => {
+      this.productName = product.productName
+    });
    }
 
   ngOnInit() {
+    
     // this.rowData = this.http.get('url');
   }
 

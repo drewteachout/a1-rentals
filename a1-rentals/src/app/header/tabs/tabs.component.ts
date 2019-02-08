@@ -15,6 +15,7 @@ export class TabsComponent implements OnInit {
   tab2: any[];
   tab3: any[];
   tab4: any[];
+  tab5: any[];
   tabs: any[];
 
   constructor(private prodServ: ProductsService, private router: Router, private db: AngularFirestore) {
@@ -23,13 +24,13 @@ export class TabsComponent implements OnInit {
     
     this.db.collection('/products').valueChanges().subscribe((productNames: any[]) => {
       productNames.forEach(product => {
-        console.log(product);
+        //console.log(product);
         if(!product['hidden']) {
           this.db.collection('/' + product['collection_name']).valueChanges().subscribe((productInfo: any) => {
             let nextProductList: any[] = [product['display_name'], []]
             for(let i = 0; i < productInfo.length; i++) {
-              console.log(productInfo[i]);
-              console.log(productInfo[i].hasOwnProperty('name'));
+              //console.log(productInfo[i]);
+              //console.log(productInfo[i].hasOwnProperty('name'));
               if(productInfo[i].hasOwnProperty('name')) {
                 if(!productInfo[i]['hidden']) {
                   nextProductList[1].push(productInfo[i]['name']);
@@ -43,7 +44,8 @@ export class TabsComponent implements OnInit {
     });
     this.tab3 = ['Packages', []];
     this.tab4 = ['Contact Us', []];
-    this.tabs = [this.tab1, this.tab2, this.tab3, this.tab4];
+    this.tab5 = ['Admin Tools', []];
+    this.tabs = [this.tab1, this.tab2, this.tab3, this.tab4, this.tab5];
   }
 
   ngOnInit() {

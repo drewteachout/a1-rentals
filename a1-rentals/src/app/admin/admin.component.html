@@ -1,0 +1,13 @@
+<div class="container">
+  <select>
+      <option *ngFor="let category of products" value="category">{{category.name}}</option>
+  </select>
+  <div class="product-grid">
+    <ag-grid-angular
+      class="ag-theme-balham"
+      [rowData]="rowData"
+      [columnDefs]="columnDefs"
+      >
+    </ag-grid-angular>
+  </div>
+</div>

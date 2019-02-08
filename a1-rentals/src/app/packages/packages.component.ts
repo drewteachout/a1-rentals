@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore, CollectionReference } from 'angularfire2/firestore';
-import { defineBase } from '@angular/core/src/render3';
+import { AngularFirestore} from 'angularfire2/firestore';
 
 @Component({
   selector: 'app-packages',

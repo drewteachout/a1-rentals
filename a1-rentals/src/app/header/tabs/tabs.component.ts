@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Product } from 'src/app/util/Product';
 import { ProductsService } from 'src/app/services/products.service';
 import { Router } from '@angular/router';
+import { AngularFirestore } from 'angularfire2/firestore';
 
 @Component({
   selector: 'app-tabs',
@@ -17,10 +18,30 @@ export class TabsComponent implements OnInit, AfterViewInit {
   tabs: any[];
   previousTab: string = "Popular Products";
 
-  constructor(private prodServ: ProductsService, private router: Router) {
+  constructor(private prodServ: ProductsService, private router: Router, private db: AngularFirestore) {
     this.tab1 = ['Popular Products', []];
     this.tab2 = ['Rental Products', [['Chairs', []], ['Tents', ['Elite Pole Tents', 'Frame Tents']],
       ['Lights', ['L.E.D. Dance Floor Lights', 'Lighted Tables', 'LED Furniture Rentals', 'Uplighting Rentals']]]];
+    
+    this.db.collection('/products').doc('collection names').valueChanges().subscribe((productNames: string[]) => {
+      let keyArray = []
+      Object.keys(productNames).forEach(key => {
+        keyArray.push(key);
+      });
+      keyArray = keyArray.sort()
+      let productList = []
+      keyArray.forEach(num => {
+        productList.push(productNames[num])
+      });
+      console.log(productList);
+      productList.forEach(productName => {
+        this.db.collection('/' + productName).valueChanges().subscribe((productInfo: any) => {
+          for(let i = 0; i < productInfo.length; i++) {
+            console.log(productInfo[i])
+          }
+        })
+      });
+    })
     this.tab3 = ['Packages', []];
     this.tab4 = ['Contact Us', []];
     this.tabs = [this.tab1, this.tab2, this.tab3, this.tab4];

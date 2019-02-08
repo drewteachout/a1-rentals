@@ -20,8 +20,7 @@ export class TabsComponent implements OnInit, AfterViewInit {
 
   constructor(private prodServ: ProductsService, private router: Router, private db: AngularFirestore) {
     this.tab1 = ['Popular Products', []];
-    this.tab2 = ['Rental Products', [['Chairs', []], ['Tents', ['Elite Pole Tents', 'Frame Tents']],
-      ['Lights', ['L.E.D. Dance Floor Lights', 'Lighted Tables', 'LED Furniture Rentals', 'Uplighting Rentals']]]];
+    this.tab2 = ['Rental Products', []];
     
     this.db.collection('/products').doc('collection names').valueChanges().subscribe((productNames: string[]) => {
       let keyArray = []
@@ -35,11 +34,17 @@ export class TabsComponent implements OnInit, AfterViewInit {
       });
       console.log(productList);
       productList.forEach(productName => {
+        let nextProductList = [productName, []];
         this.db.collection('/' + productName).valueChanges().subscribe((productInfo: any) => {
           for(let i = 0; i < productInfo.length; i++) {
-            console.log(productInfo[i])
+            console.log(productInfo[i]);
+            console.log(productInfo[i].hasOwnProperty('name'));
+            if(productInfo[i].hasOwnProperty('name')) {
+              nextProductList[1].push(productInfo[i]['name']);
+            }
           }
-        })
+          this.tab2[1].push(nextProductList);
+        });
       });
     })
     this.tab3 = ['Packages', []];

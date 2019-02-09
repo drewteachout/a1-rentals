@@ -36,10 +36,11 @@ p {
 }
 
 .product-grid {
-    float: right;
-    padding-right: 5%;
-    position: relative;
-    width: 700px;
+    /* float: right; */
+    /* padding-right: 5%; */
+    /* position: relative; */
+    display: inline-block;
+    width: 100%;
 }
 
 .product-info {

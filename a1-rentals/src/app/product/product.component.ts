@@ -28,13 +28,13 @@ export class ProductComponent implements OnInit {
     ' rentals feature a blue vinyl seat.';
   quoteTotal: string;
 
-  columnDefs = [
+  private columnDefs = [
     {headerName: 'Item Name', field: 'name', width: 438},
     {headerName: 'Price ($)', field: 'price', width: 170, sortable: true},
     {headerName: 'Quantity', field: 'quantity', editable: true, width: 90}
   ];
 
-  rowData = [
+  private rowData = [
     { name: 'Poly/metal chair rental - black', price: '1.25', quantity: '0'},
     { name: 'Poly/metal chair rental - WEDDING white', price: '1.75', quantity: '0'},
     { name: 'Resin padded chair rental - white', price: '3.25', quantity: '0'},
@@ -47,6 +47,9 @@ export class ProductComponent implements OnInit {
     { name: 'L.E.D. Furniture', price: 'See L.E.D. Furniture Page', quantity: '0'},
   ];
 
+  private gridApi;
+  private gridColumnApi;
+
   constructor() {
    }
 
@@ -58,6 +61,31 @@ export class ProductComponent implements OnInit {
 
   loadData() {
 
+  }
+
+  sizeToFit() {
+    this.gridApi.sizeColumnsToFit();
+  }
+
+  autoSizeAll() {
+    var allColumnIds = [];
+    this.gridColumnApi.getAllColumns().forEach(function(column) {
+      allColumnIds.push(column.colId);
+    });
+    this.gridColumnApi.autoSizeColumns(allColumnIds);
+  }
+
+  onGridReady(params) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+
+    // this.http
+    //   .get(
+    //     "https://raw.githubusercontent.com/ag-grid/ag-grid/master/packages/ag-grid-docs/src/olympicWinnersSmall.json"
+    //   )
+    //   .subscribe(data => {
+    //     this.rowData = data;
+    //   });
   }
 
 }

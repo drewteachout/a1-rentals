@@ -25,6 +25,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { environment } from 'src/environments/environment.prod';
 import { QuoteCartServiceService } from './services/quote-cart-service.service';
 import { AdminComponent } from './admin/admin.component';
+import { ToggleSwitchComponent } from './admin/toggle-switch/toggle-switch.component';
 
 
 const appRoutes: Routes = [
@@ -53,7 +54,8 @@ const appRoutes: Routes = [
     QuoteTileComponent,
     ContactComponent,
     QuoteCartComponent,
-    AdminComponent
+    AdminComponent,
+    ToggleSwitchComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -61,7 +63,7 @@ const appRoutes: Routes = [
       //{ enableTracing: true } // <-- debugging purposes only
     ),
     BrowserModule,
-    AgGridModule.withComponents([]),
+    AgGridModule.withComponents([ToggleSwitchComponent]),
     NgImageSliderModule,
     FormsModule,
     AgmCoreModule.forRoot({

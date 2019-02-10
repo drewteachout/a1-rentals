@@ -1,46 +1,80 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
-import { ProductsService } from '../services/products.service';
+import { ToggleSwitchComponent } from './toggle-switch/toggle-switch.component';
+import { GridOptions } from 'ag-grid-community';
 
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.css']
+  styleUrls: ['./admin.component.css'],
+  entryComponents: [ToggleSwitchComponent]
 })
 export class AdminComponent implements OnInit {
 
+  public gridOptions: GridOptions;
+  currentSelection: any;
+  hidden: boolean = false;
   columnDefs = [
-    {headerName: 'Product name', field: 'name', width: 438},
-    {headerName: 'Hidden from dropdown', field: 'hidden', width: 170, sortable: true},
-    {headerName: 'Number', field: 'orderNum', width: 170, sortable: true}
+    {headerName: 'Product name', field: 'name', width: 200},
+    {headerName: 'Hidden',
+      field: 'hidden',
+      cellRendererFramework: ToggleSwitchComponent, 
+      editable: true,
+      colId: 'toggle',
+      width: 200
+    }
   ];
-
   products: any[] = []
-  // rowData = [
-  //   { name: 'Poly/metal chair rental - black', price: '1.25', quantity: '0'},
-  //   { name: 'Poly/metal chair rental - WEDDING white', price: '1.75', quantity: '0'},
-  //   { name: 'Resin padded chair rental - white', price: '3.25', quantity: '0'},
-  //   { name: 'Children\'s chair rental', price: '1.50', quantity: '0'},
-  //   { name: 'L.E.D. Bar stool', price: '25', quantity: '0'},
-  //   { name: 'L.E.D. Beanbag chair', price: '29', quantity: '0'},
-  //   { name: 'L.E.D. Bench', price: '39', quantity: '0'},
-  //   { name: 'L.E.D. Curved Bench', price: '39', quantity: '0'},
-  //   { name: 'L.E.D. Cube, 16" x 16"', price: '19', quantity: '0'},
-  //   { name: 'L.E.D. Furniture', price: 'See L.E.D. Furniture Page', quantity: '0'},
-  // ];
+  rowData: any[] = []
   constructor(private db: AngularFirestore) {
     this.db.collection('/products').valueChanges().subscribe((productNames: any[]) => {
-      console.log(productNames);
       productNames.forEach(element => {
         this.products.push({
           name: element['display_name'],
+          db_name: element['collection_name'],
           hidden: element['hidden'],
           orderNum: element['display_order']});
       });
     });
+    this.gridOptions = <GridOptions>{
+      rowData: this.products,
+      columnDefs: this.columnDefs,
+      context: {
+          componentParent: this
+      }
+    };
   }
 
   ngOnInit() {
+  }
+
+  valueChanged() {
+    console.log(this.currentSelection);
+    this.db.collection('/' + this.currentSelection.db_name).valueChanges().subscribe((productNames: any[]) => {
+      let newRowData = []
+      productNames.forEach(element => {
+        if(element.hasOwnProperty('hidden')) {
+          newRowData.push({
+            name: element['name'],
+            hidden: element['hidden']
+          });
+        }
+      });
+      this.rowData = newRowData;
+    });
+    this.db.collection('/products').doc(this.currentSelection.db_name).valueChanges().subscribe((docObject) => {
+      this.hidden = docObject['hidden'];
+    });
+  }
+
+  public toggleHidden(cell) {
+    this.db.collection('/' + this.currentSelection.db_name).doc(this.rowData[cell.row].name.replace('/', '-')).update({hidden: cell.hidden});
+  }
+
+  exposeSubTab() {
+    if(this.currentSelection != undefined) {
+      this.db.collection('/products').doc(this.currentSelection.db_name).update({hidden: this.hidden});
+    }
   }
 
 }

@@ -1,9 +1,11 @@
 <div class="container">
-  <select>
-      <option *ngFor="let category of products" value="category">{{category.name}}</option>
+  <select [(ngModel)]='currentSelection' (ngModelChange)='valueChanged()'>
+      <option *ngFor="let category of products" [ngValue]="category">{{category.name}}</option>
   </select>
+  <input type="checkbox" [(ngModel)]='hidden' (ngModelChange)='exposeSubTab()'>
   <div class="product-grid">
-    <ag-grid-angular
+    <ag-grid-angular class="ag-fresh"
+      [gridOptions]="gridOptions"
       class="ag-theme-balham"
       [rowData]="rowData"
       [columnDefs]="columnDefs"

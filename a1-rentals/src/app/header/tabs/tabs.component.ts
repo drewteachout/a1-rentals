@@ -24,20 +24,28 @@ export class TabsComponent implements OnInit {
     
     this.db.collection('/products').valueChanges().subscribe((productNames: any[]) => {
       productNames.forEach(product => {
-        //console.log(product);
         if(!product['hidden']) {
           this.db.collection('/' + product['collection_name']).valueChanges().subscribe((productInfo: any) => {
+            console.log("Updating " + productInfo)
             let nextProductList: any[] = [product['display_name'], []]
             for(let i = 0; i < productInfo.length; i++) {
-              //console.log(productInfo[i]);
-              //console.log(productInfo[i].hasOwnProperty('name'));
               if(productInfo[i].hasOwnProperty('name')) {
                 if(!productInfo[i]['hidden']) {
                   nextProductList[1].push(productInfo[i]['name']);
                 }
               }
             }
-            this.tab2[1].push(nextProductList);
+            let flag = false
+            for(let i = 0; i < this.tab2[1].length; i++) {
+              if(this.tab2[1][i][0] == nextProductList[0]) {
+                this.tab2[1][i] = nextProductList
+                flag = true
+              }
+            }
+            if(!flag) {
+              this.tab2[1].push(nextProductList);
+            }
+            
           });
         }
       });

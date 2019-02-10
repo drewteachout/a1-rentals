@@ -20,6 +20,7 @@ export class HeaderComponent implements OnInit {
         document.getElementById("Rental Products").className = "button-tab primary";
         document.getElementById("Packages").className = "button-tab primary";
         document.getElementById("Contact Us").className = "button-tab primary";
+        document.getElementById("Admin Tools").className = "button-tab primary";
         if(document.getElementById(url) != null) {
           document.getElementById(url).className = "button-tab accent";
         }

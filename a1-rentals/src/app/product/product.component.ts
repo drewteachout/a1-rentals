@@ -26,12 +26,12 @@ export class ProductComponent implements OnInit {
     'the little ones. They can be used with our children\'s tables. They are good for children up to ' +
     'approximately 6 or 7 years old. The solid resin chairs are red or blue. The metal framed children\'s chair' +
     ' rentals feature a blue vinyl seat.';
-  quoteTotal: string;
+  quoteTotal: number;
 
   columnDefs = [
     {headerName: 'Item Name', field: 'name'},
-    {headerName: 'Price ($)', field: 'price', sortable: true},
-    {headerName: 'Quantity', field: 'quantity', editable: true}
+    {headerName: 'Price ($)', field: 'price', sortable: true, type: 'numericColumn'},
+    {headerName: 'Quantity', field: 'quantity', editable: true, type: 'numericColumn'}
   ];
 
   rowData = [
@@ -51,18 +51,36 @@ export class ProductComponent implements OnInit {
 
   private gridApi;
   private gridColumnApi;
+  private productTotals;
 
   constructor() {
    }
 
   ngOnInit() {
     this.productName = 'Chairs';
-    this.quoteTotal = '0.00';
+    this.quoteTotal = 0.00;
     this.loadData();
   }
 
   loadData() {
 
+  }
+
+  onCellValueChanged(event) {
+    console.log('Event: ', event);
+    let num = event.newValue;
+    num = Number(num);
+    this.gridApi.forEachNode(this.handleNode);
+    console.log(num);
+    const typeError = isNaN(num);
+    if (typeError) {
+      // Do something
+    }
+  }
+
+  handleNode(node, index) {
+    // console.log('Index: ', index);
+    // console.log('Node: ', node);
   }
 
   sizeToFit() {

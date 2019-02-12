@@ -19,21 +19,23 @@ p {
 
 .description {
     display: inline-block;
-
+    width: 100%;
     text-decoration: underline;
     margin: 24px;
 }
 
 .left {
+    /* display: inline-block; */
     float: left;
     width: 50%;
     text-align: center;
 }
 
 .right {
-    /* float: right; */
-    display: inline-block;
+    float: right;
+    /* display: inline-block; */
     text-align: center;
+    width: 50%;
 }
 
 .product-grid {
@@ -45,7 +47,7 @@ p {
 }
 
 .product-info {
-    overflow: auto;
+    overflow: hidden;
 }
 
 .quote {
@@ -59,7 +61,7 @@ p {
     margin: 10px;
     position: relative;
     text-align: center;
-    width: 800px;
+    width: 70%;
 }
 
 .title {

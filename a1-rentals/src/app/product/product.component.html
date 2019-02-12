@@ -19,6 +19,8 @@
         [rowData]="rowData"
         [columnDefs]="columnDefs"
         [domLayout]="domLayout"
+        [singleClickEdit]="true"
+        (cellValueChanged)="onCellValueChanged($event)"
         (gridReady)="onGridReady($event)"
         >
       </ag-grid-angular>

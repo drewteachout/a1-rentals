@@ -28,24 +28,26 @@ export class ProductComponent implements OnInit {
     ' rentals feature a blue vinyl seat.';
   quoteTotal: string;
 
-  private columnDefs = [
-    {headerName: 'Item Name', field: 'name', width: 438},
-    {headerName: 'Price ($)', field: 'price', width: 170, sortable: true},
-    {headerName: 'Quantity', field: 'quantity', editable: true, width: 90}
+  columnDefs = [
+    {headerName: 'Item Name', field: 'name'},
+    {headerName: 'Price ($)', field: 'price', sortable: true},
+    {headerName: 'Quantity', field: 'quantity', editable: true}
   ];
 
-  private rowData = [
-    { name: 'Poly/metal chair rental - black', price: '1.25', quantity: '0'},
-    { name: 'Poly/metal chair rental - WEDDING white', price: '1.75', quantity: '0'},
-    { name: 'Resin padded chair rental - white', price: '3.25', quantity: '0'},
-    { name: 'Children\'s chair rental', price: '1.50', quantity: '0'},
-    { name: 'L.E.D. Bar stool', price: '25', quantity: '0'},
-    { name: 'L.E.D. Beanbag chair', price: '29', quantity: '0'},
-    { name: 'L.E.D. Bench', price: '39', quantity: '0'},
-    { name: 'L.E.D. Curved Bench', price: '39', quantity: '0'},
-    { name: 'L.E.D. Cube, 16" x 16"', price: '19', quantity: '0'},
-    { name: 'L.E.D. Furniture', price: 'See L.E.D. Furniture Page', quantity: '0'},
+  rowData = [
+    { name: 'Poly/metal chair rental - black', price: 1.25, quantity: 0},
+    { name: 'Poly/metal chair rental - WEDDING white', price: 1.75, quantity: 0},
+    { name: 'Resin padded chair rental - white', price: 3.25, quantity: 0},
+    { name: 'Children\'s chair rental', price: 1.50, quantity: 0},
+    { name: 'L.E.D. Bar stool', price: 25.00, quantity: 0},
+    { name: 'L.E.D. Beanbag chair', price: 29.00, quantity: 0},
+    { name: 'L.E.D. Bench', price: 39.00, quantity: 0},
+    { name: 'L.E.D. Curved Bench', price: 39.00, quantity: 0},
+    { name: 'L.E.D. Cube, 16" x 16"', price: 19.00, quantity: 0},
+    { name: 'L.E.D. Furniture', price: 'See L.E.D. Furniture Page', quantity: 0},
   ];
+
+  domLayout = 'autoHeight';
 
   private gridApi;
   private gridColumnApi;
@@ -68,7 +70,7 @@ export class ProductComponent implements OnInit {
   }
 
   autoSizeAll() {
-    var allColumnIds = [];
+    const allColumnIds = [];
     this.gridColumnApi.getAllColumns().forEach(function(column) {
       allColumnIds.push(column.colId);
     });

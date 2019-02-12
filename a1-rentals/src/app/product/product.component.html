@@ -1,7 +1,6 @@
 <h2 class="title">{{productName}}</h2>
 <div class="product-info">
   <div class="left">
-    <!-- <ng-image-slider class="carousel" [images]="imageObject" #nav></ng-image-slider> -->
     <div class="slideshow">
       <slideshow [imageUrls]="images"
                  [height]="'400px'"
@@ -16,9 +15,11 @@
     <div class="product-grid">
       <ag-grid-angular
         class="ag-theme-dark"
-        style="height: 100%"
+        id="productInfo"
         [rowData]="rowData"
         [columnDefs]="columnDefs"
+        [domLayout]="domLayout"
+        (gridReady)="onGridReady($event)"
         >
       </ag-grid-angular>
     </div>

@@ -31,16 +31,17 @@ p {
 }
 
 .right {
-    float: right;
+    /* float: right; */
+    display: inline-block;
     text-align: center;
 }
 
 .product-grid {
     /* float: right; */
-    /* padding-right: 5%; */
+    margin: auto;
     /* position: relative; */
     display: inline-block;
-    width: 100%;
+    /* width: 100%; */
 }
 
 .product-info {

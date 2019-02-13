@@ -30,7 +30,12 @@ const appRoutes: Routes = [
   { path: 'Popular Products', component: HomepageComponent},
   { path: 'Contact Us', component: ContactComponent},
   { path: 'Quote Cart', component: QuoteCartComponent},
-  { path: 'Rental Products', component: ProductComponent},
+  { path: 'Rental Products/:productCategory/:productName', component: ProductComponent},
+  { path: 'Rental Products/:productCategory', component: ProductComponent},
+  { path: 'Rental Products',
+    redirectTo: '/Rental Products/all/',
+    pathMatch: 'full'
+  },
   { path: '',
     redirectTo: '/Popular Products',
     pathMatch: 'full'

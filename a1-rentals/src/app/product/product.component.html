@@ -1,22 +1,27 @@
-<h2 class="title">{{productName}}</h2>
-<div class="product-info">
-  <div class="left">
-    <ng-image-slider class="carousel" [images]="imageObject" #nav></ng-image-slider>
-    <h3 class="description">Product Description</h3>
-    <p>{{productDescription}}</p>
-  </div>
-  <div class="right">
-    <div class="product-grid">
-      <ag-grid-angular
-        class="ag-theme-balham"
-        [rowData]="rowData"
-        [columnDefs]="columnDefs"
-        >
-      </ag-grid-angular>
+<div *ngIf="!isCategory; else category">  
+  <h2 class="title">{{productName}}</h2>
+  <div class="product-info">
+    <div class="left">
+      <ng-image-slider class="carousel" [images]="imageObject" #nav></ng-image-slider>
+      <h3 class="description">Product Description</h3>
+      <p>{{productDescription}}</p>
+    </div>
+    <div class="right">
+      <div class="product-grid">
+        <ag-grid-angular
+          class="ag-theme-balham"
+          [rowData]="rowData"
+          [columnDefs]="columnDefs"
+          >
+        </ag-grid-angular>
+      </div>
     </div>
   </div>
+  <div class="quote">
+    <h3>Selected Item Total: ${{quoteTotal}}</h3>
+    <button class="button-std primary">Add Selection to Quote</button>
+  </div>
 </div>
-<div class="quote">
-  <h3>Selected Item Total: ${{quoteTotal}}</h3>
-  <button class="button-std primary">Add Selection to Quote</button>
-</div>
+<ng-template #category>
+  <p>Found a category</p>
+</ng-template>

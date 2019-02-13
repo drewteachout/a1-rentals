@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "public": "dist/a1-rentals",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

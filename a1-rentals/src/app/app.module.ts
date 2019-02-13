@@ -15,6 +15,22 @@ import { QuoteTileComponent } from './quote-tile/quote-tile.component';
 
 import { AgGridModule } from 'ag-grid-angular';
 import { NgImageSliderModule} from 'ng-image-slider';
+import { ContactComponent } from './contact/contact.component';
+
+import { RouterModule, Routes } from '@angular/router';
+import { QuoteCartComponent } from './quote-cart/quote-cart.component';
+
+const appRoutes: Routes = [
+  { path: 'Popular Products', component: HomepageComponent},
+  { path: 'Contact Us', component: ContactComponent},
+  { path: 'Quote Cart', component: QuoteCartComponent},
+  { path: 'Rental Products', component: ProductComponent},
+  { path: '',
+    redirectTo: '/Popular Products',
+    pathMatch: 'full'
+  },
+  //{ path: '**', component: PageNotFoundComponent }
+];
 
 @NgModule({
   declarations: [
@@ -26,9 +42,15 @@ import { NgImageSliderModule} from 'ng-image-slider';
     ProductComponent,
     FormComponent,
     MapComponent,
-    QuoteTileComponent
+    QuoteTileComponent,
+    ContactComponent,
+    QuoteCartComponent
   ],
   imports: [
+    RouterModule.forRoot(
+      appRoutes,
+      { enableTracing: true } // <-- debugging purposes only
+    ),
     BrowserModule,
     AgGridModule.withComponents([]),
     NgImageSliderModule,

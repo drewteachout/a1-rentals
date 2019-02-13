@@ -1,20 +1,13 @@
 button {
-    display: inline-block;
-    margin-left: 5%;
+    margin: auto;
 }
 
 h3 {
-    display: inline-block;
-    margin-left: 60%;
+    margin: auto;
 }
 
 p {
     text-align: center;
-}
-
-.carousel {
-    /* margin: 24px; */
-    max-width: 50%;
 }
 
 .description {
@@ -25,25 +18,20 @@ p {
 }
 
 .left {
-    /* display: inline-block; */
     float: left;
-    width: 50%;
     text-align: center;
+    width: 50%;
 }
 
 .right {
     float: right;
-    /* display: inline-block; */
     text-align: center;
     width: 50%;
 }
 
 .product-grid {
-    /* float: right; */
     margin: auto;
-    /* position: relative; */
     display: inline-block;
-    /* width: 100%; */
 }
 
 .product-info {
@@ -52,8 +40,7 @@ p {
 
 .quote {
     display: block;
-    margin-top: 24px;
-    margin-right: 0px;
+
 }
 
 .slideshow {
@@ -64,8 +51,18 @@ p {
     width: 70%;
 }
 
+.submit {
+    display: inline-block;
+    width: 20%;
+}
+
 .title {
     display: block;
     position: relative;
     text-align: center
+}
+
+.total {
+    display: inline-block;
+    width: 80%;
 }

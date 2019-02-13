@@ -14,7 +14,7 @@
   <div class="right">
     <div class="product-grid">
       <ag-grid-angular
-        class="ag-theme-dark"
+        class="ag-theme-balham-dark"
         id="productInfo"
         [rowData]="rowData"
         [columnDefs]="columnDefs"
@@ -28,6 +28,10 @@
   </div>
 </div>
 <div class="quote">
-  <h3>Selected Item Total: ${{quoteTotal}}</h3>
-  <button class="button-std primary">Add Selection to Quote</button>
+  <div class="total">
+    <h3>Selected Item Total: ${{quoteTotal}}</h3>
+  </div>
+  <div class="submit">
+    <button class="button-std primary" onclick="">Add Selection to Quote</button>
+  </div>
 </div>

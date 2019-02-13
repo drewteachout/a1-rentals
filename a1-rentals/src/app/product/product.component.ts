@@ -26,35 +26,51 @@ export class ProductComponent implements OnInit {
     'the little ones. They can be used with our children\'s tables. They are good for children up to ' +
     'approximately 6 or 7 years old. The solid resin chairs are red or blue. The metal framed children\'s chair' +
     ' rentals feature a blue vinyl seat.';
-  quoteTotal: number;
 
-  columnDefs = [
-    {headerName: 'Item Name', field: 'name'},
-    {headerName: 'Price ($)', field: 'price', sortable: true, type: 'numericColumn'},
-    {headerName: 'Quantity', field: 'quantity', editable: true, type: 'numericColumn'}
-  ];
-
-  rowData = [
-    { name: 'Poly/metal chair rental - black', price: 1.25, quantity: 0},
-    { name: 'Poly/metal chair rental - WEDDING white', price: 1.75, quantity: 0},
-    { name: 'Resin padded chair rental - white', price: 3.25, quantity: 0},
-    { name: 'Children\'s chair rental', price: 1.50, quantity: 0},
-    { name: 'L.E.D. Bar stool', price: 25.00, quantity: 0},
-    { name: 'L.E.D. Beanbag chair', price: 29.00, quantity: 0},
-    { name: 'L.E.D. Bench', price: 39.00, quantity: 0},
-    { name: 'L.E.D. Curved Bench', price: 39.00, quantity: 0},
-    { name: 'L.E.D. Cube, 16" x 16"', price: 19.00, quantity: 0},
-    { name: 'L.E.D. Furniture', price: 'See L.E.D. Furniture Page', quantity: 0},
-  ];
+  public columnDefs;
+  public rowData;
+  public quoteTotal: number;
 
   domLayout = 'autoHeight';
 
   private gridApi;
   private gridColumnApi;
-  private productTotals;
 
   constructor() {
-   }
+    this.columnDefs = [
+      {
+        headerName: 'Item Name',
+        field: 'name'
+      },
+      {
+        headerName: 'Price ($)',
+        field: 'price',
+        sortable: true,
+        type: 'numericColumn',
+      },
+      {
+        headerName: 'Quantity',
+        field: 'quantity',
+        editable: true,
+        type: 'numericColumn',
+        valueFormatter: numberFormatter,
+        valueParser: numberParser
+      }
+    ];
+
+    this.rowData = [
+      { name: 'Poly/metal chair rental - black', price: 1.25, quantity: 0},
+      { name: 'Poly/metal chair rental - WEDDING white', price: 1.75, quantity: 0},
+      { name: 'Resin padded chair rental - white', price: 3.25, quantity: 0},
+      { name: 'Children\'s chair rental', price: 1.50, quantity: 0},
+      { name: 'L.E.D. Bar stool', price: 25.00, quantity: 0},
+      { name: 'L.E.D. Beanbag chair', price: 29.00, quantity: 0},
+      { name: 'L.E.D. Bench', price: 39.00, quantity: 0},
+      { name: 'L.E.D. Curved Bench', price: 39.00, quantity: 0},
+      { name: 'L.E.D. Cube, 16" x 16"', price: 19.00, quantity: 0},
+      { name: 'L.E.D. Furniture', price: 'See L.E.D. Furniture Page', quantity: 0},
+    ];
+  }
 
   ngOnInit() {
     this.productName = 'Chairs';
@@ -67,15 +83,18 @@ export class ProductComponent implements OnInit {
   }
 
   onCellValueChanged(event) {
-    console.log('Event: ', event);
-    let num = event.newValue;
-    num = Number(num);
-    this.gridApi.forEachNode(this.handleNode);
-    console.log(num);
-    const typeError = isNaN(num);
-    if (typeError) {
-      // Do something
+    if (!isNaN(event.newValue)) {
+      const price = event.data.price;
+      const oldItemTotal = event.oldValue * price;
+      const newItemTotal = event.newValue * price;
+      if (!isNaN(newItemTotal)) {
+        this.quoteTotal = this.quoteTotal - oldItemTotal + newItemTotal;
+      }
     }
+  }
+
+  addSelectionToCart() {
+    // TODO: Push table data to database
   }
 
   handleNode(node, index) {
@@ -108,4 +127,16 @@ export class ProductComponent implements OnInit {
     //   });
   }
 
+}
+
+function numberFormatter(params) {
+  return formatNumber(params.value);
+}
+function numberParser(params) {
+  return Number(params.newValue);
+}
+function formatNumber(number) {
+  return Math.floor(number)
+    .toString()
+    .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 }

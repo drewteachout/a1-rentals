@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { IImage } from 'ng-simple-slideshow';
+import { Router } from '@angular/router';
+import { ProductsService } from '../services/products.service';
+import { Product } from '../util/Product';
 
 @Component({
   selector: 'app-product',
@@ -36,7 +39,7 @@ export class ProductComponent implements OnInit {
   private gridApi;
   private gridColumnApi;
 
-  constructor() {
+  constructor(private prodServ: ProductsService) {
     this.columnDefs = [
       {
         headerName: 'Item Name',
@@ -70,6 +73,10 @@ export class ProductComponent implements OnInit {
       { name: 'L.E.D. Cube, 16" x 16"', price: 19.00, quantity: 0},
       { name: 'L.E.D. Furniture', price: 'See L.E.D. Furniture Page', quantity: 0},
     ];
+
+    this.prodServ.get().subscribe((product: Product) => {
+      this.productName = product.productName
+    });
   }
 
   ngOnInit() {

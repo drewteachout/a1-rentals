@@ -86,8 +86,8 @@ export class ProductComponent implements OnInit {
     route.paramMap.subscribe((urlParamMap: ParamMap) => {
       console.log('ProductName: ', urlParamMap.get('productName'));
       console.log('ProductCategory: ', urlParamMap.get('productCategory'));
-      let name = urlParamMap.get('productName');
-      let category = urlParamMap.get('productCategory');
+      const name = urlParamMap.get('productName');
+      const category = urlParamMap.get('productCategory');
       this.category = category;
       if (name == null || name.length === 0) {
         this.productName = category;

@@ -35,10 +35,12 @@ export class ProductComponent implements OnInit {
 
   public columnDefs;
   public rowData;
-  public quoteTotal: number;
+  public total: string;
+
 
   domLayout = 'autoHeight';
 
+  private quoteTotal: number;
   private gridApi;
   private gridColumnApi;
 
@@ -126,6 +128,7 @@ export class ProductComponent implements OnInit {
         this.quoteTotal = this.quoteTotal - oldItemTotal + newItemTotal;
       }
     }
+    this.total = this.currencyConverter(this.quoteTotal);
   }
 
   addSelectionToCart() {
@@ -135,6 +138,17 @@ export class ProductComponent implements OnInit {
   handleNode(node, index) {
     // console.log('Index: ', index);
     // console.log('Node: ', node);
+  }
+
+  currencyConverter(value: number): string {
+    let val = value.toString();
+    console.log(value % 2);
+    console.log(val.search('.'));
+    if (val.indexOf('.') >= 0) {
+      const len = val.length;
+      // if (val.search)
+    }
+    return '';
   }
 
   sizeToFit() {

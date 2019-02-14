@@ -7,7 +7,7 @@
                   [height]="'400px'"
                   [autoPlay]="true"
                   [showArrows]="true">
-        </slideshow>
+        </slideshow> 
       </div>
       <h3 class="description">Product Description</h3>
       <p>{{productDescription}}</p>
@@ -17,6 +17,7 @@
         <ag-grid-angular
           class="ag-theme-balham-dark"
           id="productInfo"
+          style="width: 100%; height: 100%;"
           [rowData]="rowData"
           [columnDefs]="columnDefs"
           [domLayout]="domLayout"
@@ -25,14 +26,14 @@
           (gridReady)="onGridReady($event)">
         </ag-grid-angular>
       </div>
-    </div>
-  </div>
-  <div class="quote">
-    <div class="total">
-      <h3>Selected Item Total: ${{quoteTotal}}</h3>
-    </div>
-    <div class="submit">
-      <button class="button-std primary" onclick="">Add Selection to Quote</button>
+      <div class="quote">
+        <div class="total">
+          <h3 class="centered">Selected Item Total: ${{quoteTotal}}</h3>
+        </div>
+        <div class="submit">
+          <button class="button-std primary" onclick="">Add Selection to Quote</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>

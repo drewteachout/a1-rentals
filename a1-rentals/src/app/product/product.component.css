@@ -10,6 +10,11 @@ p {
     text-align: center;
 }
 
+.centered {
+    margin-top: 14px;
+    margin-bottom: 14px;
+}
+
 .description {
     display: inline-block;
     width: 100%;
@@ -18,20 +23,24 @@ p {
 }
 
 .left {
-    float: left;
+    display: inline-block;
+    /* float: left; */
     text-align: center;
-    width: 50%;
+    width: 950px;
 }
 
 .right {
-    float: right;
+    display: inline-block;
+    /* float: right; */
     text-align: center;
-    width: 50%;
+    vertical-align: top;
+    width: 950px;
 }
 
 .product-grid {
-    margin: auto;
     display: inline-block;
+    padding-top: 5%;
+    vertical-align: top;
 }
 
 .product-info {
@@ -40,7 +49,7 @@ p {
 
 .quote {
     display: block;
-
+    margin-top: 5%;
 }
 
 .slideshow {
@@ -53,7 +62,7 @@ p {
 
 .submit {
     display: inline-block;
-    width: 20%;
+    padding-left: 3%;
 }
 
 .title {
@@ -64,5 +73,5 @@ p {
 
 .total {
     display: inline-block;
-    width: 80%;
+    height: 51px;
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { IImage } from 'ng-simple-slideshow';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ProductsService } from '../services/products.service';
 import { Product } from '../util/Product';
@@ -11,15 +12,15 @@ import { AngularFirestore } from 'angularfire2/firestore';
 })
 export class ProductComponent implements OnInit {
 
-  imageObject: Array<object> = [
-    { image: 'assets/images/blackChair.jpg', thumbImage: 'assets/images/blackChair.jpg', title: 'Poly/metal chair rental - black'},
-    { image: 'assets/images/whiteChair.jpg', thumbImage: 'assets/images/whiteChair.jpg'},
-    { image: 'assets/images/resinChair.jpg', thumbImage: 'assets/images/resinChair.jpg'},
-    { image: 'assets/images/ledBarStool.jpg', thumbImage: 'assets/images/ledBarStool.jpg'},
-    { image: 'assets/images/ledBeanBagChair.jpg', thumbImage: 'assets/images/ledBeanBagChair.jpg'},
-    { image: 'assets/images/ledBench.jpg', thumbImage: 'assets/images/ledBench.jpg'},
-    { image: 'assets/images/ledCube1.png', thumbImage: 'assets/images/ledCube1.png'},
-    { image: 'assets/images/ledCube2.jpg', thumbImage: 'assets/images/ledCube2.jpg'},
+  images: (string | IImage)[] = [
+    { url: 'assets/images/blackChair.jpg', caption: 'Poly/metal chair rental - black'},
+    { url: 'assets/images/whiteChair.jpg', caption: 'Poly/metal chair rental - WEDDING white'},
+    { url: 'assets/images/resinChair.jpg', caption: 'Resin padded chair rental - white'},
+    { url: 'assets/images/ledBarStool.jpg', caption: 'L.E.D. Bar stool'},
+    { url: 'assets/images/ledBeanBagChair.jpg', caption: 'L.E.D. Beanbag chair'},
+    { url: 'assets/images/ledBench.jpg', caption: 'L.E.D. Bench'},
+    { url: 'assets/images/ledCube1.png', caption: 'L.E.D. Cube, 16" x 16"'},
+    { url: 'assets/images/ledCube2.jpg', caption: 'L.E.D. Cube, 20" x 20"'},
   ];
 
   productName: string;
@@ -31,59 +32,160 @@ export class ProductComponent implements OnInit {
     'the little ones. They can be used with our children\'s tables. They are good for children up to ' +
     'approximately 6 or 7 years old. The solid resin chairs are red or blue. The metal framed children\'s chair' +
     ' rentals feature a blue vinyl seat.';
-  quoteTotal: string;
 
-  columnDefs = [
-    {headerName: 'Item Name', field: 'name', width: 438},
-    {headerName: 'Price ($)', field: 'price', width: 170, sortable: true},
-    {headerName: 'Quantity', field: 'quantity', editable: true, width: 90}
-  ];
+  public columnDefs;
+  public rowData;
+  public total: string;
 
-  rowData = [
-    { name: 'Poly/metal chair rental - black', price: '1.25', quantity: '0'},
-    { name: 'Poly/metal chair rental - WEDDING white', price: '1.75', quantity: '0'},
-    { name: 'Resin padded chair rental - white', price: '3.25', quantity: '0'},
-    { name: 'Children\'s chair rental', price: '1.50', quantity: '0'},
-    { name: 'L.E.D. Bar stool', price: '25', quantity: '0'},
-    { name: 'L.E.D. Beanbag chair', price: '29', quantity: '0'},
-    { name: 'L.E.D. Bench', price: '39', quantity: '0'},
-    { name: 'L.E.D. Curved Bench', price: '39', quantity: '0'},
-    { name: 'L.E.D. Cube, 16" x 16"', price: '19', quantity: '0'},
-    { name: 'L.E.D. Furniture', price: 'See L.E.D. Furniture Page', quantity: '0'},
-  ];
+
+  domLayout = 'autoHeight';
+
+  private quoteTotal: number;
+  private gridApi;
+  private gridColumnApi;
 
   constructor(private route: ActivatedRoute, private db: AngularFirestore) {
+    this.columnDefs = [
+      {
+        headerName: 'Item Name',
+        field: 'name'
+      },
+      {
+        headerName: 'Price ($)',
+        field: 'price',
+        sortable: true,
+        type: 'numericColumn',
+      },
+      {
+        headerName: 'Quantity',
+        field: 'quantity',
+        editable: true,
+        type: 'numericColumn',
+        valueFormatter: numberFormatter,
+        valueParser: numberParser
+      }
+    ];
+
+    this.rowData = [
+      { name: 'Poly/metal chair rental - black', price: 1.25, quantity: 0},
+      { name: 'Poly/metal chair rental - WEDDING white', price: 1.75, quantity: 0},
+      { name: 'Resin padded chair rental - white', price: 3.25, quantity: 0},
+      { name: 'Children\'s chair rental', price: 1.50, quantity: 0},
+      { name: 'L.E.D. Bar stool', price: 25.00, quantity: 0},
+      { name: 'L.E.D. Beanbag chair', price: 29.00, quantity: 0},
+      { name: 'L.E.D. Bench', price: 39.00, quantity: 0},
+      { name: 'L.E.D. Curved Bench', price: 39.00, quantity: 0},
+      { name: 'L.E.D. Cube, 16" x 16"', price: 19.00, quantity: 0},
+      { name: 'L.E.D. Furniture', price: 'See L.E.D. Furniture Page', quantity: 0},
+    ];
+
+    // this.prodServ.get().subscribe((product: Product) => {
+    //   this.productName = product.productName;
+    // });
 
     this.productName = 'Chairs';
-    this.quoteTotal = '0.00';
-    this.isCategory = false
+    this.isCategory = false;
     route.paramMap.subscribe((urlParamMap: ParamMap) => {
-      console.log(urlParamMap.get('productName'))
-      console.log(urlParamMap.get('productCategory'))
-      let name = urlParamMap.get('productName')
-      let category = urlParamMap.get('productCategory')
-      this.category = category
-      if(name == null || name.length == 0) {
-        this.productName = category
-        this.isCategory = true
+      console.log('ProductName: ', urlParamMap.get('productName'));
+      console.log('ProductCategory: ', urlParamMap.get('productCategory'));
+      const name = urlParamMap.get('productName');
+      const category = urlParamMap.get('productCategory');
+      this.category = category;
+      if (name == null || name.length === 0) {
+        this.productName = category;
+        this.isCategory = true;
       } else {
         this.productName = name
         this.isCategory = false
         this.db.collection("/" + category.replace('/', '-')).doc(name.replace('/', '-')).collection(name.replace('/', '-')).valueChanges().subscribe(items => {
           console.log(items)
-          let newRowData = []
+          const newRowData = []
           items.forEach(element => {
-            newRowData.push({ name: element['type'], price: element['price'], quantity: 0 })
+            newRowData.push({ name: element['type'], price: element['price'], quantity: 0 });
           });
-          this.rowData = newRowData
-        })
+          this.rowData = newRowData;
+        });
       }
-    })
+    });
    }
 
   ngOnInit() {
-    
-    // this.rowData = this.http.get('url');
+    this.productName = 'Chairs';
+    this.quoteTotal = 0.00;
+    this.loadData();
   }
 
+  loadData() {
+
+  }
+
+  onCellValueChanged(event) {
+    if (!isNaN(event.newValue)) {
+      const price = event.data.price;
+      const oldItemTotal = event.oldValue * price;
+      const newItemTotal = event.newValue * price;
+      if (!isNaN(newItemTotal)) {
+        this.quoteTotal = this.quoteTotal - oldItemTotal + newItemTotal;
+      }
+    }
+    this.total = this.currencyConverter(this.quoteTotal);
+  }
+
+  addSelectionToCart() {
+    // TODO: Push table data to database
+  }
+
+  handleNode(node, index) {
+    // console.log('Index: ', index);
+    // console.log('Node: ', node);
+  }
+
+  currencyConverter(value: number): string {
+    let val = value.toString();
+    console.log(value % 2);
+    console.log(val.search('.'));
+    if (val.indexOf('.') >= 0) {
+      const len = val.length;
+      // if (val.search)
+    }
+    return '';
+  }
+
+  sizeToFit() {
+    this.gridApi.sizeColumnsToFit();
+  }
+
+  autoSizeAll() {
+    const allColumnIds = [];
+    this.gridColumnApi.getAllColumns().forEach(function(column) {
+      allColumnIds.push(column.colId);
+    });
+    this.gridColumnApi.autoSizeColumns(allColumnIds);
+  }
+
+  onGridReady(params) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+
+    // this.http
+    //   .get(
+    //     "https://raw.githubusercontent.com/ag-grid/ag-grid/master/packages/ag-grid-docs/src/olympicWinnersSmall.json"
+    //   )
+    //   .subscribe(data => {
+    //     this.rowData = data;
+    //   });
+  }
+
+}
+
+function numberFormatter(params) {
+  return formatNumber(params.value);
+}
+function numberParser(params) {
+  return Number(params.newValue);
+}
+function formatNumber(number) {
+  return Math.floor(number)
+    .toString()
+    .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 }

@@ -1,0 +1,16 @@
+{
+    "chair": [
+        {
+            "title": "Poly/metal chair rental - black",
+            "url": "../../assets/images/blackChair.jpg"
+        },
+        {
+            "title": "Poly/metal chair rental - WEDDING white",
+            "url": "../../assets/images/whiteChair.jpg"
+        },
+        {
+            "title": "Resin padded chair rental - white",
+            "url": "../../assets/images/resinChair.jpg"
+        }
+    ]
+}

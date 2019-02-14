@@ -1,25 +1,40 @@
-<div *ngIf="!isCategory; else category">  
+<div *ngIf="!isCategory; else category">
   <h2 class="title">{{productName}}</h2>
   <div class="product-info">
     <div class="left">
-      <ng-image-slider class="carousel" [images]="imageObject" #nav></ng-image-slider>
+      <div class="slideshow">
+        <slideshow [imageUrls]="images"
+                  [height]="'400px'"
+                  [autoPlay]="true"
+                  [showArrows]="true">
+        </slideshow> 
+      </div>
       <h3 class="description">Product Description</h3>
       <p>{{productDescription}}</p>
     </div>
     <div class="right">
       <div class="product-grid">
         <ag-grid-angular
-          class="ag-theme-balham"
+          class="ag-theme-balham-dark"
+          id="productInfo"
+          style="width: 100%; height: 100%;"
           [rowData]="rowData"
           [columnDefs]="columnDefs"
-          >
+          [domLayout]="domLayout"
+          [singleClickEdit]="true"
+          (cellValueChanged)="onCellValueChanged($event)"
+          (gridReady)="onGridReady($event)">
         </ag-grid-angular>
       </div>
+      <div class="quote">
+        <div class="total">
+          <h3 class="centered">Selected Item Total: ${{quoteTotal}}</h3>
+        </div>
+        <div class="submit">
+          <button class="button-std primary" onclick="">Add Selection to Quote</button>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="quote">
-    <h3>Selected Item Total: ${{quoteTotal}}</h3>
-    <button class="button-std primary">Add Selection to Quote</button>
   </div>
 </div>
 <ng-template #category>

@@ -3,9 +3,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AgmCoreModule } from '@agm/core';
 
-import { AngularFirestoreModule } from 'angularfire2/firestore';
-import { AngularFireModule } from '@angular/fire';
-
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { HomepageComponent } from './homepage/homepage.component';
@@ -18,13 +15,16 @@ import { QuoteTileComponent } from './quote-tile/quote-tile.component';
 import { QuoteCartComponent } from './quote-cart/quote-cart.component';
 import { ContactComponent } from './contact/contact.component';
 
+import { QuoteCartServiceService } from './services/quote-cart-service.service';
+import { environment } from 'src/environments/environment.prod';
+
 import { AgGridModule } from 'ag-grid-angular';
 import { NgImageSliderModule} from 'ng-image-slider';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule, Routes } from '@angular/router';
-import { environment } from 'src/environments/environment.prod';
-import { QuoteCartServiceService } from './services/quote-cart-service.service';
-
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireModule } from '@angular/fire';
+import { SlideshowModule } from 'ng-simple-slideshow';
 
 const appRoutes: Routes = [
   { path: 'Popular Products', component: HomepageComponent},
@@ -55,7 +55,7 @@ const appRoutes: Routes = [
     MapComponent,
     QuoteTileComponent,
     ContactComponent,
-    QuoteCartComponent
+    QuoteCartComponent,
   ],
   imports: [
     RouterModule.forRoot(
@@ -69,8 +69,10 @@ const appRoutes: Routes = [
     AgmCoreModule.forRoot({
       apiKey: 'YOUR_KEY'
     }),
+    NgbModule,
     AngularFirestoreModule,
     AngularFireModule.initializeApp(environment.firebase),
+    SlideshowModule
   ],
   providers: [QuoteCartServiceService],
   bootstrap: [AppComponent]

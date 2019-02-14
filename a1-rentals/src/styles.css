@@ -17,26 +17,26 @@ h1 {
     font-family: "Mosk"; 
     font-size: 70px;
     margin: 15px;
-    color: #D98310;
+    /* color: #D98310; */
 }
 
 h2 {
     font-family: "Mosk";
     font-size: 44px;
-    color: #D98310;
+    /* color: #D98310; */
 }
 
 h3 {
     font-family: "Mosk";
     font-size: 22px;
-    color: #D98310;
+    /* color: #D98310; */
 }
 
 h4 {
     font-family: "Mosk";
     font-size: 16px;
     margin: 10px;
-    color: #D98310;
+    /* color: #D98310; */
 }
 
 img {
@@ -77,31 +77,48 @@ p {
     padding: 15px 40px;
 }
 
+/* 
+    All color options go here
+*/
 .background {
-    background-color: #0b3c5d;
+    /* background-color: #0b3c5d; */
+    background-color: #F4F4F4;
 }
 
 .primary {
-    background-color: #1d2731;
+    /* background-color: #1d2731; */
+    background-color: #C0B283;
 }
 
 .secondary {
-    background-color: #328cc1;
+    /* background-color: #328cc1; */
+    background-color: #DCD0C0;
 }
 
 .tertiary {
-    background-color: black;
+    background-color: #373737;
 }
 
 .accent {
-    background-color: #813772;
+    /* background-color: #813772; */
+    background-color: #C0B283;
 }
 
 .default {
-    background-color: #a9a9a9;
+    /* background-color: #a9a9a9; */
+    background-color: #F4F4F4;
 }
 
 button:hover {
-    background-color: #813772;
+    /* background-color: #813772; */
+    background-color: #C0B283;
     cursor: pointer;
+}
+
+.text {
+    color: #373737
+}
+
+.text-secondary {
+    color: #646464;
 }

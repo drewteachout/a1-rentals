@@ -1,5 +1,5 @@
 <div *ngIf="!isCategory; else category">
-  <h2 class="title">{{productName}}</h2>
+  <h2 class="title text">{{productName}}</h2>
   <div class="product-info">
     <div class="left">
       <div class="slideshow">
@@ -9,8 +9,8 @@
                   [showArrows]="true">
         </slideshow> 
       </div>
-      <h3 class="description">Product Description</h3>
-      <p>{{productDescription}}</p>
+      <h3 class="description text">Product Description</h3>
+      <p class="text-secondary">{{productDescription}}</p>
     </div>
     <div class="right">
       <div class="product-grid">
@@ -28,7 +28,7 @@
       </div>
       <div class="quote">
         <div class="total">
-          <h3 class="centered">Selected Item Total: ${{quoteTotal}}</h3>
+          <h3 class="centered text">Selected Item Total: ${{quoteTotal}}</h3>
         </div>
         <div class="submit">
           <button class="button-std primary" onclick="">Add Selection to Quote</button>

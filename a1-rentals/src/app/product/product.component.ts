@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { IImage } from 'ng-simple-slideshow';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ProductsService } from '../services/products.service';
 import { Product } from '../util/Product';
+import { AngularFirestore } from 'angularfire2/firestore';
 
 @Component({
   selector: 'app-product',
@@ -23,6 +24,8 @@ export class ProductComponent implements OnInit {
   ];
 
   productName: string;
+  category: string;
+  isCategory: boolean;
   productDescription = 'Our sturdy poly/metal chair rentals feature vinyl seats and back with a metal frame.' +
     'The resin padded chair rentals are designed to be more comfortable and they look great for that traditional' +
     ' wedding look. Both styles resist sinking into lawns. A-1 Rentals also have chair rentals designed for ' +
@@ -39,7 +42,7 @@ export class ProductComponent implements OnInit {
   private gridApi;
   private gridColumnApi;
 
-  constructor(private prodServ: ProductsService) {
+  constructor(private route: ActivatedRoute, private db: AngularFirestore) {
     this.columnDefs = [
       {
         headerName: 'Item Name',
@@ -74,10 +77,35 @@ export class ProductComponent implements OnInit {
       { name: 'L.E.D. Furniture', price: 'See L.E.D. Furniture Page', quantity: 0},
     ];
 
-    this.prodServ.get().subscribe((product: Product) => {
-      this.productName = product.productName;
+    // this.prodServ.get().subscribe((product: Product) => {
+    //   this.productName = product.productName;
+    // });
+
+    this.productName = 'Chairs';
+    this.isCategory = false;
+    route.paramMap.subscribe((urlParamMap: ParamMap) => {
+      console.log('ProductName: ', urlParamMap.get('productName'));
+      console.log('ProductCategory: ', urlParamMap.get('productCategory'));
+      let name = urlParamMap.get('productName');
+      let category = urlParamMap.get('productCategory');
+      this.category = category;
+      if (name == null || name.length === 0) {
+        this.productName = category;
+        this.isCategory = true;
+      } else {
+        this.productName = name;
+        this.isCategory = false;
+        this.db.collection('/' + category).doc(name).collection(name).valueChanges().subscribe(items => {
+          console.log(items);
+          const newRowData = [];
+          items.forEach(element => {
+            newRowData.push({ name: element['type'], price: element['price'], quantity: 0 });
+          });
+          this.rowData = newRowData;
+        });
+      }
     });
-  }
+   }
 
   ngOnInit() {
     this.productName = 'Chairs';

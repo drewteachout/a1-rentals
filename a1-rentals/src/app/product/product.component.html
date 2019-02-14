@@ -1,37 +1,42 @@
-<h2 class="title">{{productName}}</h2>
-<div class="product-info">
-  <div class="left">
-    <div class="slideshow">
-      <slideshow [imageUrls]="images"
-                 [height]="'400px'"
-                 [autoPlay]="true"
-                 [showArrows]="true">
-      </slideshow>
+<div *ngIf="!isCategory; else category">
+  <h2 class="title">{{productName}}</h2>
+  <div class="product-info">
+    <div class="left">
+      <div class="slideshow">
+        <slideshow [imageUrls]="images"
+                  [height]="'400px'"
+                  [autoPlay]="true"
+                  [showArrows]="true">
+        </slideshow>
+      </div>
+      <h3 class="description">Product Description</h3>
+      <p>{{productDescription}}</p>
     </div>
-    <h3 class="description">Product Description</h3>
-    <p>{{productDescription}}</p>
+    <div class="right">
+      <div class="product-grid">
+        <ag-grid-angular
+          class="ag-theme-balham-dark"
+          id="productInfo"
+          [rowData]="rowData"
+          [columnDefs]="columnDefs"
+          [domLayout]="domLayout"
+          [singleClickEdit]="true"
+          (cellValueChanged)="onCellValueChanged($event)"
+          (gridReady)="onGridReady($event)"
+          >
+        </ag-grid-angular>
+      </div>
+    </div>
   </div>
-  <div class="right">
-    <div class="product-grid">
-      <ag-grid-angular
-        class="ag-theme-balham-dark"
-        id="productInfo"
-        [rowData]="rowData"
-        [columnDefs]="columnDefs"
-        [domLayout]="domLayout"
-        [singleClickEdit]="true"
-        (cellValueChanged)="onCellValueChanged($event)"
-        (gridReady)="onGridReady($event)"
-        >
-      </ag-grid-angular>
+  <div class="quote">
+    <div class="total">
+      <h3>Selected Item Total: ${{quoteTotal}}</h3>
+    </div>
+    <div class="submit">
+      <button class="button-std primary" onclick="">Add Selection to Quote</button>
     </div>
   </div>
 </div>
-<div class="quote">
-  <div class="total">
-    <h3>Selected Item Total: ${{quoteTotal}}</h3>
-  </div>
-  <div class="submit">
-    <button class="button-std primary" onclick="">Add Selection to Quote</button>
-  </div>
-</div>
+<ng-template #category>
+  <p>Found a category</p>
+</ng-template>

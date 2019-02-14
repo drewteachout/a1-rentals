@@ -95,11 +95,11 @@ export class ProductComponent implements OnInit {
         this.productName = category;
         this.isCategory = true;
       } else {
-        this.productName = name;
-        this.isCategory = false;
-        this.db.collection('/' + category).doc(name).collection(name).valueChanges().subscribe(items => {
-          console.log(items);
-          const newRowData = [];
+        this.productName = name
+        this.isCategory = false
+        this.db.collection("/" + category.replace('/', '-')).doc(name.replace('/', '-')).collection(name.replace('/', '-')).valueChanges().subscribe(items => {
+          console.log(items)
+          const newRowData = []
           items.forEach(element => {
             newRowData.push({ name: element['type'], price: element['price'], quantity: 0 });
           });

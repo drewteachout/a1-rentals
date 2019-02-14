@@ -1,12 +1,12 @@
 <div class="tile">
-    <h2>{{cartItem.productName}}</h2>
+    <h2 class="text">{{cartItem.productName}}</h2>
     <div class="left">
         <img src="assets/images/temp.jpg" height=180 width=180>
     </div>
     <div class="right">
-        <h4>Description: {{getProductDescription()}}</h4>
-        <h3 style="padding-top: 10%">Total Cost: {{ getPrice() | currency:'USD' }}</h3>
-        <h3 style="float:left;">Quantity:</h3>
+        <h4 class="text-secondary">Description: {{getProductDescription()}}</h4>
+        <h3 class="text" style="padding-top: 10%">Total Cost: {{ getPrice() | currency:'USD' }}</h3>
+        <h3 class="text" style="float:left;">Quantity:</h3>
         <input style="margin-top: 5%; padding-left: 2%" 
             class="input" 
             type="number"

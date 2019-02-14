@@ -75,7 +75,7 @@ export class ProductComponent implements OnInit {
     ];
 
     this.prodServ.get().subscribe((product: Product) => {
-      this.productName = product.productName
+      this.productName = product.productName;
     });
   }
 

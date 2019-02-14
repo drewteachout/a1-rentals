@@ -12,37 +12,17 @@ import { AngularFirestore } from 'angularfire2/firestore';
 })
 export class ProductComponent implements OnInit {
 
-  images: (string | IImage)[] = [
-    { url: 'assets/images/blackChair.jpg', caption: 'Poly/metal chair rental - black'},
-    { url: 'assets/images/whiteChair.jpg', caption: 'Poly/metal chair rental - WEDDING white'},
-    { url: 'assets/images/resinChair.jpg', caption: 'Resin padded chair rental - white'},
-    { url: 'assets/images/ledBarStool.jpg', caption: 'L.E.D. Bar stool'},
-    { url: 'assets/images/ledBeanBagChair.jpg', caption: 'L.E.D. Beanbag chair'},
-    { url: 'assets/images/ledBench.jpg', caption: 'L.E.D. Bench'},
-    { url: 'assets/images/ledCube1.png', caption: 'L.E.D. Cube, 16" x 16"'},
-    { url: 'assets/images/ledCube2.jpg', caption: 'L.E.D. Cube, 20" x 20"'},
-  ];
-
-  productName: string;
-  category: string;
-  isCategory: boolean;
-  productDescription = 'Our sturdy poly/metal chair rentals feature vinyl seats and back with a metal frame.' +
-    'The resin padded chair rentals are designed to be more comfortable and they look great for that traditional' +
-    ' wedding look. Both styles resist sinking into lawns. A-1 Rentals also have chair rentals designed for ' +
-    'the little ones. They can be used with our children\'s tables. They are good for children up to ' +
-    'approximately 6 or 7 years old. The solid resin chairs are red or blue. The metal framed children\'s chair' +
-    ' rentals feature a blue vinyl seat.';
-
-  public columnDefs;
-  public rowData;
+  public category: string;
+  public isCategory: boolean;
+  public columnDefs: any;
+  public rowData: any;
+  public images: (string | IImage)[];
+  public productDescription: string;
+  public productName: string;
   public total: string;
 
-
-  domLayout = 'autoHeight';
-
+  private domLayout: string;
   private quoteTotal: number;
-  private gridApi;
-  private gridColumnApi;
 
   constructor(private route: ActivatedRoute, private db: AngularFirestore) {
     this.columnDefs = [
@@ -51,43 +31,52 @@ export class ProductComponent implements OnInit {
         field: 'name'
       },
       {
-        headerName: 'Price ($)',
+        headerName: 'Price',
         field: 'price',
         sortable: true,
         type: 'numericColumn',
+        valueFormatter: numberFormatter,
       },
       {
         headerName: 'Quantity',
         field: 'quantity',
         editable: true,
         type: 'numericColumn',
-        valueFormatter: numberFormatter,
         valueParser: numberParser
       }
     ];
 
-    this.rowData = [
-      { name: 'Poly/metal chair rental - black', price: 1.25, quantity: 0},
-      { name: 'Poly/metal chair rental - WEDDING white', price: 1.75, quantity: 0},
-      { name: 'Resin padded chair rental - white', price: 3.25, quantity: 0},
-      { name: 'Children\'s chair rental', price: 1.50, quantity: 0},
-      { name: 'L.E.D. Bar stool', price: 25.00, quantity: 0},
-      { name: 'L.E.D. Beanbag chair', price: 29.00, quantity: 0},
-      { name: 'L.E.D. Bench', price: 39.00, quantity: 0},
-      { name: 'L.E.D. Curved Bench', price: 39.00, quantity: 0},
-      { name: 'L.E.D. Cube, 16" x 16"', price: 19.00, quantity: 0},
-      { name: 'L.E.D. Furniture', price: 'See L.E.D. Furniture Page', quantity: 0},
+    this.images = [
+      { url: 'assets/images/blackChair.jpg', caption: 'Poly/metal chair rental - black'},
+      { url: 'assets/images/whiteChair.jpg', caption: 'Poly/metal chair rental - WEDDING white'},
+      { url: 'assets/images/resinChair.jpg', caption: 'Resin padded chair rental - white'},
+      { url: 'assets/images/ledBarStool.jpg', caption: 'L.E.D. Bar stool'},
+      { url: 'assets/images/ledBeanBagChair.jpg', caption: 'L.E.D. Beanbag chair'},
+      { url: 'assets/images/ledBench.jpg', caption: 'L.E.D. Bench'},
+      { url: 'assets/images/ledCube1.png', caption: 'L.E.D. Cube, 16" x 16"'},
+      { url: 'assets/images/ledCube2.jpg', caption: 'L.E.D. Cube, 20" x 20"'},
     ];
 
-    // this.prodServ.get().subscribe((product: Product) => {
-    //   this.productName = product.productName;
-    // });
+    this.productDescription = 'Our sturdy poly/metal chair rentals feature vinyl seats and back with a metal frame.' +
+    'The resin padded chair rentals are designed to be more comfortable and they look great for that traditional' +
+    ' wedding look. Both styles resist sinking into lawns. A-1 Rentals also have chair rentals designed for ' +
+    'the little ones. They can be used with our children\'s tables. They are good for children up to ' +
+    'approximately 6 or 7 years old. The solid resin chairs are red or blue. The metal framed children\'s chair' +
+    ' rentals feature a blue vinyl seat.';
 
-    this.productName = 'Chairs';
+    this.domLayout = 'autoHeight';
+    this.loadData(route);
     this.isCategory = false;
+   }
+
+  ngOnInit() {
+    this.productName = 'Chairs';
+    this.quoteTotal = 0.00;
+    this.total = '0.00';
+  }
+
+  loadData(route: ActivatedRoute) {
     route.paramMap.subscribe((urlParamMap: ParamMap) => {
-      console.log('ProductName: ', urlParamMap.get('productName'));
-      console.log('ProductCategory: ', urlParamMap.get('productCategory'));
       const name = urlParamMap.get('productName');
       const category = urlParamMap.get('productCategory');
       this.category = category;
@@ -95,11 +84,11 @@ export class ProductComponent implements OnInit {
         this.productName = category;
         this.isCategory = true;
       } else {
-        this.productName = name
-        this.isCategory = false
-        this.db.collection("/" + category.replace('/', '-')).doc(name.replace('/', '-')).collection(name.replace('/', '-')).valueChanges().subscribe(items => {
-          console.log(items)
-          const newRowData = []
+        this.productName = name;
+        this.isCategory = false;
+        this.db.collection('/' +
+          category.replace('/', '-')).doc(name.replace('/', '-')).collection(name.replace('/', '-')).valueChanges().subscribe(items => {
+          const newRowData = [];
           items.forEach(element => {
             newRowData.push({ name: element['type'], price: element['price'], quantity: 0 });
           });
@@ -107,16 +96,6 @@ export class ProductComponent implements OnInit {
         });
       }
     });
-   }
-
-  ngOnInit() {
-    this.productName = 'Chairs';
-    this.quoteTotal = 0.00;
-    this.loadData();
-  }
-
-  loadData() {
-
   }
 
   onCellValueChanged(event) {
@@ -125,7 +104,10 @@ export class ProductComponent implements OnInit {
       const oldItemTotal = event.oldValue * price;
       const newItemTotal = event.newValue * price;
       if (!isNaN(newItemTotal)) {
-        this.quoteTotal = this.quoteTotal - oldItemTotal + newItemTotal;
+        if (!isNaN(oldItemTotal)) {
+          this.quoteTotal = this.quoteTotal - oldItemTotal;
+        }
+        this.quoteTotal = this.quoteTotal + newItemTotal;
       }
     }
     this.total = this.currencyConverter(this.quoteTotal);
@@ -135,47 +117,17 @@ export class ProductComponent implements OnInit {
     // TODO: Push table data to database
   }
 
-  handleNode(node, index) {
-    // console.log('Index: ', index);
-    // console.log('Node: ', node);
-  }
-
   currencyConverter(value: number): string {
     let val = value.toString();
-    console.log(value % 2);
-    console.log(val.search('.'));
-    if (val.indexOf('.') >= 0) {
-      const len = val.length;
-      // if (val.search)
+    const index = val.indexOf('.');
+    const len = val.length;
+    if (index >= 0 && index === len - 1) {
+      val = val + '0';
+    } else if (index === -1) {
+      val = val + '.00';
     }
-    return '';
+    return val;
   }
-
-  sizeToFit() {
-    this.gridApi.sizeColumnsToFit();
-  }
-
-  autoSizeAll() {
-    const allColumnIds = [];
-    this.gridColumnApi.getAllColumns().forEach(function(column) {
-      allColumnIds.push(column.colId);
-    });
-    this.gridColumnApi.autoSizeColumns(allColumnIds);
-  }
-
-  onGridReady(params) {
-    this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
-
-    // this.http
-    //   .get(
-    //     "https://raw.githubusercontent.com/ag-grid/ag-grid/master/packages/ag-grid-docs/src/olympicWinnersSmall.json"
-    //   )
-    //   .subscribe(data => {
-    //     this.rowData = data;
-    //   });
-  }
-
 }
 
 function numberFormatter(params) {
@@ -185,7 +137,7 @@ function numberParser(params) {
   return Number(params.newValue);
 }
 function formatNumber(number) {
-  return Math.floor(number)
+  return '$' + Math.floor(number)
     .toString()
     .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 }

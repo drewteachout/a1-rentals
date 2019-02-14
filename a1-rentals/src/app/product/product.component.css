@@ -1,57 +1,77 @@
 button {
-    display: inline-block;
-    margin-left: 5%;
+    margin: auto;
 }
 
 h3 {
-    display: inline-block;
-    margin-left: 60%;
+    margin: auto;
 }
 
 p {
     text-align: center;
 }
 
-.carousel {
-    margin: 24px;
+.centered {
+    margin-top: 14px;
+    margin-bottom: 14px;
 }
 
 .description {
     display: inline-block;
+    width: 100%;
     text-decoration: underline;
     margin: 24px;
 }
 
 .left {
-    float: left;
-    width: 50%;
+    display: inline-block;
+    /* float: left; */
     text-align: center;
+    width: 950px;
 }
 
 .right {
-    float: right;
+    display: inline-block;
+    /* float: right; */
     text-align: center;
+    vertical-align: top;
+    width: 950px;
 }
 
 .product-grid {
-    float: center;
-    padding-right: 96px;
-    position: relative;
-    width: 700px;
+    display: inline-block;
+    padding-top: 5%;
+    vertical-align: top;
 }
 
 .product-info {
-    overflow: auto;
+    overflow: hidden;
 }
 
 .quote {
     display: block;
-    margin-top: 24px;
-    margin-right: 0px;
+    margin-top: 5%;
+}
+
+.slideshow {
+    display: inline-block;
+    margin: 10px;
+    position: relative;
+    text-align: center;
+    width: 70%;
+}
+
+.submit {
+    display: inline-block;
+    padding-left: 3%;
 }
 
 .title {
     display: block;
     position: relative;
     text-align: center
+}
+
+.total {
+    display: inline-block;
+    height: 51px;
 }

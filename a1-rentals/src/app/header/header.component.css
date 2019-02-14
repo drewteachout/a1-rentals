@@ -1,11 +1,10 @@
-
 h1 {
     cursor: pointer;
 }
 
 .parent {
     display: flex;
-    margin: 15px;
+    padding: 15px;
 }
 
 .title {

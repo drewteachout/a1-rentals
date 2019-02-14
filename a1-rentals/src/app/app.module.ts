@@ -12,19 +12,30 @@ import { ProductComponent } from './product/product.component';
 import { FormComponent } from './form/form.component';
 import { MapComponent } from './map/map.component';
 import { QuoteTileComponent } from './quote-tile/quote-tile.component';
+import { QuoteCartComponent } from './quote-cart/quote-cart.component';
+import { ContactComponent } from './contact/contact.component';
+
+import { QuoteCartServiceService } from './services/quote-cart-service.service';
+import { environment } from 'src/environments/environment.prod';
 
 import { AgGridModule } from 'ag-grid-angular';
 import { NgImageSliderModule} from 'ng-image-slider';
-import { ContactComponent } from './contact/contact.component';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule, Routes } from '@angular/router';
-import { QuoteCartComponent } from './quote-cart/quote-cart.component';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireModule } from '@angular/fire';
+import { SlideshowModule } from 'ng-simple-slideshow';
 
 const appRoutes: Routes = [
   { path: 'Popular Products', component: HomepageComponent},
   { path: 'Contact Us', component: ContactComponent},
   { path: 'Quote Cart', component: QuoteCartComponent},
-  { path: 'Rental Products', component: ProductComponent},
+  { path: 'Rental Products/:productCategory/:productName', component: ProductComponent},
+  { path: 'Rental Products/:productCategory', component: ProductComponent},
+  { path: 'Rental Products',
+    redirectTo: '/Rental Products/all/',
+    pathMatch: 'full'
+  },
   { path: '',
     redirectTo: '/Popular Products',
     pathMatch: 'full'
@@ -44,12 +55,12 @@ const appRoutes: Routes = [
     MapComponent,
     QuoteTileComponent,
     ContactComponent,
-    QuoteCartComponent
+    QuoteCartComponent,
   ],
   imports: [
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: true } // <-- debugging purposes only
+      //{ enableTracing: true } // <-- debugging purposes only
     ),
     BrowserModule,
     AgGridModule.withComponents([]),
@@ -57,9 +68,13 @@ const appRoutes: Routes = [
     FormsModule,
     AgmCoreModule.forRoot({
       apiKey: 'YOUR_KEY'
-    })
+    }),
+    NgbModule,
+    AngularFirestoreModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    SlideshowModule
   ],
-  providers: [],
+  providers: [QuoteCartServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

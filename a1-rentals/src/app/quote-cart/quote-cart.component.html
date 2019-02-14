@@ -1,1 +1,17 @@
-<app-quote-tile></app-quote-tile>
+
+<div style="display: inline-block; width: 100%;">
+    <div class="cart">
+        <div class="quote-tile" *ngFor="let product of cart">
+            <app-quote-tile [cartItem]="product"></app-quote-tile>
+            <img style="float: right;" (click)="deleteTile(product)" src="assets/images/trashcan.png" height=30 width=30>
+        </div>
+    </div>
+    <div class="right">
+        <h2>Enter Your Contact Information</h2>
+        <app-form [submitLocation]="quote"></app-form>
+        <p>*All prices are just quotes. Nothing can be directly rented.
+                This is for a variety of factors including availability, distance from the street, weather conditions, and more. 
+                Please fill out your contact information and choose next steps.
+                A representative will reach out to you as soon as possible to finalize your order.</p>
+    </div>
+</div>

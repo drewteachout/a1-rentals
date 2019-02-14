@@ -1,5 +1,11 @@
 @import "~ag-grid-community/dist/styles/ag-grid.css";
 @import "~ag-grid-community/dist/styles/ag-theme-balham.css";
+@import "~ag-grid-community/dist/styles/ag-theme-balham-dark.css";
+@import "~ag-grid-community/dist/styles/ag-theme-material.css";
+@import "~ag-grid-community/dist/styles/ag-theme-fresh.css";
+@import "~ag-grid-community/dist/styles/ag-theme-dark.css";
+@import "~ag-grid-community/dist/styles/ag-theme-blue.css";
+@import "~ag-grid-community/dist/styles/ag-theme-bootstrap.css";
 @import url('https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css');
 
 /* You can add global styles to this file, and also import other style files */
@@ -11,23 +17,26 @@ h1 {
     font-family: "Mosk"; 
     font-size: 70px;
     margin: 15px;
+    color: #D98310;
 }
 
 h2 {
     font-family: "Mosk";
     font-size: 44px;
+    color: #D98310;
 }
 
 h3 {
     font-family: "Mosk";
     font-size: 22px;
-    margin: 10px;
+    color: #D98310;
 }
 
 h4 {
     font-family: "Mosk";
     font-size: 16px;
     margin: 10px;
+    color: #D98310;
 }
 
 img {
@@ -38,16 +47,17 @@ p {
     font-family: "Mosk";
     font-size: 16px;
     margin: 16px;
+    color: white;
 }
 
 /* 
     All global classes go here
 */
 .button-std {
-    background-color:#3f2b96;
-    border: 1px solid #3e4c96;
+    border: none;
     /* box-shadow:inset 0px 34px 0px -15px #3e2b96; */
     color: #ffffff;
+    
     cursor: pointer;
     font-size: 15px;
     font-family: "Mosk";
@@ -55,6 +65,43 @@ p {
     padding: 15px 40px;
 }
 
-.button-std:hover {
-    background-color: 1px solid #f0f0f0;
+.button-secondary {
+    border: none;
+    /* box-shadow:inset 0px 34px 0px -15px #3e2b96; */
+    color: #ffffff;
+    background-color: #328cc1;
+    cursor: pointer;
+    font-size: 15px;
+    font-family: "Mosk";
+    font-weight: bold;
+    padding: 15px 40px;
+}
+
+.background {
+    background-color: #0b3c5d;
+}
+
+.primary {
+    background-color: #1d2731;
+}
+
+.secondary {
+    background-color: #328cc1;
+}
+
+.tertiary {
+    background-color: black;
+}
+
+.accent {
+    background-color: #813772;
+}
+
+.default {
+    background-color: #a9a9a9;
+}
+
+button:hover {
+    background-color: #813772;
+    cursor: pointer;
 }

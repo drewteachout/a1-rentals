@@ -4,7 +4,9 @@
 
 .tiles {
     float: left;
-    margin-left: 68px;
-    margin-right: 68px;
-    margin-top: 56px
+    /* margin: 4% 4%; */
+    overflow: auto;
+    margin-left: 1%;
+    margin-right: 1%;
+    margin-top: 3%;
 }

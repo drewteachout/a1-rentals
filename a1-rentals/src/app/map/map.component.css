@@ -1,5 +1,24 @@
 agm-map {
     /*to update*/
-    height: 300px;
-    width: 300px;
-  }
+    height: 350px;
+    width: 350px;
+    float: left;
+}
+
+.container {
+  margin-top: 5%;
+  margin-left: 5%;
+  display: inline-block;
+}
+
+.underlined {
+  float: left;
+  padding-right: 50%; 
+  text-decoration: underline;
+}
+
+.subtext {
+  margin-top: 0;
+  color: white;
+  float: left; 
+}

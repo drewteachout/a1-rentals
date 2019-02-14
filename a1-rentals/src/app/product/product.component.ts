@@ -69,7 +69,7 @@ export class ProductComponent implements OnInit {
       } else {
         this.productName = name
         this.isCategory = false
-        this.db.collection("/" + category).doc(name).collection(name).valueChanges().subscribe(items => {
+        this.db.collection("/" + category.replace('/', '-')).doc(name.replace('/', '-')).collection(name.replace('/', '-')).valueChanges().subscribe(items => {
           console.log(items)
           let newRowData = []
           items.forEach(element => {

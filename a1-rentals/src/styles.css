@@ -108,7 +108,7 @@ p {
 
 .accent {
     /* background-color: #813772; */
-    background-color: #C0B283;
+    background-color: #373737;
 }
 
 .default {
@@ -118,7 +118,7 @@ p {
 
 button:hover {
     /* background-color: #813772; */
-    background-color: #E5DAB6;
+    background-color: #373737;
     cursor: pointer;
 }
 

@@ -1,11 +1,3 @@
-.button-tab {
-    border: none;
-    color: white;
-    font-family: "Mosk";
-    font-size: 18px;
-    padding: 16px;
-}
-
 .rectangle {
     border: none;
     color: white;
@@ -54,12 +46,4 @@
 
 .tab:hover .button-tab:hover .tab-content-sub {
     display: block;
-}
-
-.button-tab:hover{
-    background-color: #813772;
-}
-
-.button-tab-sub:hover{
-    background-color: #813772;
 }

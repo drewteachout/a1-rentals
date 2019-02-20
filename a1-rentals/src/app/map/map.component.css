@@ -19,6 +19,6 @@ agm-map {
 
 .subtext {
   margin-top: 0;
-  color: white;
+  /* color: white; */
   float: left; 
 }

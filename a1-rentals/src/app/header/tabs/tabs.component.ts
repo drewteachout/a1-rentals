@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Product } from 'src/app/util/Product';
 import { ProductsService } from 'src/app/services/products.service';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { AngularFirestore } from 'angularfire2/firestore';
 
 @Component({
@@ -22,6 +22,7 @@ export class TabsComponent implements OnInit {
     this.tab1 = ['Popular Products', []];
     this.tab2 = ['Rental Products', []];
     this.db.collection('/products').valueChanges().subscribe((productNames: any[]) => {
+      this.tab2[1] = []
       productNames.forEach(product => {
         if (!product['hidden']) {
           this.db.collection('/' + product['collection_name']).valueChanges().subscribe((productInfo: any) => {
@@ -69,6 +70,6 @@ export class TabsComponent implements OnInit {
     event.stopPropagation();
     let prod = new Product(name, previous);
     this.prodServ.update(prod);
-    this.router.navigateByUrl('/Rental Products');
+    this.router.navigate(['/Rental Products', previous, name]);
   }
 }

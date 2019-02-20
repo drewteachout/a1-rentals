@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { IImage } from 'ng-simple-slideshow';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ProductsService } from '../services/products.service';
 import { Product } from '../util/Product';
+import { AngularFirestore } from 'angularfire2/firestore';
 
 @Component({
   selector: 'app-product',
@@ -10,56 +12,131 @@ import { Product } from '../util/Product';
 })
 export class ProductComponent implements OnInit {
 
-  imageObject: Array<object> = [
-    { image: 'assets/images/blackChair.jpg', thumbImage: 'assets/images/blackChair.jpg', title: 'Poly/metal chair rental - black'},
-    { image: 'assets/images/whiteChair.jpg', thumbImage: 'assets/images/whiteChair.jpg'},
-    { image: 'assets/images/resinChair.jpg', thumbImage: 'assets/images/resinChair.jpg'},
-    { image: 'assets/images/ledBarStool.jpg', thumbImage: 'assets/images/ledBarStool.jpg'},
-    { image: 'assets/images/ledBeanBagChair.jpg', thumbImage: 'assets/images/ledBeanBagChair.jpg'},
-    { image: 'assets/images/ledBench.jpg', thumbImage: 'assets/images/ledBench.jpg'},
-    { image: 'assets/images/ledCube1.png', thumbImage: 'assets/images/ledCube1.png'},
-    { image: 'assets/images/ledCube2.jpg', thumbImage: 'assets/images/ledCube2.jpg'},
-  ];
+  public category: string;
+  public isCategory: boolean;
+  public columnDefs: any;
+  public rowData: any;
+  public images: (string | IImage)[];
+  public productDescription: string;
+  public productName: string;
+  public total: string;
 
-  productName: string;
-  productDescription = 'Our sturdy poly/metal chair rentals feature vinyl seats and back with a metal frame.' +
+  private domLayout: string;
+  private quoteTotal: number;
+
+  constructor(private route: ActivatedRoute, private db: AngularFirestore) {
+    this.columnDefs = [
+      {
+        headerName: 'Item Name',
+        field: 'name'
+      },
+      {
+        headerName: 'Price',
+        field: 'price',
+        sortable: true,
+        type: 'numericColumn',
+        valueFormatter: numberFormatter,
+      },
+      {
+        headerName: 'Quantity',
+        field: 'quantity',
+        editable: true,
+        type: 'numericColumn',
+        valueParser: numberParser
+      }
+    ];
+
+    this.images = [
+      { url: 'assets/images/blackChair.jpg', caption: 'Poly/metal chair rental - black'},
+      { url: 'assets/images/whiteChair.jpg', caption: 'Poly/metal chair rental - WEDDING white'},
+      { url: 'assets/images/resinChair.jpg', caption: 'Resin padded chair rental - white'},
+      { url: 'assets/images/ledBarStool.jpg', caption: 'L.E.D. Bar stool'},
+      { url: 'assets/images/ledBeanBagChair.jpg', caption: 'L.E.D. Beanbag chair'},
+      { url: 'assets/images/ledBench.jpg', caption: 'L.E.D. Bench'},
+      { url: 'assets/images/ledCube1.png', caption: 'L.E.D. Cube, 16" x 16"'},
+      { url: 'assets/images/ledCube2.jpg', caption: 'L.E.D. Cube, 20" x 20"'},
+    ];
+
+    this.productDescription = 'Our sturdy poly/metal chair rentals feature vinyl seats and back with a metal frame.' +
     'The resin padded chair rentals are designed to be more comfortable and they look great for that traditional' +
     ' wedding look. Both styles resist sinking into lawns. A-1 Rentals also have chair rentals designed for ' +
     'the little ones. They can be used with our children\'s tables. They are good for children up to ' +
     'approximately 6 or 7 years old. The solid resin chairs are red or blue. The metal framed children\'s chair' +
     ' rentals feature a blue vinyl seat.';
-  quoteTotal: string;
 
-  columnDefs = [
-    {headerName: 'Item Name', field: 'name', width: 438},
-    {headerName: 'Price ($)', field: 'price', width: 170, sortable: true},
-    {headerName: 'Quantity', field: 'quantity', editable: true, width: 90}
-  ];
-
-  rowData = [
-    { name: 'Poly/metal chair rental - black', price: '1.25', quantity: '0'},
-    { name: 'Poly/metal chair rental - WEDDING white', price: '1.75', quantity: '0'},
-    { name: 'Resin padded chair rental - white', price: '3.25', quantity: '0'},
-    { name: 'Children\'s chair rental', price: '1.50', quantity: '0'},
-    { name: 'L.E.D. Bar stool', price: '25', quantity: '0'},
-    { name: 'L.E.D. Beanbag chair', price: '29', quantity: '0'},
-    { name: 'L.E.D. Bench', price: '39', quantity: '0'},
-    { name: 'L.E.D. Curved Bench', price: '39', quantity: '0'},
-    { name: 'L.E.D. Cube, 16" x 16"', price: '19', quantity: '0'},
-    { name: 'L.E.D. Furniture', price: 'See L.E.D. Furniture Page', quantity: '0'},
-  ];
-
-  constructor(private prodServ: ProductsService) {
-    this.productName = 'Chairs';
-    this.quoteTotal = '0.00';
-    this.prodServ.get().subscribe((product: Product) => {
-      this.productName = product.productName
-    });
+    this.domLayout = 'autoHeight';
+    this.loadData(route);
+    this.isCategory = false;
    }
 
   ngOnInit() {
-    
-    // this.rowData = this.http.get('url');
+    this.quoteTotal = 0.00;
+    this.total = '0.00';
   }
 
+  loadData(route: ActivatedRoute) {
+    route.paramMap.subscribe((urlParamMap: ParamMap) => {
+      const name = urlParamMap.get('productName');
+      const category = urlParamMap.get('productCategory');
+      this.category = category;
+      if (name == null || name.length === 0) {
+        this.productName = category;
+        this.isCategory = true;
+      } else {
+        this.productName = name;
+        this.isCategory = false;
+        this.db.collection('/' +
+          category.replace('/', '-')).doc(name.replace('/', '-')).collection(name.replace('/', '-')).valueChanges().subscribe(items => {
+          const newRowData = [];
+          items.forEach(element => {
+            newRowData.push({ name: element['type'], price: element['price'], quantity: 0 });
+          });
+          this.rowData = newRowData;
+        });
+      }
+    });
+  }
+
+  onCellValueChanged(event) {
+    if (!isNaN(event.newValue)) {
+      const price = event.data.price;
+      const oldItemTotal = event.oldValue * price;
+      const newItemTotal = event.newValue * price;
+      if (!isNaN(newItemTotal)) {
+        if (!isNaN(oldItemTotal)) {
+          this.quoteTotal = this.quoteTotal - oldItemTotal;
+        }
+        this.quoteTotal = this.quoteTotal + newItemTotal;
+      }
+    }
+    this.total = this.currencyConverter(this.quoteTotal);
+  }
+
+  addSelectionToCart() {
+    // TODO: Push table data to database
+  }
+
+  currencyConverter(value: number): string {
+    let val = value.toString();
+    const index = val.indexOf('.');
+    const len = val.length;
+    if (index >= 0 && index === len - 1) {
+      val = val + '0';
+    } else if (index === -1) {
+      val = val + '.00';
+    }
+    return val;
+  }
+}
+
+function numberFormatter(params) {
+  return formatNumber(params.value);
+}
+function numberParser(params) {
+  return Number(params.newValue);
+}
+function formatNumber(number) {
+  return '$' + Math.floor(number)
+    .toString()
+    .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 }

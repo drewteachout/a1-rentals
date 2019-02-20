@@ -13,7 +13,7 @@ export class HomepageComponent implements OnInit {
 
   constructor(db: AngularFirestore) {
     db.collection('/popular').valueChanges().subscribe((popular_items: any[]) => {
-      for(let i = 0; i < popular_items.length; i++) {
+      for (let i = 0; i < popular_items.length; i++) {
         this.products[i] = [popular_items[i].name, popular_items[i].path];
       }
     });

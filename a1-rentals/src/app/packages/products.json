@@ -1,163 +1,190 @@
 {
     "product": {
-        "pole tent": [
-            {
-                "dimensions": "20 x 20",
-                "color": "white",
-                "price": 275
-            },
-            {
-                "dimensions": "20 x 30",
-                "color": "white",
-                "price": 415
-            },
-            {
-                "dimensions": "20 x 40",
-                "color": "white",
-                "price": 515
-            },
-            {
-                "dimensions": "30 x 30",
-                "color": "white",
-                "price": 545
-            },
-            {
-                "dimensions": "30 x 45",
-                "color": "white",
-                "price": 845
-            },
-            {
-                "dimensions": "30 x 60",
-                "color": "white",
-                "price": 1145
-            },
-            {
-                "dimensions": "30 x 75",
-                "color": "white",
-                "price": 1445
-            },
-            {
-                "dimensions": "30 x 90",
-                "color": "white",
-                "price": 1345
-            },
-            {
-                "dimensions": "40 x 40",
-                "color": "white",
-                "price": 825
-            },
-            {
-                "dimensions": "40 x 60",
-                "color": "white",
-                "price": 1125
-            },
-            {
-                "dimensions": "40 x 80",
-                "color": "white",
-                "price": 1450
-            },
-            {
-                "dimensions": "40 x 100",
-                "color": "white",
-                "price": 1725
-            },
-            {
-                "dimensions": "40 x 120",
-                "color": "white",
-                "price": 2100
-            },
-            {
-                "dimensions": "60 x 60",
-                "color": "white",
-                "price": 1575
-            },
-            {
-                "dimensions": "60 x 90",
-                "color": "white",
-                "price": 2175
-            },
-            {
-                "dimensions": "60 x 120",
-                "color": "white",
-                "price": 2775
-            }
-        ],
-        "frame tent": [
-            {
-                "dimensions": "10 x 10",
-                "color": "white",
-                "price": 125
-            },
-            {
-                "dimensions": "10 x 20",
-                "color": "white",
-                "price": 190
-            },
-            {
-                "dimensions": "10 x 30",
-                "color": "white",
-                "price": 270
-            },
-            {
-                "dimensions": "15 x 15",
-                "color": "white",
-                "price": 250
-            },
-            {
-                "dimensions": "20 x 20",
-                "color": "white",
-                "price": 275
-            },
-            {
-                "dimensions": "20 x 30",
-                "color": "white",
-                "price": 415
-            },
-            {
-                "dimensions": "20 x 40",
-                "color": "white",
-                "price": 475
-            },
-            {
-                "dimensions": "30 x 30",
-                "color": "white",
-                "price": 515
-            },
-            {
-                "dimensions": "30 x 45",
-                "color": "white",
-                "price": 895
-            },
-            {
-                "dimensions": "30 x 60",
-                "color": "white",
-                "price": 1175
-            },
-            {
-                "dimensions": "40 x 40",
-                "color": "white",
-                "price": 975
-            },
-            {
-                "dimensions": "40 x 60",
-                "color": "white",
-                "price": 1475
-            },
-            {
-                "dimensions": "40 x 80",
-                "color": "white",
-                "price": 1975
-            },
-            {
-                "dimensions": "40 x 100",
-                "color": "white",
-                "price": 2495
-            }
-        ],
-        "tent accessory": {
-            "sidewalls": [
+        "Tents": {
+            "Elite Pole Tents": [
                 {
-                    "style":"solid white",
+                    "dimensions": "20 x 20",
+                    "color": "White",
+                    "capacity": 40,
+                    "price": 275
+                },
+                {
+                    "dimensions": "20 x 30",
+                    "color": "White",
+                    "capacity": 60,
+                    "price": 415
+                },
+                {
+                    "dimensions": "20 x 40",
+                    "color": "White",
+                    "capacity": 80,
+                    "price": 515
+                },
+                {
+                    "dimensions": "30 x 30",
+                    "color": "White",
+                    "capacity": 90,
+                    "price": 545
+                },
+                {
+                    "dimensions": "30 x 45",
+                    "color": "White",
+                    "capacity": 135,
+                    "price": 845
+                },
+                {
+                    "dimensions": "30 x 60",
+                    "color": "White",
+                    "capacity": 180,
+                    "price": 1145
+                },
+                {
+                    "dimensions": "30 x 75",
+                    "color": "White",
+                    "capacity": 225,
+                    "price": 1445
+                },
+                {
+                    "dimensions": "30 x 90",
+                    "color": "White",
+                    "capacity": 270,
+                    "price": 1345
+                },
+                {
+                    "dimensions": "40 x 40",
+                    "color": "White",
+                    "capacity": 160,
+                    "price": 825
+                },
+                {
+                    "dimensions": "40 x 60",
+                    "color": "White",
+                    "capacity": 240,
+                    "price": 1125
+                },
+                {
+                    "dimensions": "40 x 80",
+                    "color": "White",
+                    "capacity": 320,
+                    "price": 1450
+                },
+                {
+                    "dimensions": "40 x 100",
+                    "color": "White",
+                    "capacity": 400,
+                    "price": 1725
+                },
+                {
+                    "dimensions": "40 x 120",
+                    "color": "White",
+                    "capacity": 480,
+                    "price": 2100
+                },
+                {
+                    "dimensions": "60 x 60",
+                    "color": "White",
+                    "capacity": 360,
+                    "price": 1575
+                },
+                {
+                    "dimensions": "60 x 90",
+                    "color": "White",
+                    "capacity": 540,
+                    "price": 2175
+                },
+                {
+                    "dimensions": "60 x 120",
+                    "color": "White",
+                    "capacity": 720,
+                    "price": 2775
+                }
+            ],
+            "Frame Tents": [
+                {
+                    "dimensions": "10 x 10",
+                    "color": "White",
+                    "price": 125
+                },
+                {
+                    "dimensions": "10 x 20",
+                    "color": "White",
+                    "price": 190
+                },
+                {
+                    "dimensions": "10 x 30",
+                    "color": "White",
+                    "price": 270
+                },
+                {
+                    "dimensions": "15 x 15",
+                    "color": "White",
+                    "capacity": 20,
+                    "price": 250
+                },
+                {
+                    "dimensions": "20 x 20",
+                    "color": "White",
+                    "capacity": 40,
+                    "price": 275
+                },
+                {
+                    "dimensions": "20 x 30",
+                    "color": "White",
+                    "capacity": 60,
+                    "price": 415
+                },
+                {
+                    "dimensions": "20 x 40",
+                    "color": "White",
+                    "capacity": 80,
+                    "price": 475
+                },
+                {
+                    "dimensions": "30 x 30",
+                    "color": "White",
+                    "capacity": 90,
+                    "price": 515
+                },
+                {
+                    "dimensions": "30 x 45",
+                    "color": "White",
+                    "capacity": 135,
+                    "price": 895
+                },
+                {
+                    "dimensions": "30 x 60",
+                    "color": "White",
+                    "capacity": 180,
+                    "price": 1175
+                },
+                {
+                    "dimensions": "40 x 40",
+                    "color": "White",
+                    "capacity": 160,
+                    "price": 975
+                },
+                {
+                    "dimensions": "40 x 60",
+                    "color": "White",
+                    "capacity": 240,
+                    "price": 1475
+                },
+                {
+                    "dimensions": "40 x 80",
+                    "color": "White",
+                    "capacity": 320,
+                    "price": 1975
+                },
+                {
+                    "dimensions": "40 x 100",
+                    "color": "White",
+                    "capacity": 400,
+                    "price": 2495
+                }
+            ],
+            "Tent Accessories": [
+                {
+                    "style":"Solid White",
                     "price":"20/20ft"
                 },
                 {
@@ -167,9 +194,7 @@
                 {
                     "style": "sidewall door",
                     "price": 30
-                }
-            ],
-            "pole curtains": [
+                },
                 {
                     "poles": "side",
                     "price": 15,
@@ -189,9 +214,7 @@
                     "poles": "center",
                     "price": 25,
                     "vinyl": true
-                }
-            ],
-            "tent liner": [
+                },
                 {
                     "length": 20,
                     "price": 0.5
@@ -199,193 +222,138 @@
                 {
                     "length": 40,
                     "price": 0.5
+                },
+                {
+                    "length": 10,
+                    "price": 10
                 }
-            ],
-            "rain gutters": {
-                "length": 10,
-                "price": 10
-            }
+            ]
         },
-        "lighting": {
-            "extension cord": [
-                {
-                    "length": 50,
-                    "price": 5
-                },
-                {
-                    "length": 100,
-                    "price": 10
-                }
-            ],
-            "dimmer": [
-                {
-                    "power": 600,
-                    "price": 10
-                },
-                {
-                    "power": 1200,
-                    "price": 15
-                }
-            ],
-            "buclet/barrel": [
-                {
-                    "type": "cement bucket",
-                    "price": 10
-                },
-                {
-                    "type": "water barrel",
-                    "price": 10
-                }
-            ],
-            "chandelier": {
-                "number of lights": 10,
-                "price": 99
+        "Lighting": [
+            {
+                "name": "Starlight Streamers",
+                "price": 45
             },
-            "starlight streamers": {
-                "price": 0.40
-            },
-            "hanging 4-globe lamps": {
+            {
+                "name": "Hanging 4-GLobe Lamps (set of 2) w/ brackets and arms",
                 "price": 95
             },
-            "uplighting": {
+            {
+                "name": "Extension Cord, White 50'",
+                "price": 5
+            },
+            {
+                "name": "Extension Cord, White 100'",
+                "price": 15
+            },
+            {
+                "name": "Dimmer,  1200 Watt, 50' Cord",
+                "price": 15
+            },
+            {
+                "name": "Dimmer, 600 Watt, 50' Cord",
+                "price": 10
+            },
+            {
+                "name": "Chantilly Chandelier, 10 Lights",
+                "price": 99
+            },
+            {
+                "name": "Uplighting, ez par 64, many colors",
                 "price": 25
             }
-        },
-        "table": [
-            {
-                "style": "rectangle",
-                "seats": "6-8",
-                "dimensions": "6 x 30",
-                "price": 8,
-                "lights": false
-            },
-            {
-                "style": "rectangle",
-                "seats": "8-10",
-                "dimensions": "8 x 30",
-                "price": "9",
-                "lights": false
-            },
-            {
-                "style": "children rectangle",
-                "seats": "6-8",
-                "dimensions": "6 x 24",
-                "price": 9,
-                "lights": false
-            },
-            {
-                "style": "round",
-                "seats": "6-8",
-                "dimensions": "48",
-                "price": 8,
-                "lights": false
-            },
-            {
-                "style": "round",
-                "seats": "8-10",
-                "dimensions": "60",
-                "price": 9,
-                "lights": false
-            },
-            {
-                "style": "cabaret",
-                "seats": null,
-                "dimensions": "30",
-                "price": 11,
-                "lights": false
-            },
-            {
-                "style": "cabaret",
-                "seats": null,
-                "dimensions": "42",
-                "price": 12,
-                "lights": false
-            },
-            {
-                "style": "serpentine",
-                "seats": null,
-                "dimensions": null,
-                "price": 10,
-                "lights": false
-            },
-            {
-                "style": "square",
-                "seats": null,
-                "dimensions": "4 x 4",
-                "price": 10,
-                "lights": false
-            },
-            {
-                "style": "rustic farm rectangle with benches",
-                "seats": "10",
-                "dimensions": "8 x 40",
-                "price": 89,
-                "lights": false
-            },
-            {
-                "style": "single whiskey barrel cocktail",
-                "seats": null,
-                "dimensions": "36 H x 32 D",
-                "price": 45,
-                "lights": false
-            },
-            {
-                "style": "double whiskey barrel with table top",
-                "seats": null,
-                "dimensions": "6 x 32",
-                "price": 125,
-                "lights": false
-            },
-            {
-                "style": "coffee table",
-                "seats": null,
-                "dimensions": null,
-                "price": 35,
-                "lights": true
-            },
-            {
-                "style": "hi-boy with barstools",
-                "seats": "2",
-                "dimensions": "30 x 42",
-                "price": 129,
-                "lights": true
-            },
-            {
-                "style": "hi-boy with footrest, barstools",
-                "seats": "2",
-                "dimensions": "21 x 42",
-                "price": 129,
-                "lights": true
-            },
-            {
-                "style": "cube",
-                "seats": null,
-                "dimensions": "16 x 16",
-                "price": 19,
-                "lights": true
-            },
-            {
-                "style": "accent glass top",
-                "seats": null,
-                "dimensions": null,
-                "price": 25,
-                "lights": true
-            },
-            {
-                "style": "rectangle",
-                "seats": null,
-                "dimensions": "8 x 30",
-                "price": 35,
-                "lights": true
-            },
-            {
-                "style": "cabaret",
-                "seats": null,
-                "dimensions": "30 x 40",
-                "price": 35,
-                "lights": true
-            }
         ],
+        "Tables": {
+            "Rectangle Tables": [
+                {
+                    "name": "Table rental 6' x 30\"",
+                    "capacity": "seats 6-8 people",
+                    "price": 8
+                },
+                {
+                    "name": "Table rental 8' x 30\"",
+                    "capacity": "seats 8-10 people",
+                    "price": 9
+                },
+                {
+                    "name": "Rustic Famr Table set with benches, 8' x 40\"",
+                    "capacity": "seats 8-10",
+                    "price": 89
+                },
+                {
+                    "name": "Single Barrel Cocktail Table 36\" x 32\"",
+                    "price": 45
+                },
+                {
+                    "name": "Double Barrel Table, 6' x 32\"",
+                    "price": 125
+                },
+                {
+                    "name": "Children's Table rental, 6' x 24\"",
+                    "capacity": "seats 6-8 people",
+                    "price": 9
+                },
+                {
+                    "name": "L.E.D. Coffee table",
+                    "price": 35
+                },
+                {
+                    "name": "L.E.D. Hi-Boy Table, 30\" D x 42\" H, w/2 Barstools",
+                    "price": 129
+                },
+                {
+                    "name": "L.E.D. Hi-Boy Table, w/footrest, 21\" D x 42\" H, w/2 Barstools",
+                    "price": 129
+                },
+                {
+                    "name": "L.E.D. Cube, 16\" x16\"",
+                    "price": 19
+                },
+                {
+                    "name": "L.E.D. Cube, 20\" x20\"",
+                    "price": 22
+                },
+                {
+                    "name": "L.E.D. Accent Glass Top Table",
+                    "price": 25
+                }
+            ],
+            "Lighted Tables": [
+                {
+                    "name": "Rectangle, includes white spandex/light",
+                    "size": "8' Rectangle",
+                    "price": 35
+                },
+                {
+                    "name": "Cabaret Table, includes white spandex/light",
+                    "size": "30\"D x 42\"H",
+                    "price": 35
+                }
+            ],
+            "Round Tables": [
+                {
+                    "name": "Table rental, 48\" round (4')",
+                    "capacity": "seats 6-8",
+                    "price": 8
+                },
+                {
+                    "name": "Table rental, 60\" round (5')",
+                    "capacity": "seats 8-10 people",
+                    "price": 9
+                },
+                {
+                    "name": "Table rental, 30\" cabaret, 42\" or 30\" tall",
+                    "price": 11
+                },
+                {
+                    "name": "Table rental, 36\" cabaret, 42\" or 30\" tall",
+                    "price": 12
+                }
+            ],
+            "Specialty Tables": [
+
+            ]
+        },
         "bar": {
             "lighted": [
                 {
@@ -417,7 +385,7 @@
                 },
                 {
                     "dimensions": "6",
-                    "color": "white wood",
+                    "color": "White wood",
                     "price": 70
                 }
             ],
@@ -450,7 +418,7 @@
                     "price": 1.25
                 },
                 {
-                    "type": "poly/metal white",
+                    "type": "poly/metal White",
                     "price": 1.75
                 },
                 {
@@ -802,31 +770,31 @@
         "tableware": {
             "China": [
                 {
-                    "style": "royal white",
+                    "style": "royal White",
                     "type": "dinner plate",
                     "dimension": 10.625,
                     "price": 0.40
                 },
                 {
-                    "style": "royal white",
+                    "style": "royal White",
                     "type": "salad/dessert plate",
                     "dimension": 8,
                     "price": 0.35
                 },
                 {
-                    "style": "royal white",
+                    "style": "royal White",
                     "type": "bread & butter plate",
                     "dimension": 7.5,
                     "price": 0.35
                 },
                 {
-                    "style": "royal white",
+                    "style": "royal White",
                     "type": "coffee cup & saucer",
                     "dimension": 6.5,
                     "price": 0.70
                 },
                 {
-                    "style": "royal white",
+                    "style": "royal White",
                     "type": "soup bowl",
                     "dimension": null,
                     "price": 0.50
@@ -904,25 +872,25 @@
                     "price": 0.90
                 },
                 {
-                    "style": "artisan square white",
+                    "style": "artisan square White",
                     "type": "dinner plate",
                     "dimension": 10.75,
                     "price": 0.50
                 },
                 {
-                    "style": "artisan square white",
+                    "style": "artisan square White",
                     "type": "salad/dessert plate",
                     "dimension": 8.25,
                     "price": 0.45
                 },
                 {
-                    "style": "artisan square white",
+                    "style": "artisan square White",
                     "type": "bread & butter plate",
                     "dimension": 7,
                     "price": 0.45
                 },
                 {
-                    "style": "artisan square white",
+                    "style": "artisan square White",
                     "type": "coffee cup & saucer",
                     "dimension": null,
                     "price": 0.90
@@ -1288,7 +1256,7 @@
             {
                 "type":"pipe and drape section",
                 "dimensions": "10 x 8",
-                "color": "white banjo",
+                "color": "White banjo",
                 "price": 35
             },
             {
@@ -1300,7 +1268,7 @@
             {
                 "type":"pipe and drape section",
                 "dimensions": "10 x 8",
-                "color": "white sheer",
+                "color": "White sheer",
                 "price": 35
             },
             {
@@ -1336,7 +1304,7 @@
             {
                 "type":"wedding canopy rental",
                 "dimensions": "10 x 10 x 10 x 8",
-                "color": "white sheer",
+                "color": "White sheer",
                 "price": 160
             }
         ],

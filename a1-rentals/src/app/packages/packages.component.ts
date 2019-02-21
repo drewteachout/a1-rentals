@@ -14,10 +14,22 @@ export class PackagesComponent implements OnInit {
   }
 
   buttonClicked() {
+    this.db.collection('/popular').doc('YtLOsxneLuqWfdyHx9Wn').set({
+      name: 'Elite Pole Tents',
+      path: '../assets/images/ElitePollTent.jpg'
+    });
+    this.db.collection('/popular').doc('iyaTVYdQnYBLkzanfiTx').set({
+      name: 'Tables',
+      path: '../assets/images/RectangleTables.jpg'
+    });
+    this.db.collection('/popular').doc('vzlrfFkKhndY24pmQ7bT').set({
+      name: 'Chairs',
+      path: '../assets/images/blackChair.jpg'
+    });
     let count: number = 0;
-    const jsonContent = require("./products.json")['product'];
+    const jsonContent = require('./products.json')['product'];
     Object.keys(jsonContent).forEach(key => {
-        //add key to product list
+      //add key to product list
       this.db.collection('/products')
       .doc(key.replace('/', '-'))
       .set({

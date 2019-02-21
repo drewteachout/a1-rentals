@@ -22,11 +22,10 @@ export class TabsComponent implements OnInit {
     this.tab1 = ['Popular Products', []];
     this.tab2 = ['Rental Products', []];
     this.db.collection('/products').valueChanges().subscribe((productNames: any[]) => {
-      this.tab2[1] = []
+      this.tab2[1] = [];
       productNames.forEach(product => {
         if (!product['hidden']) {
           this.db.collection('/' + product['collection_name']).valueChanges().subscribe((productInfo: any) => {
-            console.log('Updating ' + productInfo)
             const nextProductList: any[] = [product['display_name'], []]
             for (let i = 0; i < productInfo.length; i++) {
               if (productInfo[i].hasOwnProperty('name')) {

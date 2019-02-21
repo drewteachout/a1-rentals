@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from "@angular/core";
-import {ICellRendererAngularComp} from "ag-grid-angular";
+import {Component, Input, OnInit} from '@angular/core';
+import {ICellRendererAngularComp} from 'ag-grid-angular';
 
 @Component({
     selector: 'app-toggle-switch',
@@ -11,11 +11,11 @@ export class ToggleSwitchComponent implements ICellRendererAngularComp, OnInit {
     private state: boolean;
 
     ngOnInit() {
-      console.log(this.state)
+      console.log(this.state);
     }
     agInit(params: any): void {
         this.params = params;
-        this.state = this.params.data.hidden
+        this.state = this.params.data.hidden;
     }
 
     refresh(): boolean {
@@ -23,6 +23,8 @@ export class ToggleSwitchComponent implements ICellRendererAngularComp, OnInit {
     }
 
     public invokeParentMethod() {
-      this.params.context.componentParent.toggleHidden({row: this.params.node.rowIndex, hidden: this.state});
+      if (this.state !== undefined) {
+        this.params.context.componentParent.toggleHidden({row: this.params.node.rowIndex, hidden: this.state});
+      }
     }
 }

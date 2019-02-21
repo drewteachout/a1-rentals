@@ -9,6 +9,8 @@
       class="ag-theme-balham"
       [rowData]="rowData"
       [columnDefs]="columnDefs"
+      [getNodeChildDetails]="getNodeChildDetails"
+      (gridReady)="onGridReady($event)"
       >
     </ag-grid-angular>
   </div>

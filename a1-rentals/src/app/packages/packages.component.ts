@@ -34,7 +34,7 @@ export class PackagesComponent implements OnInit {
       .doc(key.replace('/', '-'))
       .set({
         collection_name: key.replace('/', '-'),
-        hidden: true,
+        hidden: false,
         display_name: key,
         display_order: count
       }).then(() => {
@@ -55,7 +55,7 @@ export class PackagesComponent implements OnInit {
               .doc(docTitle.replace('/', '-'))
               .set({
                 array: true,
-                hidden: true,
+                hidden: false,
                 name: docTitle
               })
               .then((res) => {

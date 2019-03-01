@@ -6,9 +6,10 @@
     <button class="circle primary" (click)="addProductGroup()">+</button>
     <button *ngIf="currentGroupSelection != undefined && !currentGroupSelection.hidden" id="groupButton" class="button-std primary space" (click)="toggleGroupHidden()">Hide Group</button>
     <button *ngIf="currentGroupSelection != undefined && currentGroupSelection.hidden" id="groupButton" class="button-std primary space" (click)="toggleGroupHidden()">Show Group</button>
+    <button *ngIf="subGroups.length === 0 && rowData.length === 0 && currentGroupSelection != null" id="groupButton" class="button-std primary space" (click)="addProductSubGroup()">Add Subgroup</button>
     <button class="right" *ngIf="subGroups.length == 0 && currentGroupSelection != undefined" class="button-std primary right" (click)="addProduct()">Add Product</button>
     <div class="indent" *ngIf="subGroups.length > 0">
-      <select class="groups" [(ngModel)]='currentSubGroupSelection' (ngModelChange)='subGroupValueChanged()'>
+      <select class="groups" [(ngModel)]='currentSubGroupSelection' (ngModelChange)='subGroupValueChanged()' [disabled]="subGroups.length == 0">
         <option *ngFor="let group of subGroups" [ngValue]="group">{{group.name}}</option>
       </select>
       <button class="circle primary" (click)="addProductSubGroup()">+</button>
@@ -37,7 +38,7 @@
     <div class="product-content">
       <div>
         <input [(ngModel)]="newProductGroup" class="field-input" type="text" placeholder="Product Group Name">
-        <button class="button-std primary" (click)="addSubTabClicked()">Add Sub-Group</button>
+        <button class="button-std primary" (click)="addSubTabClicked()">Add Subgroup</button>
         <div class="indent-subgroups" *ngFor="let subgroup of newSubGroups; let i = index">
           <input [(ngModel)]="subgroup.name" type="text" placeholder="SubGroup Name">
           <button class="circle primary" (click)='removeSubGroup(i)'>-</button>
@@ -52,7 +53,20 @@
 
 
   <app-modal id="addProductSubGroupModal">
-    <h1>Modal Works</h1>
+      <div *ngIf="currentGroupSelection != undefined" class="top primary">
+          <h2>Add Subgroup To {{currentGroupSelection.name}}</h2>
+      </div>
+      <div class="product-content">
+        <div *ngFor="let obj of newSubGroupObjects; let i = index;">
+          <h3 style="display: inline">{{i + 1}}.</h3>
+          <input [(ngModel)]="newSubGroupObjects[i].name" class="field-input" type="text" placeholder="New Subgroup Name">
+          <button *ngIf="i !== 0" class="circle primary" (click)='removeSubGroupObject(i)'>-</button>
+          <button *ngIf="i===(newSubGroupObjects.length - 1)" (click)="addSubGroup()" class="add-field button-secondary primary">Add Subgroup</button>
+        </div>
+        <div class="right-submit">
+          <button class="button-std primary" (click)="addNewSubGroup()">Submit</button>
+        </div>
+      </div>
   </app-modal>
 
 

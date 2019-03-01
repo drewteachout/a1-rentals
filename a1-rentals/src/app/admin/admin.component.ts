@@ -16,8 +16,8 @@ export class AdminComponent implements OnInit {
   public gridOptions: GridOptions;
   currentGroupSelection: any;
   private newProductObjects: any[] = [{key: 'Name', value: ''}];
+  private newSubGroupObjects: any[] = [{name: ''}];
   private newProductGroup = '';
-  private hasSubGroup = false;
   private newSubGroups: any[] = [];
   currentSubGroupSelection: any;
   hidden: boolean = false;
@@ -35,6 +35,10 @@ export class AdminComponent implements OnInit {
           hidden: element['hidden'],
           orderNum: element['display_order']});
       });
+      if (this.currentGroupSelection === undefined) {
+        this.currentGroupSelection = this.products.length === 0 ? {name: ''} : this.products[0];
+        this.groupValueChanged();
+      }
     });
     this.gridOptions = <GridOptions>{
       rowData: this.rowData,
@@ -50,25 +54,31 @@ export class AdminComponent implements OnInit {
 
   groupValueChanged() {
     this.currentSubGroupSelection = null;
-    let newRowData = [];
+    console.log(this.currentGroupSelection);
     this.db.collection('/' + this.currentGroupSelection.db_name).valueChanges().pipe(map(productSubGroups => {
-      return productSubGroups.filter(element => element.hasOwnProperty('array'));
+      return productSubGroups.filter((element: any) => element.hasOwnProperty('array') && element.array);
     })).subscribe((subGroups) => {
       if (this.currentSubGroupSelection == null) {
         this.subGroups = subGroups;
+        console.log(this.subGroups.length);
+        console.log(this.subGroups);
+        if (this.subGroups.length !== 0) {
+          this.currentSubGroupSelection = this.subGroups[0]
+          this.subGroupValueChanged();
+        }
       }
     });
     this.db.collection('/' + this.currentGroupSelection.db_name).valueChanges().pipe(map(productSubGroups => {
       return productSubGroups.filter(element => !element.hasOwnProperty('array'));
     })).subscribe((products: []) => {
       if (products !== undefined && products.length > 0) {
-        let mySet = new Set();
+        const mySet = new Set();
         products.forEach((product: any) => {
           Object.keys(product).forEach((key) => {
             mySet.add(key);
-          })
+          });
         });
-        let newColDefs = [];
+        const newColDefs = [];
         mySet.forEach((key) => {
           newColDefs.push({
             field: key
@@ -78,24 +88,24 @@ export class AdminComponent implements OnInit {
       }
       if (this.currentSubGroupSelection == null) {
         this.rowData = products;
-        console.log(products)
+        console.log(products);
       }
     });
   }
 
   subGroupValueChanged() {
-    let dbSub = this.db.collection('/' + this.currentGroupSelection.db_name)
+    this.db.collection('/' + this.currentGroupSelection.db_name)
     .doc(this.currentSubGroupSelection.name.replace('/', ','))
     .collection(this.currentSubGroupSelection.name.replace('/', ',')).valueChanges()
     .subscribe((products: any[]) => {
       if (products !== undefined && products.length > 0) {
-        let mySet = new Set();
+        const mySet = new Set();
         products.forEach((product: any) => {
           Object.keys(product).forEach((key) => {
             mySet.add(key);
-          })
+          });
         });
-        let newColDefs = [];
+        const newColDefs = [];
         mySet.forEach((key) => {
           newColDefs.push({
             field: key
@@ -188,7 +198,7 @@ export class AdminComponent implements OnInit {
    console.log(this.newSubGroups);
  }
 
- removeSubGroup(index) {
+ removeSubGroup(index: number) {
    if (index !== this.newSubGroups.length - 1) {
     this.newSubGroups = this.newSubGroups.slice(0, index).concat(this.newSubGroups.slice(index + 1));
    } else {
@@ -198,7 +208,7 @@ export class AdminComponent implements OnInit {
 
  addNewProductGroup() {
    if (this.newSubGroups.length === 0) {
-    this.db.collection('/' + this.newProductGroup).doc('dummy').set({});
+    this.db.collection('/' + this.newProductGroup).doc('dummy').set({array: false});
    } else {
      this.newSubGroups.forEach((element) => {
        this.db.collection(this.newProductGroup).doc(element.name).set({array: true, hidden: false, name: element.name});
@@ -207,5 +217,29 @@ export class AdminComponent implements OnInit {
    }
    this.closeModal('addProductGroupModal');
  }
+
+ addSubGroup() {
+  this.newSubGroupObjects.push({name: ''});
+}
+
+addNewSubGroup() {
+  if (this.newSubGroupObjects.length === 0) {
+    alert('Cannot add 0 subgroups');
+  } else {
+    this.newSubGroupObjects.forEach(element => {
+      if (String(element.name).length !== 0) {
+        this.db.collection(this.currentGroupSelection.db_name).doc(element.name).set({array: true, hidden: false, name: element.name});
+      }
+    });
+  }
+}
+
+removeSubGroupObject(index: number) {
+  if (index !== this.newSubGroupObjects.length - 1) {
+    this.newSubGroupObjects = this.newSubGroupObjects.slice(0, index).concat(this.newSubGroupObjects.slice(index + 1));
+   } else {
+     this.newSubGroupObjects.pop();
+   }
+}
 
 }

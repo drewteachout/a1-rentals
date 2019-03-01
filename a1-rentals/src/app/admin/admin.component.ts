@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { ToggleSwitchComponent } from './toggle-switch/toggle-switch.component';
 import { GridOptions } from 'ag-grid-community';
+import { map } from 'rxjs/operators';
+import { ModalService } from '../services/modal.service';
 
 @Component({
   selector: 'app-admin',
@@ -12,23 +14,19 @@ import { GridOptions } from 'ag-grid-community';
 export class AdminComponent implements OnInit {
 
   public gridOptions: GridOptions;
-  currentSelection: any;
-  private getNodeChildDetails;
+  currentGroupSelection: any;
+  private newProductObjects: any[] = [{key: 'Name', value: ''}];
+  private newProductGroup = '';
+  private hasSubGroup = false;
+  private newSubGroups: any[] = [];
+  currentSubGroupSelection: any;
   hidden: boolean = false;
-  columnDefs = [
-    {headerName: 'Product name', field: 'name', width: 200},
-    {headerName: 'Hidden',
-      field: 'hidden',
-      cellRendererFramework: ToggleSwitchComponent,
-      editable: true,
-      colId: 'toggle',
-      width: 200,
-      cellClass: 'toggle-class'
-    }
-  ];
+  columnDefs = [];
+  private gridApi;
   products: any[] = [];
+  subGroups: any[] = [];
   rowData: any[] = [];
-  constructor(private db: AngularFirestore) {
+  constructor(private db: AngularFirestore, private modalService: ModalService) {
     this.db.collection('/products').valueChanges().subscribe((productNames: any[]) => {
       productNames.forEach(element => {
         this.products.push({
@@ -45,75 +43,169 @@ export class AdminComponent implements OnInit {
           componentParent: this
       }
     };
-    this.getNodeChildDetails = function getNodeChildDetails(rowItem) {
-      console.log(rowItem);
-      if (rowItem.products) {
-        console.log(rowItem.products);
-        return {
-          group: true,
-          expanded: false,
-          children: rowItem.products,
-          key: rowItem.name
-        };
-      } else {
-        console.log('No Products found in group');
-        return null;
-      }
-    };
   }
 
   ngOnInit() {
   }
 
-  valueChanged() {
-    console.log(this.currentSelection);
-    this.db.collection('/' + this.currentSelection.db_name).valueChanges().subscribe((productSubGroups: any[]) => {
-      const newRowData = [];
-      if (productSubGroups.length > 0 && productSubGroups[0].hasOwnProperty('array')) {
-        console.log('Subgroups found');
-        productSubGroups.forEach(productSubGroup => {
-          console.log(productSubGroup);
-          this.db.collection('/' + this.currentSelection.db_name)
-          .doc(productSubGroup['name'].replace('/', '-'))
-          .collection(productSubGroup['name'].replace('/', '-')).valueChanges().subscribe((products) => {
-            newRowData.push({
-              name: productSubGroup['name'],
-              hidden: productSubGroup['hidden'],
-              products: products
-            });
-            console.log(newRowData);
+  groupValueChanged() {
+    this.currentSubGroupSelection = null;
+    let newRowData = [];
+    this.db.collection('/' + this.currentGroupSelection.db_name).valueChanges().pipe(map(productSubGroups => {
+      return productSubGroups.filter(element => element.hasOwnProperty('array'));
+    })).subscribe((subGroups) => {
+      if (this.currentSubGroupSelection == null) {
+        this.subGroups = subGroups;
+      }
+    });
+    this.db.collection('/' + this.currentGroupSelection.db_name).valueChanges().pipe(map(productSubGroups => {
+      return productSubGroups.filter(element => !element.hasOwnProperty('array'));
+    })).subscribe((products: []) => {
+      if (products !== undefined && products.length > 0) {
+        let mySet = new Set();
+        products.forEach((product: any) => {
+          Object.keys(product).forEach((key) => {
+            mySet.add(key);
+          })
+        });
+        let newColDefs = [];
+        mySet.forEach((key) => {
+          newColDefs.push({
+            field: key
           });
         });
-      } else {
-        console.log('Only products here');
-        newRowData.push( {
-          name: this.currentSelection.name,
-          products: productSubGroups
-        });
-        console.log(newRowData);
+        this.columnDefs = newColDefs;
       }
-      this.rowData = newRowData;
-    });
-    this.db.collection('/products').doc(this.currentSelection.db_name).valueChanges().subscribe((docObject) => {
-      this.hidden = docObject['hidden'];
+      if (this.currentSubGroupSelection == null) {
+        this.rowData = products;
+        console.log(products)
+      }
     });
   }
 
-  public toggleHidden(cell) {
-    this.db.collection('/' + this.currentSelection.db_name)
-    .doc(this.rowData[cell.row].name.replace('/', '-'))
-    .update({hidden: cell.hidden});
+  subGroupValueChanged() {
+    let dbSub = this.db.collection('/' + this.currentGroupSelection.db_name)
+    .doc(this.currentSubGroupSelection.name.replace('/', ','))
+    .collection(this.currentSubGroupSelection.name.replace('/', ',')).valueChanges()
+    .subscribe((products: any[]) => {
+      if (products !== undefined && products.length > 0) {
+        let mySet = new Set();
+        products.forEach((product: any) => {
+          Object.keys(product).forEach((key) => {
+            mySet.add(key);
+          })
+        });
+        let newColDefs = [];
+        mySet.forEach((key) => {
+          newColDefs.push({
+            field: key
+          });
+        });
+        this.columnDefs = newColDefs;
+      }
+      this.rowData = products;
+      console.log(products);
+    });
   }
 
   exposeSubTab() {
-    if(this.currentSelection !== undefined) {
-      this.db.collection('/products').doc(this.currentSelection.db_name).update({hidden: this.hidden});
+    if (this.currentGroupSelection !== undefined) {
+      this.db.collection('/products').doc(this.currentGroupSelection.db_name).update({hidden: this.hidden});
     }
   }
 
   onGridReady(params) {
+    this.gridApi = params.api;
     params.api.sizeColumnsToFit();
-    console.log(this.rowData)
   }
+
+  addProductSubGroup() {
+    this.openModal('addProductSubGroupModal');
+    console.log('add product subgroup clicked');
+  }
+
+  addProductGroup() {
+    console.log('add product group clicked');
+    this.openModal('addProductGroupModal');
+  }
+
+  addProduct() {
+    this.openModal('addProductModal');
+    console.log('add product clicked');
+  }
+
+  toggleGroupHidden() {
+    this.db.collection('/products').doc(this.currentGroupSelection.db_name).update({
+      hidden: !this.currentGroupSelection.hidden
+    });
+    this.currentGroupSelection.hidden = !this.currentGroupSelection.hidden;
+    console.log('toggle group hidden clicked');
+  }
+
+  toggleSubGroupHidden() {
+    console.log(this.currentSubGroupSelection);
+    this.db.collection(this.currentGroupSelection.db_name).doc(this.currentSubGroupSelection.name.replace('/', '-')).update({
+      hidden: !this.currentSubGroupSelection.hidden
+    });
+    this.currentSubGroupSelection.hidden = !this.currentSubGroupSelection.hidden;
+    console.log(this.currentSubGroupSelection);
+  }
+
+  openModal(id: string) {
+    console.log(id);
+    this.modalService.open(id);
+  }
+
+  closeModal(id: string) {
+    this.modalService.close(id);
+  }
+
+  addNewProduct() {
+    console.log(this.newProductObjects);
+    const newObj = {};
+      this.newProductObjects.forEach(element => {
+        newObj[String(element.key).toLowerCase()] = element.value;
+      });
+    if (this.currentSubGroupSelection == null) {
+      this.db.collection(this.currentGroupSelection.db_name).doc(this.db.createId()).set(newObj);
+    } else {
+      this.db.collection(this.currentGroupSelection.db_name)
+      .doc(this.currentSubGroupSelection.name.replace('/', '-'))
+      .collection(this.currentSubGroupSelection.name.replace('/', '-'))
+      .doc(this.db.createId()).set(newObj);
+    }
+    this.newProductObjects = [{key: 'name', value: ''}];
+    this.closeModal('addProductModal');
+  }
+
+  addProductField() {
+    this.newProductObjects.push({key: '', value: ''});
+  }
+
+ addSubTabClicked() {
+   console.log('add Subtab Clicked');
+   this.newSubGroups.push({name: ''});
+   console.log(this.newSubGroups);
+ }
+
+ removeSubGroup(index) {
+   if (index !== this.newSubGroups.length - 1) {
+    this.newSubGroups = this.newSubGroups.slice(0, index).concat(this.newSubGroups.slice(index + 1));
+   } else {
+     this.newSubGroups.pop();
+   }
+ }
+
+ addNewProductGroup() {
+   if (this.newSubGroups.length === 0) {
+    this.db.collection('/' + this.newProductGroup).doc('dummy').set({});
+   } else {
+     this.newSubGroups.forEach((element) => {
+       this.db.collection(this.newProductGroup).doc(element.name).set({array: true, hidden: false, name: element.name});
+       console.log('added ' + element.name + ' to ' + this.newProductGroup);
+     });
+   }
+   this.closeModal('addProductGroupModal');
+ }
 
 }

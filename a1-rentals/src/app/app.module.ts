@@ -28,6 +28,8 @@ import { ToggleSwitchComponent } from './admin/toggle-switch/toggle-switch.compo
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireModule } from '@angular/fire';
 import { SlideshowModule } from 'ng-simple-slideshow';
+import { ModalComponent } from './modal/modal.component';
+import { ModalService } from './services/modal.service';
 
 const appRoutes: Routes = [
   { path: 'Popular Products', component: HomepageComponent},
@@ -61,7 +63,8 @@ const appRoutes: Routes = [
     ContactComponent,
     QuoteCartComponent,
     AdminComponent,
-    ToggleSwitchComponent
+    ToggleSwitchComponent,
+    ModalComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -80,7 +83,7 @@ const appRoutes: Routes = [
     AngularFireModule.initializeApp(environment.firebase),
     SlideshowModule
   ],
-  providers: [QuoteCartServiceService],
+  providers: [QuoteCartServiceService, ModalService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

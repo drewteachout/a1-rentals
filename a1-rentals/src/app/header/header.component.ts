@@ -9,18 +9,18 @@ import { Router, NavigationEnd, RouterEvent } from '@angular/router';
 
 export class HeaderComponent implements OnInit {
 
-  private lastID: number = 0;
+  private lastID = 0;
 
   constructor(private router: Router) {
     router.events.subscribe((a: RouterEvent) => {
-      if(a instanceof NavigationEnd) {
+      if (a instanceof NavigationEnd) {
         let url = a.url.substring(1);
         url = url.replace('%20', ' ');
         document.getElementById('Popular Products').className = 'button-tab primary';
         document.getElementById('Rental Products').className = 'button-tab primary';
         document.getElementById('Packages').className = 'button-tab primary';
         document.getElementById('Contact Us').className = 'button-tab primary';
-        if(document.getElementById(url) != null) {
+        if (document.getElementById(url) != null) {
           document.getElementById(url).className = 'button-tab accent';
         }
       }

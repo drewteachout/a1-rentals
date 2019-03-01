@@ -70,7 +70,6 @@ export class ProductComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.productName = 'Chairs';
     this.quoteTotal = 0.00;
     this.total = '0.00';
   }

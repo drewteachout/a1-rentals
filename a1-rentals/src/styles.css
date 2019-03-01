@@ -14,27 +14,27 @@ body {
 }
 
 h1 {
-    font-family: "Mosk"; 
-    font-size: 70px;
+    font-family: "Champagne"; 
+    font-size: 80px;
     margin: 15px;
     /* color: #D98310; */
 }
 
 h2 {
-    font-family: "Mosk";
+    font-family: "Champagne";
     font-size: 44px;
     /* color: #D98310; */
 }
 
 h3 {
-    font-family: "Mosk";
-    font-size: 22px;
+    font-family: "Limousine";
+    font-size: 30px;
     /* color: #D98310; */
 }
 
 h4 {
-    font-family: "Mosk";
-    font-size: 16px;
+    font-family: "Limousine";
+    font-size: 20px;
     margin: 10px;
     /* color: #D98310; */
 }
@@ -44,8 +44,8 @@ img {
 }
 
 p {
-    font-family: "Mosk";
-    font-size: 16px;
+    font-family: "Limousine";
+    font-size: 18px;
     margin: 16px;
     color: white;
 }
@@ -53,14 +53,21 @@ p {
 /* 
     All global classes go here
 */
+.button-tab {
+    border: none;
+    color: white;
+    font-family: "Champagne";
+    font-size: 18px;
+    padding: 16px;
+}
+
 .button-std {
     border: none;
     /* box-shadow:inset 0px 34px 0px -15px #3e2b96; */
     color: #ffffff;
-    
     cursor: pointer;
-    font-size: 15px;
-    font-family: "Mosk";
+    font-size: 18px;
+    font-family: "Champagne";
     font-weight: bold;
     padding: 15px 40px;
 }
@@ -71,7 +78,7 @@ p {
     color: #ffffff;
     background-color: #328cc1;
     cursor: pointer;
-    font-size: 15px;
+    font-size: 19px;
     font-family: "Mosk";
     font-weight: bold;
     padding: 15px 40px;
@@ -81,7 +88,6 @@ p {
     All color options go here
 */
 .background {
-    /* background-color: #0b3c5d; */
     background-color: #F4F4F4;
 }
 
@@ -101,7 +107,7 @@ p {
 
 .accent {
     /* background-color: #813772; */
-    background-color: #C0B283;
+    background-color: #373737;
 }
 
 .default {
@@ -111,8 +117,16 @@ p {
 
 button:hover {
     /* background-color: #813772; */
-    background-color: #C0B283;
+    background-color: #373737;
     cursor: pointer;
+}
+
+.button-tab:hover{
+    background-color: #373737;
+}
+
+.button-tab-sub:hover{
+    background-color: #373737;
 }
 
 .text {
@@ -122,3 +136,52 @@ button:hover {
 .text-secondary {
     color: #646464;
 }
+
+/* MODAL STYLES
+-------------------------------*/
+app-modal { display: none; }
+.modal {
+    /* modal container fixed across whole screen */
+    display: block;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    /* z-index must be higher than .jw-modal-background */
+    z-index: 1000;
+     
+    /* enables scrolling for tall modals */
+    overflow: auto;
+}
+.modal .modal-body {
+
+    /* margin exposes part of the modal background */
+    margin-top: 15%;
+    margin-left: 20%;
+    margin-right: 20%;
+    padding: 0%;
+}
+
+.modal-background {
+    /* modal background fixed across whole screen */
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    /* semi-transparent black  */
+    background-color: #000;
+    opacity: 0.75;
+     
+    /* z-index must be below .jw-modal and above everything else  */
+    z-index: 900;
+}
+body.modal-open {
+    /* body overflow is hidden to hide main scrollbar when modal window is open */
+
+    overflow: hidden;
+}
+  

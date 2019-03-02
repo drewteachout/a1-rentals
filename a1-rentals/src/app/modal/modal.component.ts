@@ -1,6 +1,7 @@
 ﻿import { Component, ElementRef, Input, OnInit, OnDestroy } from '@angular/core';
 
 import { ModalService } from '../services/modal.service';
+import { By } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-modal',
@@ -25,9 +26,6 @@ export class ModalComponent implements OnInit, OnDestroy {
             return;
         }
 
-        // move element to bottom of page (just before </body>) so it can be displayed above everything else
-        document.body.appendChild(this.element);
-
         // close modal on background click
         this.element.addEventListener('click', function (e: any) {
             if (e.target.className === 'modal') {
@@ -36,9 +34,9 @@ export class ModalComponent implements OnInit, OnDestroy {
         });
 
         // add self (this modal instance) to the modal service so it's accessible from controllers
-        console.log(this);
+        //console.log(this);
         this.modalService.add(this);
-        console.log(this.modalService);
+        //console.log(this.modalService);
     }
 
     // remove self from modal service when directive is destroyed
@@ -49,13 +47,13 @@ export class ModalComponent implements OnInit, OnDestroy {
 
     // open modal
     open(): void {
-        this.element.style.display = 'block';
-        document.body.classList.add('modal-open');
+        const element = document.getElementById(this.id);
+        //console.log((<HTMLElement>element.childNodes[0]).classList.add('is-active'));
     }
 
     // close modal
     close(): void {
-        this.element.style.display = 'none';
-        document.body.classList.remove('modal-open');
+        const element = document.getElementById(this.id);
+        //console.log((<HTMLElement>element.childNodes[0]).classList.remove('is-active'));
     }
 }

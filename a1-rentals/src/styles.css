@@ -9,9 +9,6 @@
 @import url('https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css');
 
 /* You can add global styles to this file, and also import other style files */
-body {
-    margin: 0px;
-}
 
 h1 {
     font-family: "Champagne"; 
@@ -43,12 +40,12 @@ img {
     margin: 10px;
 }
 
-p {
+/* p {
     font-family: "Limousine";
     font-size: 18px;
     margin: 16px;
     color: white;
-}
+} */
 
 /* 
     All global classes go here
@@ -136,52 +133,3 @@ button:hover {
 .text-secondary {
     color: #646464;
 }
-
-/* MODAL STYLES
--------------------------------*/
-app-modal { display: none; }
-.modal {
-    /* modal container fixed across whole screen */
-    display: block;
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-
-    /* z-index must be higher than .jw-modal-background */
-    z-index: 1000;
-     
-    /* enables scrolling for tall modals */
-    overflow: auto;
-}
-.modal .modal-body {
-
-    /* margin exposes part of the modal background */
-    margin-top: 15%;
-    margin-left: 20%;
-    margin-right: 20%;
-    padding: 0%;
-}
-
-.modal-background {
-    /* modal background fixed across whole screen */
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-
-    /* semi-transparent black  */
-    background-color: #000;
-    opacity: 0.75;
-     
-    /* z-index must be below .jw-modal and above everything else  */
-    z-index: 900;
-}
-body.modal-open {
-    /* body overflow is hidden to hide main scrollbar when modal window is open */
-
-    overflow: hidden;
-}
-  

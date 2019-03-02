@@ -22,20 +22,18 @@ import { AgGridModule } from 'ag-grid-angular';
 import { NgImageSliderModule} from 'ng-image-slider';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminComponent } from './admin/admin.component';
-import { ToggleSwitchComponent } from './admin/toggle-switch/toggle-switch.component';
 
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireModule } from '@angular/fire';
 import { SlideshowModule } from 'ng-simple-slideshow';
-import { ModalComponent } from './modal/modal.component';
 import { ModalService } from './services/modal.service';
+import { AdminModule } from './admin/admin.module';
 
 const appRoutes: Routes = [
   { path: 'Popular Products', component: HomepageComponent},
   { path: 'Contact Us', component: ContactComponent},
   { path: 'Quote Cart', component: QuoteCartComponent},
-  { path: 'admin', component: AdminComponent},
+  { path: 'admin', loadChildren: './admin/admin.module#AdminModule' },
   { path: 'Rental Products/:productCategory/:productName', component: ProductComponent},
   { path: 'Rental Products/:productCategory', component: ProductComponent},
   { path: 'Rental Products',
@@ -61,10 +59,7 @@ const appRoutes: Routes = [
     MapComponent,
     QuoteTileComponent,
     ContactComponent,
-    QuoteCartComponent,
-    AdminComponent,
-    ToggleSwitchComponent,
-    ModalComponent
+    QuoteCartComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -72,7 +67,7 @@ const appRoutes: Routes = [
       //{ enableTracing: true } // <-- debugging purposes only
     ),
     BrowserModule,
-    AgGridModule.withComponents([ToggleSwitchComponent]),
+    AgGridModule.withComponents([]),
     NgImageSliderModule,
     FormsModule,
     AgmCoreModule.forRoot({

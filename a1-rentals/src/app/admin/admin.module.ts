@@ -7,22 +7,21 @@ import { ModalService } from '../services/modal.service';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Routes, RouterModule } from '@angular/router';
 import { AgGridModule } from 'ag-grid-angular';
-import { environment } from 'src/environments/environment.prod';
 import { FormsModule } from '@angular/forms';
 import { ModalComponent } from './modal/modal.component';
 import { AdminComponent } from './admin.component';
-import { PopularProductsManagerComponent } from './admin/popular-products-manager/popular-products-manager.component';
 
 const appRoutes: Routes = [
+  { path: '',
+    redirectTo: 'database management',
+    pathMatch: 'full'
+  },
   { path: '', component: AdminComponent, children: [
     { path: 'database management', component: DatabaseManagerComponent},
     { path: 'popular products', component: DatabaseManagerComponent},
     { path: 'banners', component: DatabaseManagerComponent},
   ]},
-  { path: '',
-    redirectTo: 'database management',
-    pathMatch: 'full'
-  },
+  
   // { path: '**', component: PageNotFoundComponent }
 ];
 @NgModule({
@@ -30,8 +29,7 @@ const appRoutes: Routes = [
     DatabaseManagerComponent,
     ToggleSwitchComponent,
     ModalComponent,
-    AdminComponent,
-    PopularProductsManagerComponent
+    AdminComponent
   ],
   imports: [
     CommonModule,

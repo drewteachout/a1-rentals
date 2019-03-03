@@ -9,7 +9,7 @@ import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firesto
 export class PopularProductsManagerComponent implements OnInit {
 
   private popularProducts: any[] = [[]];
-  private across = 4;
+  private across = 6;
   constructor(private db: AngularFirestore) {
     db.collection('/popular').valueChanges().subscribe((popular: {}[]) => {
       this.popularProducts = [[]];

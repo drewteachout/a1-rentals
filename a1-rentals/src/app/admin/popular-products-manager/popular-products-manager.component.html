@@ -1,5 +1,5 @@
 <div *ngFor="let productRow of popularProducts; let i = index" class="columns tile is-ancestor">
-  <div *ngFor="let product of productRow" class="tile is-parent column is-3">
+  <div *ngFor="let product of productRow" class="tile is-parent column is-2">
     <div class="tile is-child card">
       <header class="card-header">
         <p class="card-header-title is-size-2">
@@ -22,7 +22,7 @@
       </footer>
     </div>
   </div>
-  <div *ngIf="productRow.length <= 3" class="tile is-parent column is-3">
+  <div *ngIf="productRow.length <= 3" class="tile is-parent column is-2">
     <div class="tile is-child card">
       <header class="card-header">
         <p class="card-header-title is-size-2">
@@ -36,7 +36,7 @@
   </div>
 </div>
 <div *ngIf="popularProducts[popularProducts.length - 1].length === 4" class="columns tile is-ancestor">
-  <div class="tile is-parent column is-3">
+  <div class="tile is-parent column is-2">
     <div class="tile is-child card">
       <header class="card-header">
         <p class="card-header-title is-size-2">

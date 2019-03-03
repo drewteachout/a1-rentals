@@ -142,11 +142,10 @@ export class DatabaseManagerComponent implements OnInit {
     //console.log('add product clicked');
   }
 
-  toggleGroupHidden() {
-    this.db.collection('/products').doc(this.currentGroupSelection.db_name).update({
-      hidden: !this.currentGroupSelection.hidden
+  toggleGroupHidden(group: any) {
+    this.db.collection('/products').doc(group.db_name).update({
+      hidden: !group.hidden
     });
-    this.currentGroupSelection.hidden = !this.currentGroupSelection.hidden;
     //console.log('toggle group hidden clicked');
   }
 
@@ -242,10 +241,19 @@ export class DatabaseManagerComponent implements OnInit {
 
   clearNewProductGroup() {
     this.newProductGroup = '';
-    this.newSubGroupObjects = [];
+    this.newSubGroups = [{name: '', }];
   }
 
-  switchDropdown(className: string, i: number) {
+  clearNewProductSubGroup() {
+    this.newSubGroupObjects = [{name: ''}];
+  }
+
+  clearNewProduct() {
+    this.newProductObjects = [{'name': ''}];
+  }
+
+  switchDropdown(className: string, i: number, $event: MouseEvent) {
+    $event.stopPropagation();
     //console.log('switch dropdown');
     const selected = document.getElementById(className + i).classList;
     if (selected.contains('is-active')) {

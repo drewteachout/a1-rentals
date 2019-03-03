@@ -1,38 +1,3 @@
-<!-- <div class="container is-fluid">
-  <div class="level is-mobile">
-    <div class="level-left">
-      <select class="level-item groups" [(ngModel)]='currentGroupSelection' (ngModelChange)='groupValueChanged()'>
-          <option *ngFor="let category of products" [ngValue]="category">{{category.name}}</option>
-      </select>
-      <button class="level-item circle primary" (click)="addProductGroup()">+</button>
-      <button *ngIf="currentGroupSelection != undefined && !currentGroupSelection.hidden" id="groupButton" class="level-item button-std primary" (click)="toggleGroupHidden()">Hide Group</button>
-      <button *ngIf="currentGroupSelection != undefined && currentGroupSelection.hidden" id="groupButton" class="level-item button-std primary" (click)="toggleGroupHidden()">Show Group</button>
-      <button *ngIf="subGroups.length === 0 && rowData.length === 0 && currentGroupSelection != null" id="groupButton" class="level-item button-std primary" (click)="addProductSubGroup()">Add Subgroup</button>
-      <button class="right" *ngIf="subGroups.length == 0 && currentGroupSelection != undefined" class="level-item button-std primary" (click)="addProduct()">Add Product</button>
-    </div>
-  </div>
-  <div class="indent level is-mobile" *ngIf="subGroups.length > 0">
-      <div class="level-left">
-      <select class="level-item groups" [(ngModel)]='currentSubGroupSelection' (ngModelChange)='subGroupValueChanged()' [disabled]="subGroups.length == 0">
-        <option *ngFor="let group of subGroups" [ngValue]="group">{{group.name}}</option>
-      </select>
-      <button class="level-item circle primary" (click)="addProductSubGroup()">+</button>
-      <button *ngIf="currentSubGroupSelection != undefined && !currentSubGroupSelection.hidden" id="subGroupButton" class="level-item button-std primary" (click)="toggleSubGroupHidden()">Hide Sub-Group</button>
-      <button *ngIf="currentSubGroupSelection != undefined && currentSubGroupSelection.hidden" id="subGroupButton" class="level-item button-std primary" (click)="toggleSubGroupHidden()">Show Sub-Group</button>
-      <button *ngIf="subGroups.length != 0 && currentSubGroupSelection != null" class="level-item button-std primary" (click)="addProduct()">Add Product</button>
-      </div>
-  </div>
-  <div class=" level is-mobile product-grid">
-    <ag-grid-angular class="level-item ag-fresh"
-      [gridOptions]="gridOptions"
-      class="ag-theme-balham"
-      [rowData]="rowData"
-      [columnDefs]="columnDefs"
-      (gridReady)="onGridReady($event)"
-      >
-    </ag-grid-angular>
-  </div>
-</div> -->
 <div class="columns">
   <div class="column is-4">
       <button (click)="addProductGroup()" class="button is-large is-fullwidth primary">Add Product Group +</button>
@@ -50,7 +15,7 @@
               <th>{{i}}</th>
               <td>{{product.name}}</td>
               <td>
-                <div class="dropdown" [attr.id]="'productGroupDropdown' + i" (click)="switchDropdown('productGroupDropdown', i)">
+                <div class="dropdown" [attr.id]="'productGroupDropdown' + i" (click)="switchDropdown('productGroupDropdown', i, $event)">
                   <div class="dropdown-trigger">
                     <button class="button" aria-haspopup="true" aria-controls="dropdown-menu2">
                       <span>Options</span>
@@ -61,14 +26,18 @@
                   </div>
                   <div class="dropdown-menu" id="dropdown-menu2" role="menu">
                     <div class="dropdown-content">
-                      <div *ngIf="product.hidden" (click)="toggleGroupHidden()" class="dropdown-item">
+                      <div *ngIf="product.hidden" (click)="toggleGroupHidden(product)" class="dropdown-item">
                           <p class="is-size-3">Show</p>
                       </div>
-                      <div *ngIf="!product.hidden" (click)="toggleGroupHidden()" class="dropdown-item">
+                      <div *ngIf="!product.hidden" (click)="toggleGroupHidden(product)" class="dropdown-item">
                           <p class="is-size-3">Hide</p>
                         </div>
                       <hr class="dropdown-divider">
-                      <div class="dropdown-item">
+                      <div (click)="editGroup(product)" class="dropdown-item">
+                          <p class="is-size-3">Edit</p>
+                      </div>
+                      <hr class="dropdown-divider">
+                      <div (click)="deleteGroup(product)" class="dropdown-item">
                         <p class="is-size-3">Delete</p>
                       </div>
                     </div>
@@ -94,7 +63,7 @@
             <th>{{i}}</th>
             <td>{{subGroup.name}}</td>
             <td>
-              <div class="dropdown" [attr.id]="'productSubGroupDropdown' + i" (click)="switchDropdown('productSubGroupDropdown', i)">
+              <div class="dropdown" [attr.id]="'productSubGroupDropdown' + i" (click)="switchDropdown('productSubGroupDropdown', i, $event)">
                 <div class="dropdown-trigger">
                   <button class="button" aria-haspopup="true" aria-controls="dropdown-menu2">
                     <span>Options</span>
@@ -105,17 +74,20 @@
                 </div>
                 <div class="dropdown-menu" id="dropdown-menu2" role="menu">
                   <div class="dropdown-content">
-                    <div class="dropdown-item">
-                      <p>You can insert <strong>any type of content</strong> within the dropdown menu.</p>
+                    <div *ngIf="subGroup.hidden" (click)="toggleSubGroupHidden(subGroup)" class="dropdown-item">
+                        <p class="is-size-3">Show</p>
+                    </div>
+                    <div *ngIf="!subGroup.hidden" (click)="toggleGroupHidden(subGroup)" class="dropdown-item">
+                        <p class="is-size-3">Hide</p>
+                      </div>
+                    <hr class="dropdown-divider">
+                    <div (click)="editSubGroup(subGroup)" class="dropdown-item">
+                        <p class="is-size-3">Edit</p>
                     </div>
                     <hr class="dropdown-divider">
-                    <div class="dropdown-item">
-                      <p>You simply need to use a <code>&lt;div&gt;</code> instead.</p>
+                    <div (click)="deleteSubGroup(subGroup)" class="dropdown-item">
+                      <p class="is-size-3">Delete</p>
                     </div>
-                    <hr class="dropdown-divider">
-                    <a href="#" class="dropdown-item">
-                      This is a link
-                    </a>
                   </div>
                 </div>
               </div>
@@ -126,14 +98,15 @@
     </table>
   </div>
   <div class="column">
-    <div class="columns">
-      <div *ngIf="subGroups.length === 0 && rowData.length === 0" class="column">
+    <div *ngIf="subGroups.length === 0 && rowData.length === 0" class="columns">
+      <div class="column">
         <button (click)="addProductSubGroup()" class="button is-large is-fullwidth primary">Add Subgroup +</button>
       </div>
       <div class="column">
         <button (click)="addProduct()" class="button is-large is-fullwidth primary">Add Product +</button>
       </div>
     </div>
+    <button *ngIf="subGroups.length !== 0 || rowData.length !== 0" (click)="addProduct()" class="button is-large is-fullwidth primary">Add Product +</button>
     <table class="table is-striped is-hoverable is-fullwidth">
       <tr>
         <th>#</th>
@@ -146,7 +119,7 @@
             <th>{{i}}</th>
             <td *ngFor="let col of columnDefs">{{product[col.field]}}</td>
             <td>
-              <div class="dropdown" [attr.id]="'productDropdown' + i" (click)="switchDropdown('productDropdown', i)">
+              <div class="dropdown" [attr.id]="'productDropdown' + i" (click)="switchDropdown('productDropdown', i, $event)">
                 <div class="dropdown-trigger">
                   <button class="button" aria-haspopup="true" aria-controls="dropdown-menu2">
                     <span>Options</span>
@@ -157,17 +130,13 @@
                 </div>
                 <div class="dropdown-menu" id="dropdown-menu2" role="menu">
                   <div class="dropdown-content">
-                    <div class="dropdown-item">
-                      <p>You can insert <strong>any type of content</strong> within the dropdown menu.</p>
+                    <div (click)="editProduct(product)" class="dropdown-item">
+                        <p class="is-size-3">Edit</p>
                     </div>
                     <hr class="dropdown-divider">
-                    <div class="dropdown-item">
-                      <p>You simply need to use a <code>&lt;div&gt;</code> instead.</p>
+                    <div (click)="deleteProduct(product)" class="dropdown-item">
+                      <p class="is-size-3">Delete</p>
                     </div>
-                    <hr class="dropdown-divider">
-                    <a href="#" class="dropdown-item">
-                      This is a link
-                    </a>
                   </div>
                 </div>
               </div>
@@ -184,26 +153,28 @@
   
 <app-modal id="addProductGroupModal">
   <header class="modal-card-head">
-      <p class="modal-card-title title is-2">Create New Product Group</p>
+    <p class="modal-card-title title is-2">Create New Product Group</p>
     <button class="delete" aria-label="close" (click)="clearNewProductGroup();closeModal('addProductGroupModal')"></button>
   </header>
   <section class="modal-card-body">
-        <input [(ngModel)]="newProductGroup" class="field-input" type="text" placeholder="Product Group Name">
-        <button class="button-std primary" (click)="addSubTabClicked()">Add Subgroup</button>
-        <ol type="1">
-          <li class="indent-subgroups level" *ngFor="let subgroup of newSubGroups; let i = index">
-            <div class="level-left">
-              <input [(ngModel)]="subgroup.name" type="text" placeholder="SubGroup Name" class="level-item">
-              <button class="button delete is-medium is-danger level-item" (click)='removeSubGroup(i)'></button>
-            </div>
-          </li>
-        </ol>
+    <div class="level">
+      <div class="level-left">
+        <input [(ngModel)]="newProductGroup" class="field-input level-item" type="text" placeholder="Product Group Name">
+        <button class="button is-large primary level-item" (click)="addSubTabClicked()">Add Subgroup</button>
+      </div>
+    </div>
+    <ol type="1">
+      <li class="indent-subgroups level" *ngFor="let subgroup of newSubGroups; let i = index">
+        <div class="level-left">
+          <input [(ngModel)]="subgroup.name" type="text" placeholder="SubGroup Name" class="level-item">
+          <button class="button delete is-medium is-danger level-item" (click)='removeSubGroup(i)'></button>
+        </div>
+      </li>
+    </ol>
   </section>
   <footer class="modal-card-foot">
-    <div class="level">
-      <div class="level-right">
-        <button class="button is-large level-item is-success" (click)="addNewProductGroup()">Create</button>
-      </div>
+    <div class="right-submit">
+      <button class="button-std primary" (click)="addNewProductGroup()">Create</button>
     </div>
   </footer>
 </app-modal>
@@ -211,39 +182,49 @@
 
 
 <app-modal id="addProductSubGroupModal">
-    <div *ngIf="currentGroupSelection != undefined" class="top primary">
-        <h2>Add Subgroup To {{currentGroupSelection.name}}</h2>
-    </div>
-    <div class="product-content">
-      <div class="level" *ngFor="let obj of newSubGroupObjects; let i = index;">
-        <div class="level-left">
-          <h3 class="level-item" style="display: inline">{{i + 1}}.</h3>
-          <input class="level-item" [(ngModel)]="newSubGroupObjects[i].name" class="field-input" type="text" placeholder="New Subgroup Name">
-          <button *ngIf="i !== 0" class="level-item delete is-medium primary" (click)='removeSubGroupObject(i)'>-</button>
-          <button *ngIf="i === (newSubGroupObjects.length - 1)" (click)="addSubGroup()" class="level-item add-field button-secondary primary">Add Subgroup</button>
-        </div>
+  <header class="modal-card-head">
+      <p *ngIf="currentGroupSelection !== undefined" class="modal-card-title title is-2">Add Subgroup To {{currentGroupSelection.name}}</p>
+      <p *ngIf="currentGroupSelection === undefined" class="modal-card-title title is-2">Add Subgroup</p>
+      <button class="delete" aria-label="close" (click)="clearNewProductSubGroup();closeModal('addProductSubGroupModal')"></button>
+  </header>
+  <section class="modal-card-body">
+    <div class="level" *ngFor="let obj of newSubGroupObjects; let i = index;">
+      <div class="level-left">
+        <h3 class="level-item" style="display: inline">{{i + 1}}.</h3>
+        <input class="level-item" [(ngModel)]="newSubGroupObjects[i].name" class="field-input" type="text" placeholder="New Subgroup Name">
+        <button *ngIf="i !== 0" class="button level-item delete is-medium is-danger" (click)='removeSubGroupObject(i)'></button>
+        <button *ngIf="i === (newSubGroupObjects.length - 1)" (click)="addSubGroup()" class="level-item button is-large primary">Add Subgroup</button>
       </div>
+    </div>
+  </section>
+  <footer class="modal-card-foot">
       <div class="right-submit">
         <button class="button-std primary" (click)="addNewSubGroup()">Submit</button>
       </div>
-    </div>
+    </footer>
 </app-modal>
 
 
 
 <app-modal id="addProductModal">
-  <div class="top primary">
-    <h2>Add Product</h2>
-  </div>
-  <div class="product-content">
-    <div *ngFor="let obj of newProductObjects; let i = index;">
-      <input [(ngModel)]="newProductObjects[i].key" class="field-input" type="text" placeholder="New Field Name">
-      <input [(ngModel)]="newProductObjects[i].value" class="field-input" type="text" placeholder="Product Name">
-      <button *ngIf="i===(newProductObjects.length - 1)" (click)="addProductField()" class="add-field button-secondary primary">Add Field</button>
+  <header class="modal-card-head">
+    <p class="modal-card-title title is-2">Create New Product Group</p>
+    <button class="delete" aria-label="close" (click)="clearNewProduct();closeModal('addProductModal')"></button>
+  </header>
+  <section class="modal-card-body">
+    <div *ngFor="let obj of newProductObjects; let i = index;" class="level">
+      <div class="level-left">
+        <input [(ngModel)]="newProductObjects[i].key" class="level-item field-input" type="text" placeholder="New Field Name">
+        <input [(ngModel)]="newProductObjects[i].value" class="level-item field-input" type="text" placeholder="Product Name">
+        <button *ngIf="i !== 0" class="button level-item delete is-medium is-danger" (click)='removeProductObject(i)'></button>
+        <button *ngIf="i===(newProductObjects.length - 1)" (click)="addProductField()" class="level-item button is-large primary">Add Field</button>
+      </div>
     </div>
+  </section>
+  <footer class="modal-card-foot">
     <div class="right-submit">
       <button class="button-std primary" (click)="addNewProduct()">Submit</button>
     </div>
-  </div>
+  </footer>
 </app-modal>
   

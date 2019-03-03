@@ -10,6 +10,7 @@ import { AgGridModule } from 'ag-grid-angular';
 import { FormsModule } from '@angular/forms';
 import { ModalComponent } from './modal/modal.component';
 import { AdminComponent } from './admin.component';
+import { PopularProductsManagerComponent } from './popular-products-manager/popular-products-manager.component';
 
 const appRoutes: Routes = [
   { path: '',
@@ -18,7 +19,7 @@ const appRoutes: Routes = [
   },
   { path: '', component: AdminComponent, children: [
     { path: 'database management', component: DatabaseManagerComponent},
-    { path: 'popular products', component: DatabaseManagerComponent},
+    { path: 'popular products', component: PopularProductsManagerComponent},
     { path: 'banners', component: DatabaseManagerComponent},
   ]},
   
@@ -29,7 +30,8 @@ const appRoutes: Routes = [
     DatabaseManagerComponent,
     ToggleSwitchComponent,
     ModalComponent,
-    AdminComponent
+    AdminComponent,
+    PopularProductsManagerComponent
   ],
   imports: [
     CommonModule,

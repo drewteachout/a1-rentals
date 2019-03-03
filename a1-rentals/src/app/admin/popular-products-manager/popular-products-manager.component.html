@@ -1,0 +1,54 @@
+<div *ngFor="let productRow of popularProducts; let i = index" class="columns tile is-ancestor">
+  <div *ngFor="let product of productRow" class="tile is-parent column is-3">
+    <div class="tile is-child card">
+      <header class="card-header">
+        <p class="card-header-title is-size-2">
+          {{product.name}}
+        </p>
+        <a class="card-header-icon" aria-label="more options">
+          <span class="icon">
+            <i class="fas fa-bars" style="font-size:24px" aria-hidden="true"></i>
+          </span>
+        </a>
+      </header>
+      <div class="card-content">
+        <figure class="image is-square">
+            <img src="../{{product.path}}">
+        </figure>
+      </div>
+      <footer class="card-footer">
+        <a (click)="editPopularProduct(product)" class="card-footer-item">Edit</a>
+        <a (click)="deletePopularProduct(product)" class="card-footer-item">Delete</a>
+      </footer>
+    </div>
+  </div>
+  <div *ngIf="productRow.length <= 3" class="tile is-parent column is-3">
+    <div class="tile is-child card">
+      <header class="card-header">
+        <p class="card-header-title is-size-2">
+          Add Product
+        </p>
+      </header>
+      <div (click)="addProductSelected()" class="middle card-content">
+        <i class="fas fa-plus" style="font-size:300px" aria-hidden="true"></i>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="popularProducts[popularProducts.length - 1].length === 4" class="columns tile is-ancestor">
+  <div class="tile is-parent column is-3">
+    <div class="tile is-child card">
+      <header class="card-header">
+        <p class="card-header-title is-size-2">
+          Add Product
+        </p>
+      </header>
+      <div (click)="addProductSelected()" class="middle card-content">
+        <i class="fas fa-plus" style="font-size:300px" aria-hidden="true"></i>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-modal id="popularEditModal">
+</app-modal>

@@ -184,85 +184,116 @@
             ],
             "Tent Accessories": [
                 {
-                    "style":"Solid White",
-                    "price":"20/20ft"
+                    "item": "Tent Sidewalls Rentals, Solid White 20\"",
+                    "price": 20
                 },
                 {
-                    "style":"French window",
-                    "price":"30/20ft"
-                },
-                {
-                    "style": "sidewall door",
+                    "item": "Tent Sidewalls Rentals, French Window 20\"",
                     "price": 30
                 },
                 {
-                    "poles": "side",
-                    "price": 15,
-                    "vinyl": false
+                    "item": "Tent Pole Cover Rentals, side pole (vinyl)",
+                    "price": 5
                 },
                 {
-                    "poles": "center",
-                    "price": 30,
-                    "vinyl": false
+                    "item": "Tent Pole Cover Rentals, center pole (vinyl)",
+                    "price": 25
                 },
                 {
-                    "poles": "side",
-                    "price": 5,
-                    "vinyl": true
+                    "item": "Tent Pole Curtain Rentals, 7' tall (cloth)",
+                    "price": 15
                 },
                 {
-                    "poles": "center",
-                    "price": 25,
-                    "vinyl": true
+                    "item": "Tent Sidewall door Rentals, 10' (vinyl flap, velcro and zipper)",
+                    "price": 30
                 },
                 {
-                    "length": 20,
-                    "price": 0.5
+                    "item": "Tent Liner Rentals, 40' wide (for FRAME tents ONLY)",
+                    "price": 10
                 },
                 {
-                    "length": 40,
-                    "price": 0.5
+                    "item": "Tent Liner Rentals, 20' wide (for FRAME tents ONLY)",
+                    "price": 0.50
                 },
                 {
-                    "length": 10,
+                    "item": "Tent Sidewalls Rentals, Solid White",
+                    "price": 0.50
+                }
+            ],
+            "Tent Lighting": [
+                {
+                    "item": "Starlight Streamers",
+                    "price": 0.40
+                },
+                {
+                    "item": "Uplighting, EZ Par 64, many colors",
+                    "price": 25
+                },
+                {
+                    "item": "Hanging 4-Globe Lamps (set of 2) w/brackets and arms",
+                    "price": 95
+                },
+                {
+                    "item": "Dimmer, 1200 Watt, 50' Cord",
+                    "price": 15
+                },
+                {
+                    "item": "Dimmer, 1600 Watt, 50' Cord",
+                    "price": 10
+                },
+                {
+                    "item": "Chantilly Chandelier, 10 lights",
+                    "price": 99
+                }
+            ],
+            "Tent L.E.D Lighting": [
+                {
+                    "item": "Uplighting, EZ Par 64, many colors",
+                    "price": 25
+                }
+            ],
+            "Weights": [
+                {
+                    "item": "Water Barrels, for frame tents, includes barrel cover",
+                    "price": 10
+                },
+                {
+                    "item": "Cement bucket, for frame tents",
                     "price": 10
                 }
             ]
         },
-        "Lighting": [
-            {
-                "name": "Starlight Streamers",
-                "price": 45
-            },
-            {
-                "name": "Hanging 4-GLobe Lamps (set of 2) w/ brackets and arms",
-                "price": 95
-            },
-            {
-                "name": "Extension Cord, White 50'",
-                "price": 5
-            },
-            {
-                "name": "Extension Cord, White 100'",
-                "price": 15
-            },
-            {
-                "name": "Dimmer,  1200 Watt, 50' Cord",
-                "price": 15
-            },
-            {
-                "name": "Dimmer, 600 Watt, 50' Cord",
-                "price": 10
-            },
-            {
-                "name": "Chantilly Chandelier, 10 Lights",
-                "price": 99
-            },
-            {
-                "name": "Uplighting, ez par 64, many colors",
-                "price": 25
-            }
-        ],
+        "Lighting": {
+            "Uplighting Rentals": [
+                {
+                    "size": "EZ Par 64 Uplighting",
+                    "color": "numerous",
+                    "price": 25
+                },
+                {
+                    "size": "EZ Par 64 Uplighting, 15 or more each",
+                    "color": "numerous",
+                    "price": 20
+                }
+            ],
+            "EZ PAR 64 Uplighting Rental": [
+                {
+                    "size": "EZ Par 64",
+                    "color": "numerous",
+                    "price": 19.50
+                },
+                {
+                    "size": "EZ Par 64, 15 or more each",
+                    "color": "numerous",
+                    "price": 17.50
+                },
+                {
+                    "size": "EZ Par 64, 30 or more each",
+                    "color": "numerous",
+                    "price": 15
+                }
+            ]
+        },
         "Tables": {
             "Rectangle Tables": [
                 {
@@ -349,997 +380,1339 @@
                     "name": "Table rental, 36\" cabaret, 42\" or 30\" tall",
                     "price": 12
                 }
-            ]
-        },
-        "bar": {
-            "lighted": [
+            ],
+            "Specialty Tables": [
                 {
-                    "type": "L.E.D. bar",
-                    "dimensions": null,
-                    "price": 149
+                    "table size": "Table rental, serpentine",
+                    "rental fee": 10
                 },
                 {
-                    "type": "L.E.D. ice chest",
-                    "dimensions": null,
-                    "price": 75
-                },
-                {
-                    "type": "lighted bar with spandex",
-                    "dimensions": "6",
-                    "price": 149
+                    "table size": "Table rental, square, 4' x 4'",
+                    "rental fee": 10
                 }
             ],
-            "folding": [
+            "Rustic Farm Tables": [
                 {
-                    "dimensions": "6",
-                    "color": "black",
+                    "table": "Rectangle with 4 benches",
+                    "table size": "8' x 40\" Rectangle",
+                    "rental fee": 89
+                }
+            ],
+            "Whiskey Barrel Cocktail Tables": [
+                {
+                    "table": "Single Barrel Cocktail",
+                    "table size": "36\" H x 32\" D",
+                    "rental fee": 45
+                },
+                {
+                    "table": "Double Barrel",
+                    "table size": "6' x 32\"",
+                    "rental fee": 125
+                },
+                {
+                    "table": "6' Table with White wood/charcoal cap",
+                    "table size": "6' x 30\"",
+                    "rental fee": 45
+                }
+            ]
+        },
+        "Heating/Cooling": {
+            "Cooling": [
+                {
+                    "item": "Misting Fan Rentals",
+                    "price": 60
+                },
+                {
+                    "item": "Pedestal Fan Rentals",
+                    "price": 35
+                },
+                {
+                    "item": "Tent Pole Fan Rentals",
+                    "price": 30
+                },
+                {
+                    "item": "Power Breezer Rentals",
+                    "price": 275
+                }
+            ],
+            "Heating": [
+                {
+                    "item": "Patio Mushroom Heater Rentals, with 20 lb. propane",
+                    "price": 115
+                },
+                {
+                    "item": "Duct Heater Rentals, 85,000 BTU, w/100 lb. propane",
+                    "price": 175
+                },
+                {
+                    "item": "Duct Heater Rentals, 175,000 BTU, w/100 lb. propane",
+                    "price": 225
+                }
+            ],
+            "Power Breezer Rentals": [
+                {
+                    "item": "Power Breezer Rental",
+                    "price": 275
+                }
+            ]
+        },
+        "Chairs": [
+            {
+                "type": "Poly/metal chair rental - black",
+                "price": 1.25
+            },
+            {
+                "type": "Poly/metal chair rental - WEDDING White",
+                "price": 1.75
+            },
+            {
+                "type": "Resin padded chair rental - white",
+                "price": 3.25
+            },
+            {
+                "type": "Children's chair rental",
+                "price": 1.5
+            },
+            {
+                "type":"L.E.D. Bar stool",
+                "price": 25
+            },
+            {
+                "type":"L.E.D. Beanbag chair",
+                "price": 29
+            },
+            {
+                "type":"L.E.D. Bench",
+                "price": 39
+            },
+            {
+                "type":"L.E.D. Curved bench",
+                "price": 39
+            },
+            {
+                "type": "L.E.D. Cube 16\" x 16\" cube",
+                "price": 19
+            },
+            {
+                "type": "L.E.D. Cube 20\" x 20\" cube",
+                "price": 22
+            }
+        ],
+        "Linens": {
+            "Linen Rentals": [
+                {
+                    "linen size": "Square, 85\" x 85\" linen rental",
+                    "accomodates table size": "60\" Round",
+                    "color": "White, Ivory, Black",
+                    "rental fee": 10
+                },
+                {
+                    "linen size": "Square, 54\" x 54\" linen rental",
+                    "accomodates table size": "Overlays",
+                    "color": "White, Ivory, Black",
+                    "rental fee": 8
+                },
+                {
+                    "linen size": "Round, 90\" linen rental",
+                    "accomodates table size": "60\" Round, 1/2 to floor",
+                    "color": "White, Ivory, Black",
+                    "rental fee": 11
+                },
+                {
+                    "linen size": "Round, 120\" linen rental",
+                    "accomodates table size": "60\" Round to Floor",
+                    "color": "White, Ivory, Black",
+                    "rental fee": 18
+                },
+                {
+                    "linen size": "Rectangle, 52\" x 116\" linen rental",
+                    "accomodates table size": "6' and 8' Rectangular, 1/3 to floor",
+                    "color": "White, Ivory, Black",
+                    "rental fee": 11
+                },
+                {
+                    "linen size": "Rectangle, 90\" x 132\" linen rental",
+                    "accomodates table size": "6' Rectangle to floor",
+                    "color": "White, Ivory, Black",
+                    "rental fee": 17
+                },
+                {
+                    "linen size": "Rectangle, 90\" x 156\" linen rental",
+                    "accomodates table size": "8' Rectangle to floor",
+                    "color": "White, Ivory, Black",
+                    "rental fee": 19
+                },
+                {
+                    "linen size": "Napkins, 20\" x 20\" linen rental",
+                    "color": "White",
+                    "rental fee": 0.50
+                },
+                {
+                    "linen size": "Napkins, 20\" x 20\" linen rental",
+                    "color": "Ivory, Black",
+                    "rental fee": 0.60
+                }
+            ],
+            "Spandex Linens": [
+                {
+                    "spandex": "Rectangle",
+                    "accomodates table size": "8' Rectangle",
+                    "color": "White, Black",
+                    "rental fee": 19
+                },
+                {
+                    "spandex": "Rectangle",
+                    "accomodates table size": "6' Rectangle",
+                    "color": "White, Black",
+                    "rental fee": 17
+                },
+                {
+                    "spandex": "Cabaret Table",
+                    "accomodates table size": "30\"D x 42\"H",
+                    "color": "White, Black",
+                    "rental fee": 15
+                }
+            ]
+        },
+        "Stage Rentals": [
+                {
+                    "item": "Stage section, 4' x 8' rental, Black vinyl or Dark grey carpet top, 4 piece minimum",
+                    "type": "Wenger",
+                    "price": 70
+                },
+                {
+                    "item": "Stairs with handrail rental",
+                    "type": "Wenger",
+                    "price": 30
+                },
+                {
+                    "item": "Black skirting, 8' length rental",
+                    "type": "Wenger",
+                    "price": 10
+                },
+                {
+                    "item": "Quarter round section, 4' x 4', great for runways. 2 make a semi-circle",
+                    "type": "Wenger",
                     "price": 45
                 },
                 {
-                    "dimensions": "6",
-                    "color": "bamboo/hay",
+                    "item": "Stage section, 4' x 8' rental, Black vinyl or Dark grey carpet top, 4 piece minimum",
+                    "type": "Bil-Jax",
                     "price": 70
                 },
                 {
-                    "dimensions": "6",
-                    "color": "White wood",
-                    "price": 70
+                    "item": "Stairs with handrail rental",
+                    "type": "Bil-Jax",
+                    "price": 30
+                },
+                {
+                    "item": "Black skirting, 8' length rental",
+                    "type": "Bil-Jax",
+                    "price": 10
+                },
+                {
+                    "item": "Quarter round section, 4' x 4', great for runways. 2 make a semi-circle",
+                    "type": "Bil-Jax",
+                    "price": 45
+                },
+                {
+                    "stage size": "8' x 16' stage rental",
+                    "pieces needed": "4 wenger pcs, 8 bil-jax pcs"
+                },
+                {
+                    "stage size": "16' x 8' stage rental",
+                    "pieces needed": "4 wenger pcs, 8 bil-jax pcs"
+                },
+                {
+                    "stage size": "20' x 8' stage rental",
+                    "pieces needed": "5 wenger pcs, 10 bil-jax pcs"
+                },
+                {
+                    "stage size": "24' x 8' stage rental",
+                    "pieces needed": "6 wenger pcs, 12 bil-jax pcs"
+                },
+                {
+                    "stage size": "24' x 12' stage rental",
+                    "pieces needed": "9 wenger pcs, 18 bil-jax pcs"
+                },
+                {
+                    "stage size": "32' x 8' stage rental",
+                    "pieces needed": "8 wenger pcs, 16 bil-jax pcs"
+                },
+                {
+                    "stage size": "32' x 12' stage rental",
+                    "pieces needed": "12 wenger pcs, 24 bil-jax pcs"
                 }
-            ],
-            "misc": [
-                {
-                    "type": "whiskey barrel",
-                    "dimensions": "6 x 32",
-                    "price": 125
-                },
-                {
-                    "type": "fill n chill bar",
-                    "dimensions": null,
-                    "price": 50
-                },
-                {
-                    "type": "black bar with built in features",
-                    "dimensions": "6",
-                    "price": 125
-                }
-            ]
-        },
-        "chair": {
-            "non-L.E.D. seating": [
-                {
-                    "type": "children's chair",
-                    "price": 1.5
-                },
-                {
-                    "type": "poly/metal black",
-                    "price": 1.25
-                },
-                {
-                    "type": "poly/metal White",
-                    "price": 1.75
-                },
-                {
-                    "type": "resin padded",
-                    "price": 3.25
-                }
-            ],
-            "L.E.D. seating": [
-                {
-                    "type":"beanbag chair",
-                    "price": 29
-                },
-                {
-                    "type":"bench",
-                    "price": 39
-                },
-                {
-                    "type":"curved bench",
-                    "price": 39
-                },
-                {
-                    "type": "16 x 16 cube",
-                    "price": 19
-                }
-            ],
-            "bar stool": [
-                {
-                    "L.E.D.": false, 
-                    "price": 5
-                },
-                {
-                    "L.E.D.": true, 
-                    "price": 25
-                }
-            ]
-        },
-        "linen": {
-            "square": [
-                {
-                    "dimension": 90,
-                    "table size": "60 round",
-                    "price": 11
-                },
-                {
-                    "dimension": 54,
-                    "table size": "Overlays",
-                    "price": 8
-                },
-                {
-                    "dimension": 20,
-                    "table size": "n/a (napkin)",
-                    "price": "0.50/0.60"
-                }
-            ],
-            "round": [
-                {
-                    "dimension": 90,
-                    "table size": "60 round, 1/2 to floor",
-                    "price": 11
-                },
-                {
-                    "dimension": 120,
-                    "table size": "60 round to floor",
-                    "price": 18
-                }
-            ],
-            "rectangle": [
-                {
-                    "dimensions": "52 x 116",
-                    "table size": "1/3 to floor",
-                    "price": 11 
-                },
-                {
-                    "dimensions": "90 x 132",
-                    "table size": "6' rectangle to floor",
-                    "price": 17
-                },
-                {
-                    "dimensions": "90 x 156",
-                    "table size": "8' rectangle to floor",
-                    "price": 19
-                }
-            ]
-        },
-        "inflatable pub": [
+        ],
+        "Bars": [
             {
-                "name": "Finn's Pub",
-                "dimensions": "33 x 16 x 20",
-                "price": 599
+                "bar type": "L.E.D. Furniture Bar, any color",
+                "rental fee": 149
             },
             {
-                "name": "Snug's Pub",
-                "dimensions": "16 x 16 x 20",
-                "price": 349
+                "bar type": "L.E.D. Ice chest, any color",
+                "rental fee": 75
+            },
+            {
+                "bar type": "Folding Bar, 6' Black",
+                "rental fee": 45
+            },
+            {
+                "bar type": "Folding Bar, Bamboo/hay cap",
+                "rental fee": 45
+            },
+            {
+                "bar type": "Folding Bar, White wood/charcoal cap",
+                "rental fee": 45
+            },
+            {
+                "bar type": "Bar Rental, fill n' chill (up to 6 cases of beer bottles)",
+                "rental fee": 50
+            },
+            {
+                "bar type": "Bar, 6' w/ compartments, black",
+                "rental fee": 125
+            },
+            {
+                "bar type": "Lighted Bar, 6', includes spandex",
+                "rental fee": 149
             }
         ],
-        "stage": [
-            {
-                "name": "4' x 8' stage section",
-                "price": 70
-            },
-            {
-                "name": "stairs with handrail",
-                "price": 30
-            },
-            {
-                "name": "8' black skirting",
-                "price": 10
-            },
-            {
-                "name": "4' x 4' quarter round section",
-                "price": 45
-            }
-        ],
-        "dance floor": {
-            "indoor/outdoor under tent": [
+        "Dance Floor": {
+            "Indoor or Outdoor": [
                 {
-                    "capacity": 19,
-                    "dimensions": "12 x 12",
+                    "capacity": "19 dancers at a time",
+                    "dimensions": "12 x 12 dance floor rental",
                     "price": 232
                 },
                 {
-                    "capacity": 25,
-                    "dimensions": "12 x 15",
+                    "capacity": "25 dancers at a time",
+                    "dimensions": "12 x 15 dance floor rental",
                     "price": 290
                 },
                 {
-                    "capacity": 31,
-                    "dimensions": "15 x 15",
+                    "capacity": "31 dancers at a time",
+                    "dimensions": "15 x 15 dance floor rental",
                     "price": 362.50
                 },
                 {
-                    "capacity": 38,
-                    "dimensions": "15 x 18",
+                    "capacity": "38 dancers at a time",
+                    "dimensions": "15 x 18 dance floor rental",
                     "price": 435
                 },
                 {
-                    "capacity": 44,
-                    "dimensions": "18 x 18",
+                    "capacity": "44 dancers at a time",
+                    "dimensions": "18 x 18 dance floor rental",
                     "price": 522
                 },
                 {
-                    "capacity": 50,
-                    "dimensions": "18 x 21",
+                    "capacity": "50 dancers at a time",
+                    "dimensions": "18 x 21 dance floor rental",
                     "price": 609
                 },
                 {
-                    "capacity": 56,
-                    "dimensions": "21 x 21",
+                    "capacity": "56 dancers at a time",
+                    "dimensions": "21 x 21 dance floor rental",
                     "price": 710.50
                 },
                 {
-                    "capacity": 63,
-                    "dimensions": "21 x 24",
+                    "capacity": "63 dancers at a time",
+                    "dimensions": "21 x 24 dance floor rental",
                     "price": 812
                 }
             ],
-            "outdoor, open air": [
+            "Outdoor": [
                 {
-                    "capacity": 18,
-                    "dimensions": "12 x 12",
+                    "capacity": "18 dancers at a time",
+                    "dimensions": "12 x 12 dance floor rental",
                     "price": 279
                 },
                 {
-                    "capacity": 24,
-                    "dimensions": "12 x 16",
+                    "capacity": "24 dancers at a time",
+                    "dimensions": "12 x 16 dance floor rental",
                     "price": 372
                 },
                 {
-                    "capacity": 32,
-                    "dimensions": "16 x 16",
+                    "capacity": "32 dancers at a time",
+                    "dimensions": "16 x 16 dance floor rental",
                     "price": 496
                 },
                 {
-                    "capacity": 40,
-                    "dimensions": "16 x 20",
+                    "capacity": "40 dancers at a time",
+                    "dimensions": "16 x 20 dance floor rental",
                     "price": 620
                 },
                 {
-                    "capacity": 50,
-                    "dimensions": "20 x 20",
+                    "capacity": "50 dancers at a time",
+                    "dimensions": "20 x 20 dance floor rental",
                     "price": 775
                 },
                 {
-                    "capacity": 60,
-                    "dimensions": "20 x 24",
+                    "capacity": "60 dancers at a time",
+                    "dimensions": "20 x 24 dance floor rental",
                     "price": 930
                 }
             ],
-            "L.E.D, indoor": [
+            "L.E.D Floors": [
                 {
-                    "capacity": 18,
-                    "dimensions": "12 x 12",
+                    "capacity": "18 dancers at a time",
+                    "dimensions": "12 x 12 dance floor rental",
                     "price": 720
                 },
                 {
-                    "capacity": 24,
-                    "dimensions": "12 x 16",
+                    "capacity": "24 dancers at a time",
+                    "dimensions": "12 x 16 dance floor rental",
                     "price": 960
                 },
                 {
-                    "capacity": 32,
-                    "dimensions": "16 x 16",
+                    "capacity": "32 dancers at a time",
+                    "dimensions": "16 x 16 dance floor rental",
                     "price": 1280
                 },
                 {
-                    "capacity": 40,
-                    "dimensions": "16 x 20",
+                    "capacity": "40 dancers at a time",
+                    "dimensions": "16 x 20 dance floor rental",
                     "price": 1600
                 },
                 {
-                    "capacity": 50,
-                    "dimensions": "20 x 20",
+                    "capacity": "50 dancers at a time",
+                    "dimensions": "20 x 20 dance floor rental",
                     "price": 2000
                 },
                 {
-                    "capacity": 60,
-                    "dimensions": "20 x 24",
+                    "capacity": "60 dancers at a time",
+                    "dimensions": "20 x 24 dance floor rental",
                     "price": 2400
                 }
             ]
         },
-        "food/bev equipment": {
-            "serving tray": [
-                {
-                    "shape": "round",
-                    "dimension": "12",
-                    "price": 6.50
-                },
-                {
-                    "shape": "round",
-                    "dimension": "15 1/4",
-                    "price": 7
-                },
-                {
-                    "shape": "round",
-                    "dimension": "18 5/8",
-                    "price": 7.50
-                },
-                {
-                    "shape": "oblong",
-                    "dimension": "15 x 12",
-                    "price": 6.50
-                },
-                {
-                    "shape": "oblong",
-                    "dimension": "18 x 14",
-                    "price": 7
-                },
-                {
-                    "shape": "oblong",
-                    "dimension": "22 x 16",
-                    "price": 7.50
-                }
-            ],
-            "chafing dish": [
-                {
-                    "qt capacity": 8,
-                    "shape": "rectangle",
-                    "material": "aluminum",
-                    "price": 20
-                },
-                {
-                    "qt capacity": 4.2,
-                    "shape": "round",
-                    "material": "stainless steel",
-                    "price": 20
-                },
-                {
-                    "qt capacity": 9,
-                    "shape": "rectangle",
-                    "material": "stainless steel",
-                    "price": 25
-                }
-            ],
-            "coffee maker": [
-                {
-                    "capacity (cup)": 60,
-                    "price": 20
-                },
-                {
-                    "capacity (cup)": 100,
-                    "price": 25
-                },
-                {
-                    "capacity (cup)": 101,
-                    "price": 30
-                }
-            ],
-            "cooler": [
-                {
-                    "contents": "beverage",
-                    "feature": "wheeled",
-                    "price": 20
-                },
-                {
-                    "contents": "beverage",
-                    "feature": "tabletop",
-                    "price": 5
-                },
-                {
-                    "contents": "beverage",
-                    "features": "beer keg",
-                    "price": 20    
-                },
-                {
-                    "contents": "beverage or food",
-                    "features": "fill n' chill",
-                    "price": 50
-                }
-            ],
-            "frozen drink machine": [
-                {
-                    "type": "double bowl 3 gallon x2",
-                    "price": 139
-                },
-                {
-                    "type": "Frosty Factory 1 unit",
-                    "price": 150
-                },
-                {
-                    "type": "Frosty Factory 2 unit",
-                    "price": 275
-                }
-            ],
-            "misc": [
-                {
-                    "type": "waiter stand",
-                    "price": 6
-                },
-                {
-                    "type": "waiter tray",
-                    "price": 6
-                },
-                {
-                    "type": "2 x 5 charcoal grill",
-                    "price": 50
-                },
-                {
-                    "type": "insulated food pan carrier",
-                    "price": 30
-                },
-                {
-                    "type": "5 gallon beverage server",
-                    "price": 15
-                }
-            ]
-        },
-        "tableware": {
+        "Tableware": {
             "China": [
                 {
-                    "style": "royal White",
-                    "type": "dinner plate",
+                    "style": "Royal White",
+                    "item": "Dinner Plate Rental",
                     "dimension": 10.625,
-                    "price": 0.40
+                    "rental fee": 0.40
                 },
                 {
-                    "style": "royal White",
-                    "type": "salad/dessert plate",
+                    "style": "Royal White",
+                    "item": "Salad/Dessert Plate Rental",
                     "dimension": 8,
-                    "price": 0.35
+                    "rental fee": 0.35
                 },
                 {
-                    "style": "royal White",
-                    "type": "bread & butter plate",
+                    "style": "Royal White",
+                    "item": "Bread & Butter Plate Rental",
                     "dimension": 7.5,
-                    "price": 0.35
+                    "rental fee": 0.35
                 },
                 {
-                    "style": "royal White",
-                    "type": "coffee cup & saucer",
+                    "style": "Royal White",
+                    "item": "Coffee Cup AND Saucer Rental",
                     "dimension": 6.5,
-                    "price": 0.70
+                    "rental fee": 0.70
                 },
                 {
-                    "style": "royal White",
-                    "type": "soup bowl",
-                    "dimension": null,
-                    "price": 0.50
+                    "style": "Royal White",
+                    "item": "Soup Bowl Rental",
+                    "rental fee": 0.50
                 },
                 {
-                    "style": "rhiannon",
-                    "type": "dinner plate",
+                    "style": "Rhiannon",
+                    "item": "Dinner Plate Rental",
                     "dimension": 10.75,
-                    "price": 0.50
+                    "rental fee": 0.50
                 },
                 {
-                    "style": "rhiannon",
-                    "type": "salad/dessert plate",
+                    "style": "Rhiannon",
+                    "item": "Salad/Dessert Plate Rental",
                     "dimension": 7.75,
-                    "price": 0.45
+                    "rental fee": 0.45
                 },
                 {
-                    "style": "rhiannon",
-                    "type": "bread & butter plate",
+                    "style": "Rhiannon",
+                    "item": "Bread & Butter Plate Rental",
                     "dimension": 6.5,
-                    "price": 0.45
+                    "rental fee": 0.45
                 },
                 {
-                    "style": "rhiannon",
-                    "type": "coffee cup & saucer",
+                    "style": "Rhiannon",
+                    "item": "Coffee Cup AND Saucer Rental",
                     "dimension": 6.125,
-                    "price": 0.90
+                    "rental fee": 0.90
                 },
                 {
-                    "style": "double platinum band",
-                    "type": "dinner plate",
+                    "style": "Double Platinum Band",
+                    "item": "Dinner Plate Rental",
                     "dimension": 10.5,
-                    "price": 0.50
+                    "rental fee": 0.50
                 },
                 {
-                    "style": "double platinum band",
-                    "type": "salad/dessert plate",
+                    "style": "Double Platinum Band",
+                    "item": "Salad/Dessert Plate Rental",
                     "dimension": 7.5,
-                    "price": 0.45
+                    "rental fee": 0.45
                 },
                 {
-                    "style": "double platinum band",
-                    "type": "bread & butter plate",
+                    "style": "Double Platinum Band",
+                    "item": "Bread & Butter Plate Rental",
                     "dimension": 6.5,
-                    "price": 0.45
+                    "rental fee": 0.45
                 },
                 {
-                    "style": "double platinum band",
-                    "type": "coffee cup & saucer",
+                    "style": "Double Platinum Band",
+                    "item": "Coffee Cup AND Saucer Rental",
                     "dimension": 6.25,
-                    "price": 0.90
+                    "rental fee": 0.90
                 },
                 {
-                    "style": "classic ivory gold band",
-                    "type": "dinner plate",
+                    "style": "Classic Ivory Gold Band",
+                    "item": "Dinner Plate Rental",
                     "dimension": 10.75,
-                    "price": 0.50
+                    "rental fee": 0.50
                 },
                 {
-                    "style": "classic ivory gold band",
-                    "type": "salad/dessert plate",
+                    "style": "Classic Ivory Gold Band",
+                    "item": "Salad/Dessert Plate Rental",
                     "dimension": 7.75,
-                    "price": 0.45
+                    "rental fee": 0.45
                 },
                 {
-                    "style": "classic ivory gold band",
-                    "type": "bread & butter plate",
+                    "style": "Classic Ivory Gold Band",
+                    "item": "Bread & Butter Plate Rental",
                     "dimension": 6.5,
-                    "price": 0.45
+                    "rental fee": 0.45
                 },
                 {
-                    "style": "classic ivory gold band",
-                    "type": "coffee cup & saucer",
+                    "style": "Classic Ivory Gold Band",
+                    "item": "Coffee Cup AND Saucer Rental",
                     "dimension": 6.125,
-                    "price": 0.90
+                    "rental fee": 0.90
                 },
                 {
-                    "style": "artisan square White",
-                    "type": "dinner plate",
+                    "style": "Artisan Square White",
+                    "item": "Dinner Plate Rental",
                     "dimension": 10.75,
-                    "price": 0.50
+                    "rental fee": 0.50
                 },
                 {
-                    "style": "artisan square White",
-                    "type": "salad/dessert plate",
+                    "style": "Artisan Square White",
+                    "item": "Salad/Dessert Plate Rental",
                     "dimension": 8.25,
-                    "price": 0.45
+                    "rental fee": 0.45
                 },
                 {
-                    "style": "artisan square White",
-                    "type": "bread & butter plate",
+                    "style": "Artisan Square White",
+                    "item": "Bread & Butter Plate Rental",
                     "dimension": 7,
-                    "price": 0.45
+                    "rental fee": 0.45
                 },
                 {
-                    "style": "artisan square White",
-                    "type": "coffee cup & saucer",
-                    "dimension": null,
-                    "price": 0.90
+                    "style": "Artisan Square White",
+                    "item": "Coffee Cup AND Saucer Rental",
+                    "rental fee": 0.90
                 },
                 {
-                    "style": "artisan square black",
-                    "type": "salad/dessert plate",
+                    "style": "Artisan Square Black",
+                    "item": "Salad/Dessert Plate Rental",
                     "dimension": 8.25,
-                    "price": 0.45
+                    "rental fee": 0.45
                 },
                 {
-                    "style": "cosmos",
-                    "type": "dinner plate",
+                    "style": "Cosmos Glass",
+                    "item": "Dinner Plate Rental",
                     "dimension": 10.75,
-                    "price": 0.40
+                    "rental fee": 0.40
                 },
                 {
-                    "style": "cosmos",
-                    "type": "dessert plate",
+                    "style": "Cosmos Glass",
+                    "item": "Dessert Plate Rental",
                     "dimension": 7,
-                    "price": 0.40
+                    "rental fee": 0.40
                 }
             ],
             "Glassware": [
                 {
-                    "type": "wine",
+                    "item": "Wine Glass Rental",
                     "quantity": 16,
-                    "price": 0.40
+                    "price": 6.40
                 },
                 {
-                    "type": "wine",
+                    "item": "Wine Glass Rental",
                     "quantity": 25,
-                    "price": 0.40
+                    "price": 10.00
                 },
                 {
-                    "type": "water/beer",
+                    "item": "Water/Beer Glass Rental",
                     "quantity": 25,
-                    "price": 0.40
+                    "price": 10.00
                 },
                 {
-                    "type": "champagne flute",
+                    "item": "Champagne Flute Glass Rental",
                     "quantity": 36,
-                    "price": 0.40
+                    "price": 14.40
                 },
                 {
-                    "type": "pilsner",
+                    "item": "Pilsner Glass Rental",
                     "quantity": 25,
-                    "price": 0.40
+                    "price": 10.00
                 },
                 {
-                    "type": "punch",
+                    "item": "Punch Glass Rental",
                     "quantity": 16,
-                    "price": 0.40
+                    "price": 6.40
                 },
                 {
-                    "type": "short cocktail",
+                    "item": "Cocktail, short Glass Rental",
                     "quantity": 25,
-                    "price": 0.40
+                    "price": 10.00
                 },
                 {
-                    "type": "tall cocktail",
+                    "item": "Cocktail, tall Glass Rental",
                     "quantity": 25,
-                    "price": 0.40
+                    "price": 10.00
                 },
                 {
-                    "type": "martini",
+                    "item": "Martini Glass Rental",
                     "quantity": 9,
-                    "price": 0.50
+                    "price": 4.50
                 },
                 {
-                    "type": "margarita",
+                    "item": "Margarita Glass Rental",
                     "quantity": 9,
-                    "price": 0.50
+                    "price": 4.50
                 },
                 {
-                    "type": "16 oz mason jar",
+                    "item": "Mason Glass",
                     "quantity": 16,
-                    "price": 0.50
+                    "price": 8.00
                 }
             ],
-            "silverware": [
+            "Silverware": [
                 {
+                    "item": "knife, dinner fork, salad fork, tablespoon, teaspoon",
                     "style": "pearl",
-                    "includes": "knife, dinner fork, salad fork, tablespoon, teaspoon",
                     "price": 0.40
                 },
                 {
+                    "item": "knife, dinner fork, salad fork, tablespoon, teaspoon",
                     "style": "astor",
-                    "includes": "knife, dinner fork, salad fork, tablespoon, teaspoon",
                     "price": 0.40
                 },
                 {
+                    "item": "knife, dinner fork, salad fork, spoon",
                     "style": "bastia-hammered",
-                    "includes": "knife, dinner fork, salad fork, spoon",
                     "price": 0.40
                 }
             ]
         },
-        "heating/cooling": {
-            "fans": [
+        "Food and Drink Machines": {
+            "Frozen Drink Machines": [
                 {
-                    "type": "misting",
-                    "price": 60
+                    "machine": "Frusheez Frozen Drink Machine, double bowl, 3 gallon x 2, 125 lbs.",
+                    "price": 139
                 },
                 {
-                    "type": "pedestal",
-                    "price": 35
+                    "machine": "Hi-capacity, 1 unit frosty factory, 95 lbs.",
+                    "price": 150
                 },
                 {
-                    "type": "tent pole",
-                    "price": 30
-                },
-                {
-                    "type": "power breezer",
+                    "machine": "Hi-capacity, 2 unit frosty factory, 170 lbs.",
                     "price": 275
+                },
+                {
+                    "machine": "Bar, 6' with Bamboo/Hay cap",
+                    "price": 45
                 }
             ],
-            "heaters": [
+            "Frozen Drink Mixes": [
                 {
-                    "type": "patio mushroom",
-                    "propane": 20,
-                    "BTU": null,
-                    "price": 115
+                    "mix": "Zodiac Margarita, 1 gallon produces (50-60 drinks, 5 gallons)",
+                    "price": 25
                 },
                 {
-                    "type": "duct",
-                    "propane": 100,
-                    "BTU": 85000,
-                    "price": 175
+                    "mix": "Zodiac Strawberry Daiquiri, 1 gallon produces (50-60 drinks, 5 gallons)",
+                    "price": 25
                 },
                 {
-                    "type": "duct",
-                    "propane": 100,
-                    "BTU": 175000,
-                    "price": 225
-                }
-            ]
-        },
-        "moonwalk": [
-            {
-              "type": "dance dome",
-              "price": 299  
-            },
-            {
-                "type": "moonwalk",
-                "price": 125
-            }
-        ],
-        "dunk tank": [
-            {
-                "capacity": 550,
-                "dimensions": "9 x 4 x 8",
-                "price": 250
-            },
-            {
-                "capacity": 350,
-                "dimensions": "8 x 4 x 8",
-                "price": 175
-            },
-            {
-                "capacity": "water cage",
-                "dimensions": null,
-                "price": 175
-            }
-        ],
-        "fun food": {
-            "machines": [
-                {
-                    "food": "popcorn",
-                    "price": 60
+                    "mix": "Zodiac Hurricane, 1 gal produces (50-60 drinks, 5 gallons)",
+                    "price": 25
                 },
                 {
-                    "food": "cotton candy",
-                    "price": 60
+                    "mix": "Zodiac Pina Colada, 1 gallon produces (50-60 drinks, 5 gallons)",
+                    "price": 12.50
                 },
                 {
-                    "food": "Sno-Kone",
-                    "price": 60
+                    "mix": "Frusheez Southwest (Texas style margarita), 1/2 gallon produces (25-30 drinks, 2.5 gallons)",
+                    "price": 12.50
+                },
+                {
+                    "mix": "Frusheez Apple Cider, 1/2 gallon produces (25-30 drinks, 2.5 gallons)",
+                    "price": 12.50
+                },
+                {
+                    "mix": "Frusheez Sweet Tea, 1/2 gallon produces (25-30 drinks, 2.5 gallons)",
+                    "price": 12.50
+                },
+                {
+                    "mix": "Frusheez Lemon, 1/2 gallon produces (25-30 drinks, 2.5 gallons)",
+                    "price": 12.50
+                },
+                {
+                    "mix": "Frusheez Cherry, 1/2 gal produces (25-30 drinks, 2.5 gallons)",
+                    "price": 12.50
+                },
+                {
+                    "mix": "Frusheez Blue Raspberry, 1/2 gallon produces (25-30 drinks, 2.5 gallons)",
+                    "price": 12.50
+                },
+                {
+                    "mix": "Frusheez Grape, 1/2 gallon produces (25-30 drinks, 2.5 gallons)",
+                    "price": 12.50
+                },
+                {
+                    "mix": "Frusheez Fruit Punch, 1/2 gal produces (25-30 drinks, 2.5 gallons)",
+                    "price": 12.50
+                },
+                {
+                    "mix": "Frusheez Orange, 1/2 gallon produces (25-30 drinks, 2.5 gallons)",
+                    "price": 12.50
+                },
+                {
+                    "mix": "Frusheez Margarita, 1/2 gallon produces (25-30 drinks, 2.5 gallons)",
+                    "price": 12.50
                 }
             ],
-            "servings": [
+            "Fun Food Machines": [
                 {
-                    "food": "popcorn",
-                    "servings": 50,
+                    "fun food machine": "Popcorn Machine Rental",
+                    "price": 60
+                },
+                {
+                    "fun food machine": "Cotton Candy Machine Rental",
+                    "price": 60
+                },
+                {
+                    "fun food machine": "Sno-Kone Machine Rental",
+                    "price": 60
+                },
+                {
+                    "servings": "Popcorn, 50 svgs",
                     "price": 20
                 },
                 {
-                    "food": "popcorn",
-                    "servings": 100,
+                    "servings": "Popcorn, 100 svgs",
                     "price": 30
                 },
                 {
-                    "food": "Sno-Kone",
-                    "servings": 50,
+                    "servings": "Sno-Kone, 50 svgs",
                     "price": 15
                 },
                 {
-                    "food": "Sno-Kone",
-                    "servings": 100,
+                    "servings": "Sno-Kone, 100 svgs",
                     "price": 25
                 },
                 {
-                    "food": "cotton candy",
-                    "servings": 50,
+                    "servings": "Cotton Candy, 50 svgs",
                     "price": 15
                 },
                 {
-                    "food": "cotton candy",
-                    "servings": 100,
-                    "price": 25
-                }
-            ]
-        },
-        "restroom": [
-            {
-                "brand": "Ameri-can",
-                "toilets/urinals": 6,
-                "price": 849
-            },
-            {
-                "brand": "Wells Cargo",
-                "toilets/urinals": 4,
-                "price": 799
-            },
-            {
-                "brand": "Deluxe",
-                "toilets/urinals": [1,3],
-                "price": 99
-            },
-            {
-                "brand": "Deluxe (4+ or wheelchair accessable)",
-                "toilets/urinals": null,
-                "price": null
-            }
-        ],
-        "movie screen": [
-            {
-                "dimensions": "14 x 10",
-                "visibility": "up to 200 people",
-                "price": 449
-            },
-            {
-                "dimensions": "25 x 15",
-                "visibility": "200+ people",
-                "price": 575
-            }
-        ],
-        "frozen drink": {
-            "Zodiac": [
-                {
-                    "flavor": "margarita",
-                    "quantity (gallons)": 5,
-                    "drinks per gallon": [50,60],
-                    "price": 25
-                },
-                {
-                    "flavor": "strawberry daiquiri",
-                    "quantity (gallons)": 5,
-                    "drinks per gallon": [50,60],
-                    "price": 25
-                },
-                {
-                    "flavor": "pina colada",
-                    "quantity (gallons)": 5,
-                    "drinks per gallon": [50,60],
-                    "price": 25
-                },
-                {
-                    "flavor": "peach daiquiri",
-                    "quantity (gallons)": 5,
-                    "drinks per gallon": [50,60],
-                    "price": 25
-                },
-                {
-                    "flavor": "hurricane",
-                    "quantity (gallons)": 5,
-                    "drinks per gallon": [50,60],
+                    "servings": "Cotton Candy, 100 svgs",
                     "price": 25
                 }
             ],
-            "Frusheez": [
+            "Food/Beverage Rentals": [
                 {
-                    "flavor": "Southwest (Texas style margarita)",
-                    "quantity (gallons)": 2.5,
-                    "drinks per 1/2 gallon": [25,30],
-                    "price": 12.50
+                    "item": "Bar/Buffet Rental, 6' Folding",
+                    "price": 45
                 },
                 {
-                    "flavor": "apple cider",
-                    "quantity (gallons)": 2.5,
-                    "drinks per 1/2 gallon": [25,30],
-                    "price": 12.50
+                    "item": "Bar/Buffet Rental, 6' Folding, Bamboo/hay cap",
+                    "price": 45
                 },
                 {
-                    "flavor": "sweet tea",
-                    "quantity (gallons)": 2.5,
-                    "drinks per 1/2 gallon": [25,30],
-                    "price": 12.50
+                    "item": "Bar/Buffet Rental, 6' Folding, White wood/charcoal cap",
+                    "price": 45
                 },
                 {
-                    "flavor": "lemon",
-                    "quantity (gallons)": 2.5,
-                    "drinks per 1/2 gallon": [25,30],
-                    "price": 12.50
+                    "item": "Bar/buffet table, Double Barrel",
+                    "price": 149
                 },
                 {
-                    "flavor": "cherry",
-                    "quantity (gallons)": 2.5,
-                    "drinks per 1/2 gallon": [25,30],
-                    "price": 12.50
+                    "item": "LED Furniture Bar, numerous colors",
+                    "price": 149
                 },
                 {
-                    "flavor": "blue raspberry",
-                    "quantity (gallons)": 2.5,
-                    "drinks per 1/2 gallon": [25,30],
-                    "price": 12.50
+                    "item": "Bar Rental, 6', Maxamizer",
+                    "price": 125
                 },
                 {
-                    "flavor": "grape",
-                    "quantity (gallons)": 2.5,
-                    "drinks per 1/2 gallon": [25,30],
-                    "price": 12.50
+                    "item": "Bar Rental, fill n' chill (up to 6 cases of beer bottles)",
+                    "price": 50
                 },
                 {
-                    "flavor": "fruit punch",
-                    "quantity (gallons)": 2.5,
-                    "drinks per 1/2 gallon": [25,30],
-                    "price": 12.50
+                    "item": "Bar Stool Rental",
+                    "price": 5
                 },
                 {
-                    "flavor": "orange",
-                    "quantity (gallons)": 2.5,
-                    "drinks per 1/2 gallon": [25,30],
-                    "price": 12.50
+                    "item": "Beverage server rental, insulated 5 gallon",
+                    "price": 15
                 },
                 {
-                    "flavor": "margarita",
-                    "quantity (gallons)": 2.5,
-                    "drinks per 1/2 gallon": [25,30],
-                    "price": 12.50
+                    "item": "Chafing Dish Rental, 8 Qt rectangle aluminum",
+                    "price": 20
+                },
+                {
+                    "item": "Chafing Dish Rental, 4.2 Qt. round polished stainless steel",
+                    "price": 20
+                },
+                {
+                    "item": "Chafing Dish Rental, 9 Qt. rectangle polished stainless steel",
+                    "price": 25
+                },
+                {
+                    "item": "Coffee Maker Rental, 60 cup",
+                    "price": 20
+                },
+                {
+                    "item": "Coffee Maker Rental, 100 cup",
+                    "price": 25
+                },
+                {
+                    "item": "Coffee Maker Rental, 101 cup, polished stainless steel",
+                    "price": 30
+                },
+                {
+                    "item": "Cooler, Beer Keg",
+                    "price": 20
+                },
+                {
+                    "item": "Cooler, beverage, tall with wheels",
+                    "price": 20
+                },
+                {
+                    "item": "Cooler, beverage, tabletop",
+                    "price": 5
+                },
+                {
+                    "item": "Cotton Candy Maker Rental",
+                    "price": 60
+                },
+                {
+                    "item": "Fill n' chill party table cooler rental (bar drinks or chilled food buffet. Requires 75-100 lbs of ice/10 cases)",
+                    "price": 50
+                },
+                {
+                    "item": "Food pan carrier rental, insulated",
+                    "price": 30
+                },
+                {
+                    "item": "Frozen drink machine rental, double bowl 3 gallon x 2",
+                    "price": 139
+                },
+                {
+                    "item": "Frozen drink machine rental, double bowl 1.5 gallon x 2",
+                    "price": 129
+                },
+                {
+                    "item": "Grill Rental, 2' x 5' charcoal, 50 pound charcoal capacity(please clean when finished)",
+                    "price": 50
+                },
+                {
+                    "item": "Popcorn Maker Rental",
+                    "price": 60
+                },
+                {
+                    "item": "Punch bowl Rental, polished stainless steel 17.5 Qt.",
+                    "price": 15
+                },
+                {
+                    "item": "Serving Tray Rentals, 12\" round polished stainless steel",
+                    "price": 6.50
+                },
+                {
+                    "item": "Serving Tray Rentals, 15 1/4\" round polished stainless steel",
+                    "price": 7.00
+                },
+                {
+                    "item": "Serving Tray Rentals, 18 5/8\" round polished stainless steel",
+                    "price": 7.50
+                },
+                {
+                    "item": "Serving Tray Rentals, 15\" x 12\" oblong polished stainless steel",
+                    "price": 6.50
+                },
+                {
+                    "item": "Serving Tray Rentals, 18\" x 14\" oblong polished stainless steel",
+                    "price": 7.00
+                },
+                {
+                    "item": "Serving Tray Rentals, 22\" x 16\" oblong polished stainless steel",
+                    "price": 7.50
+                },
+                {
+                    "item": "Sno-Kone Maker Rental",
+                    "price": 60
+                },
+                {
+                    "item": "Waiter stand Rental",
+                    "price": 6
+                },
+                {
+                    "item": "Waiter tray Rental",
+                    "price": 6
                 }
             ]
         },
-        "pipe/drape": [
+        "Pipe/Drape Rentals": [
             {
-                "type":"pipe and drape section",
-                "dimensions": "10 x 8",
-                "color": "black banjo",
+                "size":"10' wide x 8' tall, Pipe and Drape Rental, section",
+                "color": "Black Banjo",
                 "price": 30
             },
             {
-                "type":"pipe and drape section",
-                "dimensions": "10 x 8",
-                "color": "blue banjo",
+                "size":"10' wide x 8' tall, Pipe and Drape Rental, section",
+                "color": "Blue Banjo",
                 "price": 35
             },
             {
-                "type":"pipe and drape section",
-                "dimensions": "10 x 8",
-                "color": "red banjo",
+                "size":"10' wide x 8' tall, Pipe and Drape Rental, section",
+                "color": "Red Banjo",
                 "price": 35
             },
             {
-                "type":"pipe and drape section",
-                "dimensions": "10 x 8",
-                "color": "White banjo",
+                "size":"10' wide x 8' tall, Pipe and Drape Rental, section",
+                "color": "White Banjo",
                 "price": 35
             },
             {
-                "type":"pipe and drape section",
-                "dimensions": "10 x 8",
-                "color": "black velour",
+                "size":"10' wide x 8' tall, Pipe and Drape Rental, section",
+                "color": "Black Velour",
                 "price": 65
             },
             {
-                "type":"pipe and drape section",
-                "dimensions": "10 x 8",
+                "size":"10' wide x 8' tall, Pipe and Drape Rental, section",
                 "color": "White sheer",
                 "price": 35
             },
             {
-                "type":"pipe and drape section",
-                "dimensions": "10 x 10",
-                "color": "black banjo",
+                "size":"10' wide x 10' tall, Pipe and Drape Rental, section",
+                "color": "Black Banjo",
                 "price": 40
             },
             {
-                "type":"pipe and drape section",
-                "dimensions": "10 x 12",
-                "color": "black banjo",
+                "size":"10' wide x 12' tall, Pipe and Drape Rental, section",
+                "color": "Black Banjo",
                 "price": 45
             },
             {
-                "type":"pipe and drape section",
-                "dimensions": "10 x 3",
-                "color": "black banjo",
+                "size":"10' wide x 3' tall, Pipe and Drape Rental, section",
+                "color": "Black Banjo",
                 "price": 15
             },
             {
-                "type":"pipe and drape section",
-                "dimensions": "10 x 3",
-                "color": "blue banjo",
+                "size":"10' wide x 3' tall, Pipe and Drape Rental, section",
+                "color": "Blue Banjo",
                 "price": 20
             },
             {
-                "type":"pipe and drape section",
-                "dimensions": "10 x 3",
-                "color": "red banjo",
+                "size":"10' wide x 3' tall, Pipe and Drape Rental, section",
+                "color": "Red Banjo",
                 "price": 20
             },
             {
-                "type":"wedding canopy rental",
-                "dimensions": "10 x 10 x 10 x 8",
-                "color": "White sheer",
+                "size":"10' x 10' x 10' x 10' x 8' High Wedding Canopy Rental",
+                "color": "White Sheer",
                 "price": 160
             }
         ],
-        "misc": {
-            "red carpet runners": [
+        "LED Furniture Rentals": {
+            "L.E.D Chairs": [
                 {
-                    "length": 20,
+                    "l.e.d. chairs": "Ask about our volume discounts"
+                },
+                {
+                    "l.e.d. chairs":"L.E.D. Bean Bag Chair",
+                    "price": 29
+                },
+                {
+                    "l.e.d. chairs":"L.E.D. Bench",
+                    "price": 39
+                },
+                {
+                    "l.e.d. chairs":"L.E.D. Curved Bench, 1 section",
+                    "price": 39
+                },
+                {
+                    "l.e.d. chairs": "L.E.D. Cube 16\" x 16\" cube",
+                    "price": 19
+                },
+                {
+                    "l.e.d. chairs": "L.E.D. Cube 20\" x 20\" cube",
+                    "price": 22
+                },
+                {
+                    "l.e.d. chairs": "L.E.D. Hi-Boy Table, w/ footrest, 21\" D x 42\" H, w/ 2 Chairs",
+                    "price": 129
+                },
+                {
+                    "l.e.d. chairs": "L.E.D. Hi-Boy Table, 30\" D x 42\" H, w/ 2 Chairs",
+                    "price": 129
+                }
+            ],
+            "L.E.D Tables": [
+                {
+                    "l.e.d. tables": "Ask about our volume discounts"
+                },
+                {
+                    "l.e.d. tables":"L.E.D. Coffee Tables, 22\" diameter x 17\" high",
+                    "price": 35
+                },
+                {
+                    "l.e.d. tables":"L.E.D. Cocktail Tables, 30\" diameter x 42\" high",
+                    "price": 39
+                },
+                {
+                    "l.e.d. tables":"L.E.D. Coffee Tables, 22\" diameter x 17\" high",
+                    "price": 19
+                },
+                {
+                    "l.e.d. tables":"L.E.D. Cube, 16\" x 16\"",
+                    "price": 29
+                },
+                {
+                    "l.e.d. tables":"L.E.D. Cube, 20\" x 20\"",
+                    "price": 22
+                },
+                {
+                    "l.e.d. tables":"L.E.D. Hi-Boy Table, w/ footrest, 21\" D x 42\" H, w/ 2 Barstools",
+                    "price": 129
+                },
+                {
+                    "l.e.d. tables":"L.E.D. Hi-Boy Table, 30\" D x 42\" H, w/ 2 Barstools",
+                    "price": 129
+                },
+                {
+                    "l.e.d. tables":"L.E.D. Accent Glass Top Table, 13\" W x 20.5\" H, 17.5\" diameter top",
+                    "price": 25
+                }
+            ],
+            "L.E.D. Bars": [
+                {
+                    "l.e.d. bars": "Ask about our volume discounts"
+                },
+                {
+                    "l.e.d. bars": "L.E.D. Bar, 48\" L x 24\" W x 48\" H",
+                    "price": 149
+                },
+                {
+                    "l.e.d. bars": "L.E.D. Ice Chest, 47\"L x 24\" W x 48\" H"
+                }
+            ],
+            "L.E.D Dance Floors": [
+                {
+                    "capacity": "18 dancers at a time",
+                    "size": "12 x 12 dance foor rental",
+                    "price": 720
+                },
+                {
+                    "capacity": "24 dancers at a time",
+                    "size": "12 x 16 dance foor rental",
+                    "price": 720
+                },
+                {
+                    "capacity": "32 dancers at a time",
+                    "size": "16 x 16 dance foor rental",
+                    "price": 720
+                },
+                {
+                    "capacity": "40 dancers at a time",
+                    "size": "16 x 20 dance foor rental",
+                    "price": 720
+                },
+                {
+                    "capacity": "50 dancers at a time",
+                    "size": "12 x 12 dance foor rental",
+                    "price": 720
+                },
+                {
+                    "capacity": "60 dancers at a time",
+                    "size": "12 x 12 dance foor rental",
+                    "price": 720
+                }
+            ]
+        },
+        "Outdoors": {
+            "Dunk Tanks": [
+                {
+                    "dunk tank": "550 Gallon Dunk Tank, 9'W x 4'L x 8' Tall",
+                    "price": 250
+                },
+                {
+                    "dunk tank": "350 Gallon Dunk Tank, 8'W x 4'L x 8' Tall",
+                    "price": 175
+                }
+            ],
+            "Moonwalks": [
+                {
+                    "theme": "NEW!! STAR WARS Moonwalk",
+                    "price": 125
+                },
+                {
+                    "theme": "Finding Nemo Moonwalk",
+                    "price": 125
+                },
+                {
+                    "theme": "Mickey Mouse Moonwalk",
+                    "price": 125
+                },
+                {
+                    "theme": "Minnie Moonwalk",
+                    "price": 125
+                },
+                {
+                    "theme": "Avengers Moonwalk",
+                    "price": 125
+                },
+                {
+                    "theme": "Captain America-Civil War",
+                    "price": 125
+                },
+                {
+                    "theme": "Frozen Moonwalk",
+                    "price": 125
+                },
+                {
+                    "theme": "Frozen-Olaf Moonwalk",
+                    "price": 125
+                },
+                {
+                    "theme": "Nemo Moonwalk",
+                    "price": 125
+                },
+                {
+                    "theme": "Disney Princess Moonwalk",
+                    "price": 125
+                },
+                {
+                    "theme": "Minions Moonwalk",
+                    "price": 125
+                },
+                {
+                    "theme": "Shrek Moonwalk",
+                    "price": 125
+                },
+                {
+                    "theme": "Noah's Ark Moonwalk",
+                    "price": 125
+                },
+                {
+                    "theme": "David and Goliath Moonwalk",
+                    "price": 125
+                },
+                {
+                    "theme": "Jonah and the Whale Moonwalk",
+                    "price": 125
+                },
+                {
+                    "theme": "Dora the Explorer Moonwalk",
+                    "price": 125
+                },
+                {
+                    "theme": "Pirates Moonwalk",
+                    "price": 125
+                },
+                {
+                    "theme": "The Incredibles Moonwalk",
+                    "price": 125
+                }
+            ],
+            "Movie Screen Rentals": [
+                {
+                    "size": "14' wide x 10' high movie screen rental",
+                    "capacity": "Up to 200 People",
+                    "price": 449
+                },
+                {
+                    "dimensions": "25' wide x 15' high movie screen rental",
+                    "capacity": "200+ people",
+                    "price": 575
+                },
+                {
+                    "dimensions": "Popcorn Machine (must request)",
+                    "price": 0
+                }
+            ],
+            "Dance Dome": [
+                {
+                    "item": "Dance Dome Rental, large, 20' x 24' x 18' HIGH",
+                    "price": 299
+                }
+            ],
+            "Inflatable Pub Rentals": [
+                {
+                    "item": "Finn's Pub (33' x 16' x 20' H)",
+                    "capacity": "Up To 50 people standing",
+                    "price": 599
+                },
+                {
+                    "item": "Snug's Pub (16' x 16' x 20' H",
+                    "capacity": "Up to 25 people standing",
+                    "price": 349
+                }
+            ]
+        },
+        "Restroom": [
+            {
+                "restroom": "Ameri-can executive restroom rental (3 toilets, 3 urinals)",
+                "price": 849
+            },
+            {
+                "restroom": "Wells Cargo 3 room executive trailer (3 toilets, 1 urinal)",
+                "price": 799
+            },
+            {
+                "restroom": "Deluxe, 1-3 units",
+                "price": 125
+            },
+            {
+                "restroom": "Deluxe, 4+ units",
+                "price": "call"
+            },
+            {
+                "restroom": "Wheel Chair Accessible, ADA",
+                "price": 150
+            },
+            {
+                "restroom": "Ambassador, 1-3 units",
+                "price": 125
+            },
+            {
+                "restroom": "Ambassador, 4+ units",
+                "price": "call"
+            }
+        ],
+        "Miscellaneous": {
+            "Red Carpet Runners": [
+                {
+                    "item": "25' Red Carpet Runners",
                     "price": 45
                 },
                 {
-                    "length": 25,
-                    "price": 45
-                },
-                {
-                    "length": 50,
+                    "item": "50' Red Carpet Runners",
                     "price": 65
                 }
             ],
-            "stanchion": [
+            "Speaker Podiums": [
                 {
-                    "type": "black with 7.5' strap",
-                    "price": 15
-                },
-                {
-                    "type": "chrome",
-                    "price": 9
+                    "type": "Speaker Podium",
+                    "price": 125
                 }
             ],
-            "misc": [
+            "Rope and Stanchions": [
                 {
-                    "product": "red or black rope",
+                    "item": "Stanchion, Chrome",
+                    "price": 9
+                },
+                {
+                    "item": "Rope, Red or Black",
                     "price": 7
                 },
                 {
-                    "product": "speaker podium",
-                    "price": 125
+                    "item": "Black stanchion with retractable strap, 7.5'",
+                    "price": 15
                 }
             ]
-        }
+        },
+        "Used for Sale": [
+            {
+                "item": "Island Oasis drink machine, retails $3200, hardly used",
+                "price": 1900
+            },
+            {
+                "item": "Frozen drink machine, 1.5 gallon, retails $1600",
+                "price": 800
+            },
+            {
+                "item": "Champagne Fountains (3 avail), sells for $700 new/each",
+                "price": 300
+            },
+            {
+                "item": "Double Platinum China set, 240 b/b plates, 220 cups, 220 saucers, 180 Dinner plates, 380 Salad/Desert plates",
+                "price": 2200
+            },
+            {
+                "item": "Hot dog steamer",
+                "price": 150
+            },
+            {
+                "item": "Pretzel display machine",
+                "price": 200
+            },
+            {
+                "item": "Pretzel oven",
+                "price": 250
+            },
+            {
+                "item": "Cotton Candy machine with top and bubble (3 avail)",
+                "price": 375
+            },
+            {
+                "item": "Sno-kone machine",
+                "price": 375
+            },
+            {
+                "item": "20 x 20 Pole Tent, 5 years old, good shape, sells for $1800 new",
+                "price": 800
+            },
+            {
+                "item": "20 x 30 Pole Tent, 5 years old, good shape, sells for $2400 new",
+                "price": 1300
+            },
+            {
+                "item": "20 x 40 Pole Tent, 5 years old, good shape, sells for $3200",
+                "price": 1700
+            },
+            {
+                "item": "30 x 60 Pole Tent, 5 years old, good shape, sells for $7600",
+                "price": 4200
+            },
+            {
+                "item": "40 x 60 Pole Tent, 6 years old, Grade B, sells for $9000",
+                "price": 4500
+            },
+            {
+                "item": "40 x 80 Pole Tent, 6 years old, Grade B, sells for $11,000",
+                "price": 6000
+            },
+            {
+                "item": "Childrens Chairs (over 150 still avail, red, blue)",
+                "price": 6
+            },
+            {
+                "item": "Water Cage Challenge, almost new, retails near $2000",
+                "price": 900
+            },
+            {
+                "item": "Dunk Tank, grade B, includes liner",
+                "price": 750
+            },
+            {
+                "item": "Sea of Balls Inflatable, 5 years old, includes balls, paid $3000",
+                "price": 500
+            },
+            {
+                "item": "Sports Cage Inflatable",
+                "price": 500
+            },
+            {
+                "item": "Fly Guy, with blower (4 avail.)",
+                "price": 200
+            },
+            {
+                "item": "Fly Guy, 2 legs, with blowers",
+                "price": 350
+            }
+        ]
     }
 }

@@ -254,7 +254,6 @@ export class DatabaseManagerComponent implements OnInit {
 
   switchDropdown(className: string, i: number, $event: MouseEvent) {
     $event.stopPropagation();
-    //console.log('switch dropdown');
     const selected = document.getElementById(className + i).classList;
     if (selected.contains('is-active')) {
       selected.remove('is-active');

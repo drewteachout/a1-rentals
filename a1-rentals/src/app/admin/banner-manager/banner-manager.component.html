@@ -97,3 +97,47 @@
       </div>
     </footer>
   </app-modal>
+
+<app-modal id="editBannerModal">
+  <header class="modal-card-head">
+    <p class="modal-card-title title is-2">Create New Banner</p>
+    <button class="delete" aria-label="close" (click)="clearNewBanner();closeModal('editBannerModal')"></button>
+  </header>
+  <section class="modal-card-body">
+    <div class="level">
+      <div class="level-left">
+        <h3 class="level item">Title: </h3>
+        <input [(ngModel)]="newBanner.title" class="level-item space" type="text" placeholder="New Banner Title">
+      </div>
+    </div>
+    <div class="level">
+      <div class="level-left">
+        <h3 class="level item">Message: </h3>
+        <textarea [(ngModel)]="newBanner.message" class="level-item space" placeholder="New Banner Message"></textarea>
+      </div>
+    </div>
+    <div class="level">
+      <div class="level-left">
+        <h3 class="level item">Color: </h3>
+        <input [(ngModel)]="newBanner.color" class="level-item space" type="color" placeholder="Black">
+      </div>
+    </div>
+    <div class="level">
+      <div class="level-left">
+        <h3 class="level item">Start Date: </h3>
+        <input [(ngModel)]="newBanner.start_date" class="level-item space" type="date">
+      </div>
+    </div>
+    <div class="level">
+      <div class="level-left">
+        <h3 class="level item ">End Date: </h3>
+        <input [(ngModel)]="newBanner.end_date" class="level-item space" type="date">
+      </div>
+    </div>
+  </section>
+  <footer class="modal-card-foot">
+    <div class="right-submit">
+      <button class="button-std primary" (click)="editBanner();closeModal('editBannerModal')">Submit</button>
+    </div>
+  </footer>
+</app-modal>

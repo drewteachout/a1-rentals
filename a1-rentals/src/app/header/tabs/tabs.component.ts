@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Product } from 'src/app/util/Product';
 import { ProductsService } from 'src/app/services/products.service';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router} from '@angular/router';
 import { AngularFirestore } from 'angularfire2/firestore';
 
 @Component({
@@ -15,26 +15,35 @@ export class TabsComponent implements OnInit {
   tab2: any[];
   tab3: any[];
   tab4: any[];
+  tab5: any[];
   tabs: any[];
 
   constructor(private prodServ: ProductsService, private router: Router, private db: AngularFirestore) {
     this.tab1 = ['Popular Products', []];
     this.tab2 = ['Rental Products', []];
-    
     this.db.collection('/products').valueChanges().subscribe((productNames: any[]) => {
-      this.tab2[1] = []
+      this.tab2[1] = [];
       productNames.forEach(product => {
-        if(!product['hidden']) {
+        if (!product['hidden']) {
           this.db.collection('/' + product['collection_name']).valueChanges().subscribe((productInfo: any) => {
-            let nextProductList: any[] = [product['display_name'], []]
-            for(let i = 0; i < productInfo.length; i++) {
-              if(productInfo[i].hasOwnProperty('name')) {
-                if(!productInfo[i]['hidden']) {
+            const nextProductList: any[] = [product['display_name'], []]
+            for (let i = 0; i < productInfo.length; i++) {
+              if (productInfo[i].hasOwnProperty('array') && productInfo[i]['array'] === true) {
+                if (!productInfo[i]['hidden']) {
                   nextProductList[1].push(productInfo[i]['name']);
                 }
               }
             }
-            this.tab2[1].push(nextProductList);
+            let flag = false;
+            for (let i = 0; i < this.tab2[1].length; i++) {
+              if (this.tab2[1][i][0] === nextProductList[0]) {
+                this.tab2[1][i] = nextProductList;
+                flag = true;
+              }
+            }
+            if (!flag) {
+              this.tab2[1].push(nextProductList);
+            }
           });
         }
       });

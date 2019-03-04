@@ -9,12 +9,21 @@ import { AngularFirestore } from 'angularfire2/firestore';
 })
 export class HomepageComponent implements OnInit {
 
-  products: any[] = [];
+  private products: any[] = [[]];
+  private productsPerRow = 4;
 
   constructor(db: AngularFirestore) {
     db.collection('/popular').valueChanges().subscribe((popular_items: any[]) => {
+      let innerCount = 0;
+      let outerCount = 0;
       for (let i = 0; i < popular_items.length; i++) {
-        this.products[i] = [popular_items[i].name, popular_items[i].path];
+        if (innerCount === this.productsPerRow) {
+          innerCount = 0;
+          outerCount++;
+          this.products.push([]);
+        }
+        this.products[outerCount].push([popular_items[i].name, popular_items[i].path]);
+        innerCount++;
       }
     });
   }

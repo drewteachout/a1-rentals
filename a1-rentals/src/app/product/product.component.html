@@ -1,7 +1,7 @@
 <div *ngIf="!isCategory; else category">
   <h2 class="title text">{{productName}}</h2>
-  <div class="product-info">
-    <div class="left">
+  <div class="product-info columns">
+    <div class="column">
       <div class="slideshow">
         <slideshow [imageUrls]="images"
                   [height]="'400px'"
@@ -12,7 +12,7 @@
       <h3 class="description text">Product Description</h3>
       <p class="text-secondary">{{productDescription}}</p>
     </div>
-    <div class="right">
+    <div class="column">
       <div class="product-grid">
         <ag-grid-angular
           class="ag-theme-balham-dark"

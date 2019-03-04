@@ -1,8 +1,8 @@
-<div class="container">
+<div>
   <form (ngSubmit)="onSubmit()" #contactForm = "ngForm">
     <div class='col50'>
-      <div class="form-group">
-        <div class='left'>
+      <div class="columns form-group">
+        <div class='column'>
           <label for="firstName"><h4 class="text">First Name</h4></label>
           <input type="text" class="form-control small-input" id="firstName"
                 required
@@ -14,7 +14,7 @@
           </div>
         </div>
 
-        <div class='right'>
+        <div class='column'>
           <label for="lastName"><h4 class="text">Last Name</h4></label>
           <input type="text" class="form-control small-input" id="lastName"
                 required

@@ -12,16 +12,18 @@ import { ModalComponent } from './modal/modal.component';
 import { AdminComponent } from './admin.component';
 import { PopularProductsManagerComponent } from './popular-products-manager/popular-products-manager.component';
 import { BannerManagerComponent } from './banner-manager/banner-manager.component';
+import { LoginComponent } from './login/login.component';
 
 const appRoutes: Routes = [
   { path: '',
-    redirectTo: 'database management',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   { path: '', component: AdminComponent, children: [
     { path: 'database management', component: DatabaseManagerComponent},
     { path: 'popular products', component: PopularProductsManagerComponent},
     { path: 'banners', component: BannerManagerComponent},
+    { path: 'login', component: LoginComponent}
   ]},
   
   // { path: '**', component: PageNotFoundComponent }
@@ -33,7 +35,8 @@ const appRoutes: Routes = [
     ModalComponent,
     AdminComponent,
     PopularProductsManagerComponent,
-    BannerManagerComponent
+    BannerManagerComponent,
+    LoginComponent
   ],
   imports: [
     CommonModule,

@@ -28,9 +28,11 @@ import { AngularFireModule } from '@angular/fire';
 import { SlideshowModule } from 'ng-simple-slideshow';
 import { ModalService } from './services/modal.service';
 import { AdminModule } from './admin/admin.module';
+import { PackagesComponent } from './packages/packages.component';
 
 const appRoutes: Routes = [
   { path: 'Popular Products', component: HomepageComponent},
+  { path: 'Packages', component: PackagesComponent},
   { path: 'Contact Us', component: ContactComponent},
   { path: 'Quote Cart', component: QuoteCartComponent},
   { path: 'admin', loadChildren: './admin/admin.module#AdminModule' },
@@ -59,7 +61,8 @@ const appRoutes: Routes = [
     MapComponent,
     QuoteTileComponent,
     ContactComponent,
-    QuoteCartComponent
+    QuoteCartComponent,
+    PackagesComponent
   ],
   imports: [
     RouterModule.forRoot(

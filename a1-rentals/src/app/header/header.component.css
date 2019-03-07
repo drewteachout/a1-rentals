@@ -1,5 +1,7 @@
 h1 {
     cursor: pointer;
+    font-size: 76px;
+    width: 30%;
 }
 
 .parent {

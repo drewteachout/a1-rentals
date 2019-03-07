@@ -67,7 +67,7 @@ export class TabsComponent implements OnInit {
 
   subtabClicked(previous: string, name: string, event: MouseEvent) {
     event.stopPropagation();
-    let prod = new Product(name, previous);
+    const prod = new Product(name, previous);
     this.prodServ.update(prod);
     this.router.navigate(['/Rental Products', previous, name]);
   }

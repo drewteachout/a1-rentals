@@ -37,7 +37,7 @@ const appRoutes: Routes = [
   { path: 'Rental Products/:productCategory/:productName', component: ProductComponent},
   { path: 'Rental Products/:productCategory', component: ProductComponent},
   { path: 'Rental Products',
-    redirectTo: '/Rental Products/all/',
+    redirectTo: '/Rental Products/',
     pathMatch: 'full'
   },
   { path: '',

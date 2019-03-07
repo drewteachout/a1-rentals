@@ -13,25 +13,24 @@ export class HomepageComponent implements OnInit {
 
   productData = [];
 
-  constructor(db: AngularFirestore) {
+  constructor(private db: AngularFirestore) {
     for (let i = 0; i < this.numColumns; i++) {
       this.productData.push([]);
     }
-    this.loadData(db);
+    this.loadData();
   }
 
   ngOnInit() {
   }
 
-  loadData(db: any) {
-    db.collection('/popular').valueChanges().subscribe((popular_items: any[]) => {
+  loadData() {
+    this.db.collection('/popular').valueChanges().subscribe((popular_items: any[]) => {
       for (let i = 0; i < popular_items.length; i++) {
         const key = i % this.numColumns;
         const data = this.productData[key];
         data.push([popular_items[i].name, popular_items[i].path]);
         this.productData[key] = data;
       }
-      console.log('Product Data: ', this.productData);
     });
   }
 }

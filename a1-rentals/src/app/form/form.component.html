@@ -1,9 +1,9 @@
-<div class="container">
+<div>
   <form (ngSubmit)="onSubmit()" #contactForm = "ngForm">
     <div class='col50'>
-      <div class="form-group">
-        <div class='left'>
-          <label for="firstName"><h4>First Name</h4></label>
+      <div class="columns form-group">
+        <div class='column'>
+          <label for="firstName"><h4 class="text">First Name</h4></label>
           <input type="text" class="form-control small-input" id="firstName"
                 required
                 [(ngModel)]="model.firstName" name="firstName"
@@ -14,8 +14,8 @@
           </div>
         </div>
 
-        <div class='right'>
-          <label for="lastName"><h4>Last Name</h4></label>
+        <div class='column'>
+          <label for="lastName"><h4 class="text">Last Name</h4></label>
           <input type="text" class="form-control small-input" id="lastName"
                 required
                 [(ngModel)]="model.lastName" name = lastName
@@ -42,7 +42,7 @@
 
       <div style="clear:both;">&nbsp;</div>
       <div class="form-group">
-        <label for="email"><h4>Email Address</h4></label>
+        <label for="email"><h4 class="text">Email Address</h4></label>
         <input type="text" class="form-control" id="email"
               required
               [(ngModel)]="model.email" name = email
@@ -54,13 +54,13 @@
       </div>
 
       <div class="form-group">
-        <label for="phoneNumber"><h4>Phone Number</h4></label>
+        <label for="phoneNumber"><h4 class="text">Phone Number</h4></label>
         <input type="text" class="form-control" id="phoneNumber"
               [(ngModel)]="model.phoneNumber" name = phoneNumber>
       </div>
 
       <div class="form-group">
-        <label for="subject"><h4>Subject</h4></label>
+        <label for="subject"><h4 class="text">Subject</h4></label>
         <input type="text" class="form-control" id="subject"
               required
               [(ngModel)]="model.subject" name = subject
@@ -73,7 +73,7 @@
 
 
       <div class="form-group">
-        <label for="message"><h4>Message</h4></label>
+        <label for="message"><h4 class="text">Message</h4></label>
         <textarea rows="5" cols="25" class="form-control large-input" id="message"
               required
               [(ngModel)]="model.message" name = message
@@ -86,7 +86,7 @@
       </div>
 
 
-      <button type="submit" class="btn btn-success" [disabled]="!contactForm.form.valid">Submit</button>
+      <button type="submit" class="button-std" [disabled]="!contactForm.form.valid">Submit</button>
     </div>
     <!-- not sure this next line is necessary
     <button type="button" class="btn btn-default" (click)="newContact(); contactForm.reset()">New Contact</button>-->

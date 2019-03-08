@@ -9,32 +9,33 @@
 @import url('https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css');
 
 /* You can add global styles to this file, and also import other style files */
-body {
-    margin: 0px;
+
+.button-tab {
+    z-index: 31;
 }
 
 h1 {
-    font-family: "Mosk"; 
-    font-size: 70px;
+    font-family: "Champagne"; 
+    font-size: 80px;
     margin: 15px;
     /* color: #D98310; */
 }
 
 h2 {
-    font-family: "Mosk";
+    font-family: "Champagne";
     font-size: 44px;
     /* color: #D98310; */
 }
 
 h3 {
-    font-family: "Mosk";
-    font-size: 22px;
+    font-family: "Limousine";
+    font-size: 30px;
     /* color: #D98310; */
 }
 
 h4 {
-    font-family: "Mosk";
-    font-size: 16px;
+    font-family: "Limousine";
+    font-size: 20px;
     margin: 10px;
     /* color: #D98310; */
 }
@@ -43,24 +44,31 @@ img {
     margin: 10px;
 }
 
-p {
-    font-family: "Mosk";
-    font-size: 16px;
+/* p {
+    font-family: "Limousine";
+    font-size: 18px;
     margin: 16px;
     color: white;
-}
+} */
 
 /* 
     All global classes go here
 */
+.button-tab {
+    border: none;
+    color: white;
+    font-family: "Champagne";
+    font-size: 18px;
+    padding: 16px;
+}
+
 .button-std {
     border: none;
     /* box-shadow:inset 0px 34px 0px -15px #3e2b96; */
     color: #ffffff;
-    
     cursor: pointer;
-    font-size: 15px;
-    font-family: "Mosk";
+    font-size: 18px;
+    font-family: "Champagne";
     font-weight: bold;
     padding: 15px 40px;
 }
@@ -71,7 +79,7 @@ p {
     color: #ffffff;
     background-color: #328cc1;
     cursor: pointer;
-    font-size: 15px;
+    font-size: 19px;
     font-family: "Mosk";
     font-weight: bold;
     padding: 15px 40px;
@@ -81,7 +89,6 @@ p {
     All color options go here
 */
 .background {
-    /* background-color: #0b3c5d; */
     background-color: #F4F4F4;
 }
 
@@ -101,7 +108,7 @@ p {
 
 .accent {
     /* background-color: #813772; */
-    background-color: #C0B283;
+    background-color: #373737;
 }
 
 .default {
@@ -111,8 +118,16 @@ p {
 
 button:hover {
     /* background-color: #813772; */
-    background-color: #C0B283;
+    background-color: #373737;
     cursor: pointer;
+}
+
+.button-tab:hover{
+    background-color: #373737;
+}
+
+.button-tab-sub:hover{
+    background-color: #373737;
 }
 
 .text {

@@ -4,3 +4,31 @@
     font-weight: 700;
     src: url('assets/Fonts/MoskBold.ttf') format('truetype')
 }
+
+@font-face {
+    font-family: "Autobus";
+    font-style: bold;
+    font-weight: 700;
+    src: url('assets/fonts/Autobus-Bold.ttf') format('truetype')
+}
+
+@font-face {
+    font-family: "timeburner";
+    font-style: normal;
+    font-weight: 700;
+    src: url('assets/fonts/timeburnernormal.ttf') format('truetype')
+}
+
+@font-face {
+    font-family: "Champagne";
+    font-style: bold;
+    font-weight: 1800;
+    src: url('assets/fonts/Champagne&LimousinesBold.ttf') format('truetype')
+}
+
+@font-face {
+    font-family: "Limousine";
+    font-style: normal;
+    font-weight: 800;
+    src: url('assets/fonts/Champagne&Limousines.ttf') format('truetype')
+}

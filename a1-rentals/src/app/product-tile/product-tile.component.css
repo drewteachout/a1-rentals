@@ -2,29 +2,7 @@ h2 {
     margin-top: 2.5%;
 }
 
-.tile {
-    align-items: center;
-    padding-top: 5%;
-    border-style: solid;
-    border-radius: 5%;
-    border: black;
-    border-width: 10px;
-    color: black;
-    cursor: pointer;
-    display: table-cell;
-    height: 300px;
-    max-height: 300px;
-    max-width: 400px;
+center {
     text-align: center;
-    vertical-align: middle;
-    width: 400px;
-}
-
-img {
-    position: relative;
-    width:  75%;
-    height: 75%;
-    background-position: 50% 50%;
-    background-repeat:   no-repeat;
-    background-size:     cover;
+    align-content: center;
 }

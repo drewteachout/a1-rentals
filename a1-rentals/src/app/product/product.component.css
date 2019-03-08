@@ -37,6 +37,10 @@ p {
     width: 950px;
 }
 
+.margin {
+    margin: 0.5%
+}
+
 .product-grid {
     display: inline-block;
     padding-top: 5%;

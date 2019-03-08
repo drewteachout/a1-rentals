@@ -1,0 +1,22 @@
+<p>
+  This page is under construction
+</p>
+<div class="columns is-centered margin">
+    <div class="column" *ngFor="let packages of packageData">
+        <div *ngFor="let package of packages">
+            <div class="tile is-ancestor">
+              <div class="tile is-parent">
+                <article class="tile is-child box">
+                  <p class="title">{{package[0]}}</p>
+                  <figure class="image is-4by3">
+                      <img class="center" src="{{package[1]}}">
+                  </figure>
+                  <p>{{package[2]}}</p>
+                  <h3>Price: {{package[3]}}</h3>
+                </article>
+              </div>
+            </div>
+            <!-- <app-product-tile productName={{package[0]}} productSource={{package[1]}}></app-product-tile> -->
+        </div>
+    </div>
+</div>

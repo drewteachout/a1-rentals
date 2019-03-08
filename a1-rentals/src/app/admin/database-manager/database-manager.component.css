@@ -1,0 +1,93 @@
+.product-grid {
+    float: center;
+    padding-right: 10%;
+    padding-top: 1%;
+    position: relative;
+}
+.toggle-class{
+    align-content: center;
+}
+
+.groups {
+    min-width: 18%;
+}
+
+.circle {
+    border-radius: 50%;
+    margin-left: 1%;
+    margin-right: 1%;
+    width: 30px;
+    height: 30px;
+    border: none;
+    font-size: 20px;
+    text-align: center;
+    text-decoration: none;
+    font-family: "Mosk";
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.right {
+    margin-left: 60%;
+}
+
+.inline {
+    display: inline;
+}
+
+.space {
+    margin-top: 1%;
+    margin-bottom: 1%;
+    margin-right: 1%;
+    margin-left: 1%;
+}
+
+.indent {
+    margin-left: 3%;
+}
+
+select {
+    text-decoration: none;
+    font-family: "Mosk";
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.top {
+    padding-left: 2%;
+    text-align: center;
+}
+
+.right-submit {
+    margin-left: 70%;
+    padding-top: 4%;
+    padding-bottom: 1%;
+}
+
+.product-content {
+    padding-top: 2%;
+    padding-left: 5%;
+    border-bottom: 3px solid;
+    border-left: 3px solid;
+    border-right: 3px solid;
+}
+
+.add-field {
+    margin-left: 5%;
+    border-radius: 50px;
+}
+
+.field-input {
+    margin: 2%;
+    font-size: 16px;
+}
+
+.indent-subgroups {
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-left: 6%;
+}
+
+.dropdown-item:hover {
+    background-color: lightblue;
+}

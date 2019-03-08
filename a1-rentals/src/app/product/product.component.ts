@@ -12,39 +12,26 @@ import { AngularFirestore } from 'angularfire2/firestore';
 })
 export class ProductComponent implements OnInit {
 
+  private numColumns = 5;
+  private quoteTotal: number;
+
   public category: string;
-  public isCategory: boolean;
+  public isAllProducts: boolean;
   public columnDefs: any;
   public rowData: any;
   public images: (string | IImage)[];
   public productDescription: string;
   public productName: string;
   public total: string;
+  public domLayout: string;
 
-  private domLayout: string;
-  private quoteTotal: number;
+  productData = [];
 
   constructor(private route: ActivatedRoute, private db: AngularFirestore) {
-    this.columnDefs = [
-      {
-        headerName: 'Item Name',
-        field: 'name'
-      },
-      {
-        headerName: 'Price',
-        field: 'price',
-        sortable: true,
-        type: 'numericColumn',
-        valueFormatter: numberFormatter,
-      },
-      {
-        headerName: 'Quantity',
-        field: 'quantity',
-        editable: true,
-        type: 'numericColumn',
-        valueParser: numberParser
-      }
-    ];
+
+    for (let i = 0; i < this.numColumns; i++) {
+      this.productData.push([]);
+    }
 
     this.images = [
       { url: 'assets/images/blackChair.jpg', caption: 'Poly/metal chair rental - black'},
@@ -65,35 +52,119 @@ export class ProductComponent implements OnInit {
     ' rentals feature a blue vinyl seat.';
 
     this.domLayout = 'autoHeight';
-    this.loadData(route);
-    this.isCategory = false;
+    this.isAllProducts = false;
+    this.handleData(route);
+    this.quoteTotal = 0.00;
+    this.total = '0.00';
    }
 
   ngOnInit() {
-    this.productName = 'Chairs';
-    this.quoteTotal = 0.00;
-    this.total = '0.00';
   }
 
-  loadData(route: ActivatedRoute) {
+  handleData(route: ActivatedRoute) {
+    this.rowData = [];
     route.paramMap.subscribe((urlParamMap: ParamMap) => {
       const name = urlParamMap.get('productName');
       const category = urlParamMap.get('productCategory');
       this.category = category;
-      if (name == null || name.length === 0) {
+      if (category === '' && name == null) {
+        this.isAllProducts = true;
+        this.loadRentalProducts();
+      } else if (name == null || name.length === 0) {
         this.productName = category;
-        this.isCategory = true;
+        this.loadDataCategory(category);
       } else {
         this.productName = name;
-        this.isCategory = false;
-        this.db.collection('/' +
-          category.replace('/', '-')).doc(name.replace('/', '-')).collection(name.replace('/', '-')).valueChanges().subscribe(items => {
-          const newRowData = [];
-          items.forEach(element => {
-            newRowData.push({ name: element['type'], price: element['price'], quantity: 0 });
+        this.loadDataSubCategory(category, name);
+      }
+    });
+  }
+
+  loadDataCategory(category) {
+    this.db.collection('/' + category.replace('/', '-')).valueChanges()
+      .subscribe((products: any[]) => {
+        const myMap = new Map();
+        const newColDefs = [];
+        products.forEach((product: any) => {
+          Object.keys(product).forEach((key) => {
+            myMap.set(key, product[key.toString()]);
           });
-          this.rowData = newRowData;
         });
+        myMap.forEach((value, key) => {
+          if (isNaN(value)) {
+            newColDefs.push({
+              field: key,
+              headerName: key.toString().charAt(0).toUpperCase() + key.toString().substr(1)
+            });
+          } else {
+            newColDefs.push({
+              field: key,
+              headerName: key.toString().charAt(0).toUpperCase() + key.toString().substr(1),
+              sortable: true,
+              type: 'numericColumn',
+              valueFormatter: numberFormatter,
+            });
+          }
+        });
+        newColDefs.push({
+          headerName: 'Quantity',
+          field: 'quantity',
+          editable: true,
+          type: 'numericColumn',
+          valueParser: numberParser
+        });
+        this.rowData = products;
+        this.columnDefs = newColDefs;
+      })
+  }
+
+  loadDataSubCategory(category, name) {
+    this.db.collection('/' + category.replace('/', '-'))
+      .doc(name.replace('/', '-'))
+      .collection(name.replace('/', '-')).valueChanges()
+      .subscribe((products: any[]) => {
+        const myMap = new Map();
+        const newColDefs = [];
+        products.forEach((product: any) => {
+          Object.keys(product).forEach((key) => {
+            myMap.set(key, product[key.toString()]);
+          });
+        });
+        myMap.forEach((value, key) => {
+          if (isNaN(value)) {
+            newColDefs.push({
+              field: key,
+              headerName: key.toString().charAt(0).toUpperCase() + key.toString().substr(1)
+            });
+          } else {
+            newColDefs.push({
+              field: key,
+              headerName: key.toString().charAt(0).toUpperCase() + key.toString().substr(1),
+              sortable: true,
+              type: 'numericColumn',
+              valueFormatter: numberFormatter,
+            });
+          }
+        });
+        newColDefs.push({
+          headerName: 'Quantity',
+          field: 'quantity',
+          editable: true,
+          type: 'numericColumn',
+          valueParser: numberParser
+        });
+        this.rowData = products;
+        this.columnDefs = newColDefs;
+      });
+  }
+
+  loadRentalProducts() {
+    this.db.collection('/popular').valueChanges().subscribe((popular_items: any[]) => {
+      for (let i = 0; i < popular_items.length; i++) {
+        const key = i % this.numColumns;
+        const data = this.productData[key];
+        data.push([popular_items[i].name, popular_items[i].path]);
+        this.productData[key] = data;
       }
     });
   }

@@ -19,6 +19,7 @@ export class AppComponent {
 
   loadData() {
     this.db.collection('banners').valueChanges().subscribe(items => {
+      this.bannerTexts = [];
       items.forEach(item => {
         const date = Date.now() / 1000;
         if (item['start_date'].seconds <= date && item['end_date'].seconds >= date) {

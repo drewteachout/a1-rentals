@@ -1,29 +1,12 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Admin Portal</title>
-    <link
-    href="https://fonts.googleapis.com/css?family=Roboto:300,500" rel="stylesheet">
-    <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase.js"></script>
-    <link rel="stylesheet" href="login.component.css">
-  </head>
+<div class="container">
   <h1> Admin Portal</h1>
-  <body>
-    
-    <div class="container">
-      <input id="txtEmail" type="email" placeholder="Email">
+  <div class="level">
+    <div class="level-left">
+      <input id="txtEmail" class="level-item" type="email" placeholder="Email">
       <input id="txtPassword" type="password" placeholder="Password">
-
-      <button id="btnLogin" class="btn btn-action">
-        Log in
-      </button>
-
-      <button id="btnLogout" class="btn btn-action hide">
-        Log out
+      <button id="btnLogin" class="level-item button primary is-medium">
+        Sign in
       </button>
     </div>
-    <script src="login.js"></script>
-
-  </body>
-</html>
+  </div>
+<div>

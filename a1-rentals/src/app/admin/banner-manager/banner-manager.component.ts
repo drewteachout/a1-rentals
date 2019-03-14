@@ -10,8 +10,8 @@ import { ModalService } from 'src/app/services/modal.service';
 })
 export class BannerManagerComponent implements OnInit {
 
-  private activeBanners: any[] = [];
-  private newBanner: any = {title: '', message: '', color: '', start_date: '',  end_date: ''};
+  activeBanners: any[] = [];
+  newBanner: any = {title: '', message: '', color: '', start_date: '',  end_date: ''};
   constructor(private db: AngularFirestore, private modalService: ModalService) {
     // console.log(this.newBanner.start_date.toLocaleDateString());
     this.db.collection('/banners').valueChanges().subscribe((banners: {}[]) => {
@@ -60,6 +60,10 @@ export class BannerManagerComponent implements OnInit {
       }
       selected.add('is-active');
     }
+  }
+
+  editBanner() {
+    console.log('you are viewing the console...');
   }
 
   openModal(id: string) {

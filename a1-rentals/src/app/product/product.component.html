@@ -1,7 +1,7 @@
-<div *ngIf="!isCategory; else category">
+<div class="container is-fluid" *ngIf="!isAllProducts; else category">
   <h2 class="title text">{{productName}}</h2>
-  <div class="product-info">
-    <div class="left">
+  <div class="product-info columns">
+    <div class="column">
       <div class="slideshow">
         <slideshow [imageUrls]="images"
                   [height]="'400px'"
@@ -12,7 +12,7 @@
       <h3 class="description text">Product Description</h3>
       <p class="text-secondary">{{productDescription}}</p>
     </div>
-    <div class="right">
+    <div class="column">
       <div class="product-grid">
         <ag-grid-angular
           class="ag-theme-balham-dark"
@@ -22,8 +22,7 @@
           [columnDefs]="columnDefs"
           [domLayout]="domLayout"
           [singleClickEdit]="true"
-          (cellValueChanged)="onCellValueChanged($event)"
-          (gridReady)="onGridReady($event)">
+          (cellValueChanged)="onCellValueChanged($event)">
         </ag-grid-angular>
       </div>
       <div class="quote">
@@ -38,5 +37,11 @@
   </div>
 </div>
 <ng-template #category>
-  <p>Found a category</p>
+  <div class="columns is-centered margin">
+      <div class="column" *ngFor="let products of productData">
+        <div *ngFor="let product of products">
+            <app-product-tile productName={{product[0]}} productSource={{product[1]}}></app-product-tile>
+        </div>
+      </div>
+    </div>
 </ng-template>

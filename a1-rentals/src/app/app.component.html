@@ -1,9 +1,8 @@
+<div *ngFor="let text of bannerTexts">
+    <div *ngIf="text.display" class="notification is-info">
+        <button class="delete" (click)="closeNotification(text)"></button>
+        {{text.text}}
+    </div>
+</div>
 <app-header class="header"></app-header>
 <router-outlet></router-outlet>
-<footer class="footer">
-    <div class="content has-text-centered">
-        <p>
-        <strong>Follow Us On Twitter</strong>.
-        </p>
-    </div>
-</footer>

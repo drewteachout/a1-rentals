@@ -28,16 +28,18 @@ import { AngularFireModule } from '@angular/fire';
 import { SlideshowModule } from 'ng-simple-slideshow';
 import { ModalService } from './services/modal.service';
 import { AdminModule } from './admin/admin.module';
+import { PackagesComponent } from './packages/packages.component';
 
 const appRoutes: Routes = [
   { path: 'Popular Products', component: HomepageComponent},
+  { path: 'Packages', component: PackagesComponent},
   { path: 'Contact Us', component: ContactComponent},
   { path: 'Quote Cart', component: QuoteCartComponent},
   { path: 'admin', loadChildren: './admin/admin.module#AdminModule' },
   { path: 'Rental Products/:productCategory/:productName', component: ProductComponent},
   { path: 'Rental Products/:productCategory', component: ProductComponent},
   { path: 'Rental Products',
-    redirectTo: '/Rental Products/all/',
+    redirectTo: '/Rental Products/',
     pathMatch: 'full'
   },
   { path: '',
@@ -59,7 +61,8 @@ const appRoutes: Routes = [
     MapComponent,
     QuoteTileComponent,
     ContactComponent,
-    QuoteCartComponent
+    QuoteCartComponent,
+    PackagesComponent
   ],
   imports: [
     RouterModule.forRoot(

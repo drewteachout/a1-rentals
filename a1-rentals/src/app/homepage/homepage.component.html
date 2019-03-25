@@ -1,7 +1,7 @@
-<div class="tile-is-ancestor container is-fluid top-padding">
-    <section *ngFor="let productLine of products" class="level columns">
-        <div class="level-item column is-3 tile-is-parent" *ngFor="let product of productLine">
-            <app-product-tile class="tile-is-child box secondary" productName={{product[0]}} productSource={{product[1]}}></app-product-tile>
+<div class="columns is-centered margin">
+    <div class="column" *ngFor="let products of productData">
+        <div *ngFor="let product of products">
+            <app-product-tile productName={{product[0]}} productSource={{product[1]}}></app-product-tile>
         </div>
-    </section>
+    </div>
 </div>

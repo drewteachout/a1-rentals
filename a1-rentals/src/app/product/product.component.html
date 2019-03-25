@@ -1,4 +1,4 @@
-<div class="container is-fluid" *ngIf="!isCategory; else category">
+<div class="container is-fluid" *ngIf="!isAllProducts; else category">
   <h2 class="title text">{{productName}}</h2>
   <div class="product-info columns">
     <div class="column">
@@ -22,8 +22,7 @@
           [columnDefs]="columnDefs"
           [domLayout]="domLayout"
           [singleClickEdit]="true"
-          (cellValueChanged)="onCellValueChanged($event)"
-          (gridReady)="onGridReady($event)">
+          (cellValueChanged)="onCellValueChanged($event)">
         </ag-grid-angular>
       </div>
       <div class="quote">
@@ -38,5 +37,11 @@
   </div>
 </div>
 <ng-template #category>
-  <p>Found a category</p>
+  <div class="columns is-centered margin">
+      <div class="column" *ngFor="let products of productData">
+        <div *ngFor="let product of products">
+            <app-product-tile productName={{product[0]}} productSource={{product[1]}}></app-product-tile>
+        </div>
+      </div>
+    </div>
 </ng-template>

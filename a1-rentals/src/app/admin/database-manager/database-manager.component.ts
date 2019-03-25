@@ -13,10 +13,10 @@ export class DatabaseManagerComponent implements OnInit {
 
   public gridOptions: GridOptions;
   currentGroupSelection: any;
-  private newProductObjects: any[] = [{key: 'Name', value: ''}];
-  private newSubGroupObjects: any[] = [{name: ''}];
-  private newProductGroup = '';
-  private newSubGroups: any[] = [];
+  newProductObjects: any[] = [{key: 'Name', value: ''}];
+  newSubGroupObjects: any[] = [{name: ''}];
+  newProductGroup = '';
+  newSubGroups: any[] = [];
   currentSubGroupSelection: any;
   hidden: boolean = false;
   columnDefs = [];

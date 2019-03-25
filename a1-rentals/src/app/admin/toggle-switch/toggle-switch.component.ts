@@ -8,7 +8,7 @@ import {ICellRendererAngularComp} from 'ag-grid-angular';
 })
 export class ToggleSwitchComponent implements ICellRendererAngularComp, OnInit {
     public params: any;
-    private state: boolean;
+    state: boolean;
 
     ngOnInit() {
       console.log(this.state);

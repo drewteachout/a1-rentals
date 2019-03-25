@@ -29,12 +29,14 @@ import { SlideshowModule } from 'ng-simple-slideshow';
 import { ModalService } from './services/modal.service';
 import { AdminModule } from './admin/admin.module';
 import { PackagesComponent } from './packages/packages.component';
+import { ReferencesComponent } from './references/references.component';
 
 const appRoutes: Routes = [
   { path: 'Popular Products', component: HomepageComponent},
   { path: 'Packages', component: PackagesComponent},
   { path: 'Contact Us', component: ContactComponent},
   { path: 'Quote Cart', component: QuoteCartComponent},
+  { path: 'References', component: ReferencesComponent},
   { path: 'admin', loadChildren: './admin/admin.module#AdminModule' },
   { path: 'Rental Products/:productCategory/:productName', component: ProductComponent},
   { path: 'Rental Products/:productCategory', component: ProductComponent},
@@ -62,7 +64,8 @@ const appRoutes: Routes = [
     QuoteTileComponent,
     ContactComponent,
     QuoteCartComponent,
-    PackagesComponent
+    PackagesComponent,
+    ReferencesComponent
   ],
   imports: [
     RouterModule.forRoot(

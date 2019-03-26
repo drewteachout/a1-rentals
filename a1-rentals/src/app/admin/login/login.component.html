@@ -2,10 +2,13 @@
   <h1> Admin Portal</h1>
   <div class="level">
     <div class="level-left">
-      <input id="txtEmail" class="level-item" type="email" placeholder="Email">
-      <input id="txtPassword" type="password" placeholder="Password">
-      <button id="btnLogin" class="level-item button primary is-medium">
+      <input id="txtEmail" [(ngModel)]="email" class="level-item" type="email" placeholder="Email">
+      <input id="txtPassword" [(ngModel)]="password" class="level-item" type="password" placeholder="Password">
+      <button id="btnLogin" class="level-item button primary is-medium" (click)="login()">
         Sign in
+      </button>
+      <button id="btnLogin" class="level-item button primary is-medium" (click)="logout()">
+        Sign out
       </button>
     </div>
   </div>

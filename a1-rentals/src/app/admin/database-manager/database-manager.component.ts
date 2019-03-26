@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFirestore, CollectionReference } from 'angularfire2/firestore';
 import { GridOptions } from 'ag-grid-community';
 import { map } from 'rxjs/operators';
 import { ModalService } from '../../services/modal.service';
+import { diPublic } from '@angular/core/src/render3/di';
 
 @Component({
   selector: 'app-database-manager',
@@ -299,6 +300,52 @@ export class DatabaseManagerComponent implements OnInit {
       }
     }
     selected.add('is-selected');
+  }
+
+  deleteProduct(product: any) {
+    console.log(product);
+    if (this.currentSubGroupSelection === null) {
+      const docs = this.getCurrentDocID(this.currentGroupSelection.db_name, this.currentSubGroupSelection, product);
+      docs.get().then((res) => {
+        if (res.docs.length === 1) {
+          console.log(res.docs[0]);
+          const id = res.docs[0].id;
+          this.db.collection(this.currentGroupSelection.db_name).doc(id).delete();
+        }
+      });
+    } else {
+      const docs = this.getCurrentDocID(this.currentGroupSelection.db_name, this.currentSubGroupSelection, product);
+      docs.get().then((res) => {
+        if (res.docs.length === 1) {
+          console.log(res.docs[0]);
+          const id = res.docs[0].id;
+          this.db.collection(this.currentGroupSelection.db_name)
+          .doc(this.currentSubGroupSelection.name.replace('/', '-'))
+          .collection(this.currentSubGroupSelection.name.replace('/', '-'))
+          .doc(id).delete();
+        }
+      });
+    }
+  }
+
+  getCurrentDocID(productGroup: string,  productSubgroup: any, product: any) {
+    let docs = null;
+    if (productSubgroup === null) {
+      docs = this.db.collection(productGroup).ref;
+      Object.keys(product).forEach((key) => {
+         docs = docs.where(key, '==', product[key]) as CollectionReference;
+      });
+      return docs;
+    } else {
+      docs = this.db.collection(productGroup)
+      .doc(productSubgroup.name)
+      .collection(productSubgroup.name).ref;
+      Object.keys(product).forEach((key) => {
+        docs = docs.where(key, '==', product[key]) as CollectionReference;
+      });
+    }
+    return docs;
+
   }
 
 

@@ -130,7 +130,7 @@
                 </div>
                 <div class="dropdown-menu" id="dropdown-menu2" role="menu">
                   <div class="dropdown-content">
-                    <div (click)="editProduct(product)" class="dropdown-item">
+                    <div (click)="openEditProductModal(product)" class="dropdown-item">
                         <p class="is-size-3">Edit</p>
                     </div>
                     <hr class="dropdown-divider">
@@ -208,7 +208,7 @@
 
 <app-modal id="addProductModal">
   <header class="modal-card-head">
-    <p class="modal-card-title title is-2">Create New Product Group</p>
+    <p class="modal-card-title title is-2">Add Product</p>
     <button class="delete" aria-label="close" (click)="clearNewProduct();closeModal('addProductModal')"></button>
   </header>
   <section class="modal-card-body">
@@ -224,6 +224,28 @@
   <footer class="modal-card-foot">
     <div class="right-submit">
       <button class="button-std primary" (click)="addNewProduct()">Submit</button>
+    </div>
+  </footer>
+</app-modal>
+
+<app-modal id="editProductModal">
+  <header class="modal-card-head">
+    <p class="modal-card-title title is-2">Edit Product</p>
+    <button class="delete" aria-label="close" (click)="clearNewProduct();closeModal('editProductModal')"></button>
+  </header>
+  <section class="modal-card-body">
+    <div *ngFor="let obj of newProductObjects; let i = index;" class="level">
+      <div *ngIf="obj.key != 'db_id'" class="level-left">
+        <input [(ngModel)]="newProductObjects[i].key" class="level-item field-input" type="text" placeholder="New Field Name">
+        <input [(ngModel)]="newProductObjects[i].value" class="level-item field-input" type="text" placeholder="Product Name">
+        <button *ngIf="i !== 0" class="button level-item delete is-medium is-danger" (click)='removeProductObject(i)'></button>
+        <button *ngIf="i === (newProductObjects.length - 1)" (click)="addProductField()" class="level-item button is-large primary">Add Field</button>
+      </div>
+    </div>
+  </section>
+  <footer class="modal-card-foot">
+    <div class="right-submit">
+      <button class="button-std primary" (click)="submitEditProduct()">Submit Changes</button>
     </div>
   </footer>
 </app-modal>

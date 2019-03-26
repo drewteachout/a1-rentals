@@ -328,6 +328,51 @@ export class DatabaseManagerComponent implements OnInit {
     }
   }
 
+  submitEditProduct() {
+    let id = -1;
+    const editedProduct = {};
+    this.newProductObjects.forEach((obj) => {
+      if (obj.key === 'db_id') {
+        id = obj.value;
+      } else {
+        editedProduct[obj.key] = obj.value;
+      }
+    });
+    if (id !== -1) {
+      if (this.currentSubGroupSelection === null) {
+        this.db.collection(this.currentGroupSelection.db_name).doc(id.toString()).set(editedProduct);
+      } else {
+        this.db.collection(this.currentGroupSelection.db_name)
+        .doc(this.currentSubGroupSelection.name.replace('/', '-'))
+        .collection(this.currentSubGroupSelection.name.replace('/', '-'))
+        .doc(id.toString()).set(editedProduct);
+      }
+    }
+    this.clearNewProduct();
+    this.closeModal('editProductModal');
+  }
+
+  openEditProductModal(product) {
+    this.newProductObjects.pop();
+    this.newProductObjects.push({key: 'db_id', value: ''});
+    console.log(this.newProductObjects);
+    Object.keys(product).forEach((key) => {
+      if (key === 'Name') {
+        this.newProductObjects[0]['value'] = product[key];
+      } else {
+        this.newProductObjects.push({key: key, value: product[key]});
+      }
+    });
+    let docs = this.getCurrentDocID(this.currentGroupSelection.db_name, this.currentSubGroupSelection, product);
+    docs.get().then((res) => {
+      if (res.docs.length === 1) {
+        const id = res.docs[0].id;
+        this.newProductObjects[0].value = res.docs[0].id;
+        this.openModal('editProductModal');
+      }
+    });
+  }
+
   getCurrentDocID(productGroup: string,  productSubgroup: any, product: any) {
     let docs = null;
     if (productSubgroup === null) {
@@ -345,7 +390,6 @@ export class DatabaseManagerComponent implements OnInit {
       });
     }
     return docs;
-
   }
 
 

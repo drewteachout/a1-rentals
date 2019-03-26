@@ -17,6 +17,7 @@ export class DatabaseManagerComponent implements OnInit {
   newProductObjects: any[] = [{key: 'Name', value: ''}];
   newSubGroupObjects: any[] = [{name: ''}];
   newProductGroup = '';
+  newProductGroupName = {old: '', new: '', db_name: ''};
   newSubGroups: any[] = [];
   currentSubGroupSelection: any;
   hidden: boolean = false;
@@ -60,6 +61,12 @@ export class DatabaseManagerComponent implements OnInit {
       return productSubGroups.filter((element: any) => element.hasOwnProperty('array') && element.array);
     })).subscribe((subGroups) => {
       if (this.currentSubGroupSelection == null) {
+        this.subGroups = subGroups;
+        if (this.subGroups.length !== 0) {
+          this.currentSubGroupSelection = this.subGroups[0]
+          this.subGroupValueChanged();
+        }
+      } else { // same as the if block for now until I investigate whether this causes problems
         this.subGroups = subGroups;
         if (this.subGroups.length !== 0) {
           this.currentSubGroupSelection = this.subGroups[0]
@@ -113,7 +120,7 @@ export class DatabaseManagerComponent implements OnInit {
         this.columnDefs = newColDefs;
       }
       this.rowData = products;
-      //console.log(products);
+      console.log(products);
     });
   }
 
@@ -128,17 +135,17 @@ export class DatabaseManagerComponent implements OnInit {
     params.api.sizeColumnsToFit();
   }
 
-  addProductSubGroup() {
+  openAddProductSubGroup() {
     this.openModal('addProductSubGroupModal');
     //console.log('add product subgroup clicked');
   }
 
-  addProductGroup() {
+  openAddProductGroup() {
     //console.log('add product group clicked');
     this.openModal('addProductGroupModal');
   }
 
-  addProduct() {
+  openAddProduct() {
     this.openModal('addProductModal');
     //console.log('add product clicked');
   }
@@ -213,6 +220,13 @@ export class DatabaseManagerComponent implements OnInit {
        //console.log('added ' + element.name + ' to ' + this.newProductGroup);
      });
    }
+   this.db.collection('/products').doc(this.newProductGroup).set(
+     {
+       collection_name: this.newProductGroup.replace('/', '-'),
+       display_name: this.newProductGroup,
+       display_order: 0,
+       hidden: false
+     });
    this.closeModal('addProductGroupModal');
  }
 
@@ -226,10 +240,12 @@ export class DatabaseManagerComponent implements OnInit {
     } else {
       this.newSubGroupObjects.forEach(element => {
         if (String(element.name).length !== 0) {
+          this.currentSubGroupSelection = null;
           this.db.collection(this.currentGroupSelection.db_name).doc(element.name).set({array: true, hidden: false, name: element.name});
         }
       });
     }
+    this.closeModal('addProductSubGroupModal');
   }
 
   removeSubGroupObject(index: number) {
@@ -393,4 +409,20 @@ export class DatabaseManagerComponent implements OnInit {
   }
 
 
+  openEditProductGroup(group) {
+    console.log(group);
+    this.openModal('editProductGroupModal');
+    this.newProductGroupName.old = group.name;
+    this.newProductGroupName.db_name = group.db_name;
+    console.log(this.newProductGroupName);
+  }
+
+  submitEditProductGroup() {
+    console.log(this.newProductGroupName);
+    this.db.collection('/products').doc(this.newProductGroupName.db_name).update({display_name: this.newProductGroupName.new});
+    this.closeModal('editProductGroupModal');
+    this.newProductGroupName.db_name = '';
+    this.newProductGroupName.old = '';
+    this.newProductGroupName.new = '';
+  }
 }

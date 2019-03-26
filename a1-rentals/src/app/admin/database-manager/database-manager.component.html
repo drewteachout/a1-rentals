@@ -1,6 +1,6 @@
 <div class="columns">
   <div class="column is-4">
-      <button (click)="addProductGroup()" class="button is-large is-fullwidth primary">Add Product Group +</button>
+      <button (click)="openAddProductGroup()" class="button is-large is-fullwidth primary">Add Product Group +</button>
       <table class="table is-striped is-hoverable is-fullwidth">
         <thead>
           <tr>
@@ -10,10 +10,10 @@
           </tr>
         </thead>
         <tbody>
-          <ng-container *ngFor="let product of products; let i = index;let first = first">
-            <tr [attr.id]="'productGroupRow' + i" (click)="productGroupRowSelected(product, i)" [class.is-selected]="first">
+          <ng-container *ngFor="let group of products; let i = index;let first = first">
+            <tr [attr.id]="'productGroupRow' + i" (click)="productGroupRowSelected(group, i)" [class.is-selected]="first">
               <th>{{i}}</th>
-              <td>{{product.name}}</td>
+              <td>{{group.name}}</td>
               <td>
                 <div class="dropdown" [attr.id]="'productGroupDropdown' + i" (click)="switchDropdown('productGroupDropdown', i, $event)">
                   <div class="dropdown-trigger">
@@ -26,18 +26,18 @@
                   </div>
                   <div class="dropdown-menu" id="dropdown-menu2" role="menu">
                     <div class="dropdown-content">
-                      <div *ngIf="product.hidden" (click)="toggleGroupHidden(product)" class="dropdown-item">
+                      <div *ngIf="group.hidden" (click)="toggleGroupHidden(group)" class="dropdown-item">
                           <p class="is-size-3">Show</p>
                       </div>
-                      <div *ngIf="!product.hidden" (click)="toggleGroupHidden(product)" class="dropdown-item">
+                      <div *ngIf="!group.hidden" (click)="toggleGroupHidden(group)" class="dropdown-item">
                           <p class="is-size-3">Hide</p>
                         </div>
                       <hr class="dropdown-divider">
-                      <div (click)="editGroup(product)" class="dropdown-item">
+                      <div (click)="openEditProductGroup(group)" class="dropdown-item">
                           <p class="is-size-3">Edit</p>
                       </div>
                       <hr class="dropdown-divider">
-                      <div (click)="deleteGroup(product)" class="dropdown-item">
+                      <div (click)="openDeleteGroup(group)" class="dropdown-item">
                         <p class="is-size-3">Delete</p>
                       </div>
                     </div>
@@ -50,7 +50,7 @@
       </table>
   </div>
   <div *ngIf="subGroups.length > 0" class="column">
-    <button (click)="addProductSubGroup()" class="button is-large is-fullwidth primary">Add Product Subgroup +</button>
+    <button (click)="openAddProductSubGroup()" class="button is-large is-fullwidth primary">Add Product Subgroup +</button>
     <table class="table is-striped is-hoverable is-fullwidth">
       <tr>
         <th>#</th>
@@ -100,13 +100,13 @@
   <div class="column">
     <div *ngIf="subGroups.length === 0 && rowData.length === 0" class="columns">
       <div class="column">
-        <button (click)="addProductSubGroup()" class="button is-large is-fullwidth primary">Add Subgroup +</button>
+        <button (click)="openAddProductSubGroup()" class="button is-large is-fullwidth primary">Add Subgroup +</button>
       </div>
       <div class="column">
-        <button (click)="addProduct()" class="button is-large is-fullwidth primary">Add Product +</button>
+        <button (click)="openAddProduct()" class="button is-large is-fullwidth primary">Add Product +</button>
       </div>
     </div>
-    <button *ngIf="subGroups.length !== 0 || rowData.length !== 0" (click)="addProduct()" class="button is-large is-fullwidth primary">Add Product +</button>
+    <button *ngIf="subGroups.length !== 0 || rowData.length !== 0" (click)="openAddProduct()" class="button is-large is-fullwidth primary">Add Product +</button>
     <table class="table is-striped is-hoverable is-fullwidth">
       <tr>
         <th>#</th>
@@ -246,6 +246,26 @@
   <footer class="modal-card-foot">
     <div class="right-submit">
       <button class="button-std primary" (click)="submitEditProduct()">Submit Changes</button>
+    </div>
+  </footer>
+</app-modal>
+
+<app-modal id="editProductGroupModal">
+  <header class="modal-card-head">
+    <p class="modal-card-title title is-2">Edit Product Group</p>
+    <button class="delete" aria-label="close" (click)="closeModal('editProductGroupModal')"></button>
+  </header>
+  <section class="modal-card-body">
+    <h2>Enter a new name for this Group</h2>
+    <div class="level">
+      <div class="level-left">
+        <input [(ngModel)]="newProductGroupName.new" class="level-item field-input" type="text" placeholder="{{newProductGroupName.old}}">
+      </div>
+    </div>
+  </section>
+  <footer class="modal-card-foot">
+    <div class="right-submit">
+      <button class="button-std primary" (click)="submitEditProductGroup()">Submit Changes</button>
     </div>
   </footer>
 </app-modal>

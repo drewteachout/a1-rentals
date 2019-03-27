@@ -3,7 +3,6 @@ import { AngularFirestore, CollectionReference } from 'angularfire2/firestore';
 import { GridOptions } from 'ag-grid-community';
 import { map } from 'rxjs/operators';
 import { ModalService } from '../../services/modal.service';
-import { diPublic } from '@angular/core/src/render3/di';
 
 @Component({
   selector: 'app-database-manager',
@@ -12,19 +11,13 @@ import { diPublic } from '@angular/core/src/render3/di';
 })
 export class DatabaseManagerComponent implements OnInit {
 
-  public gridOptions: GridOptions;
   currentGroupSelection: any;
   newProductObjects: any[] = [{key: 'Name', value: ''}];
-  newSubGroupObjects: any[] = [{name: ''}];
-  newProductGroup = '';
-  newProductGroupName = {old: '', new: '', db_name: ''};
-  newSubGroups: any[] = [];
-  currentSubGroupSelection: any;
+  currentSubgroupSelection: any;
   hidden: boolean = false;
   columnDefs = [];
-  private gridApi;
   products: any[] = [];
-  subGroups: any[] = [];
+  subgroups: any[] = [];
   rowData: any[] = [];
   constructor(private db: AngularFirestore, private modalService: ModalService) {
     this.db.collection('/products').valueChanges().subscribe((productNames: any[]) => {
@@ -40,43 +33,37 @@ export class DatabaseManagerComponent implements OnInit {
       if (this.currentGroupSelection === undefined) {
         //console.log('current group selection was null');
         this.currentGroupSelection = this.products.length === 0 ? {name: ''} : this.products[0];
-        this.productGroupRowSelected(this.currentGroupSelection, 0);
       }
     });
-    this.gridOptions = <GridOptions>{
-      rowData: this.rowData,
-      columnDefs: this.columnDefs,
-      context: {
-          componentParent: this
-      }
-    };
   }
 
   ngOnInit() {
   }
 
-  groupValueChanged() {
-    this.currentSubGroupSelection = null;
+  groupValueChanged(newGroup: any) {
+    this.currentGroupSelection = newGroup;
+    this.currentSubgroupSelection = null;
     //console.log(this.currentGroupSelection);
-    this.db.collection('/' + this.currentGroupSelection.db_name).valueChanges().pipe(map(productSubGroups => {
-      return productSubGroups.filter((element: any) => element.hasOwnProperty('array') && element.array);
-    })).subscribe((subGroups) => {
-      if (this.currentSubGroupSelection == null) {
-        this.subGroups = subGroups;
-        if (this.subGroups.length !== 0) {
-          this.currentSubGroupSelection = this.subGroups[0]
-          this.subGroupValueChanged();
+    this.db.collection('/' + this.currentGroupSelection.db_name).valueChanges().pipe(map(productSubgroups => {
+      return productSubgroups.filter((element: any) => element.hasOwnProperty('array') && element.array);
+    })).subscribe((subgroups) => {
+      console.log(subgroups);
+      if (this.currentSubgroupSelection == null) {
+        this.subgroups = subgroups;
+        if (this.subgroups.length !== 0) {
+          this.currentSubgroupSelection = this.subgroups[0]
+          this.subgroupValueChanged(this.subgroups[0]);
         }
       } else { // same as the if block for now until I investigate whether this causes problems
-        this.subGroups = subGroups;
-        if (this.subGroups.length !== 0) {
-          this.currentSubGroupSelection = this.subGroups[0]
-          this.subGroupValueChanged();
+        this.subgroups = subgroups;
+        if (this.subgroups.length !== 0) {
+          this.currentSubgroupSelection = this.subgroups[0]
+          this.subgroupValueChanged(this.subgroups[0]);
         }
       }
     });
-    this.db.collection('/' + this.currentGroupSelection.db_name).valueChanges().pipe(map(productSubGroups => {
-      return productSubGroups.filter(element => !element.hasOwnProperty('array'));
+    this.db.collection('/' + this.currentGroupSelection.db_name).valueChanges().pipe(map(productSubgroups => {
+      return productSubgroups.filter(element => !element.hasOwnProperty('array'));
     })).subscribe((products: []) => {
       if (products !== undefined && products.length > 0) {
         const mySet = new Set();
@@ -93,17 +80,18 @@ export class DatabaseManagerComponent implements OnInit {
         });
         this.columnDefs = newColDefs;
       }
-      if (this.currentSubGroupSelection == null) {
+      if (this.currentSubgroupSelection == null) {
         this.rowData = products;
         //console.log(products);
       }
     });
   }
 
-  subGroupValueChanged() {
+  subgroupValueChanged(subgroup) {
+    this.currentSubgroupSelection = subgroup;
     this.db.collection('/' + this.currentGroupSelection.db_name)
-    .doc(this.currentSubGroupSelection.name.replace('/', ','))
-    .collection(this.currentSubGroupSelection.name.replace('/', ',')).valueChanges()
+    .doc(this.currentSubgroupSelection.name.replace('/', ','))
+    .collection(this.currentSubgroupSelection.name.replace('/', ',')).valueChanges()
     .subscribe((products: any[]) => {
       if (products !== undefined && products.length > 0) {
         const mySet = new Set();
@@ -121,7 +109,6 @@ export class DatabaseManagerComponent implements OnInit {
         this.columnDefs = newColDefs;
       }
       this.rowData = products;
-      console.log(products);
     });
   }
 
@@ -131,19 +118,9 @@ export class DatabaseManagerComponent implements OnInit {
     }
   }
 
-  onGridReady(params) {
-    this.gridApi = params.api;
-    params.api.sizeColumnsToFit();
-  }
-
-  openAddProductSubGroup() {
-    this.openModal('addProductSubGroupModal');
+  openAddProductSubgroup() {
+    this.openModal('addProductSubgroupModal');
     //console.log('add product subgroup clicked');
-  }
-
-  openAddProductGroup() {
-    //console.log('add product group clicked');
-    this.openModal('addProductGroupModal');
   }
 
   openAddProduct() {
@@ -156,15 +133,6 @@ export class DatabaseManagerComponent implements OnInit {
       hidden: !group.hidden
     });
     //console.log('toggle group hidden clicked');
-  }
-
-  toggleSubGroupHidden() {
-    //console.log(this.currentSubGroupSelection);
-    this.db.collection(this.currentGroupSelection.db_name).doc(this.currentSubGroupSelection.name.replace('/', '-')).update({
-      hidden: !this.currentSubGroupSelection.hidden
-    });
-    this.currentSubGroupSelection.hidden = !this.currentSubGroupSelection.hidden;
-    //console.log(this.currentSubGroupSelection);
   }
 
   openModal(id: string) {
@@ -182,12 +150,12 @@ export class DatabaseManagerComponent implements OnInit {
       this.newProductObjects.forEach(element => {
         newObj[String(element.key).toLowerCase()] = element.value;
       });
-    if (this.currentSubGroupSelection == null) {
+    if (this.currentSubgroupSelection == null) {
       this.db.collection(this.currentGroupSelection.db_name).doc(this.db.createId()).set(newObj);
     } else {
       this.db.collection(this.currentGroupSelection.db_name)
-      .doc(this.currentSubGroupSelection.name.replace('/', '-'))
-      .collection(this.currentSubGroupSelection.name.replace('/', '-'))
+      .doc(this.currentSubgroupSelection.name.replace('/', '-'))
+      .collection(this.currentSubgroupSelection.name.replace('/', '-'))
       .doc(this.db.createId()).set(newObj);
     }
     this.newProductObjects = [{key: 'name', value: ''}];
@@ -196,74 +164,6 @@ export class DatabaseManagerComponent implements OnInit {
 
   addProductField() {
     this.newProductObjects.push({key: '', value: ''});
-  }
-
- addSubTabClicked() {
-   //console.log('add Subtab Clicked');
-   this.newSubGroups.push({name: ''});
-   //console.log(this.newSubGroups);
- }
-
- removeSubGroup(index: number) {
-   if (index !== this.newSubGroups.length - 1) {
-    this.newSubGroups = this.newSubGroups.slice(0, index).concat(this.newSubGroups.slice(index + 1));
-   } else {
-     this.newSubGroups.pop();
-   }
- }
-
- addNewProductGroup() {
-   if (this.newSubGroups.length === 0) {
-    this.db.collection('/' + this.newProductGroup).doc('dummy').set({array: false});
-   } else {
-     this.newSubGroups.forEach((element) => {
-       this.db.collection(this.newProductGroup).doc(element.name).set({array: true, hidden: false, name: element.name});
-       //console.log('added ' + element.name + ' to ' + this.newProductGroup);
-     });
-   }
-   this.db.collection('/products').doc(this.newProductGroup).set(
-     {
-       collection_name: this.newProductGroup.replace('/', '-'),
-       display_name: this.newProductGroup,
-       display_order: 0,
-       hidden: false
-     });
-   this.closeModal('addProductGroupModal');
- }
-
- addSubGroup() {
-  this.newSubGroupObjects.push({name: ''});
-  }
-
-  addNewSubGroup() {
-    if (this.newSubGroupObjects.length === 0) {
-      alert('Cannot add 0 subgroups');
-    } else {
-      this.newSubGroupObjects.forEach(element => {
-        if (String(element.name).length !== 0) {
-          this.currentSubGroupSelection = null;
-          this.db.collection(this.currentGroupSelection.db_name).doc(element.name).set({array: true, hidden: false, name: element.name});
-        }
-      });
-    }
-    this.closeModal('addProductSubGroupModal');
-  }
-
-  removeSubGroupObject(index: number) {
-    if (index !== this.newSubGroupObjects.length - 1) {
-      this.newSubGroupObjects = this.newSubGroupObjects.slice(0, index).concat(this.newSubGroupObjects.slice(index + 1));
-    } else {
-      this.newSubGroupObjects.pop();
-    }
-  }
-
-  clearNewProductGroup() {
-    this.newProductGroup = '';
-    this.newSubGroups = [{name: '', }];
-  }
-
-  clearNewProductSubGroup() {
-    this.newSubGroupObjects = [{name: ''}];
   }
 
   clearNewProduct() {
@@ -287,42 +187,10 @@ export class DatabaseManagerComponent implements OnInit {
     }
   }
 
-  productGroupRowSelected(group: any, index: number) {
-    //(group, index);
-    this.currentGroupSelection = group;
-    this.groupValueChanged();
-    if (document.getElementById('productGroupRow' + index) != null) {
-      const selected = document.getElementById('productGroupRow' + index).classList;
-      const selectedRows = document.getElementsByClassName('is-selected');
-      for (let j = 0; j < selectedRows.length; j++) {
-        const currentElement = selectedRows.item(j);
-        if (currentElement.id.includes('productGroupRow')) {
-          currentElement.classList.remove('is-selected');
-        }
-      }
-      selected.add('is-selected');
-    }
-  }
-
-  productSubGroupRowSelected(group: any, index: number) {
-    //console.log(group, index);
-    this.currentSubGroupSelection = group;
-    this.subGroupValueChanged();
-    const selected = document.getElementById('productSubGroupRow' + index).classList;
-    const selectedRows = document.getElementsByClassName('is-selected');
-    for (let j = 0; j < selectedRows.length; j++) {
-      const currentElement = selectedRows.item(j);
-      if (currentElement.id.includes('productSubGroupRow')) {
-        currentElement.classList.remove('is-selected');
-      }
-    }
-    selected.add('is-selected');
-  }
-
   deleteProduct(product: any) {
     console.log(product);
-    if (this.currentSubGroupSelection === null) {
-      const docs = this.getCurrentDocID(this.currentGroupSelection.db_name, this.currentSubGroupSelection, product);
+    if (this.currentSubgroupSelection === null) {
+      const docs = this.getCurrentDocID(this.currentGroupSelection.db_name, this.currentSubgroupSelection, product);
       docs.get().then((res) => {
         if (res.docs.length === 1) {
           console.log(res.docs[0]);
@@ -331,14 +199,14 @@ export class DatabaseManagerComponent implements OnInit {
         }
       });
     } else {
-      const docs = this.getCurrentDocID(this.currentGroupSelection.db_name, this.currentSubGroupSelection, product);
+      const docs = this.getCurrentDocID(this.currentGroupSelection.db_name, this.currentSubgroupSelection, product);
       docs.get().then((res) => {
         if (res.docs.length === 1) {
           console.log(res.docs[0]);
           const id = res.docs[0].id;
           this.db.collection(this.currentGroupSelection.db_name)
-          .doc(this.currentSubGroupSelection.name.replace('/', '-'))
-          .collection(this.currentSubGroupSelection.name.replace('/', '-'))
+          .doc(this.currentSubgroupSelection.name.replace('/', '-'))
+          .collection(this.currentSubgroupSelection.name.replace('/', '-'))
           .doc(id).delete();
         }
       });
@@ -356,12 +224,12 @@ export class DatabaseManagerComponent implements OnInit {
       }
     });
     if (id !== -1) {
-      if (this.currentSubGroupSelection === null) {
+      if (this.currentSubgroupSelection === null) {
         this.db.collection(this.currentGroupSelection.db_name).doc(id.toString()).set(editedProduct);
       } else {
         this.db.collection(this.currentGroupSelection.db_name)
-        .doc(this.currentSubGroupSelection.name.replace('/', '-'))
-        .collection(this.currentSubGroupSelection.name.replace('/', '-'))
+        .doc(this.currentSubgroupSelection.name.replace('/', '-'))
+        .collection(this.currentSubgroupSelection.name.replace('/', '-'))
         .doc(id.toString()).set(editedProduct);
       }
     }
@@ -380,7 +248,7 @@ export class DatabaseManagerComponent implements OnInit {
         this.newProductObjects.push({key: key, value: product[key]});
       }
     });
-    let docs = this.getCurrentDocID(this.currentGroupSelection.db_name, this.currentSubGroupSelection, product);
+    let docs = this.getCurrentDocID(this.currentGroupSelection.db_name, this.currentSubgroupSelection, product);
     docs.get().then((res) => {
       if (res.docs.length === 1) {
         const id = res.docs[0].id;
@@ -407,23 +275,5 @@ export class DatabaseManagerComponent implements OnInit {
       });
     }
     return docs;
-  }
-
-
-  openEditProductGroup(group) {
-    console.log(group);
-    this.openModal('editProductGroupModal');
-    this.newProductGroupName.old = group.name;
-    this.newProductGroupName.db_name = group.db_name;
-    console.log(this.newProductGroupName);
-  }
-
-  submitEditProductGroup() {
-    console.log(this.newProductGroupName);
-    this.db.collection('/products').doc(this.newProductGroupName.db_name).update({display_name: this.newProductGroupName.new});
-    this.closeModal('editProductGroupModal');
-    this.newProductGroupName.db_name = '';
-    this.newProductGroupName.old = '';
-    this.newProductGroupName.new = '';
   }
 }

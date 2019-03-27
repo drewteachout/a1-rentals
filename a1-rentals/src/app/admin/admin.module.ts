@@ -15,6 +15,9 @@ import { PopularProductsManagerComponent } from './popular-products-manager/popu
 import { BannerManagerComponent } from './banner-manager/banner-manager.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuardService } from './guards/auth-guard.service';
+import { ProductGroupTableComponent } from './database-manager/product-group-table/product-group-table.component';
+import { ProductSubgroupTableComponent } from './database-manager/product-subgroup-table/product-subgroup-table.component';
+import { ProductTableComponent } from './database-manager/product-table/product-table.component';
 
 const appRoutes: Routes = [
   { path: '',
@@ -38,7 +41,10 @@ const appRoutes: Routes = [
     AdminComponent,
     PopularProductsManagerComponent,
     BannerManagerComponent,
-    LoginComponent
+    LoginComponent,
+    ProductGroupTableComponent,
+    ProductSubgroupTableComponent,
+    ProductTableComponent
   ],
   imports: [
     CommonModule,

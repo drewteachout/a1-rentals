@@ -12,7 +12,7 @@
         <tbody>
           <ng-container *ngFor="let group of products; let i = index;let first = first">
             <tr [attr.id]="'productGroupRow' + i" (click)="productGroupRowSelected(group, i)" [class.is-selected]="first">
-              <th>{{i}}</th>
+              <th>{{group.orderNum}}</th>
               <td>{{group.name}}</td>
               <td>
                 <div class="dropdown" [attr.id]="'productGroupDropdown' + i" (click)="switchDropdown('productGroupDropdown', i, $event)">
@@ -60,7 +60,7 @@
       <tbody>
         <ng-container *ngFor="let subGroup of subGroups; let i = index;let first = first">
           <tr (click)="productSubGroupRowSelected(subGroup, i)" [attr.id]="'productSubGroupRow' + i" [class.is-selected]="first">
-            <th>{{i}}</th>
+            <th>{{i + 1}}</th>
             <td>{{subGroup.name}}</td>
             <td>
               <div class="dropdown" [attr.id]="'productSubGroupDropdown' + i" (click)="switchDropdown('productSubGroupDropdown', i, $event)">
@@ -116,7 +116,7 @@
       <tbody>
         <ng-container *ngFor="let product of rowData; let i = index;">
           <tr [class.is-selected]="first">
-            <th>{{i}}</th>
+            <th>{{i + 1}}</th>
             <td *ngFor="let col of columnDefs">{{product[col.field]}}</td>
             <td>
               <div class="dropdown" [attr.id]="'productDropdown' + i" (click)="switchDropdown('productDropdown', i, $event)">

@@ -28,14 +28,15 @@ export class DatabaseManagerComponent implements OnInit {
   rowData: any[] = [];
   constructor(private db: AngularFirestore, private modalService: ModalService) {
     this.db.collection('/products').valueChanges().subscribe((productNames: any[]) => {
-      this.products = [];
+      const temp = new Array(productNames.length);
       productNames.forEach(element => {
-        this.products.push({
+        temp[element['display_order'] - 1] = {
           name: element['display_name'],
           db_name: element['collection_name'],
           hidden: element['hidden'],
-          orderNum: element['display_order']});
-      });
+          orderNum: element['display_order']};
+        });
+      this.products = temp;
       if (this.currentGroupSelection === undefined) {
         //console.log('current group selection was null');
         this.currentGroupSelection = this.products.length === 0 ? {name: ''} : this.products[0];

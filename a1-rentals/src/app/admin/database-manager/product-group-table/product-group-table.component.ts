@@ -1,26 +1,41 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
+import { Component, OnInit, Input, Output, OnChanges } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { ModalService } from 'src/app/services/modal.service';
 import { EventEmitter } from '@angular/core';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-product-group-table',
   templateUrl: './product-group-table.component.html',
   styleUrls: ['./product-group-table.component.css']
 })
-export class ProductGroupTableComponent implements OnInit {
+export class ProductGroupTableComponent implements OnInit, OnChanges {
 
   @Input() productGroups: any[];
   @Output() groupValueChanged = new EventEmitter<any>();
+  @Output() groupOrderChanged = new EventEmitter<any[]>();
   newSubGroups: any[] = [];
   newProductGroup = '';
   newProductGroupName = {old: '', new: '', db_name: ''};
   currentGroupSelection: any;
   constructor(private db: AngularFirestore, private modalService: ModalService) {
-    this.groupValueChanged.emit()
   }
 
   ngOnInit() {
+  }
+
+  ngOnChanges() {
+    if (this.productGroups.length > 0) {
+      if (this.currentGroupSelection == null) {
+        this.currentGroupSelection = this.productGroups[0];
+        this.groupValueChanged.emit(this.productGroups[0]);
+        this.productGroupRowSelected(this.productGroups[0], 0);
+      } else {
+        this.currentGroupSelection = this.productGroups[0];
+        this.groupValueChanged.emit(this.productGroups[0]);
+        this.productGroupRowSelected(this.productGroups[0], 0);
+      }
+    }
   }
 
   openAddProductGroup() {
@@ -32,7 +47,7 @@ export class ProductGroupTableComponent implements OnInit {
     this.db.collection('/products').doc(group.db_name).update({
       hidden: !group.hidden
     });
-    //console.log('toggle group hidden clicked');
+
   }
 
   openModal(id: string) {
@@ -86,12 +101,14 @@ export class ProductGroupTableComponent implements OnInit {
   }
 
   productGroupRowSelected(group: any, index: number) {
-    //(group, index);
+    console.log('product group row selected', group, index);
+    console.log('productGroupRow' + index);
     this.currentGroupSelection = group;
     this.groupValueChanged.emit(this.currentGroupSelection);
     if (document.getElementById('productGroupRow' + index) != null) {
       const selected = document.getElementById('productGroupRow' + index).classList;
       const selectedRows = document.getElementsByClassName('is-selected');
+      console.log(selectedRows);
       for (let j = 0; j < selectedRows.length; j++) {
         const currentElement = selectedRows.item(j);
         if (currentElement.id.includes('productGroupRow')) {
@@ -99,6 +116,10 @@ export class ProductGroupTableComponent implements OnInit {
         }
       }
       selected.add('is-selected');
+      console.log(document.getElementById('productGroupRow' + index));
+      console.log(selected);
+    } else {
+      console.log('row not found');
     }
   }
 
@@ -130,6 +151,15 @@ export class ProductGroupTableComponent implements OnInit {
      this.newSubGroups = this.newSubGroups.slice(0, index).concat(this.newSubGroups.slice(index + 1));
     } else {
       this.newSubGroups.pop();
+    }
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    console.log(event);
+    if (event.currentIndex !== event.previousIndex) {
+      console.log(this.productGroups);
+      moveItemInArray(this.productGroups, event.previousIndex, event.currentIndex);
+      this.groupOrderChanged.emit(this.productGroups);
     }
   }
 }

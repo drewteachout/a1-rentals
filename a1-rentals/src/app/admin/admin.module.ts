@@ -18,6 +18,7 @@ import { AuthGuardService } from './guards/auth-guard.service';
 import { ProductGroupTableComponent } from './database-manager/product-group-table/product-group-table.component';
 import { ProductSubgroupTableComponent } from './database-manager/product-subgroup-table/product-subgroup-table.component';
 import { ProductTableComponent } from './database-manager/product-table/product-table.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 const appRoutes: Routes = [
   { path: '',
@@ -56,7 +57,8 @@ const appRoutes: Routes = [
       //{ enableTracing: true } // <-- debugging purposes only
     ),
     AgGridModule.withComponents([]),
-    AngularFireModule
+    AngularFireModule,
+    DragDropModule
   ],
   providers: [ModalService, AngularFirestore, AngularFireAuthModule, AuthGuardService]
 })

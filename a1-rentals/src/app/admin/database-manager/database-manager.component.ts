@@ -34,6 +34,7 @@ export class DatabaseManagerComponent implements OnInit {
         //console.log('current group selection was null');
         this.currentGroupSelection = this.products.length === 0 ? {name: ''} : this.products[0];
       }
+      console.log(this.products);
     });
   }
 
@@ -41,6 +42,7 @@ export class DatabaseManagerComponent implements OnInit {
   }
 
   groupValueChanged(newGroup: any) {
+    console.log(newGroup)
     this.currentGroupSelection = newGroup;
     this.currentSubgroupSelection = null;
     //console.log(this.currentGroupSelection);
@@ -275,5 +277,15 @@ export class DatabaseManagerComponent implements OnInit {
       });
     }
     return docs;
+  }
+
+  groupOrderChanged(newGroups: any[]) {
+    console.log(newGroups);
+    for (let i = 0; i < newGroups.length; i++) {
+      if (newGroups[i].orderNum !== i + 1) {
+        console.log(newGroups[i]);
+        this.db.collection('products').doc(newGroups[i].db_name).update({display_order: i + 1});
+      }
+    }
   }
 }

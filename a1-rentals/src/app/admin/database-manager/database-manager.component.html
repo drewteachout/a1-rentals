@@ -1,6 +1,6 @@
 <div class="columns">
   <div class="column is-4">
-    <app-product-group-table (groupValueChanged)="groupValueChanged($event)" [productGroups]="products"></app-product-group-table>
+    <app-product-group-table (groupOrderChanged)="groupOrderChanged($event)" (groupValueChanged)="groupValueChanged($event)" [productGroups]="products"></app-product-group-table>
   </div>
   <div *ngIf="subgroups.length > 0" class="column">
     <app-product-subgroup-table (groupValueChanged)="subgroupValueChanged($event)" [productSubgroups]="subgroups" [currentGroupSelection]="currentGroupSelection"></app-product-subgroup-table>

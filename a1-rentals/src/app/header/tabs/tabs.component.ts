@@ -3,6 +3,7 @@ import { Product } from 'src/app/util/Product';
 import { ProductsService } from 'src/app/services/products.service';
 import { Router} from '@angular/router';
 import { AngularFirestore } from 'angularfire2/firestore';
+import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-tabs',
@@ -21,29 +22,32 @@ export class TabsComponent implements OnInit {
   constructor(private prodServ: ProductsService, private router: Router, private db: AngularFirestore) {
     this.tab1 = ['Popular Products', []];
     this.tab2 = ['Rental Products', []];
-    this.db.collection('/products').valueChanges().subscribe((productNames: any[]) => {
-      this.tab2[1] = [];
-      productNames.forEach(product => {
+    this.db.collection('/products').valueChanges().subscribe((productGroups: any[]) => {
+      this.tab2[1] = new Array(productGroups.length);
+      productGroups.forEach(product => {
         if (!product['hidden']) {
-          this.db.collection('/' + product['collection_name']).valueChanges().subscribe((productInfo: any) => {
-            const nextProductList: any[] = [product['display_name'], []]
-            for (let i = 0; i < productInfo.length; i++) {
-              if (productInfo[i].hasOwnProperty('array') && productInfo[i]['array'] === true) {
-                if (!productInfo[i]['hidden']) {
-                  nextProductList[1].push(productInfo[i]['name']);
-                }
-              }
+          this.db.collection(product['collection_name']).valueChanges().pipe(map((productSubgroups) => {
+            console.log(productSubgroups);
+            return productSubgroups.filter((element: any) => element.hasOwnProperty('array') && element.array && !element.hidden);
+          })).subscribe((productSubgroups: any) => {
+            const nextProductList: any[] = [product['display_name'], []];
+            for (let i = 0; i < productSubgroups.length; i++) {
+              nextProductList[1].push(productSubgroups[i]['name']);
             }
             let flag = false;
             for (let i = 0; i < this.tab2[1].length; i++) {
-              if (this.tab2[1][i][0] === nextProductList[0]) {
+              if (this.tab2[1][i] !== undefined && this.tab2[1][i][0] === nextProductList[0]) {
                 this.tab2[1][i] = nextProductList;
                 flag = true;
               }
             }
             if (!flag) {
-              this.tab2[1].push(nextProductList);
+              this.tab2[1][product.display_order - 1] = nextProductList;
             }
+            this.tab2[1] = this.tab2[1].filter((element: any) => {
+              return element !== undefined;
+            });
+            console.log(this.tab2[1]);
           });
         }
       });

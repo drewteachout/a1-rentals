@@ -7,9 +7,9 @@
       <th>Options</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody cdkDropList (cdkDropListDropped)="drop($event)">
     <ng-container *ngFor="let group of productGroups; let i = index;let first = first">
-      <tr [attr.id]="'productGroupRow' + i" (click)="productGroupRowSelected(group, i)" [class.is-selected]="first">
+      <tr [attr.id]="'productGroupRow' + i" (click)="productGroupRowSelected(group, i)" [class.is-selected]="first" cdkDrag>
         <th>{{group.orderNum}}</th>
         <td>{{group.name}}</td>
         <td>

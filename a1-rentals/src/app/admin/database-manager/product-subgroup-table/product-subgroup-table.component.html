@@ -7,7 +7,7 @@
   </tr>
   <tbody>
     <ng-container *ngFor="let subgroup of productSubgroups; let i = index;let first = first">
-      <tr (click)="productSubgroupRowSelected(subgroup, i)" [attr.id]="'productSubgroupRow' + i" [class.is-selected]="first">
+      <tr (click)="productSubgroupRowSelected(subgroup, i)" [attr.id]="'productSubgroupRow' + i" [class.is-selected]="currentGroupSelection !== undefined && subgroup.db_name == currentGroupSelection.db_name">
         <th>{{i + 1}}</th>
         <td>{{subgroup.name}}</td>
         <td>

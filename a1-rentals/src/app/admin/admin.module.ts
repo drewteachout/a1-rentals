@@ -19,6 +19,9 @@ import { ProductGroupTableComponent } from './database-manager/product-group-tab
 import { ProductSubgroupTableComponent } from './database-manager/product-subgroup-table/product-subgroup-table.component';
 import { ProductTableComponent } from './database-manager/product-table/product-table.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ReferencesManagerComponent } from './references-manager/references-manager.component';
+import { ContactInfoManagerComponent } from './contact-info-manager/contact-info-manager.component';
+import { QuoteEmailManagerComponent } from './quote-email-manager/quote-email-manager.component';
 
 const appRoutes: Routes = [
   { path: '',
@@ -29,6 +32,9 @@ const appRoutes: Routes = [
     { path: 'database management', component: DatabaseManagerComponent, canActivate: [AuthGuardService]},
     { path: 'popular products', component: PopularProductsManagerComponent, canActivate: [AuthGuardService]},
     { path: 'banners', component: BannerManagerComponent, canActivate: [AuthGuardService]},
+    { path: 'references', component: ReferencesManagerComponent, canActivate: [AuthGuardService]},
+    { path: 'contact', component: ContactInfoManagerComponent, canActivate: [AuthGuardService]},
+    { path: 'email', component: QuoteEmailManagerComponent, canActivate: [AuthGuardService]},
     { path: 'login', component: LoginComponent}
   ]},
   
@@ -45,7 +51,10 @@ const appRoutes: Routes = [
     LoginComponent,
     ProductGroupTableComponent,
     ProductSubgroupTableComponent,
-    ProductTableComponent
+    ProductTableComponent,
+    ReferencesManagerComponent,
+    ContactInfoManagerComponent,
+    QuoteEmailManagerComponent
   ],
   imports: [
     CommonModule,

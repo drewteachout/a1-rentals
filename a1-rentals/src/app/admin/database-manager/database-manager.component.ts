@@ -31,10 +31,8 @@ export class DatabaseManagerComponent implements OnInit {
         });
       this.products = temp;
       if (this.currentGroupSelection === undefined) {
-        //console.log('current group selection was null');
         this.currentGroupSelection = this.products.length === 0 ? {name: ''} : this.products[0];
       }
-      console.log(this.products);
     });
   }
 
@@ -42,14 +40,11 @@ export class DatabaseManagerComponent implements OnInit {
   }
 
   groupValueChanged(newGroup: any) {
-    console.log(newGroup)
     this.currentGroupSelection = newGroup;
     this.currentSubgroupSelection = null;
-    //console.log(this.currentGroupSelection);
     this.db.collection('/' + this.currentGroupSelection.db_name).valueChanges().pipe(map(productSubgroups => {
       return productSubgroups.filter((element: any) => element.hasOwnProperty('array') && element.array);
     })).subscribe((subgroups) => {
-      console.log(subgroups);
       if (this.currentSubgroupSelection == null) {
         this.subgroups = subgroups;
         if (this.subgroups.length !== 0) {
@@ -84,12 +79,11 @@ export class DatabaseManagerComponent implements OnInit {
       }
       if (this.currentSubgroupSelection == null) {
         this.rowData = products;
-        //console.log(products);
       }
     });
   }
 
-  subgroupValueChanged(subgroup) {
+  subgroupValueChanged(subgroup: any) {
     this.currentSubgroupSelection = subgroup;
     this.db.collection('/' + this.currentGroupSelection.db_name)
     .doc(this.currentSubgroupSelection.name.replace('/', ','))
@@ -122,23 +116,19 @@ export class DatabaseManagerComponent implements OnInit {
 
   openAddProductSubgroup() {
     this.openModal('addProductSubgroupModal');
-    //console.log('add product subgroup clicked');
   }
 
   openAddProduct() {
     this.openModal('addProductModal');
-    //console.log('add product clicked');
   }
 
   toggleGroupHidden(group: any) {
     this.db.collection('/products').doc(group.db_name).update({
       hidden: !group.hidden
     });
-    //console.log('toggle group hidden clicked');
   }
 
   openModal(id: string) {
-    //console.log(id);
     this.modalService.open(id);
   }
 
@@ -147,7 +137,6 @@ export class DatabaseManagerComponent implements OnInit {
   }
 
   addNewProduct() {
-    //console.log(this.newProductObjects);
     const newObj = {};
       this.newProductObjects.forEach(element => {
         newObj[String(element.key).toLowerCase()] = element.value;
@@ -190,12 +179,10 @@ export class DatabaseManagerComponent implements OnInit {
   }
 
   deleteProduct(product: any) {
-    console.log(product);
     if (this.currentSubgroupSelection === null) {
       const docs = this.getCurrentDocID(this.currentGroupSelection.db_name, this.currentSubgroupSelection, product);
       docs.get().then((res) => {
         if (res.docs.length === 1) {
-          console.log(res.docs[0]);
           const id = res.docs[0].id;
           this.db.collection(this.currentGroupSelection.db_name).doc(id).delete();
         }
@@ -204,7 +191,6 @@ export class DatabaseManagerComponent implements OnInit {
       const docs = this.getCurrentDocID(this.currentGroupSelection.db_name, this.currentSubgroupSelection, product);
       docs.get().then((res) => {
         if (res.docs.length === 1) {
-          console.log(res.docs[0]);
           const id = res.docs[0].id;
           this.db.collection(this.currentGroupSelection.db_name)
           .doc(this.currentSubgroupSelection.name.replace('/', '-'))
@@ -242,7 +228,6 @@ export class DatabaseManagerComponent implements OnInit {
   openEditProductModal(product) {
     this.newProductObjects.pop();
     this.newProductObjects.push({key: 'db_id', value: ''});
-    console.log(this.newProductObjects);
     Object.keys(product).forEach((key) => {
       if (key === 'Name') {
         this.newProductObjects[0]['value'] = product[key];
@@ -280,12 +265,28 @@ export class DatabaseManagerComponent implements OnInit {
   }
 
   groupOrderChanged(newGroups: any[]) {
-    console.log(newGroups);
     for (let i = 0; i < newGroups.length; i++) {
       if (newGroups[i].orderNum !== i + 1) {
-        console.log(newGroups[i]);
         this.db.collection('products').doc(newGroups[i].db_name).update({display_order: i + 1});
       }
     }
   }
+
+  // async addDBNameToProductSubgroups() {
+  //   const batch = this.db.firestore.batch();
+  //   for (let i = 0; i < this.products.length; i++) {
+  //     const query = this.db.collection(this.products[i]['db_name']).ref.where('array', '==', true);
+  //     await query.get().then((res) => {
+  //       if (!res.empty) {
+  //         res.forEach((doc) => {
+  //           batch.update(doc.ref, {
+  //             db_name: doc.id.replace('/', '-'),
+  //             display_name: doc.id
+  //           });
+  //         });
+  //       }
+  //     });
+  //   }
+  //   console.log(batch.commit());
+  // }
 }

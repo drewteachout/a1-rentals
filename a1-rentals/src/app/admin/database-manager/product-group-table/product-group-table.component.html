@@ -35,7 +35,7 @@
                     <p class="is-size-3">Edit</p>
                 </div>
                 <hr class="dropdown-divider">
-                <div (click)="openDeleteGroup(group)" class="dropdown-item">
+                <div (click)="openDeleteProductGroup(group)" class="dropdown-item">
                   <p class="is-size-3">Delete</p>
                 </div>
               </div>
@@ -59,8 +59,8 @@
         <button class="button is-large primary level-item" (click)="addSubTabClicked()">Add Subgroup</button>
       </div>
     </div>
-    <ol type="1">
-      <li class="indent-subgroups level" *ngFor="let subgroup of newSubGroups; let i = index">
+    <ol class="indent-subgroups" type="1">
+      <li class="level" *ngFor="let subgroup of newSubGroups; let i = index">
         <div class="level-left">
           <input [(ngModel)]="subgroup.name" type="text" placeholder="SubGroup Name" class="level-item">
           <button class="button delete is-medium is-danger level-item" (click)='removeSubGroup(i)'></button>
@@ -91,6 +91,28 @@
   <footer class="modal-card-foot">
     <div class="right-submit">
       <button class="button-std primary" (click)="submitEditProductGroup()">Submit Changes</button>
+    </div>
+  </footer>
+</app-modal>
+
+<app-modal id="deleteProductGroupModal">
+  <header class="modal-card-head has-background-danger">
+    <p class="modal-card-title title is-2">Delete {{deleteProductGroup.name}}</p>
+    <button class="delete" aria-label="close" (click)="closeModal('deleteProductGroupModal')"></button>
+  </header>
+  <section class="modal-card-body">
+    <p class="has-text-danger">This action deletes all subgroups and products contained within any of those subgroups and cannot be undone</p>
+    <h3>Enter the name of the group to confirm: </h3>
+    <strong>{{deleteProductGroup.name}}</strong>
+    <div class="level">
+      <div class="level-left">
+        <input [(ngModel)]="deleteProductGroup.typedName" class="level-item field-input" type="text" placeholder="{{deleteProductGroup.name}}">
+      </div>
+    </div>
+  </section>
+  <footer class="modal-card-foot">
+    <div class="right-submit">
+      <button class="button is-danger is-large" [disabled]="deleteProductGroup.typedName !== deleteProductGroup.name" (click)="submitDeleteProductGroup()">Delete Group</button>
     </div>
   </footer>
 </app-modal>

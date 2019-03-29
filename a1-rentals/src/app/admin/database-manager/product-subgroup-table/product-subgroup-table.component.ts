@@ -13,14 +13,21 @@ export class ProductSubgroupTableComponent implements OnInit {
   @Input() currentGroupSelection: any;
   @Output() subgroupValueChanged = new EventEmitter<any>();
   newSubgroupObjects: any[] = [{name: ''}];
+  editProductSubgroup: any = {newName: '', oldName: '', db_name: ''};
   currentSubgroupSelection: any;
+  deleteProductSubgroup: any = {};
   constructor(private db: AngularFirestore, private modalService: ModalService) { }
 
   ngOnInit() {
   }
 
+  ngOnChanges() {
+    if (this.productSubgroups.length > 0) {
+      this.currentSubgroupSelection = this.productSubgroups[0];
+    }
+  }
+
   productSubgroupRowSelected(group: any, index: number) {
-    //console.log(group, index);
     this.currentSubgroupSelection = group;
     this.subgroupValueChanged.emit(this.currentSubgroupSelection);
     const selected = document.getElementById('productSubgroupRow' + index).classList;
@@ -81,13 +88,10 @@ export class ProductSubgroupTableComponent implements OnInit {
     this.newSubgroupObjects = [{name: ''}];
   }
 
-  toggleSubgroupHidden() {
-    //console.log(this.currentSubgroupSelection);
-    this.db.collection(this.currentGroupSelection.db_name).doc(this.currentSubgroupSelection.name.replace('/', '-')).update({
-      hidden: !this.currentSubgroupSelection.hidden
+  toggleSubgroupHidden(subgroup) {
+    this.db.collection(this.currentGroupSelection.db_name).doc(subgroup.name.replace('/', '-')).update({
+      hidden: !subgroup.hidden
     });
-    this.currentSubgroupSelection.hidden = !this.currentSubgroupSelection.hidden;
-    //console.log(this.currentSubgroupSelection);
   }
 
   openModal(id: string) {
@@ -99,4 +103,36 @@ export class ProductSubgroupTableComponent implements OnInit {
     this.modalService.close(id);
   }
 
+  openEditProductSubgroupModal(subgroup: any) {
+    this.editProductSubgroup.oldName = subgroup.display_name;
+    this.editProductSubgroup.db_name = subgroup.db_name;
+    this.editProductSubgroup.newName = '';
+    this.openModal('editProductSubgroupModal');
+  }
+
+  openAddProductSubgroupModal() {
+    this.openModal('addProductSubgroupModal');
+  }
+
+  openDeleteProductSubgroupModal(subgroup: any) {
+    this.deleteProductSubgroup.display_name = subgroup.display_name;
+    this.deleteProductSubgroup.db_name = subgroup.db_name;
+    this.openModal('deleteProductSubgroupModal');
+  }
+
+  submitEditProductSubgroup() {
+    console.log(this.editProductSubgroup);
+    this.db.collection(this.currentGroupSelection.db_name)
+    .doc(this.editProductSubgroup.db_name)
+    .update({
+      display_name: this.editProductSubgroup.newName
+    });
+    this.closeModal('editProductSubgroupModal');
+  }
+
+  submitDeleteProductSubgroup() {
+    console.log(this.deleteProductSubgroup);
+    console.log(this.db.collection(this.currentGroupSelection.db_name).doc(this.currentSubgroupSelection.db_name).delete());
+    this.closeModal('deleteProductSubgroupModal');
+  }
 }

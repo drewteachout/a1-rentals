@@ -14,7 +14,6 @@
     open(id: string) {
         // open modal specified by id
         let modal: any = this.modals.filter(x => x.id === id)[0];
-        console.log(modal);
         modal.open();
     }
 

@@ -3,6 +3,7 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { ModalService } from 'src/app/services/modal.service';
 import { EventEmitter } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { defineBase } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-product-group-table',
@@ -15,6 +16,7 @@ export class ProductGroupTableComponent implements OnInit, OnChanges {
   @Output() groupValueChanged = new EventEmitter<any>();
   @Output() groupOrderChanged = new EventEmitter<any[]>();
   newSubGroups: any[] = [];
+  deleteProductGroup = {};
   newProductGroup = '';
   newProductGroupName = {old: '', new: '', db_name: ''};
   currentGroupSelection: any;
@@ -39,7 +41,6 @@ export class ProductGroupTableComponent implements OnInit, OnChanges {
   }
 
   openAddProductGroup() {
-    //console.log('add product group clicked');
     this.openModal('addProductGroupModal');
   }
 
@@ -51,7 +52,6 @@ export class ProductGroupTableComponent implements OnInit, OnChanges {
   }
 
   openModal(id: string) {
-    //console.log(id);
     this.modalService.open(id);
   }
 
@@ -65,14 +65,13 @@ export class ProductGroupTableComponent implements OnInit, OnChanges {
     } else {
       this.newSubGroups.forEach((element) => {
         this.db.collection(this.newProductGroup).doc(element.name).set({array: true, hidden: false, name: element.name});
-        //console.log('added ' + element.name + ' to ' + this.newProductGroup);
       });
     }
     this.db.collection('/products').doc(this.newProductGroup).set(
       {
         collection_name: this.newProductGroup.replace('/', '-'),
         display_name: this.newProductGroup,
-        display_order: 0,
+        display_order: this.productGroups.length + 1,
         hidden: false
       });
     this.closeModal('addProductGroupModal');
@@ -101,14 +100,11 @@ export class ProductGroupTableComponent implements OnInit, OnChanges {
   }
 
   productGroupRowSelected(group: any, index: number) {
-    console.log('product group row selected', group, index);
-    console.log('productGroupRow' + index);
     this.currentGroupSelection = group;
     this.groupValueChanged.emit(this.currentGroupSelection);
     if (document.getElementById('productGroupRow' + index) != null) {
       const selected = document.getElementById('productGroupRow' + index).classList;
       const selectedRows = document.getElementsByClassName('is-selected');
-      console.log(selectedRows);
       for (let j = 0; j < selectedRows.length; j++) {
         const currentElement = selectedRows.item(j);
         if (currentElement.id.includes('productGroupRow')) {
@@ -116,23 +112,24 @@ export class ProductGroupTableComponent implements OnInit, OnChanges {
         }
       }
       selected.add('is-selected');
-      console.log(document.getElementById('productGroupRow' + index));
-      console.log(selected);
     } else {
       console.log('row not found');
     }
   }
 
   openEditProductGroup(group) {
-    console.log(group);
     this.openModal('editProductGroupModal');
     this.newProductGroupName.old = group.name;
     this.newProductGroupName.db_name = group.db_name;
-    console.log(this.newProductGroupName);
+  }
+
+  openDeleteProductGroup(group: any) {
+    this.deleteProductGroup = group;
+    this.deleteProductGroup['typedName'] = '';
+    this.openModal('deleteProductGroupModal');
   }
 
   submitEditProductGroup() {
-    console.log(this.newProductGroupName);
     this.db.collection('/products').doc(this.newProductGroupName.db_name).update({display_name: this.newProductGroupName.new});
     this.closeModal('editProductGroupModal');
     this.newProductGroupName.db_name = '';
@@ -140,10 +137,21 @@ export class ProductGroupTableComponent implements OnInit, OnChanges {
     this.newProductGroupName.new = '';
   }
 
+  async submitDeleteProductGroup() {
+    const batch = this.db.firestore.batch();
+    const qs = await this.db.collection(this.deleteProductGroup['db_name']).ref.get();
+    qs.forEach(doc => batch.delete(doc.ref));
+    batch.delete(this.db.collection('products').doc(this.deleteProductGroup['db_name']).ref);
+    this.deleteProductGroup = {};
+    this.closeModal('deleteProductGroupModal');
+    batch.commit().catch((err) => {
+      console.log(err);
+      alert('Delete was unsuccessful, please try again');
+    });
+  }
+
   addSubTabClicked() {
-    //console.log('add Subtab Clicked');
     this.newSubGroups.push({name: ''});
-    //console.log(this.newSubGroups);
   }
  
   removeSubGroup(index: number) {
@@ -155,9 +163,7 @@ export class ProductGroupTableComponent implements OnInit, OnChanges {
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    console.log(event);
     if (event.currentIndex !== event.previousIndex) {
-      console.log(this.productGroups);
       moveItemInArray(this.productGroups, event.previousIndex, event.currentIndex);
       this.groupOrderChanged.emit(this.productGroups);
     }

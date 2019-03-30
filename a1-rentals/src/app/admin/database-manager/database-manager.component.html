@@ -1,104 +1,26 @@
 <div class="columns">
   <div class="column is-4">
-    <app-product-group-table (groupOrderChanged)="groupOrderChanged($event)" (groupValueChanged)="groupValueChanged($event)" [productGroups]="products"></app-product-group-table>
+    <app-product-group-table
+      (groupOrderChanged)="groupOrderChanged($event)"
+      (groupValueChanged)="groupValueChanged($event)"
+      [productGroups]="products">
+    </app-product-group-table>
   </div>
   <div *ngIf="subgroups.length > 0" class="column">
-    <app-product-subgroup-table (subgroupValueChanged)="subgroupValueChanged($event)" [productSubgroups]="subgroups" [currentGroupSelection]="currentGroupSelection"></app-product-subgroup-table>
+    <app-product-subgroup-table 
+      (subgroupValueChanged)="subgroupValueChanged($event)"
+      [productSubgroups]="subgroups"
+      [currentGroupSelection]="currentGroupSelection">
+    </app-product-subgroup-table>
   </div>
   <div class="column">
-    <div *ngIf="subgroups.length === 0 && rowData.length === 0" class="columns">
-      <div class="column">
-        <button (click)="openAddProductSubgroup()" class="button is-large is-fullwidth primary">Add Subgroup +</button>
-      </div>
-      <div class="column">
-        <button (click)="openAddProduct()" class="button is-large is-fullwidth primary">Add Product +</button>
-      </div>
-    </div>
-    <button *ngIf="subgroups.length !== 0 || rowData.length !== 0" (click)="openAddProduct()" class="button is-large is-fullwidth primary">Add Product +</button>
-    <table class="table is-striped is-hoverable is-fullwidth">
-      <tr>
-        <th>#</th>
-        <th *ngFor="let col of columnDefs">{{ col.field | titlecase }}</th>
-        <th>Options</th>
-      </tr>
-      <tbody>
-        <ng-container *ngFor="let product of rowData; let i = index;">
-          <tr [class.is-selected]="first">
-            <th>{{i + 1}}</th>
-            <td *ngFor="let col of columnDefs">{{product[col.field]}}</td>
-            <td>
-              <div class="dropdown" [attr.id]="'productDropdown' + i" (click)="switchDropdown('productDropdown', i, $event)">
-                <div class="dropdown-trigger">
-                  <button class="button" aria-haspopup="true" aria-controls="dropdown-menu2">
-                    <span>Options</span>
-                    <span class="icon is-small">
-                      <i class="fas fa-angle-down" aria-hidden="true"></i>
-                    </span>
-                  </button>
-                </div>
-                <div class="dropdown-menu" id="dropdown-menu2" role="menu">
-                  <div class="dropdown-content">
-                    <div (click)="openEditProductModal(product)" class="dropdown-item">
-                        <p class="is-size-3">Edit</p>
-                    </div>
-                    <hr class="dropdown-divider">
-                    <div (click)="deleteProduct(product)" class="dropdown-item">
-                      <p class="is-size-3">Delete</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </td>
-          </tr>
-        </ng-container>
-      </tbody>
-    </table>
+    <app-product-table
+      [currentGroupSelection]="currentGroupSelection"
+      [currentSubgroupSelection]="currentSubgroupSelection"
+      [subgroups]="subgroups"
+      [rowData]="rowData"
+      [columnDefs]="columnDefs">
+    </app-product-table>
   </div>
 </div>
-
-
-
-<app-modal id="addProductModal">
-  <header class="modal-card-head">
-    <p class="modal-card-title title is-2">Add Product</p>
-    <button class="delete" aria-label="close" (click)="clearNewProduct();closeModal('addProductModal')"></button>
-  </header>
-  <section class="modal-card-body">
-    <div *ngFor="let obj of newProductObjects; let i = index;" class="level">
-      <div class="level-left">
-        <input [(ngModel)]="newProductObjects[i].key" class="level-item field-input" type="text" placeholder="New Field Name">
-        <input [(ngModel)]="newProductObjects[i].value" class="level-item field-input" type="text" placeholder="Product Name">
-        <button *ngIf="i !== 0" class="button level-item delete is-medium is-danger" (click)='removeProductObject(i)'></button>
-        <button *ngIf="i===(newProductObjects.length - 1)" (click)="addProductField()" class="level-item button is-large primary">Add Field</button>
-      </div>
-    </div>
-  </section>
-  <footer class="modal-card-foot">
-    <div class="right-submit">
-      <button class="button-std primary" (click)="addNewProduct()">Submit</button>
-    </div>
-  </footer>
-</app-modal>
-
-<app-modal id="editProductModal">
-  <header class="modal-card-head">
-    <p class="modal-card-title title is-2">Edit Product</p>
-    <button class="delete" aria-label="close" (click)="clearNewProduct();closeModal('editProductModal')"></button>
-  </header>
-  <section class="modal-card-body">
-    <div *ngFor="let obj of newProductObjects; let i = index;" class="level">
-      <div *ngIf="obj.key != 'db_id'" class="level-left">
-        <input [(ngModel)]="newProductObjects[i].key" class="level-item field-input" type="text" placeholder="New Field Name">
-        <input [(ngModel)]="newProductObjects[i].value" class="level-item field-input" type="text" placeholder="Product Name">
-        <button *ngIf="i !== 0" class="button level-item delete is-medium is-danger" (click)='removeProductObject(i)'></button>
-        <button *ngIf="i === (newProductObjects.length - 1)" (click)="addProductField()" class="level-item button is-large primary">Add Field</button>
-      </div>
-    </div>
-  </section>
-  <footer class="modal-card-foot">
-    <div class="right-submit">
-      <button class="button-std primary" (click)="submitEditProduct()">Submit Changes</button>
-    </div>
-  </footer>
-</app-modal>
   

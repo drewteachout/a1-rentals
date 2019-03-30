@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, CollectionReference } from 'angularfire2/firestore';
-import { GridOptions } from 'ag-grid-community';
 import { map } from 'rxjs/operators';
 import { ModalService } from '../../services/modal.service';
 
@@ -12,9 +11,7 @@ import { ModalService } from '../../services/modal.service';
 export class DatabaseManagerComponent implements OnInit {
 
   currentGroupSelection: any;
-  newProductObjects: any[] = [{key: 'Name', value: ''}];
   currentSubgroupSelection: any;
-  hidden: boolean = false;
   columnDefs = [];
   products: any[] = [];
   subgroups: any[] = [];
@@ -108,160 +105,10 @@ export class DatabaseManagerComponent implements OnInit {
     });
   }
 
-  exposeSubTab() {
-    if (this.currentGroupSelection !== undefined) {
-      this.db.collection('/products').doc(this.currentGroupSelection.db_name).update({hidden: this.hidden});
-    }
-  }
-
-  openAddProductSubgroup() {
-    this.openModal('addProductSubgroupModal');
-  }
-
-  openAddProduct() {
-    this.openModal('addProductModal');
-  }
-
   toggleGroupHidden(group: any) {
     this.db.collection('/products').doc(group.db_name).update({
       hidden: !group.hidden
     });
-  }
-
-  openModal(id: string) {
-    this.modalService.open(id);
-  }
-
-  closeModal(id: string) {
-    this.modalService.close(id);
-  }
-
-  addNewProduct() {
-    const newObj = {};
-      this.newProductObjects.forEach(element => {
-        newObj[String(element.key).toLowerCase()] = element.value;
-      });
-    if (this.currentSubgroupSelection == null) {
-      this.db.collection(this.currentGroupSelection.db_name).doc(this.db.createId()).set(newObj);
-    } else {
-      this.db.collection(this.currentGroupSelection.db_name)
-      .doc(this.currentSubgroupSelection.name.replace('/', '-'))
-      .collection(this.currentSubgroupSelection.name.replace('/', '-'))
-      .doc(this.db.createId()).set(newObj);
-    }
-    this.newProductObjects = [{key: 'name', value: ''}];
-    this.closeModal('addProductModal');
-  }
-
-  addProductField() {
-    this.newProductObjects.push({key: '', value: ''});
-  }
-
-  clearNewProduct() {
-    this.newProductObjects = [{'name': ''}];
-  }
-
-  switchDropdown(className: string, i: number, $event: MouseEvent) {
-    $event.stopPropagation();
-    const selected = document.getElementById(className + i).classList;
-    if (selected.contains('is-active')) {
-      selected.remove('is-active');
-    } else {
-      const activeDropdowns = document.getElementsByClassName('is-active');
-      for (let j = 0; j < activeDropdowns.length; j++) {
-        const currentElement = activeDropdowns.item(j);
-        if (currentElement.id.includes(className)) {
-          currentElement.classList.remove('is-active');
-        }
-      }
-      selected.add('is-active');
-    }
-  }
-
-  deleteProduct(product: any) {
-    if (this.currentSubgroupSelection === null) {
-      const docs = this.getCurrentDocID(this.currentGroupSelection.db_name, this.currentSubgroupSelection, product);
-      docs.get().then((res) => {
-        if (res.docs.length === 1) {
-          const id = res.docs[0].id;
-          this.db.collection(this.currentGroupSelection.db_name).doc(id).delete();
-        }
-      });
-    } else {
-      const docs = this.getCurrentDocID(this.currentGroupSelection.db_name, this.currentSubgroupSelection, product);
-      docs.get().then((res) => {
-        if (res.docs.length === 1) {
-          const id = res.docs[0].id;
-          this.db.collection(this.currentGroupSelection.db_name)
-          .doc(this.currentSubgroupSelection.name.replace('/', '-'))
-          .collection(this.currentSubgroupSelection.name.replace('/', '-'))
-          .doc(id).delete();
-        }
-      });
-    }
-  }
-
-  submitEditProduct() {
-    let id = -1;
-    const editedProduct = {};
-    this.newProductObjects.forEach((obj) => {
-      if (obj.key === 'db_id') {
-        id = obj.value;
-      } else {
-        editedProduct[obj.key] = obj.value;
-      }
-    });
-    if (id !== -1) {
-      if (this.currentSubgroupSelection === null) {
-        this.db.collection(this.currentGroupSelection.db_name).doc(id.toString()).set(editedProduct);
-      } else {
-        this.db.collection(this.currentGroupSelection.db_name)
-        .doc(this.currentSubgroupSelection.name.replace('/', '-'))
-        .collection(this.currentSubgroupSelection.name.replace('/', '-'))
-        .doc(id.toString()).set(editedProduct);
-      }
-    }
-    this.clearNewProduct();
-    this.closeModal('editProductModal');
-  }
-
-  openEditProductModal(product) {
-    this.newProductObjects.pop();
-    this.newProductObjects.push({key: 'db_id', value: ''});
-    Object.keys(product).forEach((key) => {
-      if (key === 'Name') {
-        this.newProductObjects[0]['value'] = product[key];
-      } else {
-        this.newProductObjects.push({key: key, value: product[key]});
-      }
-    });
-    let docs = this.getCurrentDocID(this.currentGroupSelection.db_name, this.currentSubgroupSelection, product);
-    docs.get().then((res) => {
-      if (res.docs.length === 1) {
-        const id = res.docs[0].id;
-        this.newProductObjects[0].value = res.docs[0].id;
-        this.openModal('editProductModal');
-      }
-    });
-  }
-
-  getCurrentDocID(productGroup: string,  productSubgroup: any, product: any) {
-    let docs = null;
-    if (productSubgroup === null) {
-      docs = this.db.collection(productGroup).ref;
-      Object.keys(product).forEach((key) => {
-         docs = docs.where(key, '==', product[key]) as CollectionReference;
-      });
-      return docs;
-    } else {
-      docs = this.db.collection(productGroup)
-      .doc(productSubgroup.name)
-      .collection(productSubgroup.name).ref;
-      Object.keys(product).forEach((key) => {
-        docs = docs.where(key, '==', product[key]) as CollectionReference;
-      });
-    }
-    return docs;
   }
 
   groupOrderChanged(newGroups: any[]) {

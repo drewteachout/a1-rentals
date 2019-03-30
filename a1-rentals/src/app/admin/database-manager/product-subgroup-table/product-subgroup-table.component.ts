@@ -121,7 +121,6 @@ export class ProductSubgroupTableComponent implements OnInit {
   }
 
   submitEditProductSubgroup() {
-    console.log(this.editProductSubgroup);
     this.db.collection(this.currentGroupSelection.db_name)
     .doc(this.editProductSubgroup.db_name)
     .update({
@@ -131,8 +130,7 @@ export class ProductSubgroupTableComponent implements OnInit {
   }
 
   submitDeleteProductSubgroup() {
-    console.log(this.deleteProductSubgroup);
-    console.log(this.db.collection(this.currentGroupSelection.db_name).doc(this.currentSubgroupSelection.db_name).delete());
+    this.db.collection(this.currentGroupSelection.db_name).doc(this.currentSubgroupSelection.db_name).delete();
     this.closeModal('deleteProductSubgroupModal');
   }
 }

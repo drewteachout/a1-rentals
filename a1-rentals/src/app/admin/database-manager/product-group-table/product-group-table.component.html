@@ -1,0 +1,118 @@
+<button (click)="openAddProductGroup()" class="button is-large is-fullwidth primary">Add Product Group +</button>
+<table class="table is-striped is-hoverable is-fullwidth">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Group Name</th>
+      <th>Options</th>
+    </tr>
+  </thead>
+  <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+    <ng-container *ngFor="let group of productGroups; let i = index;let first = first">
+      <tr *ngIf="group !== undefined" [attr.id]="'productGroupRow' + i" (click)="productGroupRowSelected(group, i)" [class.is-selected]="first" cdkDrag>
+        <th>{{group.orderNum}}</th>
+        <td>{{group.name}}</td>
+        <td>
+          <div class="dropdown" [attr.id]="'productGroupDropdown' + i" (click)="switchDropdown('productGroupDropdown', i, $event)">
+            <div class="dropdown-trigger">
+              <button class="button" aria-haspopup="true" aria-controls="dropdown-menu2">
+                <span>Options</span>
+                <span class="icon is-small">
+                  <i class="fas fa-angle-down" aria-hidden="true"></i>
+                </span>
+              </button>
+            </div>
+            <div class="dropdown-menu" id="dropdown-menu2" role="menu">
+              <div class="dropdown-content">
+                <div *ngIf="group.hidden" (click)="toggleGroupHidden(group)" class="dropdown-item">
+                    <p class="is-size-3">Show</p>
+                </div>
+                <div *ngIf="!group.hidden" (click)="toggleGroupHidden(group)" class="dropdown-item">
+                    <p class="is-size-3">Hide</p>
+                  </div>
+                <hr class="dropdown-divider">
+                <div (click)="openEditProductGroup(group)" class="dropdown-item">
+                    <p class="is-size-3">Edit</p>
+                </div>
+                <hr class="dropdown-divider">
+                <div (click)="openDeleteProductGroup(group)" class="dropdown-item">
+                  <p class="is-size-3">Delete</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
+
+<app-modal id="addProductGroupModal">
+  <header class="modal-card-head">
+    <p class="modal-card-title title is-2">Create New Product Group</p>
+    <button class="delete" aria-label="close" (click)="clearNewProductGroup();closeModal('addProductGroupModal')"></button>
+  </header>
+  <section class="modal-card-body">
+    <div class="level">
+      <div class="level-left">
+        <input [(ngModel)]="newProductGroup" class="field-input level-item" type="text" placeholder="Product Group Name">
+        <button class="button is-large primary level-item" (click)="addSubTabClicked()">Add Subgroup</button>
+      </div>
+    </div>
+    <ol class="indent-subgroups" type="1">
+      <li class="level" *ngFor="let subgroup of newSubGroups; let i = index">
+        <div class="level-left">
+          <input [(ngModel)]="subgroup.name" type="text" placeholder="SubGroup Name" class="level-item">
+          <button class="button delete is-medium is-danger level-item" (click)='removeSubGroup(i)'></button>
+        </div>
+      </li>
+    </ol>
+  </section>
+  <footer class="modal-card-foot">
+    <div class="right-submit">
+      <button class="button-std primary" (click)="addNewProductGroup()">Create</button>
+    </div>
+  </footer>
+</app-modal>
+
+<app-modal id="editProductGroupModal">
+  <header class="modal-card-head">
+    <p class="modal-card-title title is-2">Edit Product Group</p>
+    <button class="delete" aria-label="close" (click)="closeModal('editProductGroupModal')"></button>
+  </header>
+  <section class="modal-card-body">
+    <h2>Enter a new name for this Group</h2>
+    <div class="level">
+      <div class="level-left">
+        <input [(ngModel)]="newProductGroupName.new" class="level-item field-input" type="text" placeholder="{{newProductGroupName.old}}">
+      </div>
+    </div>
+  </section>
+  <footer class="modal-card-foot">
+    <div class="right-submit">
+      <button class="button-std primary" (click)="submitEditProductGroup()">Submit Changes</button>
+    </div>
+  </footer>
+</app-modal>
+
+<app-modal id="deleteProductGroupModal">
+  <header class="modal-card-head has-background-danger">
+    <p class="modal-card-title title is-2">Delete {{deleteProductGroup.name}}</p>
+    <button class="delete" aria-label="close" (click)="closeModal('deleteProductGroupModal')"></button>
+  </header>
+  <section class="modal-card-body">
+    <p class="has-text-danger">This action deletes all subgroups and products contained within any of those subgroups and cannot be undone</p>
+    <h3>Enter the name of the group to confirm: </h3>
+    <strong>{{deleteProductGroup.name}}</strong>
+    <div class="level">
+      <div class="level-left">
+        <input [(ngModel)]="deleteProductGroup.typedName" class="level-item field-input" type="text" placeholder="{{deleteProductGroup.name}}">
+      </div>
+    </div>
+  </section>
+  <footer class="modal-card-foot">
+    <div class="right-submit">
+      <button class="button is-danger is-large" [disabled]="deleteProductGroup.typedName !== deleteProductGroup.name" (click)="submitDeleteProductGroup()">Delete Group</button>
+    </div>
+  </footer>
+</app-modal>

@@ -23,6 +23,9 @@ export class HeaderComponent implements OnInit {
         document.getElementById('References').className = 'button-tab primary';
         if (document.getElementById(url) != null) {
           document.getElementById(url).className = 'button-tab accent';
+        } else if (url === '') {
+          // this only happens when someone navigates to the base address and get redirected to popular products
+          document.getElementById('Popular Products').className = 'button-tab accent';
         }
       }
     });

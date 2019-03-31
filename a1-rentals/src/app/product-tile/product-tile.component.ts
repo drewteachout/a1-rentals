@@ -1,6 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { AngularFireStorage } from '@angular/fire/storage';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-product-tile',
@@ -11,14 +9,11 @@ export class ProductTileComponent implements OnInit {
 
   @Input() productName: string;
   @Input() productSource: string;
-  storedImageURL: Observable<any>;
 
-  constructor(private storage: AngularFireStorage) {
+  constructor() {
   }
 
   ngOnInit() {
-    console.log(this.productSource);
-    this.storedImageURL = this.storage.ref(this.productSource).getDownloadURL();
   }
 
 }

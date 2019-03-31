@@ -112,11 +112,14 @@ export class DatabaseManagerComponent implements OnInit {
   }
 
   groupOrderChanged(newGroups: any[]) {
+    const batch = this.db.firestore.batch();
     for (let i = 0; i < newGroups.length; i++) {
       if (newGroups[i].orderNum !== i + 1) {
-        this.db.collection('products').doc(newGroups[i].db_name).update({display_order: i + 1});
+        batch.update(this.db.collection('products').doc(newGroups[i].db_name).ref, {display_order: i + 1});
+        //this.db.collection('products').doc(newGroups[i].db_name).update({display_order: i + 1});
       }
     }
+    batch.commit();
   }
 
   // async addDBNameToProductSubgroups() {

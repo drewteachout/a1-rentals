@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-homepage',
@@ -13,7 +14,7 @@ export class HomepageComponent implements OnInit {
 
   productData = [];
 
-  constructor(private db: AngularFirestore) {
+  constructor(private db: AngularFirestore, private storage: AngularFireStorage) {
     for (let i = 0; i < this.numColumns; i++) {
       this.productData.push([]);
     }
@@ -28,7 +29,11 @@ export class HomepageComponent implements OnInit {
       for (let i = 0; i < popular_items.length; i++) {
         const key = i % this.numColumns;
         const data = this.productData[key];
-        data.push([popular_items[i].name, popular_items[i].path]);
+        if (popular_items[i].hasOwnProperty('storage_path')) {
+          data.push([popular_items[i].name, popular_items[i].storage_path]);
+        } else {
+          data.push([popular_items[i].name, '']);
+        }
         this.productData[key] = data;
       }
     });

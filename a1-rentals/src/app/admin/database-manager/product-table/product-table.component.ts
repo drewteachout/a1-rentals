@@ -20,10 +20,6 @@ export class ProductTableComponent implements OnInit {
   ngOnInit() {
   }
 
-  ngOnChanges() {
-    console.log(this.currentSubgroupSelection);
-  }
-
   openModal(id: string) {
     this.modalService.open(id);
   }
@@ -136,7 +132,6 @@ export class ProductTableComponent implements OnInit {
       }
     });
     let docs = this.getCurrentDocID(this.currentGroupSelection['db_name'], this.currentSubgroupSelection, product);
-    console.log(docs);
     docs.get().then((res) => {
       if (res.docs.length === 1) {
         this.newProductObjects[0].value = res.docs[0].id;
@@ -150,7 +145,6 @@ export class ProductTableComponent implements OnInit {
 
   getCurrentDocID(productGroup: string,  productSubgroup: any, product: any) {
     let docs = null;
-    console.log(productSubgroup);
     if (productSubgroup === null) {
       docs = this.db.collection(productGroup).ref;
       Object.keys(product).forEach((key) => {

@@ -24,10 +24,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireModule } from '@angular/fire';
 import { SlideshowModule } from 'ng-simple-slideshow';
 import { ModalService } from './services/modal.service';
-import { AdminModule } from './admin/admin.module';
 import { PackagesComponent } from './packages/packages.component';
 import { ReferencesComponent } from './references/references.component';
 
@@ -82,7 +82,8 @@ const appRoutes: Routes = [
     NgbModule,
     AngularFirestoreModule,
     AngularFireModule.initializeApp(environment.firebase),
-    SlideshowModule
+    SlideshowModule,
+    AngularFireStorageModule
   ],
   providers: [QuoteCartServiceService, ModalService],
   bootstrap: [AppComponent]

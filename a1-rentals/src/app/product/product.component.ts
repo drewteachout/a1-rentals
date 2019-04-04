@@ -16,7 +16,7 @@ export class ProductComponent implements OnInit {
   private quoteTotal: number;
 
   public category: string;
-  public isAllProducts: boolean;
+  public isProducts: boolean;
   public columnDefs: any;
   public rowData: any;
   public images: (string | IImage)[];
@@ -52,7 +52,7 @@ export class ProductComponent implements OnInit {
     ' rentals feature a blue vinyl seat.';
 
     this.domLayout = 'autoHeight';
-    this.isAllProducts = false;
+    this.isProducts = false;
     this.handleData(route);
     this.quoteTotal = 0.00;
     this.total = '0.00';
@@ -63,17 +63,27 @@ export class ProductComponent implements OnInit {
 
   handleData(route: ActivatedRoute) {
     this.rowData = [];
+    this.productData = [];
+    for (let i = 0; i < this.numColumns; i++) {
+      this.productData.push([]);
+    }
     route.paramMap.subscribe((urlParamMap: ParamMap) => {
       const name = urlParamMap.get('productName');
       const category = urlParamMap.get('productCategory');
       this.category = category;
+      console.log(urlParamMap);
+      console.log('Category: ', category);
+      console.log('Name: ', name);
+
       if (category === '' && name == null) {
-        this.isAllProducts = true;
-        this.loadRentalProducts();
+        this.isProducts = true;
+        this.loadAllRentalProducts();
       } else if (name == null || name.length === 0) {
+        this.isProducts = false;
         this.productName = category;
         this.loadDataCategory(category);
       } else {
+        this.isProducts = false;
         this.productName = name;
         this.loadDataSubCategory(category, name);
       }
@@ -85,37 +95,48 @@ export class ProductComponent implements OnInit {
       .subscribe((products: any[]) => {
         const myMap = new Map();
         const newColDefs = [];
+        let hasSubCategories = false;
+        console.log('Products', products);
         products.forEach((product: any) => {
           Object.keys(product).forEach((key) => {
-            myMap.set(key, product[key.toString()]);
+            console.log(key === 'array');
+            if (key === 'array') {
+              hasSubCategories = true;
+            } else {
+              myMap.set(key, product[key.toString()]);
+            }
           });
         });
-        myMap.forEach((value, key) => {
-          if (isNaN(value)) {
-            newColDefs.push({
-              field: key,
-              headerName: key.toString().charAt(0).toUpperCase() + key.toString().substr(1)
-            });
-          } else {
-            newColDefs.push({
-              field: key,
-              headerName: key.toString().charAt(0).toUpperCase() + key.toString().substr(1),
-              sortable: true,
-              type: 'numericColumn',
-              valueFormatter: numberFormatter,
-            });
-          }
-        });
-        newColDefs.push({
-          headerName: 'Quantity',
-          field: 'quantity',
-          editable: true,
-          type: 'numericColumn',
-          valueParser: numberParser
-        });
-        this.rowData = products;
-        this.columnDefs = newColDefs;
-      })
+        if (!hasSubCategories) {
+          myMap.forEach((value, key) => {
+            if (isNaN(value)) {
+              newColDefs.push({
+                field: key,
+                headerName: key.toString().charAt(0).toUpperCase() + key.toString().substr(1)
+              });
+            } else {
+              newColDefs.push({
+                field: key,
+                headerName: key.toString().charAt(0).toUpperCase() + key.toString().substr(1),
+                sortable: true,
+                type: 'numericColumn',
+                valueFormatter: numberFormatter,
+              });
+            }
+          });
+          newColDefs.push({
+            headerName: 'Quantity',
+            field: 'quantity',
+            editable: true,
+            type: 'numericColumn',
+            valueParser: numberParser
+          });
+          this.rowData = products;
+          this.columnDefs = newColDefs;
+        } else {
+          this.loadRentalProducts(category);
+        }
+      });
   }
 
   loadDataSubCategory(category, name) {
@@ -158,15 +179,38 @@ export class ProductComponent implements OnInit {
       });
   }
 
-  loadRentalProducts() {
-    this.db.collection('/popular').valueChanges().subscribe((popular_items: any[]) => {
-      for (let i = 0; i < popular_items.length; i++) {
-        const key = i % this.numColumns;
-        const data = this.productData[key];
-        data.push([popular_items[i].name, popular_items[i].path]);
-        this.productData[key] = data;
-      }
-    });
+  loadAllRentalProducts() {
+    this.isProducts = true;
+    this.productData = [];
+    for (let i = 0; i < this.numColumns; i++) {
+      this.productData.push([]);
+    }
+    this.db.collection('/products').valueChanges()
+      .subscribe((products: any[]) => {
+        for (let i = 0; i < products.length; i++) {
+          const key = i % this.numColumns;
+          const data = this.productData[key];
+          data.push([products[i].display_name, products[i].image_url]);
+          this.productData[key] = data;
+        }
+      });
+  }
+
+  loadRentalProducts(category) {
+    this.isProducts = true;
+    this.productData = [];
+    for (let i = 0; i < this.numColumns; i++) {
+      this.productData.push([]);
+    }
+    this.db.collection('/' + category.replace('/', '-')).valueChanges()
+      .subscribe((products: any[]) => {
+        for (let i = 0; i < products.length; i++) {
+          const key = i % this.numColumns;
+          const data = this.productData[key];
+          data.push([products[i].display_name, products[i].image_url]);
+          this.productData[key] = data;
+        }
+      });
   }
 
   onCellValueChanged(event) {

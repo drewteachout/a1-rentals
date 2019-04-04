@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalService } from 'src/app/services/modal.service';
 import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFireStorage } from 'angularfire2/storage';
+import * as firebase from 'firebase/app';
 
 @Component({
   selector: 'app-product-picture-table',
@@ -13,7 +15,8 @@ export class ProductPictureTableComponent implements OnInit {
   @Input() columnDefs: any[] = [];
   @Input() currentGroupSelection: any;
   @Input() currentSubgroupSelection: any;
-  constructor(private modalService: ModalService, private db: AngularFirestore) { }
+  currentChangeProduct: any;
+  constructor(private modalService: ModalService, private db: AngularFirestore, private storage: AngularFireStorage) { }
 
   ngOnInit() {
   }
@@ -24,10 +27,6 @@ export class ProductPictureTableComponent implements OnInit {
 
   closeModal(id: string) {
     this.modalService.close(id);
-  }
-
-  openAddProduct() {
-    this.openModal('addProductModal');
   }
 
   switchDropdown(className: string, i: number, $event: MouseEvent) {
@@ -44,6 +43,42 @@ export class ProductPictureTableComponent implements OnInit {
         }
       }
       selected.add('is-active');
+    }
+  }
+
+  openAddImages(product: any) {
+    this.currentChangeProduct = product;
+    console.log(this.currentChangeProduct);
+    this.openModal('addProductImageModal');
+  }
+
+  openRemoveImages(product: any) {
+    this.currentChangeProduct = product;
+    console.log(this.currentChangeProduct);
+    this.openModal('removeProductImageModal');
+  }
+
+  deleteProductImage(url) {
+    this.storage.storage.refFromURL(url).delete();
+    if (this.currentSubgroupSelection != null) {
+      const path = this.currentGroupSelection.db_name + '/'
+        + this.currentSubgroupSelection.db_name + '/'
+        + this.currentSubgroupSelection.db_name + '/'
+        + this.currentChangeProduct.db_name;
+      this.db.doc(path).ref.update({
+        image_urls: firebase.firestore.FieldValue.arrayRemove(url)
+      });
+      this.currentChangeProduct.image_urls = this.currentChangeProduct.image_urls.filter((element) => element !== url);
+    } else {
+      const path = this.currentGroupSelection.db_name + '/'
+        + this.currentChangeProduct.db_name;
+      this.db.doc(path).ref.update({
+        image_urls: firebase.firestore.FieldValue.arrayRemove(url)
+      });
+      this.currentChangeProduct.image_urls = this.currentChangeProduct.image_urls.filter((element) => element !== url);
+    }
+    if (this.currentChangeProduct.image_urls.length === 0) {
+      this.closeModal('removeProductImageModal');
     }
   }
 }

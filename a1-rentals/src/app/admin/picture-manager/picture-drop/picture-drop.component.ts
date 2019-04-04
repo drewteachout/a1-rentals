@@ -3,7 +3,7 @@ import { AngularFireStorage, AngularFireUploadTask } from 'angularfire2/storage'
 import { AngularFirestore, DocumentSnapshot } from 'angularfire2/firestore';
 import { Observable, of } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
-import { UploadTaskSnapshot } from '@angular/fire/storage/interfaces';
+import * as firebase from 'firebase/app';
 
 @Component({
   selector: 'app-picture-drop',
@@ -55,7 +55,7 @@ export class PictureDropComponent {
     // The storage path
     let path: string;
     if (this.product === undefined) {
-      if (this.subgroup === undefined) {
+      if (this.subgroup === null) {
         path = this.group.db_name + `/${new Date().getTime()}_${file.name}`;
         if (this.group.hasOwnProperty('image_url') && this.group.image_url !== '') {
           this.storage.storage.refFromURL(this.group.image_url).delete();
@@ -66,7 +66,7 @@ export class PictureDropComponent {
           this.storage.storage.refFromURL(this.subgroup.image_url).delete();
         }
       }
-    } else if (this.subgroup === undefined) {
+    } else if (this.subgroup === null) {
       path = `${this.group.db_name}/${this.product.db_name}/${new Date().getTime()}_${file.name}`;
     } else {
       path = `${this.group.db_name}/${this.subgroup.db_name}/${this.product.db_name}/${new Date().getTime()}_${file.name}`;
@@ -91,25 +91,22 @@ export class PictureDropComponent {
           this.downloadURL = of(download);
           let db_path: string;
           if (this.product === undefined) {
-            if (this.subgroup === undefined) {
+            if (this.subgroup === null) {
               db_path = `/products/${this.group.db_name}`;
               this.db.doc(db_path).update({image_url: download});
             } else {
               db_path = `${this.group.db_name}/${this.subgroup.db_name}`;
               this.db.doc(db_path).update({image_url: download});
             }
-          } else if (this.subgroup === undefined) {
+          } else if (this.subgroup === null) {
             db_path = `${this.group.db_name}/${this.product.db_name}`;
-            this.db.doc(db_path).get().subscribe((doc: firebase.firestore.DocumentSnapshot) => {
-              console.log(doc);
-              console.log(download);
+            this.db.doc(db_path).ref.update({
+              image_urls: firebase.firestore.FieldValue.arrayUnion(download)
             });
           } else {
-            db_path = `${this.group.db_name}/${this.subgroup.db_name}/
-              ${this.subgroup.db_name}/${this.product.db_name}`;
-            this.db.doc(db_path).get().subscribe((doc: firebase.firestore.DocumentSnapshot) => {
-              console.log(doc);
-              console.log(download);
+            db_path = `${this.group.db_name}/${this.subgroup.db_name}/${this.subgroup.db_name}/${this.product.db_name}`;
+            this.db.doc(db_path).ref.update({
+              image_urls: firebase.firestore.FieldValue.arrayUnion(download)
             });
           }
         });

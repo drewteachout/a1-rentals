@@ -1,3 +1,41 @@
-<p>
-  references-manager works!
-</p>
+<!-- <button (click)="fixReferences()">Fix References</button> -->
+<table class="table is-striped is-hoverable is-fullwidth">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th>Options</th>
+    </tr>
+  </thead>
+  <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+    <ng-container *ngFor="let reference of references; let i = index;">
+      <tr cdkDrag>
+        <th>{{reference.order_num}}</th>
+        <td>{{reference.name}}</td>
+        <td>
+          <div class="dropdown" [attr.id]="'referencesDropdown' + i" (click)="switchDropdown('referencesDropdown', i, $event)">
+            <div class="dropdown-trigger">
+              <button class="button" aria-haspopup="true" aria-controls="dropdown-menu2">
+                <span>Options</span>
+                <span class="icon is-small">
+                  <i class="fas fa-angle-down" aria-hidden="true"></i>
+                </span>
+              </button>
+            </div>
+            <div class="dropdown-menu" id="dropdown-menu2" role="menu">
+              <div class="dropdown-content">
+                <div (click)="openEditReference(reference)" class="dropdown-item">
+                    <p class="is-size-3">Edit</p>
+                </div>
+                <hr class="dropdown-divider">
+                <div (click)="openDeleteReference(reference)" class="dropdown-item">
+                  <p class="is-size-3">Delete</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>

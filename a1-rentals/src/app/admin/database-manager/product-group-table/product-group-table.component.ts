@@ -152,7 +152,7 @@ export class ProductGroupTableComponent implements OnInit, OnChanges {
   addSubTabClicked() {
     this.newSubGroups.push({name: ''});
   }
- 
+
   removeSubGroup(index: number) {
     if (index !== this.newSubGroups.length - 1) {
      this.newSubGroups = this.newSubGroups.slice(0, index).concat(this.newSubGroups.slice(index + 1));

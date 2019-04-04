@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore, CollectionReference } from 'angularfire2/firestore';
+import { AngularFirestore } from 'angularfire2/firestore';
+import { ModalService } from 'src/app/services/modal.service';
 import { map } from 'rxjs/operators';
-import { ModalService } from '../../services/modal.service';
 
 @Component({
-  selector: 'app-database-manager',
-  templateUrl: './database-manager.component.html',
-  styleUrls: ['./database-manager.component.css']
+  selector: 'app-picture-manager',
+  templateUrl: './picture-manager.component.html',
+  styleUrls: ['./picture-manager.component.css']
 })
-export class DatabaseManagerComponent implements OnInit {
-
+export class PictureManagerComponent implements OnInit {
   currentGroupSelection: any;
   currentSubgroupSelection: any;
   columnDefs = [];
@@ -17,14 +16,19 @@ export class DatabaseManagerComponent implements OnInit {
   subgroups: any[] = [];
   rowData: any[] = [];
   constructor(private db: AngularFirestore, private modalService: ModalService) {
-    this.db.collection('/products').valueChanges().subscribe((productNames: any[]) => {
-      const temp = new Array(productNames.length);
-      productNames.forEach(element => {
+    this.db.collection('/products').valueChanges().subscribe((productGroups: any[]) => {
+      const temp = new Array(productGroups.length);
+      productGroups.forEach(element => {
         temp[element['display_order'] - 1] = {
           name: element['display_name'],
           db_name: element['collection_name'],
           hidden: element['hidden'],
           orderNum: element['display_order']};
+        if (element.hasOwnProperty('image_url')) {
+          temp[element.display_order - 1]['image_url'] = element.image_url;
+        } else {
+          temp[element.display_order - 1]['image_url'] = '';
+        }
         });
       this.products = temp;
       if (this.currentGroupSelection === undefined) {
@@ -45,13 +49,13 @@ export class DatabaseManagerComponent implements OnInit {
       if (this.currentSubgroupSelection == null) {
         this.subgroups = subgroups;
         if (this.subgroups.length !== 0) {
-          this.currentSubgroupSelection = this.subgroups[0]
+          this.currentSubgroupSelection = this.subgroups[0];
           this.subgroupValueChanged(this.subgroups[0]);
         }
       } else { // same as the if block for now until I investigate whether this causes problems
         this.subgroups = subgroups;
         if (this.subgroups.length !== 0) {
-          this.currentSubgroupSelection = this.subgroups[0]
+          this.currentSubgroupSelection = this.subgroups[0];
           this.subgroupValueChanged(this.subgroups[0]);
         }
       }
@@ -68,7 +72,7 @@ export class DatabaseManagerComponent implements OnInit {
         });
         const newColDefs = [];
         mySet.forEach((key) => {
-          if (key !== 'db_name') {
+          if (key !== 'db_name' && key !== 'image_urls') {
             newColDefs.push({
               field: key
             });
@@ -85,8 +89,8 @@ export class DatabaseManagerComponent implements OnInit {
   subgroupValueChanged(subgroup: any) {
     this.currentSubgroupSelection = subgroup;
     this.db.collection('/' + this.currentGroupSelection.db_name)
-    .doc(this.currentSubgroupSelection.name.replace('/', ','))
-    .collection(this.currentSubgroupSelection.name.replace('/', ',')).valueChanges()
+    .doc(this.currentSubgroupSelection.db_name)
+    .collection(this.currentSubgroupSelection.db_name).valueChanges()
     .subscribe((products: any[]) => {
       if (products !== undefined && products.length > 0) {
         const mySet = new Set();
@@ -97,7 +101,7 @@ export class DatabaseManagerComponent implements OnInit {
         });
         const newColDefs = [];
         mySet.forEach((key) => {
-          if (key !== 'db_name') {
+          if (key !== 'db_name' && key !== 'image_urls') {
             newColDefs.push({
               field: key
             });
@@ -108,39 +112,4 @@ export class DatabaseManagerComponent implements OnInit {
       this.rowData = products;
     });
   }
-
-  toggleGroupHidden(group: any) {
-    this.db.collection('/products').doc(group.db_name).update({
-      hidden: !group.hidden
-    });
-  }
-
-  groupOrderChanged(newGroups: any[]) {
-    const batch = this.db.firestore.batch();
-    for (let i = 0; i < newGroups.length; i++) {
-      if (newGroups[i].orderNum !== i + 1) {
-        batch.update(this.db.collection('products').doc(newGroups[i].db_name).ref, {display_order: i + 1});
-        //this.db.collection('products').doc(newGroups[i].db_name).update({display_order: i + 1});
-      }
-    }
-    batch.commit();
-  }
-
-  // async addDBNameToProductSubgroups() {
-  //   const batch = this.db.firestore.batch();
-  //   for (let i = 0; i < this.products.length; i++) {
-  //     const query = this.db.collection(this.products[i]['db_name']).ref.where('array', '==', true);
-  //     await query.get().then((res) => {
-  //       if (!res.empty) {
-  //         res.forEach((doc) => {
-  //           batch.update(doc.ref, {
-  //             db_name: doc.id.replace('/', '-'),
-  //             display_name: doc.id
-  //           });
-  //         });
-  //       }
-  //     });
-  //   }
-  //   console.log(batch.commit());
-  // }
 }

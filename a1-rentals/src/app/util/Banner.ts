@@ -1,4 +1,4 @@
-import { firestore } from 'firebase';
+import { firestore } from 'firebase/app';
 
 export class Banner {
     title = '';

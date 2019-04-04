@@ -11,9 +11,6 @@ export class LoginComponent implements OnInit {
   email: string = '';
   password: string = '';
   constructor(public authService: AngularFireAuth) {
-    this.authService.authState.subscribe((newAuth) => {
-      console.log(newAuth);
-    })
   }
 
   ngOnInit() {

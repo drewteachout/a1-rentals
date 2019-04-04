@@ -22,6 +22,15 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ReferencesManagerComponent } from './references-manager/references-manager.component';
 import { ContactInfoManagerComponent } from './contact-info-manager/contact-info-manager.component';
 import { QuoteEmailManagerComponent } from './quote-email-manager/quote-email-manager.component';
+import { PictureManagerComponent } from './picture-manager/picture-manager.component';
+import { ProductGroupPictureTableComponent } from './picture-manager/product-group-picture-table/product-group-picture-table.component';
+// tslint:disable-next-line: max-line-length
+import { ProductSubgroupPictureTableComponent } from './picture-manager/product-subgroup-picture-table/product-subgroup-picture-table.component';
+import { ProductPictureTableComponent } from './picture-manager/product-picture-table/product-picture-table.component';
+import { UploadService } from '../services/upload.service';
+import { PictureDropComponent } from './picture-manager/picture-drop/picture-drop.component';
+import { FileSizePipe } from '../util/file-size.pipe';
+import { DropZoneDirective } from '../dropZone.directive';
 
 const appRoutes: Routes = [
   { path: '',
@@ -35,6 +44,7 @@ const appRoutes: Routes = [
     { path: 'references', component: ReferencesManagerComponent, canActivate: [AuthGuardService]},
     { path: 'contact', component: ContactInfoManagerComponent, canActivate: [AuthGuardService]},
     { path: 'email', component: QuoteEmailManagerComponent, canActivate: [AuthGuardService]},
+    { path: 'pictures', component: PictureManagerComponent, canActivate: [AuthGuardService]},
     { path: 'login', component: LoginComponent}
   ]},
   
@@ -54,7 +64,14 @@ const appRoutes: Routes = [
     ProductTableComponent,
     ReferencesManagerComponent,
     ContactInfoManagerComponent,
-    QuoteEmailManagerComponent
+    QuoteEmailManagerComponent,
+    PictureManagerComponent,
+    ProductGroupPictureTableComponent,
+    ProductSubgroupPictureTableComponent,
+    ProductPictureTableComponent,
+    PictureDropComponent,
+    FileSizePipe,
+    DropZoneDirective
   ],
   imports: [
     CommonModule,
@@ -67,9 +84,9 @@ const appRoutes: Routes = [
     ),
     AgGridModule.withComponents([]),
     AngularFireModule,
-    DragDropModule
+    DragDropModule,
   ],
-  providers: [ModalService, AngularFirestore, AngularFireAuthModule, AuthGuardService]
+  providers: [ModalService, AngularFirestore, AngularFireAuthModule, AuthGuardService, UploadService]
 })
 
 export class AdminModule { }

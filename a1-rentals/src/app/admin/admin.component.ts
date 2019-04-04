@@ -14,7 +14,6 @@ export class AdminComponent implements OnInit {
   constructor(private authService: AngularFireAuth) {
     this.authService.authState.subscribe((state) => {
       if (state !== null) {
-        console.log(state.email);
         this.authStatus = 'Logged in as ' + state.email;
       } else {
         this.authStatus = 'Not logged in';

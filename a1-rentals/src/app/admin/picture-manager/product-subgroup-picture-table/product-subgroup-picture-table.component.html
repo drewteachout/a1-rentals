@@ -1,0 +1,89 @@
+<table class="table is-striped is-hoverable is-fullwidth">
+  <tr>
+    <th>#</th>
+    <th>Subgroup Name</th>
+    <th>Options</th>
+  </tr>
+  <tbody>
+    <ng-container *ngFor="let subgroup of productSubgroups; let i = index;let first = first">
+      <tr (click)="productSubgroupRowSelected(subgroup, i)" [attr.id]="'productSubgroupRow' + i" [class.is-selected]="first">
+        <td>
+            <img class="image is-128x128" *ngIf="subgroup.image_url !== ''" [src]=subgroup.image_url>
+            <img class="image is-64x64" *ngIf="subgroup.image_url === ''" src="../../../../assets/images/notfound.png">
+        </td>
+        <td>{{subgroup.display_name}}</td>
+        <td>
+          <div class="dropdown" [attr.id]="'productSubgroupDropdown' + i" (click)="switchDropdown('productSubgroupDropdown', i, $event)">
+            <div class="dropdown-trigger">
+              <button class="button" aria-haspopup="true" aria-controls="dropdown-menu2">
+                <span>Options</span>
+                <span class="icon is-small">
+                  <i class="fas fa-angle-down" aria-hidden="true"></i>
+                </span>
+              </button>
+            </div>
+            <div class="dropdown-menu" id="dropdown-menu2" role="menu">
+              <div class="dropdown-content">
+                <div *ngIf="subgroup.image_url !== ''" (click)="openChangeImage(subgroup)" class="dropdown-item">
+                    <p class="is-size-3">Change</p>
+                </div>
+                <div *ngIf="subgroup.image_url === ''" (click)="openAddImage(subgroup)" class="dropdown-item">
+                    <p class="is-size-3">Add</p>
+                  </div>
+                <hr class="dropdown-divider">
+                <div (click)="openDeleteImage(subgroup)" class="dropdown-item">
+                  <p class="is-size-3">Delete</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
+
+<app-modal id="addProductSubgroupImageModal">
+  <header class="modal-card-head">
+    <p class="modal-card-title title is-2">Add New Product Subgroup Image</p>
+    <button class="delete" aria-label="close" (click)="closeModal('addProductSubgroupImageModal')"></button>
+  </header>
+  <section class="modal-card-body">
+    <app-picture-drop [group]=currentGroupSelection [subgroup]=currentChangeSubgroup [product]=undefined></app-picture-drop>
+  </section>
+  <footer class="modal-card-foot">
+    <div class="right-submit">
+      <button class="button-std primary" (click)="closeModal('addProductSubgroupImageModal')">Close</button>
+    </div>
+  </footer>
+</app-modal>
+  
+<app-modal id="changeProductSubgroupImageModal">
+  <header class="modal-card-head">
+    <p class="modal-card-title title is-2">Change Product Subgroup Image</p>
+    <button class="delete" aria-label="close" (click)="closeModal('changeProductSubgroupImageModal')"></button>
+  </header>
+  <section class="modal-card-body">
+    <app-picture-drop [group]=currentGroupSelection [subgroup]=currentChangeSubgroup [product]=undefined></app-picture-drop>
+  </section>
+  <footer class="modal-card-foot">
+    <div class="right-submit">
+      <button class="button-std primary" (click)="closeModal('changeProductSubgroupImageModal')">Close</button>
+    </div>
+  </footer>
+</app-modal>
+  
+<app-modal id="deleteProductSubgroupImageModal">
+  <header class="modal-card-head has-background-danger">
+    <p class="modal-card-title title is-2">Delete Product Subgroup Image</p>
+    <button class="delete" aria-label="close" (click)="closeModal('deleteProductSubgroupImageModal')"></button>
+  </header>
+  <section class="modal-card-body">
+    <h3 class="has-text-danger">Are you sure you would like to delete this image?</h3>
+  </section>
+  <footer class="modal-card-foot">
+    <div class="right-submit">
+      <button class="button is-large is-danger" (click)="deleteProductSubgroupImage()">Confirm Delete</button>
+    </div>
+  </footer>
+</app-modal>

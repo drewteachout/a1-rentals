@@ -112,8 +112,6 @@ export class ProductGroupTableComponent implements OnInit, OnChanges {
         }
       }
       selected.add('is-selected');
-    } else {
-      console.log('row not found');
     }
   }
 

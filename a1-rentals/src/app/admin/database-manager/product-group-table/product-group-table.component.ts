@@ -72,7 +72,8 @@ export class ProductGroupTableComponent implements OnInit, OnChanges {
         collection_name: this.newProductGroup.replace('/', '-'),
         display_name: this.newProductGroup,
         display_order: this.productGroups.length + 1,
-        hidden: false
+        hidden: false,
+        image_url: ''
       });
     this.closeModal('addProductGroupModal');
   }

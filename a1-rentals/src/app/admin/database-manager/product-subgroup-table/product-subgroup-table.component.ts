@@ -69,7 +69,14 @@ export class ProductSubgroupTableComponent implements OnInit {
       this.newSubgroupObjects.forEach(element => {
         if (String(element.name).length !== 0) {
           this.currentSubgroupSelection = null;
-          this.db.collection(this.currentGroupSelection.db_name).doc(element.name).set({array: true, hidden: false, name: element.name});
+          this.db.collection(this.currentGroupSelection.db_name).doc(element.name.replace('/', '-')).set({
+            array: true,
+            hidden: false,
+            display_name: element.name,
+            db_name: element.name.replace('/', '-'),
+            image_url: '',
+            description: ''
+          });
         }
       });
     }
@@ -130,7 +137,7 @@ export class ProductSubgroupTableComponent implements OnInit {
   }
 
   submitDeleteProductSubgroup() {
-    this.db.collection(this.currentGroupSelection.db_name).doc(this.currentSubgroupSelection.db_name).delete();
+    this.db.collection(this.currentGroupSelection.db_name).doc(this.deleteProductSubgroup.db_name).delete();
     this.closeModal('deleteProductSubgroupModal');
   }
 }

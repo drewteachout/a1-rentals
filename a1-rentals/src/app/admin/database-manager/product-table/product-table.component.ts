@@ -37,13 +37,16 @@ export class ProductTableComponent implements OnInit {
       this.newProductObjects.forEach(element => {
         newObj[String(element.key).toLowerCase()] = element.value;
       });
+    newObj['image_urls'] = [];
+    const id = this.db.createId();
+    newObj['db_name'] = id;
     if (this.currentSubgroupSelection == null) {
-      this.db.collection(this.currentGroupSelection['db_name']).doc(this.db.createId()).set(newObj);
+      this.db.collection(this.currentGroupSelection['db_name']).doc(id).set(newObj);
     } else {
       this.db.collection(this.currentGroupSelection['db_name'])
       .doc(this.currentSubgroupSelection['db_name'])
       .collection(this.currentSubgroupSelection['db_name'])
-      .doc(this.db.createId()).set(newObj);
+      .doc(id).set(newObj);
     }
     this.newProductObjects = [{key: 'name', value: ''}];
     this.closeModal('addProductModal');

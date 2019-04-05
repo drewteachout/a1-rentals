@@ -1,4 +1,4 @@
-<!-- <button (click)="fixReferences()">Fix References</button> -->
+<button class="button is-large is-success" (click)="openAddReference()">Add Reference +</button>
 <table class="table is-striped is-hoverable is-fullwidth">
   <thead>
     <tr>
@@ -28,7 +28,7 @@
                     <p class="is-size-3">Edit</p>
                 </div>
                 <hr class="dropdown-divider">
-                <div (click)="openDeleteReference(reference)" class="dropdown-item">
+                <div (click)="deleteReference(reference)" class="dropdown-item">
                   <p class="is-size-3">Delete</p>
                 </div>
               </div>
@@ -39,3 +39,43 @@
     </ng-container>
   </tbody>
 </table>
+
+<app-modal id="editReferenceModal">
+  <header class="modal-card-head">
+    <p class="modal-card-title title is-2">Edit Reference</p>
+    <button class="delete" aria-label="close" (click)="closeModal('editReferenceModal')"></button>
+  </header>
+  <section class="modal-card-body">
+    <div class="level">
+      <div class="level-left">
+        <p class="level-item is-size-3">Name: </p>
+        <input [(ngModel)]="currentEditReference.newName" class="level-item field-input" type="text" placeholder="{{currentEditReference.name}}">
+      </div>
+    </div>
+  </section>
+  <footer class="modal-card-foot">
+    <div class="right-submit">
+      <button class="button-std primary" (click)="submitEditReference()">Submit Changes</button>
+    </div>
+  </footer>
+</app-modal>
+
+<app-modal id="addReferenceModal">
+  <header class="modal-card-head">
+    <p class="modal-card-title title is-2">Add Reference</p>
+    <button class="delete" aria-label="close" (click)="closeModal('addReferenceModal')"></button>
+  </header>
+  <section class="modal-card-body">
+    <div class="level">
+      <div class="level-left">
+        <p class="level-item is-size-3">Name</p>
+        <input [(ngModel)]="currentEditReference.newName" class="level-item field-input" type="text" placeholder="Reference name">
+      </div>
+    </div>
+  </section>
+  <footer class="modal-card-foot">
+    <div class="right-submit">
+      <button class="button-std primary" [disabled]="currentEditReference.newName === ''" (click)="submitAddReference()">Add Reference</button>
+    </div>
+  </footer>
+</app-modal>

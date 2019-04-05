@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { AngularFirestore } from 'angularfire2/firestore';
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
   selector: 'app-references-manager',
@@ -10,7 +11,9 @@ import { AngularFirestore } from 'angularfire2/firestore';
 export class ReferencesManagerComponent implements OnInit {
 
   references: any[] = [];
-  constructor(private db: AngularFirestore) {
+  currentEditReference: any = {newName: '', name: ''};
+  currentDeleteReference: any;
+  constructor(private db: AngularFirestore, private modalService: ModalService) {
     this.db.collection('References').valueChanges().subscribe((references: any[]) => {
       const temp = new Array(references.length);
       references.forEach((element) => {
@@ -67,6 +70,46 @@ export class ReferencesManagerComponent implements OnInit {
       }
       selected.add('is-active');
     }
+  }
+
+  submitAddReference() {
+    const id = this.db.createId();
+    this.db.collection('References').doc(id).set({
+      name: this.currentEditReference.newName,
+      order_num: this.references.length + 1,
+      db_name: id
+    });
+    this.closeModal('addReferenceModal');
+  }
+
+  submitEditReference() {
+    this.db.collection('References').doc(this.currentEditReference.db_name).update({
+      name: this.currentEditReference.newName
+    });
+    this.closeModal('editReferenceModal');
+  }
+
+  openEditReference(reference: any) {
+    this.currentEditReference = reference;
+    this.currentEditReference.newName = '';
+    this.openModal('editReferenceModal');
+  }
+
+  deleteReference(reference: any) {
+    this.db.collection('References').doc(reference.db_name).delete();
+  }
+
+  openAddReference() {
+    this.currentEditReference.newName = '';
+    this.openModal('addReferenceModal');
+  }
+
+  openModal(id: string) {
+    this.modalService.open(id);
+  }
+
+  closeModal(id: string) {
+    this.modalService.close(id);
   }
 
 }

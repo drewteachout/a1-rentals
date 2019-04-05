@@ -1,3 +1,47 @@
-<p>
-  contact-info-manager works!
-</p>
+<div class="columns">
+  <div class="column">
+    <article class="message is-info">
+      <div class="message-header">
+        <h2>Address</h2>
+        <button (click)="toggleAddressEditing()" class="button is-medium">Edit</button>
+      </div>
+      <div class="message-body">
+        <p *ngIf="!editingAddress" class="is-size-3">{{contactObj.Address}}</p>
+        <textarea rows="4" cols="35" [(ngModel)]="newAddress" *ngIf="editingAddress" class="is-size-3">{{contactObj.Address}}</textarea>
+      </div>
+      <div *ngIf="editingAddress" class="message-footer">
+        <button (click)="submitAddressChanges()" class="button is-success is-large">Submit Changes</button>
+      </div>
+    </article>
+  </div>
+  <div class="column">
+    <article class="message is-info">
+      <div class="message-header">
+        <h2>Phone</h2>
+        <button (click)="togglePhoneEditing()" class="button is-medium">Edit</button>
+      </div>
+      <div class="message-body">
+        <p *ngIf="!editingPhone" class="is-size-3">{{contactObj.Phone}}</p>
+        <textarea rows="4" cols="50" [(ngModel)]="newPhone" *ngIf="editingPhone" class="is-size-3">{{contactObj.Phone}}</textarea>
+      </div>
+      <div *ngIf="editingPhone" class="message-footer">
+        <button (click)="submitPhoneChanges()" class="button is-success is-large">Submit Changes</button>
+      </div>
+    </article>
+  </div>
+  <div class="column">
+    <article class="message is-info">
+      <div class="message-header">
+        <h2>Business Hours</h2>
+        <button (click)="toggleBusinessHoursEditing()" class="button is-medium">Edit</button>
+      </div>
+      <div class="message-body">
+        <p *ngIf="!editingBusinessHours" class="is-size-3">{{contactObj['Business Hours']}}</p>
+        <textarea rows="4" cols="35" [(ngModel)]="newBusinessHours" *ngIf="editingBusinessHours" class="is-size-3">{{contactObj['Business Hours']}}</textarea>
+      </div>
+      <div *ngIf="editingBusinessHours" class="message-footer">
+        <button (click)="submitBusinessHoursChanges()" class="button is-success is-large">Submit Changes</button>
+      </div>
+    </article>
+  </div>
+</div>

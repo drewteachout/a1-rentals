@@ -30,7 +30,7 @@ export class TabsComponent implements OnInit {
             for (let i = 0; i < productInfo.length; i++) {
               if (productInfo[i].hasOwnProperty('array') && productInfo[i]['array'] === true) {
                 if (!productInfo[i]['hidden']) {
-                  nextProductList[1].push(productInfo[i]['name']);
+                  nextProductList[1].push(productInfo[i]['display_name']);
                 }
               }
             }

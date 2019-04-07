@@ -30,7 +30,7 @@ export class TabsComponent implements OnInit {
             for (let i = 0; i < productInfo.length; i++) {
               if (productInfo[i].hasOwnProperty('array') && productInfo[i]['array'] === true) {
                 if (!productInfo[i]['hidden']) {
-                  nextProductList[1].push(productInfo[i]['name']);
+                  nextProductList[1].push(productInfo[i]['display_name']);
                 }
               }
             }
@@ -50,7 +50,8 @@ export class TabsComponent implements OnInit {
     });
     this.tab3 = ['Packages', []];
     this.tab4 = ['Contact Us', []];
-    this.tabs = [this.tab1, this.tab2, this.tab3, this.tab4];
+    this.tab5 = ['References', []];
+    this.tabs = [this.tab1, this.tab2, this.tab3, this.tab4, this.tab5];
   }
 
   ngOnInit() {

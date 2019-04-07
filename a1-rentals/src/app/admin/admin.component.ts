@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { ModalService } from '../services/modal.service';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Component({
   selector: 'app-admin',
@@ -9,7 +10,15 @@ import { ModalService } from '../services/modal.service';
 })
 export class AdminComponent implements OnInit {
 
-  constructor(private db: AngularFirestore, private modalService: ModalService) {
+  authStatus = 'Not logged in';
+  constructor(private authService: AngularFireAuth) {
+    this.authService.authState.subscribe((state) => {
+      if (state !== null) {
+        this.authStatus = 'Logged in as ' + state.email;
+      } else {
+        this.authStatus = 'Not logged in';
+      }
+    });
   }
 
   ngOnInit() {

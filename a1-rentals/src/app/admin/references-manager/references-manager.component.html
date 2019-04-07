@@ -1,0 +1,81 @@
+<button class="button is-large is-success" (click)="openAddReference()">Add Reference +</button>
+<table class="table is-striped is-hoverable is-fullwidth">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th>Options</th>
+    </tr>
+  </thead>
+  <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+    <ng-container *ngFor="let reference of references; let i = index;">
+      <tr cdkDrag>
+        <th>{{reference.order_num}}</th>
+        <td>{{reference.name}}</td>
+        <td>
+          <div class="dropdown" [attr.id]="'referencesDropdown' + i" (click)="switchDropdown('referencesDropdown', i, $event)">
+            <div class="dropdown-trigger">
+              <button class="button" aria-haspopup="true" aria-controls="dropdown-menu2">
+                <span>Options</span>
+                <span class="icon is-small">
+                  <i class="fas fa-angle-down" aria-hidden="true"></i>
+                </span>
+              </button>
+            </div>
+            <div class="dropdown-menu" id="dropdown-menu2" role="menu">
+              <div class="dropdown-content">
+                <div (click)="openEditReference(reference)" class="dropdown-item">
+                    <p class="is-size-3">Edit</p>
+                </div>
+                <hr class="dropdown-divider">
+                <div (click)="deleteReference(reference)" class="dropdown-item">
+                  <p class="is-size-3">Delete</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
+
+<app-modal id="editReferenceModal">
+  <header class="modal-card-head">
+    <p class="modal-card-title title is-2">Edit Reference</p>
+    <button class="delete" aria-label="close" (click)="closeModal('editReferenceModal')"></button>
+  </header>
+  <section class="modal-card-body">
+    <div class="level">
+      <div class="level-left">
+        <p class="level-item is-size-3">Name: </p>
+        <input [(ngModel)]="currentEditReference.newName" class="level-item field-input" type="text" placeholder="{{currentEditReference.name}}">
+      </div>
+    </div>
+  </section>
+  <footer class="modal-card-foot">
+    <div class="right-submit">
+      <button class="button-std primary" (click)="submitEditReference()">Submit Changes</button>
+    </div>
+  </footer>
+</app-modal>
+
+<app-modal id="addReferenceModal">
+  <header class="modal-card-head">
+    <p class="modal-card-title title is-2">Add Reference</p>
+    <button class="delete" aria-label="close" (click)="closeModal('addReferenceModal')"></button>
+  </header>
+  <section class="modal-card-body">
+    <div class="level">
+      <div class="level-left">
+        <p class="level-item is-size-3">Name</p>
+        <input [(ngModel)]="currentEditReference.newName" class="level-item field-input" type="text" placeholder="Reference name">
+      </div>
+    </div>
+  </section>
+  <footer class="modal-card-foot">
+    <div class="right-submit">
+      <button class="button-std primary" [disabled]="currentEditReference.newName === ''" (click)="submitAddReference()">Add Reference</button>
+    </div>
+  </footer>
+</app-modal>

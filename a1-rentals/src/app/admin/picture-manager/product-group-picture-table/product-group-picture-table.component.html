@@ -1,0 +1,91 @@
+<table class="table is-striped is-hoverable is-fullwidth">
+  <thead>
+    <tr>
+      <th>Thumbnail</th>
+      <th>Group Name</th>
+      <th>Options</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let group of productGroups; let i = index;let first = first">
+      <tr *ngIf="group !== undefined" [attr.id]="'productGroupRow' + i" (click)="productGroupRowSelected(group, i)" [class.is-selected]="first">
+        <td>
+            <img class="image is-128x128" *ngIf="group.image_url !== ''" [src]=group.image_url>
+            <img class="image is-64x64" *ngIf="group.image_url === ''" src="../../../../assets/images/notfound.png">
+        </td>
+        <td>{{group.name}}</td>
+        <td>
+          <div class="dropdown" [attr.id]="'productGroupDropdown' + i" (click)="switchDropdown('productGroupDropdown', i, $event)">
+            <div class="dropdown-trigger">
+              <button class="button" aria-haspopup="true" aria-controls="dropdown-menu2">
+                <span>Options</span>
+                <span class="icon is-small">
+                  <i class="fas fa-angle-down" aria-hidden="true"></i>
+                </span>
+              </button>
+            </div>
+            <div class="dropdown-menu" id="dropdown-menu2" role="menu">
+              <div class="dropdown-content">
+                <div *ngIf="group.image_url !== ''" (click)="openChangeImage(group)" class="dropdown-item">
+                    <p class="is-size-3">Change</p>
+                </div>
+                <div *ngIf="group.image_url === ''" (click)="openAddImage(group)" class="dropdown-item">
+                    <p class="is-size-3">Add</p>
+                  </div>
+                <hr class="dropdown-divider">
+                <div (click)="openDeleteImage(group)" class="dropdown-item">
+                  <p class="is-size-3">Delete</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
+
+<app-modal id="addProductGroupImageModal">
+  <header class="modal-card-head">
+    <p class="modal-card-title title is-2">Add New Product Group Image</p>
+    <button class="delete" aria-label="close" (click)="closeModal('addProductGroupImageModal')"></button>
+  </header>
+  <section class="modal-card-body">
+    <app-picture-drop [group]=currentChangeGroup [subgroup]=undefined [product]=undefined></app-picture-drop>
+  </section>
+  <footer class="modal-card-foot">
+    <div class="right-submit">
+      <button class="button-std primary" (click)="closeModal('addProductGroupImageModal')">Close</button>
+    </div>
+  </footer>
+</app-modal>
+
+<app-modal id="changeProductGroupImageModal">
+  <header class="modal-card-head">
+    <p class="modal-card-title title is-2">Change Product Group Image</p>
+    <button class="delete" aria-label="close" (click)="closeModal('changeProductGroupImageModal')"></button>
+  </header>
+  <section class="modal-card-body">
+    <app-picture-drop [group]=currentChangeGroup [subgroup]=undefined [product]=undefined></app-picture-drop>
+  </section>
+  <footer class="modal-card-foot">
+    <div class="right-submit">
+      <button class="button-std primary" (click)="closeModal('changeProductGroupImageModal')">Close</button>
+    </div>
+  </footer>
+</app-modal>
+
+<app-modal id="deleteProductGroupImageModal">
+  <header class="modal-card-head has-background-danger">
+    <p class="modal-card-title title is-2">Delete Product Group Image</p>
+    <button class="delete" aria-label="close" (click)="closeModal('deleteProductGroupImageModal')"></button>
+  </header>
+  <section class="modal-card-body">
+    <h3 class="has-text-danger">Are you sure you would like to delete this image?</h3>
+  </section>
+  <footer class="modal-card-foot">
+    <div class="right-submit">
+      <button class="button is-large is-danger" (click)="deleteProductGroupImage()">Confirm Delete</button>
+    </div>
+  </footer>
+</app-modal>

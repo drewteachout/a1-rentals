@@ -10,7 +10,8 @@ export class ProductTileComponent implements OnInit {
   @Input() productName: string;
   @Input() productSource: string;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

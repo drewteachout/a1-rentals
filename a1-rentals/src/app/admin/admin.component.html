@@ -13,20 +13,29 @@
         Banners
       </a>
 
+      <a href="admin/references" class="navbar-item">
+        References
+      </a>
+
+      <a href="admin/pictures" class="navbar-item">
+        Manage Group and Subgroup Pictures
+      </a>
+
+
       <div class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link">
           More
         </a>
 
         <div class="navbar-dropdown">
-          <a class="navbar-item">
-            Change Contact Information
+          <a href="admin/contact" class="navbar-item">
+            Contact Information
           </a>
-          <a class="navbar-item">
+          <a href="admin/email" class="navbar-item">
             Change Quote Email Address
           </a>
-          <a class="navbar-item">
-            Contact
+          <a href="admin/login" class="navbar-item">
+            Sign out
           </a>
           <hr class="navbar-divider">
           <a class="navbar-item">
@@ -34,6 +43,11 @@
           </a>
         </div>
       </div>
+    </div>
+    <div class="navbar-end">
+      <a href="admin/login" class="navbar-item">
+        {{authStatus}}
+      </a>
     </div>
   </div>
 </nav>

@@ -1,4 +1,4 @@
-import { firestore } from 'firebase';
+import { firestore } from 'firebase/app';
 
 export class Banner {
     title = '';
@@ -14,5 +14,4 @@ export class Banner {
         this.start_date = firestore.Timestamp.fromDate(start_date);
         this.end_date = firestore.Timestamp.fromDate(start_date);
     }
-    
 }

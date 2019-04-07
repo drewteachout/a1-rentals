@@ -22,18 +22,25 @@ import { NgImageSliderModule} from 'ng-image-slider';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule, Routes } from '@angular/router';
 
+import { FirestoreSettingsToken } from '@angular/fire/firestore';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireModule } from '@angular/fire';
 import { SlideshowModule } from 'ng-simple-slideshow';
 import { ModalService } from './services/modal.service';
-import { AdminModule } from './admin/admin.module';
 import { PackagesComponent } from './packages/packages.component';
+import { ReferencesComponent } from './references/references.component';
+import { UploadService } from './services/upload.service';
+import { DropZoneDirective } from './dropZone.directive';
+import { FileSizePipe } from './util/file-size.pipe';
 
 const appRoutes: Routes = [
   { path: 'Popular Products', component: HomepageComponent},
   { path: 'Packages', component: PackagesComponent},
   { path: 'Contact Us', component: ContactComponent},
   { path: 'Quote Cart', component: QuoteCartComponent},
+  { path: 'References', component: ReferencesComponent},
   { path: 'admin', loadChildren: './admin/admin.module#AdminModule' },
   { path: 'Rental Products/:productCategory/:productName', component: ProductComponent},
   { path: 'Rental Products/:productCategory', component: ProductComponent},
@@ -60,7 +67,8 @@ const appRoutes: Routes = [
     QuoteTileComponent,
     ContactComponent,
     QuoteCartComponent,
-    PackagesComponent
+    PackagesComponent,
+    ReferencesComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -77,9 +85,10 @@ const appRoutes: Routes = [
     NgbModule,
     AngularFirestoreModule,
     AngularFireModule.initializeApp(environment.firebase),
-    SlideshowModule
+    SlideshowModule,
+    AngularFireStorageModule
   ],
-  providers: [QuoteCartServiceService, ModalService],
+  providers: [QuoteCartServiceService, ModalService, UploadService, AngularFireDatabase, { provide: FirestoreSettingsToken, useValue: {} }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

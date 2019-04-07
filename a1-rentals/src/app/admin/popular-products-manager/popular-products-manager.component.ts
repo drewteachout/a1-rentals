@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { AngularFirestore } from 'angularfire2/firestore';
 
 @Component({
   selector: 'app-popular-products-manager',
@@ -8,7 +8,7 @@ import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firesto
 })
 export class PopularProductsManagerComponent implements OnInit {
 
-  private popularProducts: any[] = [[]];
+  popularProducts: any[] = [[]];
   private across = 6;
   constructor(private db: AngularFirestore) {
     db.collection('/popular').valueChanges().subscribe((popular: {}[]) => {

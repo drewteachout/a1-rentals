@@ -16,17 +16,13 @@ export class HeaderComponent implements OnInit {
       if (a instanceof NavigationEnd) {
         let url = a.url.substring(1);
         url = url.replace('%20', ' ');
-        document.getElementById('Popular Products').className = 'button-tab primary';
-        document.getElementById('Rental Products').className = 'button-tab primary';
-        document.getElementById('Packages').className = 'button-tab primary';
-        document.getElementById('Contact Us').className = 'button-tab primary';
-        document.getElementById('References').className = 'button-tab primary';
-        if (document.getElementById(url) != null) {
-          document.getElementById(url).className = 'button-tab accent';
-        } else if (url === '') {
-          // this only happens when someone navigates to the base address and get redirected to popular products
-          document.getElementById('Popular Products').className = 'button-tab accent';
-        }
+        // document.getElementById('Popular Products').className = 'button-tab primary';
+        // document.getElementById('Rental Products').className = 'button-tab primary';
+        // document.getElementById('Packages').className = 'button-tab primary';
+        // document.getElementById('Contact Us').className = 'button-tab primary';
+        // if (document.getElementById(url) != null) {
+        //   document.getElementById(url).className = 'button-tab accent';
+        // }
       }
     });
   }

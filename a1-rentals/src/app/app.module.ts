@@ -10,7 +10,6 @@ import { TabsComponent } from './header/tabs/tabs.component';
 import { ProductTileComponent } from './product-tile/product-tile.component';
 import { ProductComponent } from './product/product.component';
 import { FormComponent } from './form/form.component';
-import { MapComponent } from './map/map.component';
 import { QuoteTileComponent } from './quote-tile/quote-tile.component';
 import { QuoteCartComponent } from './quote-cart/quote-cart.component';
 import { ContactComponent } from './contact/contact.component';
@@ -65,7 +64,6 @@ const appRoutes: Routes = [
     ProductTileComponent,
     ProductComponent,
     FormComponent,
-    MapComponent,
     QuoteTileComponent,
     ContactComponent,
     QuoteCartComponent,

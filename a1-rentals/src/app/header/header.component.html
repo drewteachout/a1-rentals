@@ -1,18 +1,29 @@
-<div class="parent secondary">
-  <h1 style="outline-style: none;" [routerLink]="['Popular Products']">
-    A1 Rentals
-  </h1>
-  <div class="contact">
-    <div class="contact-icon" >
-      <img src="./../../assets/images/contact.png">
+<nav class="navbar is-white" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+            <strong>A1 Rentals</strong>
+        </a>
+        <div class="navbar-item">
+                770-458-7740
+            </div>
+            <div class="navbar-item">
+                460 Glover St. SE Marietta, GA 30060
+            </div>
     </div>
-    <div class="contact-details">
-      <h4 class="text">Phone: 770-458-7740</h4>
-      <h4 class="text">Address: 460 Glover St. SE Marietta, GA 30060</h4>
+    <div class="navbar-menu">
+        <app-tabs class="navbar-start"></app-tabs>
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
+                    <button [routerLink]="'/Quote Cart'" class="button is-primary">
+                        <strong>
+                            View Quote
+                        </strong>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
     </div>
-  </div>
-  <div class="cart">
-    <button [routerLink]="'/Quote Cart'" class="button-std primary">View Quote</button>
-  </div>
-</div>
-<app-tabs></app-tabs>
+</nav>
+    

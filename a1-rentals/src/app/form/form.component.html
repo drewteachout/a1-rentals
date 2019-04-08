@@ -1,33 +1,33 @@
 <div>
   <form (ngSubmit)="onSubmit()" #contactForm = "ngForm">
-    <div class='col50'>
-      <div class="columns form-group">
-        <div class='column'>
-          <label for="firstName"><h4 class="text">First Name</h4></label>
-          <input type="text" class="form-control small-input" id="firstName"
+        <div class='field'>
+          <label class="label" for="firstName">First Name</label>
+          <div class="control">
+                <input type="text" class="input" id="firstName"
                 required
                 [(ngModel)]="model.firstName" name="firstName"
                 #name="ngModel">
-          <div [hidden]="name.valid || name.pristine"
+          </div>
+          <p class="help is-danger" [hidden]="name.valid || name.pristine"
             class="alert alert-danger">
             First name is required
-          </div>
+        </p>
         </div>
 
-        <div class='column'>
-          <label for="lastName"><h4 class="text">Last Name</h4></label>
-          <input type="text" class="form-control small-input" id="lastName"
+    <div class='field'>
+          <label  class="label" for="lastName">Last Name</label>
+          <div class="control">
+                <input type="text" class="input" id="lastName"
                 required
                 [(ngModel)]="model.lastName" name = lastName
                 #lastName="ngModel">
-          <div [hidden]="lastName.valid || lastName.pristine"
+          </div>
+          
+          <p class="help is-danger" [hidden]="lastName.valid || lastName.pristine"
             class="alert alert-danger">
             Last name is required
-          </div>
+        </p>
         </div>
-      </div>
-
-
       <!-- <div class="form-group">
         <label for="lastName">Last Name</label>
         <input type="text" class="form-control small-input" id="lastName"
@@ -40,56 +40,62 @@
         </div>
       </div> -->
 
-      <div style="clear:both;">&nbsp;</div>
-      <div class="form-group">
-        <label for="email"><h4 class="text">Email Address</h4></label>
-        <input type="text" class="form-control" id="email"
-              required
-              [(ngModel)]="model.email" name = email
-              #email="ngModel">
-        <div [hidden]="email.valid || email.pristine"
+      <div class="field">
+        <label class="label" for="email">Email Address</label>
+        <div class="control">
+            <input type="text" class="input" id="email"
+                required
+                [(ngModel)]="model.email" name = email
+                #email="ngModel">
+        </div>
+        <p class="help is-danger"[hidden]="email.valid || email.pristine"
           class="alert alert-danger">
           Email is required
+    </p>
+      </div>
+
+      <div class="field">
+        <label class="label" for="phoneNumber">Phone Number</label>
+        <div class="control">
+            <input type="text" class="input" id="phoneNumber"
+                [(ngModel)]="model.phoneNumber" name = phoneNumber>
         </div>
+        
       </div>
 
-      <div class="form-group">
-        <label for="phoneNumber"><h4 class="text">Phone Number</h4></label>
-        <input type="text" class="form-control" id="phoneNumber"
-              [(ngModel)]="model.phoneNumber" name = phoneNumber>
-      </div>
-
-      <div class="form-group">
-        <label for="subject"><h4 class="text">Subject</h4></label>
-        <input type="text" class="form-control" id="subject"
-              required
-              [(ngModel)]="model.subject" name = subject
-              #subject="ngModel">
-        <div [hidden]="subject.valid || subject.pristine"
+      <div class="field">
+        <label class="label" for="subject">Subject</label>
+        <div class="control">
+                <input type="text" class="input" id="subject"
+                required
+                [(ngModel)]="model.subject" name = subject
+                #subject="ngModel">
+        </div>
+        
+        <p class="help is-danger" [hidden]="subject.valid || subject.pristine"
           class="alert alert-danger">
           Subject is required
-        </div>
+    </p>
       </div>
 
 
-      <div class="form-group">
-        <label for="message"><h4 class="text">Message</h4></label>
-        <textarea rows="5" cols="25" class="form-control large-input" id="message"
+      <div class="field">
+        <label class="label" for="message">Message</label>
+        <textarea rows="5" sols="25" class="textarea" id="message"
               required
               [(ngModel)]="model.message" name = message
               #message="ngModel">
         </textarea>
-        <div [hidden]="message.valid || message.pristine"
+        <p class="help is-danger" [hidden]="message.valid || message.pristine"
           class="alert alert-danger">
           Message is required
-        </div>
+    </p>
       </div>
+      <div class="field">
+        <button type="submit" class="button is-link" [disabled]="!contactForm.form.valid"><strong>Submit</strong></button>
 
-
-      <button type="submit" class="button-std" [disabled]="!contactForm.form.valid">Submit</button>
-    </div>
+      </div>
     <!-- not sure this next line is necessary
     <button type="button" class="btn btn-default" (click)="newContact(); contactForm.reset()">New Contact</button>-->
-
   </form>
 </div>

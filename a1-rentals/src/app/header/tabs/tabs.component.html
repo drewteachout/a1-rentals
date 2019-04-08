@@ -1,14 +1,20 @@
-<div class="rectangle primary">
-  <div class="tab" *ngFor="let tabName of tabs;let first = first">
-    <button class="button-tab primary" [routerLink]="'/' + tabName[0]" id="{{tabName[0]}}">{{tabName[0]}}</button>
-    <div class="tab-content primary" *ngIf="tabName[1].length > 0">
-      <a class="button-tab" *ngFor="let subTabName of tabName[1]; index as i" (click)="subtabClicked(subTabName[0], '', $event)">
-        {{subTabName[0]}}
-        <div class="tab-content-sub primary" *ngIf="subTabName[1].length > 0" [ngStyle]="setSubTabStyle(i, tabName[1])">
-          <a class="button-tab-sub" *ngFor="let title of subTabName[1];" (click)="subtabClicked(subTabName[0], title, $event)">
-            {{title}}</a>
+    <a class="navbar-item has-dropdown is-hoverable" *ngFor="let tabName of tabs">
+        <div class="navbar-item" [routerLink]="'/' + tabName[0]" id="{{tabName[0]}}">
+            <strong>{{tabName[0]}}</strong>
         </div>
-      </a>
-    </div>
-  </div>
-</div>
+        <div class="navbar-dropdown" *ngIf="tabName[1].length > 0">
+        <a class="navbar-item dropdown is-hoverable" *ngFor="let subTabName of tabName[1]; index as i" (click)="subtabClicked(subTabName[0], '', $event)">
+            <div class="dropdown-trigger">
+            {{subTabName[0]}}
+            </div>
+            <div *ngIf="subTabName[1].length > 0">
+                <div class="dropdown-menu">
+                    <div class="dropdown-content">
+                        <a class="dropdown-item" *ngFor="let title of subTabName[1];" (click)="subtabClicked(subTabName[0], title, $event)">
+                            {{title}}</a>
+                    </div>
+                </div>
+            </div>
+        </a>
+        </div>
+    </a >  

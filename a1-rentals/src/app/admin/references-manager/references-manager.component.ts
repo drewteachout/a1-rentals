@@ -96,7 +96,13 @@ export class ReferencesManagerComponent implements OnInit {
   }
 
   deleteReference(reference: any) {
-    this.db.collection('References').doc(reference.db_name).delete();
+    const batch = this.db.firestore.batch();
+    batch.delete(this.db.collection('References').doc(reference.db_name).ref);
+    for (let i = reference.order_num; i < this.references.length; i++) {
+      batch.update(this.db.collection('References').doc(this.references[i].db_name).ref,
+      {order_num: this.references[i].order_num - 1});
+    }
+    batch.commit();
   }
 
   openAddReference() {

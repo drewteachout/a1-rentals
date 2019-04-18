@@ -2,18 +2,24 @@
 <table class="table is-striped is-hoverable is-fullwidth">
   <thead>
     <tr>
+      <th></th>
       <th>#</th>
       <th>Group Name</th>
       <th>Options</th>
-      <th></th>
     </tr>
   </thead>
   <tbody cdkDropList (cdkDropListDropped)="drop($event)">
     <ng-container *ngFor="let group of productGroups; let i = index;let first = first">
       <tr *ngIf="group !== undefined" [attr.id]="'productGroupRow' + i" (click)="productGroupRowSelected(group, i)" [class.is-selected]="first" cdkDrag>
-        <th>{{group.display_order}}
-        </th>
-        <td>{{group.name}}
+        <td>
+          <span class="icon is-large">
+            <i class="fa fa-bars fa-3x"></i>
+          </span>
+        </td>
+        <td class="is-size-4">
+          {{group.display_order}}
+        </td>
+        <td class="is-size-4">{{group.name}}
         </td>
         <td>
           <div class="dropdown is-hoverable" [attr.id]="'productGroupDropdown' + i">
@@ -44,13 +50,6 @@
               </div>
             </div>
           </div>
-        </td>
-        <td>
-          <button class="button is-medium">
-            <span class="icon is-large">
-              <i class="fas fa-bars"></i>
-            </span>
-          </button>
         </td>
       </tr>
     </ng-container>

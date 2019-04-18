@@ -8,8 +8,8 @@
   <tbody>
     <ng-container *ngFor="let subgroup of productSubgroups; let i = index;let first = first">
       <tr (click)="productSubgroupRowSelected(subgroup, i)" [attr.id]="'productSubgroupRow' + i" [class.is-selected]="first">
-        <th>{{i + 1}}</th>
-        <td>{{subgroup.display_name}}</td>
+        <td class="is-size-4">{{i + 1}}</td>
+        <td class="is-size-4">{{subgroup.display_name}}</td>
         <td>
           <div class="dropdown is-hoverable" [attr.id]="'productSubgroupDropdown' + i">
             <div class="dropdown-trigger">

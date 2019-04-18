@@ -16,9 +16,9 @@
   <tbody>
     <ng-container *ngFor="let product of rowData; let i = index;">
       <tr [class.is-selected]="first">
-        <th>{{i + 1}}</th>
-        <td *ngFor="let col of columnDefs">{{product[col.field]}}</td>
-        <td>
+        <th class="is-size-4">{{i + 1}}</th>
+        <td class="is-size-4" *ngFor="let col of columnDefs">{{product[col.field]}}</td>
+        <td class="is-size-4">
           <div class="dropdown is-hoverable" [attr.id]="'productDropdown' + i">
             <div class="dropdown-trigger">
               <button class="button" aria-haspopup="true" aria-controls="dropdown-menu2">

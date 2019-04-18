@@ -190,7 +190,6 @@ export class ProductComponent implements OnInit {
         for (let i = 0; i < products.length; i++) {
           const key = i % this.numColumns;
           const data = this.productData[key];
-          console.log(products[i]);
           data.push([products[i].display_name, products[i].image_url, products[i].collection_name]);
           this.productData[key] = data;
         }
@@ -208,7 +207,6 @@ export class ProductComponent implements OnInit {
         for (let i = 0; i < products.length; i++) {
           const key = i % this.numColumns;
           const data = this.productData[key];
-          console.log(category);
           data.push([products[i].display_name, products[i].image_url, category + '/' + products[i].db_name]);
           this.productData[key] = data;
         }

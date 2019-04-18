@@ -12,7 +12,7 @@
                         <div class="zhigh dropdown-menu">
                             <div class="zhigh dropdown-content">
                                 <ng-container *ngFor="let subSubTab of subTabName[1];">
-                                    <a class="zhigh dropdown-item"  *ngIf="!subSubTab.hidden" (click)="subtabClicked(subTabName[0].collection_name, title, $event)">
+                                    <a class="zhigh dropdown-item"  *ngIf="!subSubTab.hidden" (click)="subtabClicked(subTabName[0].collection_name, subSubTab.db_name, $event)">
                                         {{subSubTab.display_name}}</a>
                                 </ng-container>
                             </div>

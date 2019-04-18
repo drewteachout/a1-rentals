@@ -25,10 +25,14 @@ export class HomepageComponent implements OnInit {
 
   loadData() {
     this.db.collection('/popular').valueChanges().subscribe((popular_items: any[]) => {
+      this.productData = []
+      for (let i = 0; i < this.numColumns; i++) {
+        this.productData.push([]);
+      }
       for (let i = 0; i < popular_items.length; i++) {
         const key = i % this.numColumns;
         const data = this.productData[key];
-        data.push([popular_items[i].name, popular_items[i].storage_path]);
+        data.push([popular_items[i].name, popular_items[i].storage_path, popular_items[i].path]);
         this.productData[key] = data;
       }
     });

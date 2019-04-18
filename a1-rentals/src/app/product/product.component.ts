@@ -181,16 +181,17 @@ export class ProductComponent implements OnInit {
 
   loadAllRentalProducts() {
     this.isProducts = true;
-    this.productData = [];
-    for (let i = 0; i < this.numColumns; i++) {
-      this.productData.push([]);
-    }
     this.db.collection('/products').valueChanges()
       .subscribe((products: any[]) => {
+        this.productData = []
+        for (let i = 0; i < this.numColumns; i++) {
+          this.productData.push([]);
+        }
         for (let i = 0; i < products.length; i++) {
           const key = i % this.numColumns;
           const data = this.productData[key];
-          data.push([products[i].display_name, products[i].image_url]);
+          console.log(products[i]);
+          data.push([products[i].display_name, products[i].image_url, products[i].collection_name]);
           this.productData[key] = data;
         }
       });
@@ -198,16 +199,17 @@ export class ProductComponent implements OnInit {
 
   loadRentalProducts(category) {
     this.isProducts = true;
-    this.productData = [];
-    for (let i = 0; i < this.numColumns; i++) {
-      this.productData.push([]);
-    }
     this.db.collection('/' + category.replace('/', '-')).valueChanges()
       .subscribe((products: any[]) => {
+        this.productData = []
+        for (let i = 0; i < this.numColumns; i++) {
+          this.productData.push([]);
+        }
         for (let i = 0; i < products.length; i++) {
           const key = i % this.numColumns;
           const data = this.productData[key];
-          data.push([products[i].display_name, products[i].image_url]);
+          console.log(category);
+          data.push([products[i].display_name, products[i].image_url, category + '/' + products[i].db_name]);
           this.productData[key] = data;
         }
       });

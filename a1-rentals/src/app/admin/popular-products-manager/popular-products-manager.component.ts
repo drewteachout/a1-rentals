@@ -9,24 +9,12 @@ import { AngularFirestore } from 'angularfire2/firestore';
 export class PopularProductsManagerComponent implements OnInit {
 
   popularProducts: any[] = [[]];
-  private across = 6;
+  private numColumns = 5;
   constructor(private db: AngularFirestore) {
-    db.collection('/popular').valueChanges().subscribe((popular: {}[]) => {
-      this.popularProducts = [[]];
-      console.log(popular);
-      let innerCount = 0;
-      let outerCount = 0;
-
-      popular.forEach((product) => {
-        if (innerCount >= this.across) {
-          innerCount = 0;
-          outerCount++;
-          this.popularProducts.push([]);
-        }
-        this.popularProducts[outerCount].push(product);
-        innerCount++;
-      });
-    });
+    for (let i = 0; i < this.numColumns; i++) {
+      this.popularProducts.push([]);
+    }
+    this.loadData();
   }
 
   ngOnInit() {
@@ -36,12 +24,21 @@ export class PopularProductsManagerComponent implements OnInit {
     console.log('Add product Selected');
   }
 
-  editPopularProduct(product: any) {
-    console.log('Edit product selected', product);
+  loadData() {
+    this.db.collection('/popular').valueChanges().subscribe((popular_items: any[]) => {
+      this.popularProducts = []
+      for (let i = 0; i < this.numColumns; i++) {
+        this.popularProducts.push([]);
+      }
+      for (let i = 0; i < popular_items.length; i++) {
+        const key = i % this.numColumns;
+        const data = this.popularProducts[key];
+        data.push([popular_items[i].name,
+          popular_items[i].storage_path,
+          popular_items[i].path,
+          popular_items[i].db_name]);
+        this.popularProducts[key] = data;
+      }
+    });
   }
-
-  deletePopularProduct(product: any) {
-    console.log('Delete product selected', product);
-  }
-
 }

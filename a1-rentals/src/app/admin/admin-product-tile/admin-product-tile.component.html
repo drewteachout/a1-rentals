@@ -1,0 +1,29 @@
+<div class="tile is-ancestor">
+    <div class="tile is-parent">
+        <article class="tile is-child box">
+            <div class="level">
+                <div class="level-left">
+                    <button (click)="editPopularProductSelected()" class="button is-info">Edit</button>
+                </div>
+                <div class="level-right">
+                    <button (click)="deletePopularProductSelected()" class="delete is-medium has-background-danger"></button>
+                </div>
+            </div>
+            <p class="title">{{productName}}</p>
+            <figure class="centered image is-4by3">
+                <img [src]="productSource"/>
+            </figure>
+            <div class="field">
+                <label class="label">Site Link</label>
+                <div class="field-body">
+                    <div class="field">
+                    <p class="control">
+                        <a href="Rental Products/{{path}}">Rental Products/{{path}}</a>
+                        <!-- <input class="input is-static" type="text" value={{path}} readonly> -->
+                    </p>
+                    </div>
+                </div>
+                </div>
+        </article>
+    </div>
+</div>

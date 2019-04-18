@@ -31,6 +31,8 @@ import { UploadService } from '../services/upload.service';
 import { PictureDropComponent } from './picture-manager/picture-drop/picture-drop.component';
 import { FileSizePipe } from '../util/file-size.pipe';
 import { DropZoneDirective } from '../dropZone.directive';
+import { ProductTileComponent } from '../product-tile/product-tile.component';
+import { AdminProductTileComponent } from './admin-product-tile/admin-product-tile.component';
 
 const appRoutes: Routes = [
   { path: '',
@@ -71,7 +73,8 @@ const appRoutes: Routes = [
     ProductPictureTableComponent,
     PictureDropComponent,
     FileSizePipe,
-    DropZoneDirective
+    DropZoneDirective,
+    AdminProductTileComponent
   ],
   imports: [
     CommonModule,

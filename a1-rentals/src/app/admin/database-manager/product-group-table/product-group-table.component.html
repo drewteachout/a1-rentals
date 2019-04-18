@@ -1,19 +1,22 @@
-<button (click)="openAddProductGroup()" class="button is-large is-fullwidth primary">Add Product Group +</button>
+<button (click)="openAddProductGroup()" class="button is-large is-fullwidth is-success">Add Product Group +</button>
 <table class="table is-striped is-hoverable is-fullwidth">
   <thead>
     <tr>
       <th>#</th>
       <th>Group Name</th>
       <th>Options</th>
+      <th></th>
     </tr>
   </thead>
   <tbody cdkDropList (cdkDropListDropped)="drop($event)">
     <ng-container *ngFor="let group of productGroups; let i = index;let first = first">
       <tr *ngIf="group !== undefined" [attr.id]="'productGroupRow' + i" (click)="productGroupRowSelected(group, i)" [class.is-selected]="first" cdkDrag>
-        <th>{{group.display_order}}</th>
-        <td>{{group.name}}</td>
+        <th>{{group.display_order}}
+        </th>
+        <td>{{group.name}}
+        </td>
         <td>
-          <div class="dropdown" [attr.id]="'productGroupDropdown' + i" (click)="switchDropdown('productGroupDropdown', i, $event)">
+          <div class="dropdown is-hoverable" [attr.id]="'productGroupDropdown' + i">
             <div class="dropdown-trigger">
               <button class="button" aria-haspopup="true" aria-controls="dropdown-menu2">
                 <span>Options</span>
@@ -24,23 +27,30 @@
             </div>
             <div class="dropdown-menu" id="dropdown-menu2" role="menu">
               <div class="dropdown-content">
-                <div *ngIf="group.hidden" (click)="toggleGroupHidden(group)" class="dropdown-item">
-                    <p class="is-size-3">Show</p>
-                </div>
-                <div *ngIf="!group.hidden" (click)="toggleGroupHidden(group)" class="dropdown-item">
-                    <p class="is-size-3">Hide</p>
-                  </div>
+                <a *ngIf="group.hidden" (click)="toggleGroupHidden(group)" class="dropdown-item">
+                  Show
+                </a>
+                <a *ngIf="!group.hidden" (click)="toggleGroupHidden(group)" class="dropdown-item">
+                  Hide
+                </a>
                 <hr class="dropdown-divider">
-                <div (click)="openEditProductGroup(group)" class="dropdown-item">
-                    <p class="is-size-3">Edit</p>
-                </div>
+                <a (click)="openEditProductGroup(group)" class="dropdown-item">
+                  Edit
+                </a>
                 <hr class="dropdown-divider">
-                <div (click)="openDeleteProductGroup(group)" class="dropdown-item">
-                  <p class="is-size-3">Delete</p>
-                </div>
+                <a (click)="openDeleteProductGroup(group)" class="dropdown-item">
+                  Delete
+                </a>
               </div>
             </div>
           </div>
+        </td>
+        <td>
+          <button class="button is-medium">
+            <span class="icon is-large">
+              <i class="fas fa-bars"></i>
+            </span>
+          </button>
         </td>
       </tr>
     </ng-container>
@@ -81,17 +91,13 @@
     <button class="delete" aria-label="close" (click)="closeModal('editProductGroupModal')"></button>
   </header>
   <section class="modal-card-body">
-    <h2>Enter a new name for this Group</h2>
-    <div class="level">
-      <div class="level-left">
-        <input [(ngModel)]="newProductGroupName.new" class="level-item field-input" type="text" placeholder="{{newProductGroupName.old}}">
-      </div>
+    <label class="label is-large">Enter a new name for {{newProductGroupName.old}}</label>
+    <div class="field is-grouped">
+        <input [(ngModel)]="newProductGroupName.new" class="input is-medium" type="text" placeholder="New Group Name">
     </div>
   </section>
   <footer class="modal-card-foot">
-    <div class="right-submit">
-      <button class="button-std primary" (click)="submitEditProductGroup()">Submit Changes</button>
-    </div>
+    <button class="button is-success" (click)="submitEditProductGroup()">Submit Changes</button>
   </footer>
 </app-modal>
 

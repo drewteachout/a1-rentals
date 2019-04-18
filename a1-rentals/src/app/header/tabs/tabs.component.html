@@ -1,18 +1,18 @@
-    <a class="navbar-item has-dropdown is-hoverable" *ngFor="let tabName of tabs">
+    <a class="zhigh navbar-item has-dropdown is-hoverable" *ngFor="let tabName of tabs">
         <div class="navbar-item" [routerLink]="'/' + tabName[0]" id="{{tabName[0]}}">
             <strong>{{tabName[0]}}</strong>
         </div>
-        <div class="navbar-dropdown" *ngIf="tabName[1].length > 0">
+        <div class="zhigh navbar-dropdown" *ngIf="tabName[1].length > 0">
             <ng-container *ngFor="let subTabName of tabName[1]; index as i">
-                <a class="navbar-item dropdown is-hoverable" *ngIf="subTabName !==undefined && !subTabName[0].hidden" (click)="subtabClicked(subTabName[0].collection_name, '', $event)">
-                    <div class="dropdown-trigger">
+                <a class="zhigh navbar-item dropdown is-hoverable" *ngIf="subTabName !==undefined && !subTabName[0].hidden" (click)="subtabClicked(subTabName[0].collection_name, '', $event)">
+                    <div class="zhigh dropdown-trigger">
                     {{subTabName[0].display_name}}
                     </div>
                     <div *ngIf="subTabName[1].length > 0">
-                        <div class="dropdown-menu">
-                            <div class="dropdown-content">
+                        <div class="zhigh dropdown-menu">
+                            <div class="zhigh dropdown-content">
                                 <ng-container *ngFor="let subSubTab of subTabName[1];">
-                                    <a class="dropdown-item"  *ngIf="!subSubTab.hidden" (click)="subtabClicked(subTabName[0].collection_name, title, $event)">
+                                    <a class="zhigh dropdown-item"  *ngIf="!subSubTab.hidden" (click)="subtabClicked(subTabName[0].collection_name, title, $event)">
                                         {{subSubTab.display_name}}</a>
                                 </ng-container>
                             </div>

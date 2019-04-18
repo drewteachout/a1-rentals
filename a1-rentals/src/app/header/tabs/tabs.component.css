@@ -2,3 +2,6 @@
     left: calc(100%);
     top: calc(-35%);
 }
+.zhigh {
+    z-index: 100;
+}

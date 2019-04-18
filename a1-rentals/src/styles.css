@@ -103,20 +103,6 @@ h4 {
     background-color: #F4F4F4;
 }
 
-button:hover {
-    /* background-color: #813772; */
-    background-color: #373737;
-    cursor: pointer;
-}
-
-.button-tab:hover{
-    background-color: #373737;
-}
-
-.button-tab-sub:hover{
-    background-color: #373737;
-}
-
 .text {
     color: #373737
 }

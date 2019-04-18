@@ -1,4 +1,4 @@
-<button (click)="openAddProductSubgroupModal()" class="button is-large is-fullwidth primary">Add Product Subgroup +</button>
+<button (click)="openAddProductSubgroupModal()" class="button is-large is-fullwidth is-success">Add Product Subgroup +</button>
 <table class="table is-striped is-hoverable is-fullwidth">
   <tr>
     <th>#</th>
@@ -11,7 +11,7 @@
         <th>{{i + 1}}</th>
         <td>{{subgroup.display_name}}</td>
         <td>
-          <div class="dropdown" [attr.id]="'productSubgroupDropdown' + i" (click)="switchDropdown('productSubgroupDropdown', i, $event)">
+          <div class="dropdown is-hoverable" [attr.id]="'productSubgroupDropdown' + i">
             <div class="dropdown-trigger">
               <button class="button" aria-haspopup="true" aria-controls="dropdown-menu2">
                 <span>Options</span>
@@ -22,20 +22,20 @@
             </div>
             <div class="dropdown-menu" id="dropdown-menu2" role="menu">
               <div class="dropdown-content">
-                <div *ngIf="subgroup.hidden" (click)="toggleSubgroupHidden(subgroup)" class="dropdown-item">
-                    <p class="is-size-3">Show</p>
-                </div>
-                <div *ngIf="!subgroup.hidden" (click)="toggleSubgroupHidden(subgroup)" class="dropdown-item">
-                    <p class="is-size-3">Hide</p>
-                  </div>
+                <a *ngIf="subgroup.hidden" (click)="toggleSubgroupHidden(subgroup)" class="dropdown-item">
+                  Show
+                </a>
+                <a *ngIf="!subgroup.hidden" (click)="toggleSubgroupHidden(subgroup)" class="dropdown-item">
+                  Hide
+                </a>
                 <hr class="dropdown-divider">
-                <div (click)="openEditProductSubgroupModal(subgroup)" class="dropdown-item">
-                    <p class="is-size-3">Edit</p>
-                </div>
+                <a (click)="openEditProductSubgroupModal(subgroup)" class="dropdown-item">
+                  Edit
+                </a>
                 <hr class="dropdown-divider">
-                <div (click)="openDeleteProductSubgroupModal(subgroup)" class="dropdown-item">
-                  <p class="is-size-3">Delete</p>
-                </div>
+                <a (click)="openDeleteProductSubgroupModal(subgroup)" class="dropdown-item">
+                  Delete
+                </a>
               </div>
             </div>
           </div>

@@ -25,18 +25,18 @@ export class TabsComponent implements OnInit {
     this.tab2 = ['Rental Products', []];
     this.db.collection('/products').valueChanges().pipe(map((docs: any[]) => {
       const subgroups = Array<Observable<any[]>>(docs.length);
-      console.log(docs.length);
       this.tab2[1] = Array(docs.length);
       docs.forEach((doc) => {
         this.tab2[1][doc.display_order - 1] = [doc, []];
         subgroups[doc.display_order - 1] = this.db.collection(doc.collection_name).valueChanges();
       });
       return subgroups;
-    }), flatMap(res => combineLatest(res)))
+    }), flatMap(res =>  {
+      return combineLatest(res)
+    }))
     .subscribe((subgroups) => {
       for (let i = 0; i < subgroups.length; i++) {
         if (subgroups[i].length > 0 && subgroups[i][0].hasOwnProperty('array')) {
-          console.log(this.tab2);
           this.tab2[1][i][1] = subgroups[i];
         }
       }

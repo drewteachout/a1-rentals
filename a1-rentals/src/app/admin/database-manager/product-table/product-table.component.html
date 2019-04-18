@@ -1,12 +1,12 @@
 <div *ngIf="subgroups.length === 0 && rowData.length === 0" class="columns">
   <div class="column">
-    <button (click)="openAddProductSubgroup()" class="button is-large is-fullwidth primary">Add Subgroup +</button>
+    <button (click)="openAddProductSubgroup()" class="button is-large is-fullwidth is-success">Add Subgroup +</button>
   </div>
   <div class="column">
-    <button (click)="openAddProduct()" class="button is-large is-fullwidth primary">Add Product +</button>
+    <button (click)="openAddProduct()" class="button is-large is-fullwidth is-success">Add Product +</button>
   </div>
 </div>
-<button *ngIf="subgroups.length !== 0 || rowData.length !== 0" (click)="openAddProduct()" class="button is-large is-fullwidth primary">Add Product +</button>
+<button *ngIf="subgroups.length !== 0 || rowData.length !== 0" (click)="openAddProduct()" class="button is-large is-fullwidth is-success">Add Product +</button>
 <table class="table is-striped is-hoverable is-fullwidth">
   <tr>
     <th>#</th>
@@ -19,7 +19,7 @@
         <th>{{i + 1}}</th>
         <td *ngFor="let col of columnDefs">{{product[col.field]}}</td>
         <td>
-          <div class="dropdown" [attr.id]="'productDropdown' + i" (click)="switchDropdown('productDropdown', i, $event)">
+          <div class="dropdown is-hoverable" [attr.id]="'productDropdown' + i">
             <div class="dropdown-trigger">
               <button class="button" aria-haspopup="true" aria-controls="dropdown-menu2">
                 <span>Options</span>
@@ -30,13 +30,13 @@
             </div>
             <div class="dropdown-menu" id="dropdown-menu2" role="menu">
               <div class="dropdown-content">
-                <div (click)="openEditProductModal(product)" class="dropdown-item">
-                    <p class="is-size-3">Edit</p>
-                </div>
+                <a (click)="openEditProductModal(product)" class="dropdown-item">
+                  Edit
+                </a>
                 <hr class="dropdown-divider">
-                <div (click)="deleteProduct(product)" class="dropdown-item">
-                  <p class="is-size-3">Delete</p>
-                </div>
+                <a (click)="deleteProduct(product)" class="dropdown-item">
+                  Delete
+                </a>
               </div>
             </div>
           </div>

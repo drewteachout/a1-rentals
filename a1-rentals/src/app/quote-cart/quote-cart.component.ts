@@ -7,7 +7,7 @@ import { QuoteCartServiceService } from '../services/quote-cart-service.service'
   templateUrl: './quote-cart.component.html',
   styleUrls: ['./quote-cart.component.css']
 })
-export class QuoteCartComponent implements OnInit, AfterViewInit {
+export class QuoteCartComponent implements OnInit {
 
   cartService: QuoteCartServiceService;
   cart: Cart_Item[] = [];
@@ -25,13 +25,6 @@ export class QuoteCartComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     console.log(this.cart);
-  }
-
-  ngAfterViewInit() {
-    document.getElementById('Popular Products').className = 'button-tab primary';
-    document.getElementById('Rental Products').className = 'button-tab primary';
-    document.getElementById('Packages').className = 'button-tab primary';
-    document.getElementById('Contact Us').className = 'button-tab primary';
   }
 
   deleteTile(cartItem: Cart_Item) {

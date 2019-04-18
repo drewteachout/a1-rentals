@@ -14,7 +14,7 @@ export class ProductTableComponent implements OnInit {
   @Input() columnDefs: any[] = [];
   @Input() currentGroupSelection: any;
   @Input() currentSubgroupSelection: any;
-  newProductObjects: any[] = [{key: 'Name', value: ''}];
+  newProductObjects: any[] = [{key: 'name', value: ''}];
   constructor(private modalService: ModalService, private db: AngularFirestore) { }
 
   ngOnInit() {
@@ -35,7 +35,11 @@ export class ProductTableComponent implements OnInit {
   addNewProduct() {
     const newObj = {};
       this.newProductObjects.forEach(element => {
-        newObj[String(element.key).toLowerCase()] = element.value;
+        if (isNaN(Number(element.value))) {
+          newObj[element.key] = element.value;
+        } else {
+          newObj[element.key] = Number(element.value);
+        }
       });
     newObj['image_urls'] = [];
     const id = this.db.createId();
@@ -79,94 +83,51 @@ export class ProductTableComponent implements OnInit {
 
   deleteProduct(product: any) {
     if (this.currentSubgroupSelection === null) {
-      const docs = this.getCurrentDocID(this.currentGroupSelection['db_name'], this.currentSubgroupSelection, product);
-      docs.get().then((res) => {
-        if (res.docs.length === 1) {
-          const id = res.docs[0].id;
-          this.db.collection(this.currentGroupSelection['db_name']).doc(id).delete();
-        }
-      });
+      const id = product.db_name;
+      this.db.collection(this.currentGroupSelection['db_name']).doc(id).delete();
     } else {
-      const docs = this.getCurrentDocID(this.currentGroupSelection['db_name'], this.currentSubgroupSelection, product);
-      docs.get().then((res) => {
-        if (res.docs.length === 1) {
-          const id = res.docs[0].id;
-          this.db.collection(this.currentGroupSelection['db_name'])
-          .doc(this.currentSubgroupSelection['db_name'])
-          .collection(this.currentSubgroupSelection['db_name'])
-          .doc(id).delete();
-        }
-      });
+      const id = product.db_name;
+      this.db.collection(this.currentGroupSelection['db_name'])
+      .doc(this.currentSubgroupSelection['db_name'])
+      .collection(this.currentSubgroupSelection['db_name'])
+      .doc(id).delete();
     }
   }
 
   submitEditProduct() {
-    let id = -1;
+    let id = '';
     const editedProduct = {};
     this.newProductObjects.forEach((obj) => {
-      if (obj.key === 'db_id') {
+      if (obj.key === 'db_name') {
         id = obj.value;
+        editedProduct[obj.key] = obj.value;
       } else {
         editedProduct[obj.key] = obj.value;
       }
     });
-    if (id !== -1) {
-      if (this.currentSubgroupSelection === null) {
-        this.db.collection(this.currentGroupSelection['db_name']).doc(id.toString()).set(editedProduct);
-      } else {
-        this.db.collection(this.currentGroupSelection['db_name'])
-        .doc(this.currentSubgroupSelection['db_name'])
-        .collection(this.currentSubgroupSelection['db_name'])
-        .doc(id.toString()).set(editedProduct);
-      }
+    console.log(editedProduct);
+    if (this.currentSubgroupSelection === null) {
+      this.db.collection(this.currentGroupSelection['db_name']).doc(id).set(editedProduct);
+    } else {
+      this.db.collection(this.currentGroupSelection['db_name'])
+      .doc(this.currentSubgroupSelection['db_name'])
+      .collection(this.currentSubgroupSelection['db_name'])
+      .doc(id).set(editedProduct);
     }
     this.clearNewProduct();
     this.closeModal('editProductModal');
   }
 
-  openEditProductModal(product) {
+  openEditProductModal(product: any) {
     this.newProductObjects.pop();
-    this.newProductObjects.push({key: 'db_id', value: ''});
     Object.keys(product).forEach((key) => {
-      if (key === 'Name') {
-        this.newProductObjects[0]['value'] = product[key];
-      } else {
-        this.newProductObjects.push({key: key, value: product[key]});
-      }
+      this.newProductObjects.push({key: key, value: product[key]});
     });
-    let docs = this.getCurrentDocID(this.currentGroupSelection['db_name'], this.currentSubgroupSelection, product);
-    docs.get().then((res) => {
-      if (res.docs.length === 1) {
-        this.newProductObjects[0].value = res.docs[0].id;
-        this.openModal('editProductModal');
-      } else {
-        console.log('multiple docs found');
-        console.log(res.docs);
-      }
-    });
+    this.openModal('editProductModal');
   }
 
-  getCurrentDocID(productGroup: string,  productSubgroup: any, product: any) {
-    let docs = null;
-    if (productSubgroup === null) {
-      docs = this.db.collection(productGroup).ref;
-      Object.keys(product).forEach((key) => {
-        if (product[key] !== undefined && product[key] !== '') {
-          docs = docs.where(key, '==', product[key]) as CollectionReference;
-        }
-      });
-      return docs;
-    } else {
-      docs = this.db.collection(productGroup)
-      .doc(productSubgroup.db_name)
-      .collection(productSubgroup.db_name).ref;
-      Object.keys(product).forEach((key) => {
-        if (product[key] !== undefined && product[key] !== '') {
-          docs = docs.where(key, '==', product[key]) as CollectionReference;
-        }
-      });
-    }
-    return docs;
+  removeProductObject(index: number) {
+    this.newProductObjects.splice(index, 1);
   }
 
 }

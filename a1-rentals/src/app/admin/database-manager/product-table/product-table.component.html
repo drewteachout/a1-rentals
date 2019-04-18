@@ -53,17 +53,26 @@
   </header>
   <section class="modal-card-body">
     <div *ngFor="let obj of newProductObjects; let i = index;" class="level">
-      <div class="level-left">
-        <input [(ngModel)]="newProductObjects[i].key" class="level-item field-input" type="text" placeholder="New Field Name">
-        <input [(ngModel)]="newProductObjects[i].value" class="level-item field-input" type="text" placeholder="Product Name">
-        <button *ngIf="i !== 0" class="button level-item delete is-medium is-danger" (click)='removeProductObject(i)'></button>
-        <button *ngIf="i===(newProductObjects.length - 1)" (click)="addProductField()" class="level-item button is-large primary">Add Field</button>
+      <div class="field is-grouped">
+        <div class="control">
+          <input [(ngModel)]="newProductObjects[i].key" class="input" type="text" placeholder="New Field Name">
+        </div>
+        <div class="control is-expanded">
+          <textarea [(ngModel)]="newProductObjects[i].value" class="textarea" type="text" placeholder="Product Name" cols="20" rows="{{('' + newProductObjects[i].value).length/18 + 1}}">
+          </textarea>
+        </div>
+        <div class="control">
+          <button *ngIf="newProductObjects.length > 1" class="button level-item delete is-medium is-danger" (click)='removeProductObject(i)'></button>
+        </div>
+        <div class="control">
+          <button *ngIf="i===(newProductObjects.length - 1)" (click)="addProductField()" class="button is-medium is-primary">Add Field</button>
+        </div>
       </div>
     </div>
   </section>
   <footer class="modal-card-foot">
     <div class="right-submit">
-      <button class="button-std primary" (click)="addNewProduct()">Submit</button>
+      <button class="button is-success" (click)="addNewProduct()">Submit</button>
     </div>
   </footer>
 </app-modal>
@@ -75,17 +84,26 @@
   </header>
   <section class="modal-card-body">
     <div *ngFor="let obj of newProductObjects; let i = index;" class="level">
-      <div *ngIf="obj.key != 'db_id'" class="level-left">
-        <input [(ngModel)]="newProductObjects[i].key" class="level-item field-input" type="text" placeholder="New Field Name">
-        <input [(ngModel)]="newProductObjects[i].value" class="level-item field-input" type="text" placeholder="Product Name">
-        <button *ngIf="i !== 0" class="button level-item delete is-medium is-danger" (click)='removeProductObject(i)'></button>
-        <button *ngIf="i === (newProductObjects.length - 1)" (click)="addProductField()" class="level-item button is-large primary">Add Field</button>
+      <div *ngIf="obj.key != 'db_id' && obj.key != 'image_urls' && obj.key != 'db_name'" class="field is-grouped">
+        <div class="control">
+          <input [(ngModel)]="newProductObjects[i].key" class="input" type="text" placeholder="New Field Name">
+        </div>
+        <div class="control is-expanded">
+          <textarea [(ngModel)]="newProductObjects[i].value" class="textarea" type="text" placeholder="Product Name" cols="20" rows="{{('' + newProductObjects[i].value).length/18 + 1}}">
+          </textarea>
+        </div>
+        <div *ngIf="newProductObjects.length > 3" class="control">
+          <button  class="button level-item delete is-medium is-danger" (click)='removeProductObject(i)'></button>
+        </div>
+        <div *ngIf="i === (newProductObjects.length - 1)" class="control">
+          <button (click)="addProductField()" class="level-item button is-medium is-primary">Add Field</button>
+        </div>
       </div>
     </div>
   </section>
   <footer class="modal-card-foot">
     <div class="right-submit">
-      <button class="button-std primary" (click)="submitEditProduct()">Submit Changes</button>
+      <button class="button is-success" (click)="submitEditProduct()">Submit Changes</button>
     </div>
   </footer>
 </app-modal>

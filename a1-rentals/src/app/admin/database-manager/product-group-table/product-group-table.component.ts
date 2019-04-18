@@ -59,12 +59,19 @@ export class ProductGroupTableComponent implements OnInit, OnChanges {
     this.modalService.close(id);
   }
 
-  addNewProductGroup() {
+  submitAddNewProductGroup() {
     if (this.newSubGroups.length === 0) {
-     this.db.collection('/' + this.newProductGroup).doc('dummy').set({array: false});
+     this.db.collection('/' + this.newProductGroup.replace('/', '-')).doc('dummy').set({array: false});
     } else {
       this.newSubGroups.forEach((element) => {
-        this.db.collection(this.newProductGroup).doc(element.name).set({array: true, hidden: false, name: element.name});
+        this.db.collection(this.newProductGroup.replace('/', '-')).doc(element.name.replace('/', '-')).set({
+          array: true,
+          hidden: false,
+          display_name: element.name,
+          description: '',
+          db_name: element.name.replace('/', '-'),
+          image_url: ''
+        });
       });
     }
     this.db.collection('/products').doc(this.newProductGroup).set(
@@ -137,10 +144,16 @@ export class ProductGroupTableComponent implements OnInit, OnChanges {
   }
 
   async submitDeleteProductGroup() {
+    console.log(this.deleteProductGroup);
     const batch = this.db.firestore.batch();
     const qs = await this.db.collection(this.deleteProductGroup['db_name']).ref.get();
     qs.forEach(doc => batch.delete(doc.ref));
     batch.delete(this.db.collection('products').doc(this.deleteProductGroup['db_name']).ref);
+    console.log(this.productGroups[this.deleteProductGroup['display_order'] - 1]);
+    for (let i = this.deleteProductGroup['display_order']; i < this.productGroups.length; i++) {
+      batch.update(this.db.collection('products').doc(this.productGroups[i].db_name).ref,
+      {display_order: this.productGroups[i].display_order - 1});
+    }
     this.deleteProductGroup = {};
     this.closeModal('deleteProductGroupModal');
     batch.commit().catch((err) => {

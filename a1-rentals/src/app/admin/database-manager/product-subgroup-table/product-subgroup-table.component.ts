@@ -102,7 +102,6 @@ export class ProductSubgroupTableComponent implements OnInit {
   }
 
   openModal(id: string) {
-    //console.log(id);
     this.modalService.open(id);
   }
 

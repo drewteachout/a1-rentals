@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IImage } from 'ng-simple-slideshow';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { ProductsService } from '../services/products.service';
-import { Product } from '../util/Product';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { AngularFirestore } from 'angularfire2/firestore';
 
 @Component({
@@ -33,23 +31,9 @@ export class ProductComponent implements OnInit {
       this.productData.push([]);
     }
 
-    this.images = [
-      { url: 'assets/images/blackChair.jpg', caption: 'Poly/metal chair rental - black'},
-      { url: 'assets/images/whiteChair.jpg', caption: 'Poly/metal chair rental - WEDDING white'},
-      { url: 'assets/images/resinChair.jpg', caption: 'Resin padded chair rental - white'},
-      { url: 'assets/images/ledBarStool.jpg', caption: 'L.E.D. Bar stool'},
-      { url: 'assets/images/ledBeanBagChair.jpg', caption: 'L.E.D. Beanbag chair'},
-      { url: 'assets/images/ledBench.jpg', caption: 'L.E.D. Bench'},
-      { url: 'assets/images/ledCube1.png', caption: 'L.E.D. Cube, 16" x 16"'},
-      { url: 'assets/images/ledCube2.jpg', caption: 'L.E.D. Cube, 20" x 20"'},
-    ];
+    this.images = [];
 
-    this.productDescription = 'Our sturdy poly/metal chair rentals feature vinyl seats and back with a metal frame.' +
-    'The resin padded chair rentals are designed to be more comfortable and they look great for that traditional' +
-    ' wedding look. Both styles resist sinking into lawns. A-1 Rentals also have chair rentals designed for ' +
-    'the little ones. They can be used with our children\'s tables. They are good for children up to ' +
-    'approximately 6 or 7 years old. The solid resin chairs are red or blue. The metal framed children\'s chair' +
-    ' rentals feature a blue vinyl seat.';
+    this.productDescription = '';
 
     this.domLayout = 'autoHeight';
     this.isProducts = false;
@@ -71,17 +55,25 @@ export class ProductComponent implements OnInit {
       const name = urlParamMap.get('productName');
       const category = urlParamMap.get('productCategory');
       this.category = category;
-
       if (category === '' && name == null) {
         this.isProducts = true;
         this.loadAllRentalProducts();
       } else if (name == null || name.length === 0) {
         this.isProducts = false;
         this.productName = category;
+        this.db.collection('products').doc(category).valueChanges()
+            .subscribe(product => {
+              this.productDescription = product['description'];
+        });
         this.loadDataCategory(category);
       } else {
         this.isProducts = false;
         this.productName = name;
+        this.db.collection('/' + category.replace('/', '-'))
+            .doc(name.replace('/', '-')).valueChanges()
+            .subscribe(product => {
+              this.productDescription = product['description'];
+        });
         this.loadDataSubCategory(category, name);
       }
     });
@@ -93,8 +85,8 @@ export class ProductComponent implements OnInit {
         const myMap = new Map();
         const newColDefs = [];
         const newRowData = [];
+        const newImageUrls = [];
         let hasSubCategories = false;
-        console.log('Products', products);
         products.forEach((product: any) => {
           const temp = [];
           let price = 0;
@@ -103,13 +95,17 @@ export class ProductComponent implements OnInit {
               hasSubCategories = true;
             } else {
               myMap.set(key, product[key.toString()]);
-              if (key !== 'db_name' && key !== 'description' && key !== 'image_urls' 
+              if (key !== 'db_name' && key !== 'description' && key !== 'image_urls'
                   && key !== 'price' && key !== 'rental fee') {
                 // Pushes all the product data that needs to be displayed
                 temp.push(product[key.toString()]);
               } else if (key === 'price' || key === 'rental fee') {
                 // Sets the price
                 price = product[key.toString()];
+              } else if (key === 'image_urls') {
+                product[key.toString()].forEach(imgUrl => {
+                  newImageUrls.push({ url: imgUrl, caption: product['caption']});
+                });
               }
             }
           });
@@ -122,19 +118,17 @@ export class ProductComponent implements OnInit {
         if (!hasSubCategories) {
           let priceLabel = 'Price';
           myMap.forEach((value, key) => {
-            if (key !== 'db_name' && key !== 'description' && key !== 'image_urls' 
+            if (key !== 'db_name' && key !== 'description' && key !== 'image_urls'
                 && key !== 'price' && key !== 'rental fee') {
               newColDefs.push(this.capitalize(key));
             } else if (key === 'price' || key === 'rental fee') {
-              // Sets the price
               priceLabel = this.capitalize(key.toString());
             }
           });
           newColDefs.push(priceLabel);
           this.columnDefs = newColDefs;
           this.rowData = newRowData;
-          console.log('New Col Defs: ', this.columnDefs);
-          console.log('New Row Data: ', this.rowData);
+          this.images = newImageUrls;
         } else {
           this.loadRentalProducts(category);
         }
@@ -148,36 +142,45 @@ export class ProductComponent implements OnInit {
       .subscribe((products: any[]) => {
         const myMap = new Map();
         const newColDefs = [];
+        const newRowData = [];
+        const newImageUrls = [];
         products.forEach((product: any) => {
+          const temp = [];
+          let price = 0;
           Object.keys(product).forEach((key) => {
             myMap.set(key, product[key.toString()]);
+            if (key !== 'db_name' && key !== 'description' && key !== 'image_urls'
+                && key !== 'price' && key !== 'rental fee') {
+              // Pushes all the product data that needs to be displayed
+              temp.push(product[key.toString()]);
+            } else if (key === 'price' || key === 'rental fee') {
+              // Sets the price
+              price = product[key.toString()];
+            } else if (key === 'image_urls') {
+              product[key.toString()].forEach(imgUrl => {
+                newImageUrls.push({ url: imgUrl, caption: product['caption']});
+              });
+            }
           });
+          // Pushes the price information last
+          if (price !== 0) {
+            temp.push(price);
+          }
+          newRowData.push(temp);
         });
+        let priceLabel = 'Price';
         myMap.forEach((value, key) => {
-          if (isNaN(value)) {
-            newColDefs.push({
-              field: key,
-              headerName: key.toString().charAt(0).toUpperCase() + key.toString().substr(1)
-            });
-          } else {
-            newColDefs.push({
-              field: key,
-              headerName: key.toString().charAt(0).toUpperCase() + key.toString().substr(1),
-              sortable: true,
-              type: 'numericColumn',
-              valueFormatter: numberFormatter,
-            });
+          if (key !== 'db_name' && key !== 'description' && key !== 'image_urls'
+              && key !== 'price' && key !== 'rental fee') {
+            newColDefs.push(this.capitalize(key));
+          } else if (key === 'price' || key === 'rental fee') {
+            priceLabel = this.capitalize(key.toString());
           }
         });
-        newColDefs.push({
-          headerName: 'Quantity',
-          field: 'quantity',
-          editable: true,
-          type: 'numericColumn',
-          valueParser: numberParser
-        });
-        this.rowData = products;
+        newColDefs.push(priceLabel);
         this.columnDefs = newColDefs;
+        this.rowData = newRowData;
+        this.images = newImageUrls;
       });
   }
 
@@ -185,7 +188,7 @@ export class ProductComponent implements OnInit {
     this.isProducts = true;
     this.db.collection('/products').valueChanges()
       .subscribe((products: any[]) => {
-        this.productData = []
+        this.productData = [];
         for (let i = 0; i < this.numColumns; i++) {
           this.productData.push([]);
         }
@@ -202,7 +205,7 @@ export class ProductComponent implements OnInit {
     this.isProducts = true;
     this.db.collection('/' + category.replace('/', '-')).valueChanges()
       .subscribe((products: any[]) => {
-        this.productData = []
+        this.productData = [];
         for (let i = 0; i < this.numColumns; i++) {
           this.productData.push([]);
         }
@@ -213,21 +216,6 @@ export class ProductComponent implements OnInit {
           this.productData[key] = data;
         }
       });
-  }
-
-  onCellValueChanged(event) {
-    if (!isNaN(event.newValue)) {
-      const price = event.data.price;
-      const oldItemTotal = event.oldValue * price;
-      const newItemTotal = event.newValue * price;
-      if (!isNaN(newItemTotal)) {
-        if (!isNaN(oldItemTotal)) {
-          this.quoteTotal = this.quoteTotal - oldItemTotal;
-        }
-        this.quoteTotal = this.quoteTotal + newItemTotal;
-      }
-    }
-    this.total = this.currencyConverter(this.quoteTotal);
   }
 
   addSelectionToCart() {
@@ -251,16 +239,4 @@ export class ProductComponent implements OnInit {
     }
     return val;
   }
-}
-
-function numberFormatter(params) {
-  return formatNumber(params.value);
-}
-function numberParser(params) {
-  return Number(params.newValue);
-}
-function formatNumber(number) {
-  return '$' + Math.floor(number)
-    .toString()
-    .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 }

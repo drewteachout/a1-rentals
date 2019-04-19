@@ -1,7 +1,7 @@
-<div class="container is-fluid" *ngIf="!isProducts; else category">
-  <h1 class="title text">{{productName}}</h1>
-  <div class="columns is-centered margin">
-    <div class="column is-centered">
+<div *ngIf="!isProducts; else category">
+  <h1 class="is-size-1 has-text-centered has-text-weight-bold">{{productName}}</h1>
+  <div class="columns is-centered">
+    <div class="column buffer">
       <div class="slideshow">
         <slideshow [imageUrls]="images"
                   [height]="'400px'"
@@ -9,15 +9,14 @@
                   [showArrows]="true">
         </slideshow> 
       </div>
-      <h3 class="description text">Product Description</h3>
-      <p class="text-secondary">{{productDescription}}</p>
+      <h1 class="is-size-3 has-text-centered has-text-weight-semibold">Product Description</h1>
+      <p class="has-text-centered">{{productDescription}}</p>
     </div>
-    <div class="column">
-      <div class="product-grid">
-        <table class="table is-striped is-fullwidth is-hoverable">
+    <div class="column buffer">
+      <div>
+        <table class="table is-striped is-fullwidth is-hoverable is-bordered">
           <thead>
             <th *ngFor="let col of columnDefs">{{col}}</th>
-            <!-- <th>Price</th> -->
             <th>Quantity</th>
           </thead>
           <tbody>
@@ -28,12 +27,12 @@
           </tbody>
         </table>
       </div>
-      <div class="columns">
-        <div class="column">
-          <strong>Selected Item Total: ${{total}}</strong>
+      <div class="columns is-centered buffer-large">
+        <div class="column is-two-thirds">
+          <h2 class="is-size-4 has-text-weight-bold is-pulled-right">Selected Item Total: ${{total}}</h2>
         </div>
-        <div class="column">
-          <button class="button is-primary" onclick=""><strong>Add Selection to Quote</strong></button>
+        <div class="column is-one-third">
+          <button class="button is-success is-pulled-right" onclick=""><strong>Add Selection to Quote</strong></button>
         </div>
       </div>
     </div>

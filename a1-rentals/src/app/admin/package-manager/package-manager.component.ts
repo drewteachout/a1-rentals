@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { ModalService } from 'src/app/services/modal.service';
+import { AngularFireStorage } from 'angularfire2/storage';
+import * as firebase from 'firebase/app';
 
 @Component({
   selector: 'app-package-manager',
@@ -15,7 +17,7 @@ export class PackageManagerComponent implements OnInit {
   groupDummy: any = {db_name: 'packages'};
   productDummy: any = {db_name: ''};
   currentChangePackage: any;
-  constructor(private db: AngularFirestore, private modalService: ModalService) {
+  constructor(private db: AngularFirestore, private modalService: ModalService, private storage: AngularFireStorage) {
     this.db.collection('packages').valueChanges().subscribe((docList) => {
       this.packages = docList;
       console.log(this.packages);
@@ -93,16 +95,33 @@ export class PackageManagerComponent implements OnInit {
     this.closeModal('addPackageModal');
   }
 
-  deletePackage(pack) {
+  deletePackage(pack: any) {
     this.db.collection('packages').doc(pack.db_name).delete();
   }
 
-  openAddImage(pack) {
+  openAddImage(pack: any) {
+    this.currentChangePackage = pack;
+    this.productDummy.db_name = pack.db_name;
+    this.openModal('addPackageImageModal');
     console.log('Add image selected');
   }
 
-  openManageImages(pack) {
+  openManageImages(pack: any) {
+    this.currentChangePackage = pack;
+    this.openModal('changePackageImagesModal');
     console.log('Manage images selected');
+  }
+
+  deletePackageImage(url: string) {
+    this.storage.storage.refFromURL(url).delete();
+    const path = 'packages/' + this.currentChangePackage.db_name;
+    this.db.doc(path).ref.update({
+      image_urls: firebase.firestore.FieldValue.arrayRemove(url)
+    });
+    this.currentChangePackage.image_urls = this.currentChangePackage.image_urls.filter((element) => element !== url);
+    if (this.currentChangePackage.image_urls.length === 0) {
+      this.closeModal('changePackageImagesModal');
+    }
   }
 
 }

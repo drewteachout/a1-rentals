@@ -71,9 +71,6 @@ export class ProductComponent implements OnInit {
       const name = urlParamMap.get('productName');
       const category = urlParamMap.get('productCategory');
       this.category = category;
-      console.log(urlParamMap);
-      console.log('Category: ', category);
-      console.log('Name: ', name);
 
       if (category === '' && name == null) {
         this.isProducts = true;
@@ -95,29 +92,49 @@ export class ProductComponent implements OnInit {
       .subscribe((products: any[]) => {
         const myMap = new Map();
         const newColDefs = [];
+        const newRowData = [];
         let hasSubCategories = false;
         console.log('Products', products);
         products.forEach((product: any) => {
+          const temp = [];
+          let price = 0;
           Object.keys(product).forEach((key) => {
-            console.log(key === 'array');
             if (key === 'array') {
               hasSubCategories = true;
             } else {
               myMap.set(key, product[key.toString()]);
+              if (key !== 'db_name' && key !== 'description' && key !== 'image_urls' 
+                  && key !== 'price' && key !== 'rental fee') {
+                // Pushes all the product data that needs to be displayed
+                temp.push(product[key.toString()]);
+              } else if (key === 'price' || key === 'rental fee') {
+                // Sets the price
+                price = product[key.toString()];
+              }
             }
           });
+          // Pushes the price information last
+          if (price !== 0) {
+            temp.push(price);
+          }
+          newRowData.push(temp);
         });
-        console.log('myMap: ', myMap);
         if (!hasSubCategories) {
-          this.columnDefs = [];
-          const temp = [];
+          let priceLabel = 'Price';
           myMap.forEach((value, key) => {
             if (key !== 'db_name' && key !== 'description' && key !== 'image_urls' 
-              && key !== 'price') {
-                this.columnDefs.push(this.capitalize(key));
-              }
+                && key !== 'price' && key !== 'rental fee') {
+              newColDefs.push(this.capitalize(key));
+            } else if (key === 'price' || key === 'rental fee') {
+              // Sets the price
+              priceLabel = this.capitalize(key.toString());
+            }
           });
-          console.log(this.columnDefs);
+          newColDefs.push(priceLabel);
+          this.columnDefs = newColDefs;
+          this.rowData = newRowData;
+          console.log('New Col Defs: ', this.columnDefs);
+          console.log('New Row Data: ', this.rowData);
         } else {
           this.loadRentalProducts(category);
         }

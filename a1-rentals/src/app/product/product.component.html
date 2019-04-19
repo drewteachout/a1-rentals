@@ -1,7 +1,7 @@
 <div class="container is-fluid" *ngIf="!isProducts; else category">
-  <h2 class="title text">{{productName}}</h2>
-  <div class="product-info columns">
-    <div class="column">
+  <h1 class="title text">{{productName}}</h1>
+  <div class="columns is-centered margin">
+    <div class="column is-centered">
       <div class="slideshow">
         <slideshow [imageUrls]="images"
                   [height]="'400px'"
@@ -14,20 +14,26 @@
     </div>
     <div class="column">
       <div class="product-grid">
-        <table class="table">
+        <table class="table is-striped is-fullwidth is-hoverable">
           <thead>
             <th *ngFor="let col of columnDefs">{{col}}</th>
-            <th>Price</th>
+            <!-- <th>Price</th> -->
             <th>Quantity</th>
           </thead>
+          <tbody>
+            <tr *ngFor="let row of rowData">
+              <td *ngFor="let rowCol of row">{{rowCol}}</td>
+              <td>0</td>
+            </tr>
+          </tbody>
         </table>
       </div>
-      <div class="quote">
-        <div class="total">
-          <h3 class="centered text">Selected Item Total: ${{total}}</h3>
+      <div class="columns">
+        <div class="column">
+          <strong>Selected Item Total: ${{total}}</strong>
         </div>
-        <div class="submit">
-          <button class="button-std primary" onclick="">Add Selection to Quote</button>
+        <div class="column">
+          <button class="button is-primary" onclick=""><strong>Add Selection to Quote</strong></button>
         </div>
       </div>
     </div>

@@ -53,7 +53,7 @@
                   Delete
                 </a>
                 <a (click)="openManageImages(package)" class="dropdown-item">
-                  Manage Images
+                  Remove Images
                 </a>
                 <a (click)="openAddImage(package)" class="dropdown-item">
                   Add Image
@@ -101,7 +101,7 @@
           <button class="button delete is-large is-danger" (click)='removeItem(i)'></button>
         </div>
         <div *ngIf="i === 0" class="control">
-          <button class="button is-info" (click)='addItem()'>Add Item</button>
+          <button class="button is-success" (click)='addItem()'>Add Item</button>
         </div>
     </div>
   </div>
@@ -113,7 +113,7 @@
 
 <app-modal id="addPackageImageModal">
   <header class="modal-card-head">
-    <p class="modal-card-title title is-2">Add New Product Image</p>
+    <p class="modal-card-title title is-2">Add New Package Image</p>
     <button class="delete" aria-label="close" (click)="closeModal('addPackageImageModal')"></button>
   </header>
   <section class="modal-card-body">
@@ -121,14 +121,14 @@
   </section>
   <footer class="modal-card-foot">
     <div class="right-submit">
-      <button class="button primary" (click)="closeModal('addPackageImageModal')">Close</button>
+      <button class="button is-success" (click)="closeModal('addPackageImageModal')">Close</button>
     </div>
   </footer>
 </app-modal>
 
 <app-modal id="changePackageImagesModal">
   <header class="modal-card-head">
-    <p class="modal-card-title title is-2">Change Product Images</p>
+    <p class="modal-card-title title is-2">Remove Package Images</p>
     <button class="delete" aria-label="close" (click)="closeModal('changePackageImagesModal')"></button>
   </header>
   <section class="modal-card-body">
@@ -141,7 +141,7 @@
   </section>
   <footer class="modal-card-foot">
     <div class="right-submit">
-      <button class="button-std primary" (click)="closeModal('changePackageImagesModal')">Close</button>
+      <button class="button is-success" (click)="closeModal('changePackageImagesModal')">Close</button>
     </div>
   </footer>
 </app-modal>

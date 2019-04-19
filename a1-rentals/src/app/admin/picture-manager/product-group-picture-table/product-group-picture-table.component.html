@@ -15,7 +15,7 @@
         </td>
         <td>{{group.name}}</td>
         <td>
-          <div class="dropdown" [attr.id]="'productGroupDropdown' + i" (click)="switchDropdown('productGroupDropdown', i, $event)">
+          <div class="dropdown is-hoverable">
             <div class="dropdown-trigger">
               <button class="button" aria-haspopup="true" aria-controls="dropdown-menu2">
                 <span>Options</span>
@@ -26,16 +26,16 @@
             </div>
             <div class="dropdown-menu" id="dropdown-menu2" role="menu">
               <div class="dropdown-content">
-                <div *ngIf="group.image_url !== ''" (click)="openChangeImage(group)" class="dropdown-item">
-                    <p class="is-size-3">Change</p>
-                </div>
-                <div *ngIf="group.image_url === ''" (click)="openAddImage(group)" class="dropdown-item">
-                    <p class="is-size-3">Add</p>
-                  </div>
+                <a *ngIf="group.image_url !== ''" (click)="openChangeImage(group)" class="dropdown-item">
+                  Change
+                </a>
+                <a *ngIf="group.image_url === ''" (click)="openAddImage(group)" class="dropdown-item">
+                  Add
+                </a>
                 <hr class="dropdown-divider">
-                <div (click)="openDeleteImage(group)" class="dropdown-item">
-                  <p class="is-size-3">Delete</p>
-                </div>
+                <a (click)="openDeleteImage(group)" class="dropdown-item">
+                  Delete
+                </a>
               </div>
             </div>
           </div>
@@ -54,9 +54,7 @@
     <app-picture-drop [group]=currentChangeGroup [subgroup]=undefined [product]=undefined></app-picture-drop>
   </section>
   <footer class="modal-card-foot">
-    <div class="right-submit">
-      <button class="button-std primary" (click)="closeModal('addProductGroupImageModal')">Close</button>
-    </div>
+    <button class="button is-success" (click)="closeModal('addProductGroupImageModal')">Close</button>
   </footer>
 </app-modal>
 
@@ -69,9 +67,7 @@
     <app-picture-drop [group]=currentChangeGroup [subgroup]=undefined [product]=undefined></app-picture-drop>
   </section>
   <footer class="modal-card-foot">
-    <div class="right-submit">
-      <button class="button-std primary" (click)="closeModal('changeProductGroupImageModal')">Close</button>
-    </div>
+    <button class="button is-success" (click)="closeModal('changeProductGroupImageModal')">Close</button>
   </footer>
 </app-modal>
 
@@ -84,8 +80,6 @@
     <h3 class="has-text-danger">Are you sure you would like to delete this image?</h3>
   </section>
   <footer class="modal-card-foot">
-    <div class="right-submit">
-      <button class="button is-large is-danger" (click)="deleteProductGroupImage()">Confirm Delete</button>
-    </div>
+    <button class="button is-large is-danger" (click)="deleteProductGroupImage()">Confirm Delete</button>
   </footer>
 </app-modal>

@@ -112,7 +112,8 @@ export class ProductSubgroupTableComponent implements OnInit {
   openEditProductSubgroupModal(subgroup: any) {
     this.editProductSubgroup.oldName = subgroup.display_name;
     this.editProductSubgroup.db_name = subgroup.db_name;
-    this.editProductSubgroup.newName = '';
+    this.editProductSubgroup.newName = subgroup.display_name;
+    this.editProductSubgroup.newDescription = subgroup.description;
     this.openModal('editProductSubgroupModal');
   }
 
@@ -123,6 +124,7 @@ export class ProductSubgroupTableComponent implements OnInit {
   openDeleteProductSubgroupModal(subgroup: any) {
     this.deleteProductSubgroup.display_name = subgroup.display_name;
     this.deleteProductSubgroup.db_name = subgroup.db_name;
+    this.deleteProductSubgroup.typedName = '';
     this.openModal('deleteProductSubgroupModal');
   }
 

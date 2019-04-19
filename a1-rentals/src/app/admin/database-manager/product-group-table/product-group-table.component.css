@@ -1,3 +1,13 @@
 .is-selected a {
     color: black;
 }
+
+.indent-subgroups {
+    margin-left: 3%;
+}
+
+.y-fixed {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    max-height: 10px;
+}

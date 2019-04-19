@@ -8,18 +8,18 @@
       <th>Options</th>
     </tr>
   </thead>
-  <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+  <tbody class="y-fixed" cdkDropList (cdkDropListDropped)="drop($event)">
     <ng-container *ngFor="let group of productGroups; let i = index;let first = first">
       <tr *ngIf="group !== undefined" [attr.id]="'productGroupRow' + i" (click)="productGroupRowSelected(group, i)" [class.is-selected]="first" cdkDrag>
         <td>
-          <span class="icon is-large">
-            <i class="fa fa-bars fa-3x"></i>
+          <span class="icon is-large has-text-grey-lighter">
+            <i class="fa fa-bars"></i>
           </span>
         </td>
-        <td class="is-size-4">
+        <td>
           {{group.display_order}}
         </td>
-        <td class="is-size-4">{{group.name}}
+        <td>{{group.name}}
         </td>
         <td>
           <div class="dropdown is-hoverable" [attr.id]="'productGroupDropdown' + i">
@@ -62,25 +62,27 @@
     <button class="delete" aria-label="close" (click)="clearNewProductGroup();closeModal('addProductGroupModal')"></button>
   </header>
   <section class="modal-card-body">
-    <div class="level">
-      <div class="level-left">
-        <input [(ngModel)]="newProductGroup" class="field-input level-item" type="text" placeholder="Product Group Name">
-        <button class="button is-large primary level-item" (click)="addSubTabClicked()">Add Subgroup</button>
+    <div class="field has-addons">
+      <div class="control">
+        <input [(ngModel)]="newProductGroup" class="input" type="text" placeholder="Product Group Name">
+      </div>
+      <div class="control">
+        <button class="button is-info" (click)="addSubTabClicked()">Add Subgroup</button>
       </div>
     </div>
-    <ol class="indent-subgroups" type="1">
-      <li class="level" *ngFor="let subgroup of newSubGroups; let i = index">
-        <div class="level-left">
-          <input [(ngModel)]="subgroup.name" type="text" placeholder="SubGroup Name" class="level-item">
-          <button class="button delete is-medium is-danger level-item" (click)='removeSubGroup(i)'></button>
+    <div class="indent-subgroups">
+      <div class="field is-grouped" *ngFor="let subgroup of newSubGroups; let i = index">
+        <div class="control">
+          <input [(ngModel)]="subgroup.name" type="text" placeholder="SubGroup Name" class="input">
         </div>
-      </li>
-    </ol>
+        <div class="control">
+          <button class="button delete is-large is-danger" (click)='removeSubGroup(i)'></button>
+        </div>
+      </div>
+    </div>
   </section>
   <footer class="modal-card-foot">
-    <div class="right-submit">
-      <button class="button-std primary" (click)="submitAddNewProductGroup()">Create</button>
-    </div>
+    <button class="button is-success" (click)="submitAddNewProductGroup()">Create</button>
   </footer>
 </app-modal>
 

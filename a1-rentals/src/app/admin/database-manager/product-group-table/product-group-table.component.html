@@ -104,22 +104,22 @@
 
 <app-modal id="deleteProductGroupModal">
   <header class="modal-card-head has-background-danger">
-    <p class="modal-card-title title is-2">Delete {{deleteProductGroup.name}}</p>
+    <p class="modal-card-title title is-2">Delete {{deleteProductGroup['name']}}</p>
     <button class="delete" aria-label="close" (click)="closeModal('deleteProductGroupModal')"></button>
   </header>
   <section class="modal-card-body">
     <p class="has-text-danger">This action deletes all subgroups and products contained within any of those subgroups and cannot be undone</p>
     <h3>Enter the name of the group to confirm: </h3>
-    <strong>{{deleteProductGroup.name}}</strong>
+    <strong>{{deleteProductGroup['name']}}</strong>
     <div class="level">
       <div class="level-left">
-        <input [(ngModel)]="deleteProductGroup.typedName" class="level-item field-input" type="text" placeholder="{{deleteProductGroup.name}}">
+        <input [(ngModel)]="deleteProductGroup['typedName']" class="level-item field-input" type="text" placeholder="{{deleteProductGroup['name']}}">
       </div>
     </div>
   </section>
   <footer class="modal-card-foot">
     <div class="right-submit">
-      <button class="button is-danger is-large" [disabled]="deleteProductGroup.typedName !== deleteProductGroup.name" (click)="submitDeleteProductGroup()">Delete Group</button>
+      <button class="button is-danger is-large" [disabled]="deleteProductGroup['typedName'] !== deleteProductGroup['name']" (click)="submitDeleteProductGroup()">Delete Group</button>
     </div>
   </footer>
 </app-modal>

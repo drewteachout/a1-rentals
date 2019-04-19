@@ -32,7 +32,7 @@ export class HomepageComponent implements OnInit {
       for (let i = 0; i < popular_items.length; i++) {
         const key = i % this.numColumns;
         const data = this.productData[key];
-        data.push([popular_items[i].name, popular_items[i].storage_path, popular_items[i].path]);
+        data.push([popular_items[i].name, popular_items[i].image_url, popular_items[i].path]);
         this.productData[key] = data;
       }
     });

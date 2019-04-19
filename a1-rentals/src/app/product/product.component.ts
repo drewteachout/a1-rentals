@@ -107,32 +107,17 @@ export class ProductComponent implements OnInit {
             }
           });
         });
+        console.log('myMap: ', myMap);
         if (!hasSubCategories) {
+          this.columnDefs = [];
+          const temp = [];
           myMap.forEach((value, key) => {
-            if (isNaN(value)) {
-              newColDefs.push({
-                field: key,
-                headerName: key.toString().charAt(0).toUpperCase() + key.toString().substr(1)
-              });
-            } else {
-              newColDefs.push({
-                field: key,
-                headerName: key.toString().charAt(0).toUpperCase() + key.toString().substr(1),
-                sortable: true,
-                type: 'numericColumn',
-                valueFormatter: numberFormatter,
-              });
-            }
+            if (key !== 'db_name' && key !== 'description' && key !== 'image_urls' 
+              && key !== 'price') {
+                this.columnDefs.push(this.capitalize(key));
+              }
           });
-          newColDefs.push({
-            headerName: 'Quantity',
-            field: 'quantity',
-            editable: true,
-            type: 'numericColumn',
-            valueParser: numberParser
-          });
-          this.rowData = products;
-          this.columnDefs = newColDefs;
+          console.log(this.columnDefs);
         } else {
           this.loadRentalProducts(category);
         }
@@ -230,6 +215,12 @@ export class ProductComponent implements OnInit {
 
   addSelectionToCart() {
     // TODO: Push table data to database
+  }
+
+  capitalize(str: string): string {
+    return str.replace(/\w\S*/g, (txt) => {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
   }
 
   currencyConverter(value: number): string {

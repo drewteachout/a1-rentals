@@ -1,0 +1,74 @@
+<div class="tile is-ancestor">
+    <div class="tile is-parent">
+        <article class="tile is-child box">
+            <div class="level">
+                <div class="level-left">
+                    <div class="dropdown is-hoverable">
+                        <div class="dropdown-trigger">
+                          <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                            <span>Edit</span>
+                            <span class="icon is-small">
+                              <i class="fas fa-angle-down" aria-hidden="true"></i>
+                            </span>
+                          </button>
+                        </div>
+                        <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                          <div class="dropdown-content">
+                            <a (click)="addPopularProductImageSelected()" *ngIf="productSource === ''" class="dropdown-item">
+                                Add Picture
+                            </a>
+                            <a (click)="changePopularProductImageSelected()" *ngIf="productSource !== ''" class="dropdown-item">
+                              Change Picture
+                            </a>
+                            <a (click)="deletePopularProductImage()" *ngIf="productSource !== ''" class="dropdown-item">
+                              Delete Picture
+                            </a>
+                            <a (click)="changePopularProductRouteSelected()" class="dropdown-item">
+                              Change Route
+                            </a>
+                            <a (click)="changePopularProductTitleSelected()" class="dropdown-item">
+                              Change Title
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+                <div class="level-right">
+                    <button (click)="deletePopularProductSelected()" class="delete is-medium has-background-danger"></button>
+                </div>
+            </div>
+            <p class="title">{{productName}}</p>
+            <figure class="centered image is-4by3">
+                <img [src]="productSource"/>
+            </figure>
+            <div class="field">
+                <label class="label">Site Link</label>
+                <div class="field-body">
+                    <div class="field">
+                        <p class="control">
+                            <a href="Rental Products/{{path}}">Rental Products/{{path}}</a>
+                        </p>
+                    </div>
+                </div>
+                </div>
+        </article>
+    </div>
+</div>
+<app-modal id="addPopularProductImageModal">
+    <header class="modal-card-head">
+        <p class="modal-card-title title is-2">Add Popular Product Image</p>
+        <button class="delete" aria-label="close" (click)="closeModal('addPopularProductImageModal')"></button>
+    </header>
+    <section class="modal-card-body">
+        <app-picture-drop [group]=currentGroupSelection [subgroup]=currentPopularProduct [product]=undefined></app-picture-drop>
+    </section>
+    <footer class="modal-card-foot">
+        <div class="right-submit">
+        <button class="button-std primary" (click)="closeModal('addProductImageModal')">Close</button>
+        </div>
+    </footer>
+</app-modal>
+<app-modal id="editPopularProductTitleModal">
+</app-modal>
+<app-modal id="editPopularProductRouteModal">
+</app-modal>

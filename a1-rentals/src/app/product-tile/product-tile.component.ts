@@ -20,7 +20,7 @@ export class ProductTileComponent implements OnInit {
   }
 
   navigateToPath() {
-    if (this.path != undefined) {
+    if (this.path !== undefined) {
       this.router.navigateByUrl('/Rental Products/' + this.path);
     }
   }

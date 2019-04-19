@@ -25,7 +25,7 @@ export class HomepageComponent implements OnInit {
 
   loadData() {
     this.db.collection('/popular').valueChanges().subscribe((popular_items: any[]) => {
-      this.productData = []
+      this.productData = [];
       for (let i = 0; i < this.numColumns; i++) {
         this.productData.push([]);
       }

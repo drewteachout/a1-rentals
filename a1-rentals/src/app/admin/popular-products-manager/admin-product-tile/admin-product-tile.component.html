@@ -14,7 +14,7 @@
                         </div>
                         <div class="dropdown-menu" id="dropdown-menu" role="menu">
                           <div class="dropdown-content">
-                            <a (click)="addPopularProductImageSelected()" *ngIf="productSource === ''" class="dropdown-item">
+                            <a (click)="changePopularProductImageSelected()" *ngIf="productSource === ''" class="dropdown-item">
                                 Add Picture
                             </a>
                             <a (click)="changePopularProductImageSelected()" *ngIf="productSource !== ''" class="dropdown-item">
@@ -23,11 +23,8 @@
                             <a (click)="deletePopularProductImage()" *ngIf="productSource !== ''" class="dropdown-item">
                               Delete Picture
                             </a>
-                            <a (click)="changePopularProductRouteSelected()" class="dropdown-item">
-                              Change Route
-                            </a>
-                            <a (click)="changePopularProductTitleSelected()" class="dropdown-item">
-                              Change Title
+                            <a (click)="editPopularProductSelected()" class="dropdown-item">
+                              Edit Information
                             </a>
                           </div>
                         </div>
@@ -54,21 +51,3 @@
         </article>
     </div>
 </div>
-<app-modal id="addPopularProductImageModal">
-    <header class="modal-card-head">
-        <p class="modal-card-title title is-2">Add Popular Product Image</p>
-        <button class="delete" aria-label="close" (click)="closeModal('addPopularProductImageModal')"></button>
-    </header>
-    <section class="modal-card-body">
-        <app-picture-drop [group]=currentGroupSelection [subgroup]=currentPopularProduct [product]=undefined></app-picture-drop>
-    </section>
-    <footer class="modal-card-foot">
-        <div class="right-submit">
-        <button class="button-std primary" (click)="closeModal('addProductImageModal')">Close</button>
-        </div>
-    </footer>
-</app-modal>
-<app-modal id="editPopularProductTitleModal">
-</app-modal>
-<app-modal id="editPopularProductRouteModal">
-</app-modal>

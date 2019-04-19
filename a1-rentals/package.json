@@ -34,6 +34,7 @@
     "firebase": "^5.8.4",
     "ng-image-slider": "^1.2.1",
     "ng-simple-slideshow": "^1.2.8",
+    "nodemailer": "^6.1.0",
     "rxjs": "~6.3.3",
     "zone.js": "^0.8.29"
   },

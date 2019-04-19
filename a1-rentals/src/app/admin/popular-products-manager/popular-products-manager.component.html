@@ -2,44 +2,97 @@
 <div class="columns is-centered margin">
   <div class="column" *ngFor="let products of popularProducts">
     <div *ngFor="let product of products">
-      <app-admin-product-tile [db_name]="product[3]" [path]="product[2]" [productName]=product[0] [productSource]=product[1]></app-admin-product-tile>
+      <app-admin-product-tile (changeImage)="popularProductImageChangeSelected($event)" (edit)="editPopularProductSelected($event)" [db_name]="product[3]" [path]="product[2]" [productName]=product[0] [productSource]=product[1]></app-admin-product-tile>
     </div>
   </div>
 </div>
 <app-modal id="addPopularProductModal">
+  <header class="modal-card-head">
+    <p class="modal-card-title title is-2">Add Popular Product</p>
+    <button class="delete" aria-label="close" (click)="closeModal('addPopularProductModal')"></button>
+  </header>
+  <section class="modal-card-body">
+    <div class="field">
+      <label class="label">Title</label>
+      <div class="control">
+        <input [(ngModel)]="newPopularProductTitle" class="input" type="text" placeholder="Popular Product Title">
+      </div>
+    </div>
+    <div class="field">
+      <label class="label">Assosciated Group</label>
+      <div class="control">
+        <div class="select">
+          <select (change)="productGroupChanged($event)" [(ngModel)]="selectedProductGroup">
+            <option *ngFor="let productGroup of productGroups" [ngValue]="productGroup">{{productGroup.display_name}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="productSubgroups.length != 0" class="field">
+      <label class="label">Assosciated Subgroup</label>
+      <div class="control">
+        <div class="select">
+          <select [(ngModel)]="selectedProductSubgroup">
+            <option *ngFor="let productSubgroup of productSubgroups" [ngValue]="productSubgroup">{{productSubgroup.display_name}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer class="modal-card-foot">
+    <button class="button is-success" (click)="submitAddPopularProduct()">Submit Changes</button>
+  </footer>
+</app-modal>
+
+<app-modal id="editPopularProductModal">
+  <header class="modal-card-head">
+    <p class="modal-card-title title is-2">Edit Popular Product</p>
+    <button class="delete" aria-label="close" (click)="closeModal('editPopularProductModal')"></button>
+  </header>
+  <section class="modal-card-body">
+    <div class="field">
+      <label class="label">Title</label>
+      <div class="control">
+        <input [(ngModel)]="newPopularProductTitle" class="input" type="text" placeholder="Popular Product Title">
+      </div>
+    </div>
+    <div class="field">
+      <label class="label">Assosciated Group</label>
+      <div class="control">
+        <div class="select">
+          <select (change)="productGroupChanged($event)" [(ngModel)]="selectedProductGroup">
+            <option *ngFor="let productGroup of productGroups" [ngValue]="productGroup">{{productGroup.display_name}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="productSubgroups.length != 0" class="field">
+      <label class="label">Assosciated Subgroup</label>
+      <div class="control">
+        <div class="select">
+          <select [(ngModel)]="selectedProductSubgroup">
+            <option *ngFor="let productSubgroup of productSubgroups" [ngValue]="productSubgroup">{{productSubgroup.display_name}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer class="modal-card-foot">
+    <button class="button is-success" (click)="submitEditPopularProduct()">Submit Changes</button>
+  </footer>
+</app-modal>
+
+<app-modal id="changePopularProductImageModal">
     <header class="modal-card-head">
-      <p class="modal-card-title title is-2">Add Popular Product</p>
-      <button class="delete" aria-label="close" (click)="closeModal('addPopularProductModal')"></button>
+        <p class="modal-card-title title is-3">Add/Change Popular Product Image</p>
+        <button class="delete" aria-label="close" (click)="closeModal('changePopularProductImageModal')"></button>
     </header>
     <section class="modal-card-body">
-      <div class="field">
-        <label class="label">Title</label>
-        <div class="control">
-          <input [(ngModel)]="newPopularProductTitle" class="input" type="text" placeholder="Popular Product Title">
-        </div>
-      </div>
-      <div class="field">
-        <label class="label">Assosciated Group</label>
-        <div class="control">
-          <div class="select">
-            <select (change)="productGroupChanged($event)" [(ngModel)]="selectedProductGroup">
-              <option *ngFor="let productGroup of productGroups" [ngValue]="productGroup">{{productGroup.display_name}}</option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div *ngIf="productSubgroups.length != 0" class="field">
-        <label class="label">Assosciated Subgroup</label>
-        <div class="control">
-          <div class="select">
-            <select [(ngModel)]="selectedProductSubgroup">
-              <option *ngFor="let productSubgroup of productSubgroups" [ngValue]="productSubgroup">{{productSubgroup.display_name}}</option>
-            </select>
-          </div>
-        </div>
-      </div>
+        <app-picture-drop [group]=groupDummy [subgroup]=subgroupDummy [product]=undefined></app-picture-drop>
     </section>
     <footer class="modal-card-foot">
-      <button class="button is-success" (click)="submitAddPopularProduct()">Submit Changes</button>
+        <div class="right-submit">
+          <button class="button is-info is-medium" (click)="closeModal('changePopularProductImageModal')">Dismiss</button>
+        </div>
     </footer>
-  </app-modal>
+</app-modal>

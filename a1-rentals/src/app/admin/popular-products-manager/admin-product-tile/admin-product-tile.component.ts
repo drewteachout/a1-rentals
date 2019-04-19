@@ -1,7 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalService } from 'src/app/services/modal.service';
 import { AngularFirestore } from 'angularfire2/firestore';
+import { map } from 'rxjs/operators';
+import { AngularFireStorage } from 'angularfire2/storage';
 
 @Component({
   selector: 'app-admin-product-tile',
@@ -14,31 +16,46 @@ export class AdminProductTileComponent implements OnInit {
   @Input() productSource: string;
   @Input() path: string;
   @Input() db_name: string;
+  @Output() edit: EventEmitter<any[]> = new EventEmitter<any[]>();
+  @Output() changeImage: EventEmitter<any[]> = new EventEmitter<any[]>();
 
-  constructor(private modalService: ModalService, private db: AngularFirestore) {
+  productGroups: any[] = [];
+  productSubgroups: any[] = [];
+  selectedProductGroup: any;
+  selectedProductSubgroup: any;
+  newPopularProductTitle: any;
+
+  constructor(private modalService: ModalService, private db: AngularFirestore, private storage: AngularFireStorage) {
+    this.db.collection('products').valueChanges().subscribe((docList: any[]) => {
+      this.productGroups = docList;
+    });
   }
 
   ngOnInit() {
   }
 
-  editPopularProductPathSelected() {
-    console.log('Edit product selected');
-    console.log(this.db_name);
-    this.openModal('editPopularProductsModal');
+  editPopularProductSelected() {
+    this.edit.emit([this.productName, this.path, this.db_name])
   }
 
   deletePopularProductSelected() {
-    console.log('Delete product selected');
-    console.log(this.db_name);
     this.db.collection('popular').doc(this.db_name).delete();
   }
 
+  deletePopularProductImage() {
+    console.log(this.productSource);
+    this.db.collection('popular').doc(this.db_name).update({
+      image_url: ''
+    })
+    this.storage.storage.refFromURL(this.productSource).delete();
+  }
+
   changePopularProductImageSelected() {
-    this.openModal('addPopularProductImageModal');
+    this.changeImage.emit([this.productSource, this.path, this.db_name]);
   }
 
   AddPopularProductImageSelected() {
-    this.openModal('addPopularProductImageModal');
+    this.changeImage.emit([this.productSource, this.path, this.db_name]);
   }
 
   openModal(id: string) {

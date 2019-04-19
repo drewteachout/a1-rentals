@@ -14,6 +14,8 @@ export class PopularProductsManagerComponent implements OnInit {
   productGroups: any[] = [];
   productSubgroups: any[] = [];
   selectedProductGroup: any = undefined;
+  editPopularProductPath: string;
+  editPopularProductDB_Name: string;
   selectedProductSubgroup: any = undefined;
   groupDummy: any = {db_name: 'popular'};
   subgroupDummy: any = {db_name: ''};
@@ -42,7 +44,6 @@ export class PopularProductsManagerComponent implements OnInit {
   }
 
   addProductSelected() {
-    console.log('Add product Selected');
     this.openModal('addPopularProductModal');
   }
 
@@ -65,26 +66,72 @@ export class PopularProductsManagerComponent implements OnInit {
   }
 
   productGroupChanged($event) {
-    console.log(this.selectedProductGroup);
     this.db.collection(this.selectedProductGroup.collection_name).valueChanges().pipe(map((docList) => {
       return docList.filter((element: any) => element.hasOwnProperty('array') && element.array);
-    })).subscribe((docList) => {
+    })).subscribe((docList: any[]) => {
       this.productSubgroups = docList;
       if (this.productSubgroups.length > 0) {
-        this.productSubgroups.push({display_name: 'None'});
+        this.productSubgroups.push({
+          display_name: 'None',
+          db_name: ''
+        });
+      }
+      if ($event === undefined) {
+        //Sent here from an edit
+        const last = this.editPopularProductPath.lastIndexOf('/');
+        if (last === this.editPopularProductPath.length - 1) {
+          // second choice should be none or undefined
+          if (docList.length === 0) {
+            this.selectedProductSubgroup = undefined;
+          } else {
+            this.selectedProductSubgroup = this.productSubgroups[this.productSubgroups.length - 1];
+          }
+        } else {
+          const subgroup_name = this.editPopularProductPath.slice(last + 1);
+          this.productSubgroups.forEach((element) => {
+            if (element.db_name === subgroup_name) {
+              this.selectedProductSubgroup = element;
+            }
+          })
+        }
       }
     });
   }
 
+  editPopularProductSelected($event: any[]) {
+    this.editPopularProductPath = $event[1];
+    this.editPopularProductDB_Name = $event[2];
+    this.newPopularProductTitle = $event[0];
+    const first = this.editPopularProductPath.slice(0, this.editPopularProductPath.indexOf('/'));
+    this.productGroups.forEach((element) => {
+      if (element.collection_name === first) {
+        this.selectedProductGroup = element;
+        this.productGroupChanged(undefined);
+      }
+    });
+    this.openModal('editPopularProductModal');
+  }
+
+  submitEditPopularProduct() {
+    this.db.collection('popular').doc(this.editPopularProductDB_Name).update({
+      path: this.selectedProductGroup.collection_name + '/' + this.selectedProductSubgroup.db_name,
+      name: this.newPopularProductTitle
+    });
+    this.closeModal('editPopularProductModal');
+    this.newPopularProductTitle = '';
+    this.editPopularProductDB_Name = '';
+    this.editPopularProductPath = '';
+    this.selectedProductGroup = undefined;
+    this.selectedProductSubgroup = undefined;
+  }
+
   submitAddPopularProduct() {
-    console.log(this.selectedProductGroup, this.selectedProductSubgroup);
     let path: string;
     if (this.selectedProductSubgroup === undefined || this.selectedProductSubgroup.display_name === 'None') {
       path = this.selectedProductGroup.collection_name;
     } else {
       path = this.selectedProductGroup.collection_name + '/' + this.selectedProductSubgroup.db_name;
     }
-    console.log(path);
     const id = this.db.createId();
     this.db.collection('popular').doc(id).set({
       db_name: id,
@@ -96,5 +143,12 @@ export class PopularProductsManagerComponent implements OnInit {
     this.selectedProductGroup = undefined;
     this.selectedProductSubgroup = undefined;
     this.productSubgroups = [];
+  }
+
+  popularProductImageChangeSelected($event) {
+    console.log($event);
+    this.subgroupDummy.db_name = $event[2];
+    this.groupDummy.image_url = $event[0];
+    this.openModal('changePopularProductImageModal');
   }
 }

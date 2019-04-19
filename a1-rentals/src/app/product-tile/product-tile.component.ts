@@ -16,6 +16,7 @@ export class ProductTileComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.productSource);
   }
 
   navigateToPath() {

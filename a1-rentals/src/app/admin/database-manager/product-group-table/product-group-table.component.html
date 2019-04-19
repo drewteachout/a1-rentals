@@ -8,18 +8,18 @@
       <th>Options</th>
     </tr>
   </thead>
-  <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+  <tbody class="y-fixed" cdkDropList (cdkDropListDropped)="drop($event)">
     <ng-container *ngFor="let group of productGroups; let i = index;let first = first">
       <tr *ngIf="group !== undefined" [attr.id]="'productGroupRow' + i" (click)="productGroupRowSelected(group, i)" [class.is-selected]="first" cdkDrag>
         <td>
-          <span class="icon is-large">
-            <i class="fa fa-bars fa-3x"></i>
+          <span class="icon is-large has-text-grey-lighter">
+            <i class="fa fa-bars"></i>
           </span>
         </td>
-        <td class="is-size-4">
+        <td>
           {{group.display_order}}
         </td>
-        <td class="is-size-4">{{group.name}}
+        <td>{{group.name}}
         </td>
         <td>
           <div class="dropdown is-hoverable" [attr.id]="'productGroupDropdown' + i">

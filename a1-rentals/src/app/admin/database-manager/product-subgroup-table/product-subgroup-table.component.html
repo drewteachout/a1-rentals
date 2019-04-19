@@ -2,14 +2,16 @@
 <table class="table is-striped is-hoverable is-fullwidth">
   <tr>
     <th>#</th>
-    <th>Subgroup Name</th>
+    <th>Name</th>
+    <th>Description</th>
     <th>Options</th>
   </tr>
   <tbody>
     <ng-container *ngFor="let subgroup of productSubgroups; let i = index;let first = first">
       <tr (click)="productSubgroupRowSelected(subgroup, i)" [attr.id]="'productSubgroupRow' + i" [class.is-selected]="first">
-        <td class="is-size-4">{{i + 1}}</td>
-        <td class="is-size-4">{{subgroup.display_name}}</td>
+        <td>{{i + 1}}</td>
+        <td>{{subgroup.display_name}}</td>
+        <td>{{subgroup.description}}</td>
         <td>
           <div class="dropdown is-hoverable" [attr.id]="'productSubgroupDropdown' + i">
             <div class="dropdown-trigger">
@@ -85,9 +87,16 @@
   </header>
   <section class="modal-card-body">
     <div class="field">
-      <label class="label">Enter a new name for this Subgroup</label>
+      <label class="label">Name</label>
       <div class="control">
         <input [(ngModel)]="editProductSubgroup.newName" class="input" type="text" placeholder="New Subgroup Name">
+      </div>
+    </div>
+    <div class="field">
+      <label class="label">Description</label>
+      <div class="control">
+        <textarea [(ngModel)]="editProductSubgroup.newDescription" rows="{{editProductSubgroup.newDescription.length / 70}}" class="textarea" type="text" placeholder="Description">
+        </textarea>
       </div>
     </div>
   </section>

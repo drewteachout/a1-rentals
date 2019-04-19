@@ -47,23 +47,33 @@
 
 <app-modal id="addProductSubgroupModal">
   <header class="modal-card-head">
-      <p *ngIf="currentGroupSelection !== undefined" class="modal-card-title title is-2">Add Subgroup To {{currentGroupSelection.name}}</p>
-      <p *ngIf="currentGroupSelection === undefined" class="modal-card-title title is-2">Add Subgroup</p>
+      <p *ngIf="currentGroupSelection !== undefined" class="modal-card-title title is-4">Add Subgroup(s) To {{currentGroupSelection.name}}</p>
+      <p *ngIf="currentGroupSelection === undefined" class="modal-card-title title is-2">Add Subgroup(s)</p>
       <button class="delete" aria-label="close" (click)="clearNewProductSubgroup();closeModal('addProductSubgroupModal')"></button>
   </header>
   <section class="modal-card-body">
-    <div class="level" *ngFor="let obj of newSubgroupObjects; let i = index;">
-      <div class="level-left">
-        <h3 class="level-item" style="display: inline">{{i + 1}}.</h3>
-        <input class="level-item" [(ngModel)]="newSubgroupObjects[i].name" class="field-input" type="text" placeholder="New Subgroup Name">
-        <button *ngIf="i !== 0" class="button level-item delete is-medium is-danger" (click)='removeSubgroupObject(i)'></button>
-        <button *ngIf="i === (newSubgroupObjects.length - 1)" (click)="addSubgroup()" class="level-item button is-large primary">Add Subgroup</button>
+    <div class="field is-horizontal" *ngFor="let obj of newSubgroupObjects; let i = index;">
+      <div class="field-label">
+        <label class="label is-size-4">{{i + 1}}.</label>
+      </div>
+      <div class="field-body">
+        <div class="field is-grouped">
+          <div class="control">
+            <input class="input" [(ngModel)]="newSubgroupObjects[i].name" type="text" placeholder="New Subgroup Name">
+          </div>
+          <div class="control">
+            <button *ngIf="i !== 0" class="button delete is-large is-danger" (click)='removeSubgroupObject(i)'></button>
+          </div>
+          <div *ngIf="i === (newSubgroupObjects.length - 1)" class="control">
+            <button (click)="addSubgroup()" class="button is-info">Add Subgroup</button>
+          </div>
+        </div>
       </div>
     </div>
   </section>
   <footer class="modal-card-foot">
       <div class="right-submit">
-        <button class="button-std primary" (click)="addNewSubgroup()">Submit</button>
+        <button class="button is-success" (click)="addNewSubgroup()">Submit</button>
       </div>
     </footer>
 </app-modal>
@@ -74,16 +84,16 @@
     <button class="delete" aria-label="close" (click)="closeModal('editProductSubgroupModal')"></button>
   </header>
   <section class="modal-card-body">
-    <h2>Enter a new name for this Subgroup</h2>
-    <div class="level">
-      <div class="level-left">
-        <input [(ngModel)]="editProductSubgroup.newName" class="level-item field-input" type="text" placeholder="{{editProductSubgroup.oldName}}">
+    <div class="field">
+      <label class="label">Enter a new name for this Subgroup</label>
+      <div class="control">
+        <input [(ngModel)]="editProductSubgroup.newName" class="input" type="text" placeholder="New Subgroup Name">
       </div>
     </div>
   </section>
   <footer class="modal-card-foot">
     <div class="right-submit">
-      <button class="button-std primary" (click)="submitEditProductSubgroup()">Submit Changes</button>
+      <button class="button is-success" (click)="submitEditProductSubgroup()">Submit Changes</button>
     </div>
   </footer>
 </app-modal>
@@ -96,10 +106,10 @@
   <section class="modal-card-body">
     <p class="has-text-danger">This action deletes all of the products contained within this subgroup and cannot be undone</p>
     <h3>Enter the name of the subgroup to confirm: </h3>
-    <strong>{{deleteProductSubgroup.display_name}}</strong>
-    <div class="level">
-      <div class="level-left">
-        <input [(ngModel)]="deleteProductSubgroup.typedName" class="level-item field-input" type="text" placeholder="{{deleteProductSubgroup.display_name}}">
+    <div class="field">
+      <strong class="label">{{deleteProductSubgroup.display_name}}</strong>
+      <div class="control">
+        <input [(ngModel)]="deleteProductSubgroup.typedName" class="input" type="text" placeholder="{{deleteProductSubgroup.display_name}}">
       </div>
     </div>
   </section>

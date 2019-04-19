@@ -123,6 +123,7 @@ export class ProductSubgroupTableComponent implements OnInit {
   openDeleteProductSubgroupModal(subgroup: any) {
     this.deleteProductSubgroup.display_name = subgroup.display_name;
     this.deleteProductSubgroup.db_name = subgroup.db_name;
+    this.deleteProductSubgroup.typedName = '';
     this.openModal('deleteProductSubgroupModal');
   }
 

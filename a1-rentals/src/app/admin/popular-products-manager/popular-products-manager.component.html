@@ -1,8 +1,10 @@
-<button (click)="addProductSelected()" class="button is-success">Add Popular Product +</button>
-<div class="columns is-centered margin">
-  <div class="column" *ngFor="let products of popularProducts">
-    <div *ngFor="let product of products">
-      <app-admin-product-tile (changeImage)="popularProductImageChangeSelected($event)" (edit)="editPopularProductSelected($event)" [db_name]="product[3]" [path]="product[2]" [productName]=product[0] [productSource]=product[1]></app-admin-product-tile>
+<div class="margin">
+  <button (click)="addProductSelected()" class="button is-success">Add Popular Product +</button>
+  <div class="columns is-centered">
+    <div class="column" *ngFor="let products of popularProducts">
+      <div *ngFor="let product of products">
+        <app-admin-product-tile (changeImage)="popularProductImageChangeSelected($event)" (edit)="editPopularProductSelected($event)" [db_name]="product[3]" [path]="product[2]" [productName]=product[0] [productSource]=product[1]></app-admin-product-tile>
+      </div>
     </div>
   </div>
 </div>

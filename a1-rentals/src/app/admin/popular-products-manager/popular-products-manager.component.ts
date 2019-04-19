@@ -66,6 +66,10 @@ export class PopularProductsManagerComponent implements OnInit {
   }
 
   productGroupChanged($event) {
+    this.selectedProductSubgroup = {
+      display_name: 'None',
+      db_name: ''
+    };
     this.db.collection(this.selectedProductGroup.collection_name).valueChanges().pipe(map((docList) => {
       return docList.filter((element: any) => element.hasOwnProperty('array') && element.array);
     })).subscribe((docList: any[]) => {

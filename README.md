@@ -32,7 +32,7 @@ The following is a description of how to host the site on aonerentals.com once y
     *   In order to set up the aonerentals we will need a functioning computer with an internet connection.
 *   Instructions
     *   **Domain Name**
-        *   In order for the website to display the correct url in the address bar, we need to setup domain _fowarding. _Complete the steps in this [article](https://support.squarespace.com/hc/en-us/articles/214767107). 
+        *   In order for the website to display the correct url in the address bar, we need to setup domain fowarding. Complete the steps in this [article](https://support.squarespace.com/hc/en-us/articles/214767107). 
             *   In step 4, replace what was previously in the field with “[https://a1-rentals.firebaseapp.com](https://a1-rentals.firebaseapp.com/Popular%20Products)”
         *   Additionally, we need to set up the custom domain with Firebase -- complete the instructions in this [article](https://firebase.google.com/docs/hosting/custom-domain).
             *   In the “custom domain” field, enter “www.aonerentals.com”

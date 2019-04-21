@@ -22,8 +22,7 @@ export class ProductComponent implements OnInit {
   public productName: string;
   public total: string;
   public domLayout: string;
-
-  productData = [];
+  public productData = [];
 
   constructor(private route: ActivatedRoute, private db: AngularFirestore) {
 
@@ -32,14 +31,11 @@ export class ProductComponent implements OnInit {
     }
 
     this.images = [];
-
     this.productDescription = '';
-
-    this.domLayout = 'autoHeight';
-    this.isProducts = false;
-    this.handleData(route);
     this.quoteTotal = 0.00;
     this.total = '0.00';
+    this.isProducts = false;
+    this.handleData(route);
    }
 
   ngOnInit() {
@@ -113,6 +109,7 @@ export class ProductComponent implements OnInit {
           if (price !== 0) {
             temp.push(price);
           }
+          temp.push(0);
           newRowData.push(temp);
         });
         if (!hasSubCategories) {
@@ -126,9 +123,11 @@ export class ProductComponent implements OnInit {
             }
           });
           newColDefs.push(priceLabel);
+          // newColDefs.push('Quantity');
           this.columnDefs = newColDefs;
           this.rowData = newRowData;
           this.images = newImageUrls;
+          console.log('Row Data: ', this.rowData);
         } else {
           this.loadRentalProducts(category);
         }
@@ -166,6 +165,7 @@ export class ProductComponent implements OnInit {
           if (price !== 0) {
             temp.push(price);
           }
+          temp.push(0);
           newRowData.push(temp);
         });
         let priceLabel = 'Price';
@@ -220,6 +220,13 @@ export class ProductComponent implements OnInit {
 
   addSelectionToCart() {
     // TODO: Push table data to database
+  }
+
+  updatePriceEstimate() {
+    this.quoteTotal = 0;
+    this.rowData.forEach(product => {
+      this.quoteTotal += +product[product.length - 2] * product[product.length - 1];
+    });
   }
 
   capitalize(str: string): string {

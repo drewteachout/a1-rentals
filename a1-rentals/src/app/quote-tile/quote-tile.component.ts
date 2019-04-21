@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Cart_Item } from '../util/Cart_Item';
 
 @Component({
-  selector: 'app-quote-tile',
+  selector: 'tr[app-quote-tile]',
   templateUrl: './quote-tile.component.html',
   styleUrls: ['./quote-tile.component.css']
 })

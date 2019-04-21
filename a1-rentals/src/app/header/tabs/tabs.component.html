@@ -1,3 +1,4 @@
+    <ng-content></ng-content>
     <a class="zhigh navbar-item has-dropdown is-hoverable" *ngFor="let tabName of tabs">
         <div class="navbar-item" [routerLink]="'/' + tabName[0]" id="{{tabName[0]}}">
             <strong>{{tabName[0]}}</strong>

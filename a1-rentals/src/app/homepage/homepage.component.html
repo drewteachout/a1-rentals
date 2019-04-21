@@ -1,7 +1,12 @@
-<div class="columns is-centered margin">
-    <div class="column" *ngFor="let products of productData">
-        <div *ngFor="let product of products">
-            <app-product-tile [path]="product[2]" [productName]=product[0] [productSource]=product[1]></app-product-tile>
+<div class="columns is-centered">
+    <div class="column is-centered is-11">
+        <p class="title has-text-centered">Popular Products</p>
+        <div class="columns is-multiline is-centered">
+            <ng-container *ngFor="let products of productData">
+                <div class="column is-one-quarter" *ngFor="let product of products">
+                    <app-product-tile [path]="product[2]" [productName]=product[0] [productSource]=product[1]></app-product-tile>
+                </div>
+            </ng-container> 
         </div>
     </div>
 </div>

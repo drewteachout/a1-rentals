@@ -20,7 +20,6 @@ export class ProductComponent implements OnInit {
   public images: (string | IImage)[];
   public productDescription: string;
   public productName: string;
-  public total: string;
   public domLayout: string;
   public productData = [];
 
@@ -33,12 +32,12 @@ export class ProductComponent implements OnInit {
     this.images = [];
     this.productDescription = '';
     this.quoteTotal = 0.00;
-    this.total = '0.00';
     this.isProducts = false;
     this.handleData(route);
    }
 
   ngOnInit() {
+    this.quoteTotal = 0.00;
   }
 
   handleData(route: ActivatedRoute) {

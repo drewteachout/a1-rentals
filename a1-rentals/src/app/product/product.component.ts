@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IImage } from 'ng-simple-slideshow';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { AngularFirestore } from 'angularfire2/firestore';
+import { QuoteCartServiceService } from '../services/quote-cart-service.service';
 
 @Component({
   selector: 'app-product',
@@ -23,7 +24,10 @@ export class ProductComponent implements OnInit {
   public domLayout: string;
   public productData = [];
 
-  constructor(private route: ActivatedRoute, private db: AngularFirestore) {
+  cartService: QuoteCartServiceService;
+
+  constructor(private route: ActivatedRoute, private db: AngularFirestore, cartService: QuoteCartServiceService) {
+    this.cartService = cartService;
 
     for (let i = 0; i < this.numColumns; i++) {
       this.productData.push([]);
@@ -218,7 +222,14 @@ export class ProductComponent implements OnInit {
   }
 
   addSelectionToCart() {
-    // TODO: Push table data to database
+    console.log('Row Data: ', this.rowData);
+    const selection = [];
+    this.rowData.forEach(product => {
+      if (product[product.length - 1] > 0) {
+        selection.push(product);
+      }
+    });
+    this.cartService.addToCart(selection);
   }
 
   updatePriceEstimate() {

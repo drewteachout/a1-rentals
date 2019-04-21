@@ -25,14 +25,21 @@ export class PackagesComponent implements OnInit {
 
   loadData() {
     this.db.collection('packages').valueChanges().subscribe((packages: any[]) => {
-      console.log(packages)
+      const packageMap = new Map();
+      packages.forEach(pck => {
+        packageMap.set(pck['display_order'], pck);
+      });
       for (let i = 0; i < packages.length; i++) {
         const key = i % this.numColumns;
         const data = this.packageData[key];
-        data.push([packages[i].name, packages[i].path, packages[i].description, packages[i].price]);
+        const imageUrls = [];
+        packageMap.get(String(i + 1)).image_urls.forEach(imgUrl => {
+          imageUrls.push({ url: imgUrl });
+        });
+        data.push([packageMap.get(String(i + 1)).name, imageUrls, packageMap.get(String(i + 1)).description,
+          packageMap.get(String(i + 1)).price, packageMap.get(String(i + 1)).items]);
         this.packageData[key] = data;
       }
-      console.log(this.packageData);
     });
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { Cart_Item } from '../util/Cart_Item';
+import { CartItem } from '../util/CartItem';
 import { QuoteCartServiceService } from '../services/quote-cart-service.service';
 
 @Component({
@@ -10,12 +10,12 @@ import { QuoteCartServiceService } from '../services/quote-cart-service.service'
 export class QuoteCartComponent implements OnInit {
 
   cartService: QuoteCartServiceService;
-  cart: Cart_Item[] = [];
+  cart: CartItem[] = [];
   quote: String = 'qoute';
 
   constructor(cartService: QuoteCartServiceService) {
     this.cartService = cartService;
-    this.cartService.get().subscribe((newCart: Cart_Item[]) => {
+    this.cartService.get().subscribe((newCart: CartItem[]) => {
       this.cart = [];
       for (let i = 0; i < newCart.length; i++) {
         this.cart.push(newCart[i]);
@@ -27,8 +27,8 @@ export class QuoteCartComponent implements OnInit {
     console.log(this.cart);
   }
 
-  deleteTile(cartItem: Cart_Item) {
-    const newCart: Cart_Item[] = [];
+  deleteTile(cartItem: CartItem) {
+    const newCart: CartItem[] = [];
     this.cart = this.cart.filter((a) => a.productName !== cartItem.productName);
     this.cartService.update(this.cart);
     console.log(cartItem.productName);

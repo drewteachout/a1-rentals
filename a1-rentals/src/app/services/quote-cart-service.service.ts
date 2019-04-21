@@ -1,48 +1,51 @@
 import { Inject, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Cart_Item } from '../util/Cart_Item';
+import { CartItem } from '../util/CartItem';
 import { SESSION_STORAGE, StorageService } from 'angular-webstorage-service';
 const STORAGE_KEY = 'pure-awesomeness';
 
 @Injectable()
 export class QuoteCartServiceService {
-  private _quote_cart_items: BehaviorSubject<Cart_Item[]>;
-  private dataStore: {
-    quote_cart_items: Cart_Item[];
-  };
+  private _quote_CartItems: BehaviorSubject<CartItem[]>;
 
   constructor(@Inject(SESSION_STORAGE) private storage: StorageService) {
-    this.dataStore = { quote_cart_items: [] };
-    this._quote_cart_items = <BehaviorSubject<Cart_Item[]>>new BehaviorSubject([]);
-    this._quote_cart_items.next([new Cart_Item('Elite Pole Tent 1', 5,
-      'The most elite pole tent money can buy buy buy buy buy buy buy buy buy', 100),
-    new Cart_Item('Elite Pole Tent 2', 5, 'The most elite pole tent money can buy', 100),
-    new Cart_Item('Elite Pole Tent 3', 5, 'The most elite pole tent money can buy', 100),
-    new Cart_Item('Elite Pole Tent 4', 5, 'The most elite pole tent money can buy', 100)]);
     sessionStorage.setItem(STORAGE_KEY,  JSON.stringify([]));
   }
 
-  public addToCart(obj: any) {
+  public addToCart(obj: any, isPackage: boolean) {
     console.log('Added these items to cart: ', obj);
     const oldData = JSON.parse(sessionStorage.getItem(STORAGE_KEY));
     console.log('OldData: ', oldData);
     const newData = [];
     for (let i = 0; i < oldData.length; i++) {
-      newData.push(oldData[i]);
+      console.log('OldData: ', oldData[i]);
+      const item = new CartItem(oldData[i]['productName'], oldData[i]['quantity'], oldData[i]['perUnitPrice']);
+      newData.push(item);
     }
-    for (let i = 0; i < obj.length; i++) {
-      newData.push(obj[i]);
+    if (isPackage) {
+
+    } else {
+      for (let i = 0; i < obj.length; i++) {
+        const item = new CartItem(obj[i][0], +obj[i][obj[i].length - 1],  +obj[i][obj[i].length - 2]);
+        newData.push(item);
+      }
     }
+
     console.log('NewData: ', newData);
     sessionStorage.setItem(STORAGE_KEY,  JSON.stringify(newData));
     console.log('Added these items to session storage: ', JSON.parse(sessionStorage.getItem(STORAGE_KEY)));
   }
 
-  update(cart: Cart_Item[]) {
-    this._quote_cart_items.next(cart);
+  public getCart() {
+    const cart = JSON.parse(sessionStorage.getItem(STORAGE_KEY));
+    return cart;
   }
 
-  get(): BehaviorSubject<Cart_Item[]>{
-    return this._quote_cart_items;
+  update(cart: CartItem[]) {
+    this._quote_CartItems.next(cart);
+  }
+
+  get(): BehaviorSubject<CartItem[]>{
+    return this._quote_CartItems;
   }
 }

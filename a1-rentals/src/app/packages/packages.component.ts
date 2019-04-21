@@ -40,6 +40,7 @@ export class PackagesComponent implements OnInit {
           packageMap.get(String(i + 1)).price, packageMap.get(String(i + 1)).items]);
         this.packageData[key] = data;
       }
+      console.log(this.packageData);
     });
   }
 }

@@ -229,7 +229,7 @@ export class ProductComponent implements OnInit {
         selection.push(product);
       }
     });
-    this.cartService.addToCart(selection);
+    this.cartService.addToCart(selection, false);
   }
 
   updatePriceEstimate() {

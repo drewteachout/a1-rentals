@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Cart_Item } from '../util/Cart_Item';
+import { CartItem } from '../util/CartItem';
 
 @Component({
   selector: 'app-quote-tile',
@@ -8,7 +8,7 @@ import { Cart_Item } from '../util/Cart_Item';
 })
 export class QuoteTileComponent implements OnInit {
 
-  @Input() cartItem: Cart_Item;
+  @Input() cartItem: CartItem;
 
   constructor() { }
 
@@ -18,7 +18,7 @@ export class QuoteTileComponent implements OnInit {
 
   getPrice() { return this.cartItem.getTotalCost(); }
 
-  getProductDescription() { return this.cartItem.productDescription; }
+  // getProductDescription() { return this.cartItem.productDescription; }
 
   getQuantity() { return this.cartItem.quantity; }
 

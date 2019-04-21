@@ -1,17 +1,41 @@
 
-<div style="display: inline-block; width: 100%;">
-    <div class="cart">
-        <div class="quote-tile" *ngFor="let product of cart">
-            <app-quote-tile [cartItem]="product"></app-quote-tile>
-            <img style="float: right;" (click)="deleteTile(product)" src="assets/images/trashcan.png" height=30 width=30>
+<div class="hero-body">
+    <div class="container has-text-centered">
+      <p class="title is-2">
+        Quote Cart*
+      </p>
+      <p class="has-text-danger has-text-weight-semibold">*All prices are just quotes. Nothing can be directly rented.
+            This is for a variety of factors including availability, distance from the street, weather conditions, and more. 
+            Please fill out your contact information and choose next steps.
+            A representative will reach out to you as soon as possible to finalize your order.</p>
+    </div>
+  </div>
+<div class="columns is-centered is-8 is-variable">
+    <div class="column is-5">
+        <div class="box">
+            <table class="table is-bordered is-striped is-fullwidth is-hoverable">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Unit Price</th>
+                        <th>Quantity</th>
+                        <th>...</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let product of cart">
+                        <tr app-quote-tile [cartItem]="product">                        
+                            <img (click)="deleteTile(product)" src="assets/images/trashcan.png" height=30 width=30>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
         </div>
     </div>
-    <div class="right">
-        <h2 class="text">Enter Your Contact Information</h2>
+    <div class="column is-5">
+        <p class="subtitle is-3 has-text-centered">Contact Information</p>
         <app-form [submitLocation]="quote"></app-form>
-        <p>*All prices are just quotes. Nothing can be directly rented.
-                This is for a variety of factors including availability, distance from the street, weather conditions, and more. 
-                Please fill out your contact information and choose next steps.
-                A representative will reach out to you as soon as possible to finalize your order.</p>
     </div>
 </div>
+
+    

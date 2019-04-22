@@ -44,11 +44,15 @@
   </div>
 </div>
 <ng-template #category>
-  <div class="columns is-centered margin">
-      <div class="column" *ngFor="let products of productData">
-        <div *ngFor="let product of products">
-            <app-product-tile [productName]="product[0]" [productSource]="product[1]" [path]="product[2]"></app-product-tile>
+    <div class="columns is-centered">
+        <div class="column is-centered is-11">
+            <div class="columns is-multiline">
+                <ng-container *ngFor="let products of productData">
+                    <div class="column is-one-quarter" *ngFor="let product of products">
+                        <app-product-tile [productName]="product[0]" [productSource]="product[1]" [path]="product[2]"></app-product-tile>
+                    </div>
+                </ng-container>
+            </div>
         </div>
-      </div>
     </div>
 </ng-template>

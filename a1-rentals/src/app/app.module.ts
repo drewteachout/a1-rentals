@@ -34,6 +34,9 @@ import { ReferencesComponent } from './references/references.component';
 import { UploadService } from './services/upload.service';
 import { DropZoneDirective } from './dropZone.directive';
 import { FileSizePipe } from './util/file-size.pipe';
+import { ReactiveFormsModule } from '@angular/forms';
+
+declare var require: any;
 
 const appRoutes: Routes = [
   { path: 'Popular Products', component: HomepageComponent},
@@ -76,6 +79,7 @@ const appRoutes: Routes = [
       //{ enableTracing: true } // <-- debugging purposes only
     ),
     BrowserModule,
+    ReactiveFormsModule,
     AgGridModule.withComponents([]),
     NgImageSliderModule,
     FormsModule,

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CartItem } from '../util/CartItem';
+import { QuoteCartServiceService } from '../services/quote-cart-service.service';
 
 @Component({
   selector: 'tr[app-quote-tile]',
@@ -10,7 +11,11 @@ export class QuoteTileComponent implements OnInit {
 
   @Input() cartItem: CartItem;
 
-  constructor() { }
+  cartService: QuoteCartServiceService;
+
+  constructor(cartService: QuoteCartServiceService) {
+    this.cartService = cartService;
+   }
 
   ngOnInit() {
     console.log(this.cartItem.productName);
@@ -23,7 +28,9 @@ export class QuoteTileComponent implements OnInit {
   getQuantity() { return this.cartItem.quantity; }
 
   updateQuantity(value: number) {
+    console.log('Value: ', value);
     this.cartItem.quantity = value;
+    this.cartService.updateQuantity(this.cartItem);
   }
 
 }

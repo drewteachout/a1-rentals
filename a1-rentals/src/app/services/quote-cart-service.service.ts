@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { CartItem } from '../util/CartItem';
 import { SESSION_STORAGE, StorageService } from 'angular-webstorage-service';
-const STORAGE_KEY = 'pure-awesomeness';
+const STORAGE_KEY = 'INTENTS FOR TENTS';
 
 @Injectable()
 export class QuoteCartServiceService {
@@ -12,47 +12,56 @@ export class QuoteCartServiceService {
     sessionStorage.setItem(STORAGE_KEY,  JSON.stringify([]));
   }
 
-  public addToCart(obj: any, description: string, isPackage: boolean) {
-    console.log('Added these items to cart: ', obj);
+  public addToCart(newItems: any, isPackage: boolean) {
     const oldData = JSON.parse(sessionStorage.getItem(STORAGE_KEY));
-    console.log('OldData: ', oldData);
     const newData = [];
-    for (let i = 0; i < oldData.length; i++) {
-      console.log('OldData: ', oldData[i]);
-      const item = new CartItem(oldData[i]['productName'], oldData[i]['productDescription'],
-                                oldData[i]['quantity'], oldData[i]['perUnitPrice']);
-      newData.push(item);
-    }
+    oldData.forEach(item => {
+      const cartReady = new CartItem(item['productName'], item['productDescription'], item['quantity'], item['price']);
+      newData.push(cartReady);
+    });
     if (isPackage) {
 
     } else {
-      for (let i = 0; i < obj.length; i++) {
-        const item = new CartItem(obj[i][0], description, +obj[i][obj[i].length - 1], +obj[i][obj[i].length - 2]);
-        newData.push(item);
-      }
+      newItems.forEach(item => {
+        let duplicate = false;
+        newData.forEach(oldItem => {
+          if (item['productName'] === oldItem['productName']) {
+            oldItem.setQuantity(item['quantity'] + oldItem['quantity']);
+            duplicate = true;
+          }
+        });
+        if (!duplicate) {
+          newData.push(item);
+        }
+      });
     }
-
-    console.log('NewData: ', newData);
     sessionStorage.setItem(STORAGE_KEY,  JSON.stringify(newData));
-    console.log('Added these items to session storage: ', JSON.parse(sessionStorage.getItem(STORAGE_KEY)));
   }
 
   public getCart(): CartItem[] {
     const cart = JSON.parse(sessionStorage.getItem(STORAGE_KEY));
     const cartItems = [];
     cart.forEach(item => {
-      const temp = new CartItem(item['productName'], item['productDescription'], item['quantity'], item['per_unit_price']);
+      const temp = new CartItem(item['productName'], item['productDescription'], item['quantity'], item['price']);
       cartItems.push(temp);
     });
-
     return cartItems;
   }
 
-  update(cart: CartItem[]) {
-    this._quote_CartItems.next(cart);
+  public updateCart(items: any) {
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(items));
   }
 
-  get(): BehaviorSubject<CartItem[]> {
-    return this._quote_CartItems;
+  public updateQuantity(updatedItem: CartItem) {
+    const oldData = JSON.parse(sessionStorage.getItem(STORAGE_KEY));
+    const newData = [];
+    oldData.forEach(item => {
+      if (item['productName'] === updatedItem['productName']) {
+        item['quantity'] = updatedItem['quantity'];
+      }
+      const cartReady = new CartItem(item['productName'], item['productDescription'], item['quantity'], item['price']);
+      newData.push(cartReady);
+    });
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(newData));
   }
 }

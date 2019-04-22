@@ -15,28 +15,18 @@ export class QuoteCartComponent implements OnInit {
 
   constructor(cartService: QuoteCartServiceService) {
     this.cartService = cartService;
-    // this.cartService.get().subscribe((newCart: CartItem[]) => {
-    //   this.cart = [];
-    //   for (let i = 0; i < newCart.length; i++) {
-    //     this.cart.push(newCart[i]);
-    //   }
-    // });
     this.loadQuotes();
   }
 
   ngOnInit() {
-    console.log(this.cart);
   }
 
   deleteTile(cartItem: CartItem) {
-    const newCart: CartItem[] = [];
     this.cart = this.cart.filter((a) => a.productName !== cartItem.productName);
-    this.cartService.update(this.cart);
-    console.log(cartItem.productName);
+    this.cartService.updateCart(this.cart);
   }
 
   loadQuotes() {
     this.cart = this.cartService.getCart();
   }
-
 }

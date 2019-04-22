@@ -14,9 +14,6 @@ export class PackagesComponent implements OnInit {
   packageData = [];
 
   constructor(private db: AngularFirestore) {
-    for (let i = 0; i < this.numColumns; i++) {
-      this.packageData.push([]);
-    }
     this.loadData();
    }
 
@@ -25,6 +22,9 @@ export class PackagesComponent implements OnInit {
 
   loadData() {
     this.db.collection('packages').valueChanges().subscribe((packages: any[]) => {
+      for (let i = 0; i < this.numColumns; i++) {
+        this.packageData.push([]);
+      }
       const packageMap = new Map();
       packages.forEach(pck => {
         packageMap.set(pck['display_order'], pck);

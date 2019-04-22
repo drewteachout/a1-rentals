@@ -120,9 +120,9 @@ export class ProductComponent implements OnInit {
           myMap.forEach((value, key) => {
             if (key !== 'db_name' && key !== 'description' && key !== 'image_urls'
                 && key !== 'price' && key !== 'rental fee') {
-              newColDefs.push(this.capitalize(key));
+              newColDefs.push(key);
             } else if (key === 'price' || key === 'rental fee') {
-              priceLabel = this.capitalize(key.toString());
+              priceLabel = key.toString();
             }
           });
           newColDefs.push(priceLabel);
@@ -175,9 +175,9 @@ export class ProductComponent implements OnInit {
         myMap.forEach((value, key) => {
           if (key !== 'db_name' && key !== 'description' && key !== 'image_urls'
               && key !== 'price' && key !== 'rental fee') {
-            newColDefs.push(this.capitalize(key));
+            newColDefs.push(key);
           } else if (key === 'price' || key === 'rental fee') {
-            priceLabel = this.capitalize(key.toString());
+            priceLabel = key.toString();
           }
         });
         newColDefs.push(priceLabel);
@@ -229,7 +229,7 @@ export class ProductComponent implements OnInit {
         selection.push(product);
       }
     });
-    this.cartService.addToCart(selection, false);
+    this.cartService.addToCart(selection, this.productDescription, false);
   }
 
   updatePriceEstimate() {
@@ -239,11 +239,11 @@ export class ProductComponent implements OnInit {
     });
   }
 
-  capitalize(str: string): string {
-    return str.replace(/\w\S*/g, (txt) => {
-      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-  });
-  }
+  // capitalize(str: string): string {
+  //   return str.replace(/\w\S*/g, (txt) => {
+  //     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  // });
+  // }
 
   currencyConverter(value: number): string {
     let val = value.toString();

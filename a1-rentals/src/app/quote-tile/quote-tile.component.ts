@@ -18,7 +18,7 @@ export class QuoteTileComponent implements OnInit {
 
   getPrice() { return this.cartItem.getTotalCost(); }
 
-  // getProductDescription() { return this.cartItem.productDescription; }
+  getProductDescription() { return this.cartItem.productDescription; }
 
   getQuantity() { return this.cartItem.quantity; }
 

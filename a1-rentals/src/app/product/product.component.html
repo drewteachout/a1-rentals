@@ -16,14 +16,15 @@
       <div>
         <table class="table is-striped is-fullwidth is-hoverable is-bordered">
           <thead>
-            <th *ngFor="let col of columnDefs">{{col}}</th>
+            <th *ngFor="let col of columnDefs">{{col | titlecase}}</th>
             <th>Quantity</th>
           </thead>
           <tbody>
             <tr *ngFor="let row of rowData">
+              <!-- Row should be a map -->
               <td *ngFor="let product of row; index as i">
                 <div *ngIf="i < row.length - 2">{{product}}</div>
-                <div *ngIf="i == row.length - 2">${{product}}</div>
+                <div *ngIf="i == row.length - 2">{{product | currency:'USD'}}</div>
                 <input class="input" *ngIf="i == row.length - 1" [(ngModel)]="row[i]" (ngModelChange)="updatePriceEstimate()" type="number" min="0">
               </td>
             </tr>

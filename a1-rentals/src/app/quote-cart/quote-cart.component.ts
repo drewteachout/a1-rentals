@@ -11,10 +11,12 @@ export class QuoteCartComponent implements OnInit {
 
   cartService: QuoteCartServiceService;
   cart: CartItem[] = [];
-  quote: String = 'qoute';
+  quote: String = 'quote';
+  quoteTotal: number;
 
   constructor(cartService: QuoteCartServiceService) {
     this.cartService = cartService;
+    this.quoteTotal = 0;
     this.loadQuotes();
   }
 
@@ -24,9 +26,18 @@ export class QuoteCartComponent implements OnInit {
   deleteTile(cartItem: CartItem) {
     this.cart = this.cart.filter((a) => a.productName !== cartItem.productName);
     this.cartService.updateCart(this.cart);
+    this.updateQuote();
   }
 
   loadQuotes() {
     this.cart = this.cartService.getCart();
+    this.updateQuote();
+  }
+
+  updateQuote() {
+    this.quoteTotal = 0;
+    this.cart.forEach(item => {
+      this.quoteTotal += item['quantity'] * item['price'];
+    })
   }
 }

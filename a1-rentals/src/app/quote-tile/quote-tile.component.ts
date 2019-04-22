@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CartItem } from '../util/CartItem';
 import { QuoteCartServiceService } from '../services/quote-cart-service.service';
 
@@ -10,6 +10,7 @@ import { QuoteCartServiceService } from '../services/quote-cart-service.service'
 export class QuoteTileComponent implements OnInit {
 
   @Input() cartItem: CartItem;
+  @Output() quantityChanged = new EventEmitter();
 
   cartService: QuoteCartServiceService;
 
@@ -18,7 +19,6 @@ export class QuoteTileComponent implements OnInit {
    }
 
   ngOnInit() {
-    console.log(this.cartItem.productName);
   }
 
   getPrice() { return this.cartItem.getTotalCost(); }
@@ -28,9 +28,9 @@ export class QuoteTileComponent implements OnInit {
   getQuantity() { return this.cartItem.quantity; }
 
   updateQuantity(value: number) {
-    console.log('Value: ', value);
     this.cartItem.quantity = value;
     this.cartService.updateQuantity(this.cartItem);
+    this.quantityChanged.emit();
   }
 
 }

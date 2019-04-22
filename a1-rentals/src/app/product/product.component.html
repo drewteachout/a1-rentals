@@ -17,11 +17,9 @@
         <table class="table is-striped is-fullwidth is-hoverable is-bordered">
           <thead>
             <th *ngFor="let col of columnDefs">{{col | titlecase}}</th>
-            <!-- <th>Quantity</th> -->
           </thead>
           <tbody>
             <tr *ngFor="let row of rowData">
-              <!-- Row should be a map -->
               <td *ngFor="let col of columnDefs">
                 <div *ngIf="col != 'price' && col != 'quantity'">{{row.get(col)}}</div>
                 <div *ngIf="col == 'price'">{{row.get(col) | currency:'USD'}}</div>

@@ -211,7 +211,7 @@ export class ProductComponent implements OnInit {
       }
     });
     this.quoteTotal = 0;
-    this.cartService.addToCart(selection, false);
+    this.cartService.addToCart(selection);
   }
 
   updatePriceEstimate(event, row) {

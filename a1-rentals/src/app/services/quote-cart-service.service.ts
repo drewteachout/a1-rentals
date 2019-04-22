@@ -12,29 +12,27 @@ export class QuoteCartServiceService {
     sessionStorage.setItem(STORAGE_KEY,  JSON.stringify([]));
   }
 
-  public addToCart(newItems: any, isPackage: boolean) {
+  public addToCart(newItems: any) {
     const oldData = JSON.parse(sessionStorage.getItem(STORAGE_KEY));
     const newData = [];
+
     oldData.forEach(item => {
       const cartReady = new CartItem(item['productName'], item['productDescription'], item['quantity'], item['price']);
       newData.push(cartReady);
     });
-    if (isPackage) {
 
-    } else {
-      newItems.forEach(item => {
-        let duplicate = false;
-        newData.forEach(oldItem => {
-          if (item['productName'] === oldItem['productName']) {
-            oldItem.setQuantity(item['quantity'] + oldItem['quantity']);
-            duplicate = true;
-          }
-        });
-        if (!duplicate) {
-          newData.push(item);
+    newItems.forEach(item => {
+      let duplicate = false;
+      newData.forEach(oldItem => {
+        if (item['productName'] === oldItem['productName']) {
+          oldItem.setQuantity(item['quantity'] + oldItem['quantity']);
+          duplicate = true;
         }
       });
-    }
+      if (!duplicate) {
+        newData.push(item);
+      }
+    });
     sessionStorage.setItem(STORAGE_KEY,  JSON.stringify(newData));
   }
 

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { IImage } from 'ng-simple-slideshow';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { AngularFirestore } from 'angularfire2/firestore';
+import { QuoteCartServiceService } from '../services/quote-cart-service.service';
+import { CartItem } from '../util/CartItem';
 
 @Component({
   selector: 'app-product',
@@ -11,8 +13,8 @@ import { AngularFirestore } from 'angularfire2/firestore';
 export class ProductComponent implements OnInit {
 
   private numColumns = 5;
-  private quoteTotal: number;
 
+  public quoteTotal: number;
   public category: string;
   public isProducts: boolean;
   public columnDefs: any;
@@ -20,11 +22,13 @@ export class ProductComponent implements OnInit {
   public images: (string | IImage)[];
   public productDescription: string;
   public productName: string;
-  public total: string;
   public domLayout: string;
   public productData = [];
 
-  constructor(private route: ActivatedRoute, private db: AngularFirestore) {
+  cartService: QuoteCartServiceService;
+
+  constructor(private route: ActivatedRoute, private db: AngularFirestore, cartService: QuoteCartServiceService) {
+    this.cartService = cartService;
 
     for (let i = 0; i < this.numColumns; i++) {
       this.productData.push([]);
@@ -32,8 +36,7 @@ export class ProductComponent implements OnInit {
 
     this.images = [];
     this.productDescription = '';
-    this.quoteTotal = 0.00;
-    this.total = '0.00';
+    this.quoteTotal = 0;
     this.isProducts = false;
     this.handleData(route);
    }
@@ -78,56 +81,45 @@ export class ProductComponent implements OnInit {
   loadDataCategory(category) {
     this.db.collection('/' + category.replace('/', '-')).valueChanges()
       .subscribe((products: any[]) => {
-        const myMap = new Map();
+        let myMap = new Map();
         const newColDefs = [];
         const newRowData = [];
         const newImageUrls = [];
         let hasSubCategories = false;
         products.forEach((product: any) => {
-          const temp = [];
-          let price = 0;
+          myMap = new Map();
           Object.keys(product).forEach((key) => {
             if (key === 'array') {
               hasSubCategories = true;
             } else {
               myMap.set(key, product[key.toString()]);
-              if (key !== 'db_name' && key !== 'description' && key !== 'image_urls'
-                  && key !== 'price' && key !== 'rental fee') {
-                // Pushes all the product data that needs to be displayed
-                temp.push(product[key.toString()]);
-              } else if (key === 'price' || key === 'rental fee') {
-                // Sets the price
-                price = product[key.toString()];
-              } else if (key === 'image_urls') {
+              if (key === 'image_urls') {
                 product[key.toString()].forEach(imgUrl => {
                   newImageUrls.push({ url: imgUrl, caption: product['caption']});
                 });
               }
             }
           });
-          // Pushes the price information last
-          if (price !== 0) {
-            temp.push(price);
-          }
-          temp.push(0);
-          newRowData.push(temp);
+          newRowData.push(myMap);
         });
         if (!hasSubCategories) {
-          let priceLabel = 'Price';
+          let priceLabel = 'price';
           myMap.forEach((value, key) => {
             if (key !== 'db_name' && key !== 'description' && key !== 'image_urls'
-                && key !== 'price' && key !== 'rental fee') {
-              newColDefs.push(this.capitalize(key));
-            } else if (key === 'price' || key === 'rental fee') {
-              priceLabel = this.capitalize(key.toString());
+                && key !== 'price' && key !== 'rental fee' && key !== 'name') {
+              newColDefs.push(key);
+            } else if (key === 'price') {
+              priceLabel = key.toString();
             }
           });
           newColDefs.push(priceLabel);
-          // newColDefs.push('Quantity');
+          newColDefs.push('quantity');
+          newRowData.forEach(row => {
+            row.set('quantity', 0);
+          });
           this.columnDefs = newColDefs;
           this.rowData = newRowData;
           this.images = newImageUrls;
-          console.log('Row Data: ', this.rowData);
         } else {
           this.loadRentalProducts(category);
         }
@@ -139,45 +131,36 @@ export class ProductComponent implements OnInit {
       .doc(name.replace('/', '-'))
       .collection(name.replace('/', '-')).valueChanges()
       .subscribe((products: any[]) => {
-        const myMap = new Map();
+        let myMap = new Map();
         const newColDefs = [];
         const newRowData = [];
         const newImageUrls = [];
         products.forEach((product: any) => {
-          const temp = [];
-          let price = 0;
+          myMap = new Map();
           Object.keys(product).forEach((key) => {
             myMap.set(key, product[key.toString()]);
-            if (key !== 'db_name' && key !== 'description' && key !== 'image_urls'
-                && key !== 'price' && key !== 'rental fee') {
-              // Pushes all the product data that needs to be displayed
-              temp.push(product[key.toString()]);
-            } else if (key === 'price' || key === 'rental fee') {
-              // Sets the price
-              price = product[key.toString()];
-            } else if (key === 'image_urls') {
+            if (key === 'image_urls') {
               product[key.toString()].forEach(imgUrl => {
                 newImageUrls.push({ url: imgUrl, caption: product['caption']});
               });
             }
           });
-          // Pushes the price information last
-          if (price !== 0) {
-            temp.push(price);
-          }
-          temp.push(0);
-          newRowData.push(temp);
+          newRowData.push(myMap);
         });
-        let priceLabel = 'Price';
+        let priceLabel = 'price';
         myMap.forEach((value, key) => {
           if (key !== 'db_name' && key !== 'description' && key !== 'image_urls'
-              && key !== 'price' && key !== 'rental fee') {
-            newColDefs.push(this.capitalize(key));
+              && key !== 'price' && key !== 'rental fee' && key !== 'name') {
+            newColDefs.push(key);
           } else if (key === 'price' || key === 'rental fee') {
-            priceLabel = this.capitalize(key.toString());
+            priceLabel = key.toString();
           }
         });
         newColDefs.push(priceLabel);
+        newColDefs.push('quantity');
+        newRowData.forEach(row => {
+          row.set('quantity', 0);
+        });
         this.columnDefs = newColDefs;
         this.rowData = newRowData;
         this.images = newImageUrls;
@@ -219,31 +202,23 @@ export class ProductComponent implements OnInit {
   }
 
   addSelectionToCart() {
-    // TODO: Push table data to database
+    const selection = [];
+    this.rowData.forEach(product => {
+      if (product.get('quantity') > 0) {
+        selection.push(new CartItem(product.get('name'), product.get('description'),
+                                    product.get('quantity'), product.get('price')));
+        product.set('quantity', 0);
+      }
+    });
+    this.quoteTotal = 0;
+    this.cartService.addToCart(selection);
   }
 
-  updatePriceEstimate() {
+  updatePriceEstimate(event, row) {
+    row.set('quantity', event);
     this.quoteTotal = 0;
     this.rowData.forEach(product => {
-      this.quoteTotal += +product[product.length - 2] * product[product.length - 1];
+      this.quoteTotal += +product.get('price') * product.get('quantity');
     });
-  }
-
-  capitalize(str: string): string {
-    return str.replace(/\w\S*/g, (txt) => {
-      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-  });
-  }
-
-  currencyConverter(value: number): string {
-    let val = value.toString();
-    const index = val.indexOf('.');
-    const len = val.length;
-    if (index >= 0 && index === len - 1) {
-      val = val + '0';
-    } else if (index === -1) {
-      val = val + '.00';
-    }
-    return val;
   }
 }

@@ -24,13 +24,14 @@
                 </thead>
                 <tbody>
                     <ng-container *ngFor="let product of cart">
-                        <tr app-quote-tile [cartItem]="product">                        
+                        <tr app-quote-tile [cartItem]="product" (quantityChanged)="updateQuote()">                        
                             <img (click)="deleteTile(product)" src="assets/images/trashcan.png" height=30 width=30>
                         </tr>
                     </ng-container>
                 </tbody>
             </table>
         </div>
+        <h2 class="is-size-4 has-text-weight-bold is-pulled-right">Quote Total: {{quoteTotal | currency}}</h2>
     </div>
     <div class="column is-5">
         <p class="subtitle is-3 has-text-centered">Contact Information</p>

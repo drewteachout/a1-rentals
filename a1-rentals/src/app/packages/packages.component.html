@@ -5,11 +5,12 @@
               <div class="tile is-parent">
                 <article class="tile is-child box">
                   <p class="title">{{package[0]}}</p>
-                  <!-- <figure class="image is-4by3">
-                      <img class="center" src="package[1][0]['url']">
-                  </figure> -->
-                  <slideshow [imageUrls]="package[1]"
-                                [height]="'200px'"
+                  <figure *ngIf="package[1].length == 1" class="image is-4by3">
+                      
+                      <img class="center" [src]="package[1][0]['url']">
+                  </figure>
+                  <slideshow *ngIf="package[1].length > 1" [imageUrls]="package[1]"
+                                [height]="'300px'"
                                 [autoPlay]="true"
                                 [showArrows]="true">
                   </slideshow>
@@ -20,7 +21,7 @@
                         {{item}}
                       </a>
                   </div>
-                  <button class="button is-success is-pulled-right" onclick=""><strong>Add to Quote</strong></button> 
+                  <button class="button is-success is-pulled-right" (click)="addSelectionToCart(package)"><strong>Add to Quote</strong></button> 
                 </article>
               </div>
             </div>

@@ -83,7 +83,6 @@ export class DatabaseManagerComponent implements OnInit {
   }
 
   subgroupValueChanged(subgroup: any) {
-    console.log(subgroup);
     this.currentSubgroupSelection = subgroup;
     this.db.collection('/' + this.currentGroupSelection.db_name)
     .doc(this.currentSubgroupSelection.db_name)

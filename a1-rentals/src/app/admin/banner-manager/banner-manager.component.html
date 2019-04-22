@@ -19,14 +19,14 @@
     </thead>
     <tbody>
       <ng-container *ngFor="let banner of activeBanners; let i = index">
-        <tr [attr.id]="'banner' + i" (click)="bannerSelected(banner, i)">
+        <tr>
           <td>{{banner.title}}</td>
           <td>{{banner.message}}</td>
           <td class="has-text-white" [style.background-color]="banner.color">{{banner.color}}</td>
           <td>{{banner.start_date.toDate() | date}}</td>
           <td>{{banner.end_date.toDate() | date}}</td>
           <td>
-            <div class="dropdown" [attr.id]="'bannerDropdown' + i" (click)="switchDropdown('bannerDropdown', i, $event)">
+            <div class="dropdown is-hoverable">
               <div class="dropdown-trigger">
                 <button class="button" aria-haspopup="true" aria-controls="dropdown-menu2">
                   <span>Options</span>
@@ -37,13 +37,13 @@
               </div>
               <div class="dropdown-menu" id="dropdown-menu2" role="menu">
                 <div class="dropdown-content">
-                  <div (click)="editBanner(banner)" class="dropdown-item">
-                      <p class="is-size-3">Edit</p>
-                  </div>
+                  <a (click)="editBanner(banner)" class="dropdown-item">
+                    Edit
+                  </a>
                   <hr class="dropdown-divider">
-                  <div (click)="deleteBanner(banner)" class="dropdown-item">
-                    <p class="is-size-3">Delete</p>
-                  </div>
+                  <a (click)="deleteBanner(banner)" class="dropdown-item">
+                    Delete
+                  </a>
                 </div>
               </div>
             </div>
@@ -55,89 +55,43 @@
 </div>
 
 <app-modal id="createBannerModal">
-    <header class="modal-card-head">
-      <p class="modal-card-title title is-2">Create New Banner</p>
-      <button class="delete" aria-label="close" (click)="clearNewBanner();closeModal('createBannerModal')"></button>
-    </header>
-    <section class="modal-card-body">
-      <div class="level">
-        <div class="level-left">
-          <h3 class="level item">Title: </h3>
-          <input [(ngModel)]="newBanner.title" class="level-item space" type="text" placeholder="New Banner Title">
-        </div>
-      </div>
-      <div class="level">
-        <div class="level-left">
-          <h3 class="level item">Message: </h3>
-          <textarea [(ngModel)]="newBanner.message" class="level-item space" placeholder="New Banner Message"></textarea>
-        </div>
-      </div>
-      <div class="level">
-        <div class="level-left">
-          <h3 class="level item">Color: </h3>
-          <input [(ngModel)]="newBanner.color" class="level-item space" type="color" placeholder="Black">
-        </div>
-      </div>
-      <div class="level">
-        <div class="level-left">
-          <h3 class="level item">Start Date: </h3>
-          <input [(ngModel)]="newBanner.start_date" class="level-item space" type="date">
-        </div>
-      </div>
-      <div class="level">
-        <div class="level-left">
-          <h3 class="level item ">End Date: </h3>
-          <input [(ngModel)]="newBanner.end_date" class="level-item space" type="date">
-        </div>
-      </div>
-    </section>
-    <footer class="modal-card-foot">
-      <div class="right-submit">
-        <button class="button-std primary" (click)="addNewBanner()">Submit</button>
-      </div>
-    </footer>
-  </app-modal>
-
-<app-modal id="editBannerModal">
   <header class="modal-card-head">
-    <p class="modal-card-title title is-2">Create New Banner</p>
-    <button class="delete" aria-label="close" (click)="clearNewBanner();closeModal('editBannerModal')"></button>
+    <p class="modal-card-title title is-2">Create/Edit Banner</p>
+    <button class="delete" aria-label="close" (click)="clearNewBanner();closeModal('createBannerModal')"></button>
   </header>
   <section class="modal-card-body">
-    <div class="level">
-      <div class="level-left">
-        <h3 class="level item">Title: </h3>
-        <input [(ngModel)]="newBanner.title" class="level-item space" type="text" placeholder="New Banner Title">
+    <div class="field">
+      <label class="label">Title: </label>
+      <div class="control">
+        <input [(ngModel)]="newBanner.title" class="input" type="text" placeholder="New Banner Title">
       </div>
     </div>
-    <div class="level">
-      <div class="level-left">
-        <h3 class="level item">Message: </h3>
-        <textarea [(ngModel)]="newBanner.message" class="level-item space" placeholder="New Banner Message"></textarea>
+    <div class="field">
+      <label class="label">Message: </label>
+      <div class="control">
+        <textarea [(ngModel)]="newBanner.message" class="textarea" rows="{{newBanner.message.length/20 + 2}}" placeholder="New Banner Message"></textarea>
       </div>
     </div>
-    <div class="level">
-      <div class="level-left">
-        <h3 class="level item">Color: </h3>
-        <input [(ngModel)]="newBanner.color" class="level-item space" type="color" placeholder="Black">
+    <div class="field">
+      <label class="label">Color: </label>
+      <div class="control">
+        <input [(ngModel)]="newBanner.color" class="input" type="color" placeholder="Black">
       </div>
     </div>
-    <div class="level">
-      <div class="level-left">
-        <h3 class="level item">Start Date: </h3>
-        <input [(ngModel)]="newBanner.start_date" class="level-item space" type="date">
+    <div class="field">
+      <label class="label">Start Date: </label>
+      <div class="control">
+        <input [(ngModel)]="newBanner.start_date" value="newBanner.start_date.toDate()" class="input" type="date">
       </div>
     </div>
-    <div class="level">
-      <div class="level-left">
-        <h3 class="level item ">End Date: </h3>
-        <input [(ngModel)]="newBanner.end_date" class="level-item space" type="date">
+    <div class="field">
+      <label class="label">End Date: </label>
+      <div class="control">
+        <input [(ngModel)]="newBanner.end_date" value="newBanner.end_date.toDate()" class="input" type="date">
       </div>
     </div>
   </section>
   <footer class="modal-card-foot">
-    <div class="right-submit">
-      <button class="button-std primary" (click)="editBanner();closeModal('editBannerModal')">Submit</button>
-    </div>
+    <button class="button is-success" (click)="addNewBanner()">Submit</button>
   </footer>
 </app-modal>

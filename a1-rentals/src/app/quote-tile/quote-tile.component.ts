@@ -1,19 +1,24 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Cart_Item } from '../util/Cart_Item';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { CartItem } from '../util/CartItem';
+import { QuoteCartServiceService } from '../services/quote-cart-service.service';
 
 @Component({
-  selector: 'app-quote-tile',
+  selector: 'tr[app-quote-tile]',
   templateUrl: './quote-tile.component.html',
   styleUrls: ['./quote-tile.component.css']
 })
 export class QuoteTileComponent implements OnInit {
 
-  @Input() cartItem: Cart_Item;
+  @Input() cartItem: CartItem;
+  @Output() quantityChanged = new EventEmitter();
 
-  constructor() { }
+  cartService: QuoteCartServiceService;
+
+  constructor(cartService: QuoteCartServiceService) {
+    this.cartService = cartService;
+   }
 
   ngOnInit() {
-    console.log(this.cartItem.productName);
   }
 
   getPrice() { return this.cartItem.getTotalCost(); }
@@ -24,6 +29,8 @@ export class QuoteTileComponent implements OnInit {
 
   updateQuantity(value: number) {
     this.cartItem.quantity = value;
+    this.cartService.updateQuantity(this.cartItem);
+    this.quantityChanged.emit();
   }
 
 }

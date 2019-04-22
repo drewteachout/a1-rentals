@@ -59,6 +59,7 @@ export class PackageManagerComponent implements OnInit {
     this.newPackage.items = [{value: ''}];
     this.newPackage.db_name = '';
     this.newPackage.price = 0;
+    this.newPackage.image_urls = [];
     this.openModal('addPackageModal');
   }
 
@@ -74,6 +75,7 @@ export class PackageManagerComponent implements OnInit {
     }
     this.newPackage.db_name = pack.db_name;
     this.newPackage.price = pack.price;
+    this.newPackage.image_urls = pack.image_urls;
     this.openModal('addPackageModal');
   }
 

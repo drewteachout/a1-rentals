@@ -16,34 +16,41 @@
       <div>
         <table class="table is-striped is-fullwidth is-hoverable is-bordered">
           <thead>
-            <th *ngFor="let col of columnDefs">{{col}}</th>
-            <th>Quantity</th>
+            <th *ngFor="let col of columnDefs">{{col | titlecase}}</th>
           </thead>
           <tbody>
             <tr *ngFor="let row of rowData">
-              <td *ngFor="let rowCol of row">{{rowCol}}</td>
-              <td>0</td>
+              <td *ngFor="let col of columnDefs">
+                <div *ngIf="col != 'price' && col != 'quantity'">{{row.get(col)}}</div>
+                <div *ngIf="col == 'price'">{{row.get(col) | currency:'USD'}}</div>
+                <div *ngIf="col == 'quantity' && row.get('price') !> 0"></div>
+                <input class="input" *ngIf="col == 'quantity' && row.get('price') > 0" [ngModel]="row.get(col)" (ngModelChange)="updatePriceEstimate($event, row)" type="number" min="0">
+              </td>
             </tr>
           </tbody>
         </table>
       </div>
       <div class="columns is-centered buffer-large">
         <div class="column is-two-thirds">
-          <h2 class="is-size-4 has-text-weight-bold is-pulled-right">Selected Item Total: ${{total}}</h2>
+          <h2 class="is-size-4 has-text-weight-bold is-pulled-right">Selected Item Total: {{quoteTotal | currency}}</h2>
         </div>
         <div class="column is-one-third">
-          <button class="button is-success is-pulled-right" onclick=""><strong>Add Selection to Quote</strong></button>
+          <button class="button is-success is-pulled-right" (click)="addSelectionToCart()"><strong>Add Selection to Quote</strong></button>
         </div>
       </div>
     </div>
   </div>
 </div>
 <ng-template #category>
-  <div class="columns is-centered margin">
-      <div class="column" *ngFor="let products of productData">
-        <div *ngFor="let product of products">
-            <app-product-tile [productName]="product[0]" [productSource]="product[1]" [path]="product[2]"></app-product-tile>
+    <div class="columns is-centered">
+        <div class="column is-centered is-11">
+            <div class="columns is-multiline">
+                <ng-container *ngFor="let products of productData">
+                    <div class="column is-one-quarter" *ngFor="let product of products">
+                        <app-product-tile [productName]="product[0]" [productSource]="product[1]" [path]="product[2]"></app-product-tile>
+                    </div>
+                </ng-container>
+            </div>
         </div>
-      </div>
     </div>
 </ng-template>

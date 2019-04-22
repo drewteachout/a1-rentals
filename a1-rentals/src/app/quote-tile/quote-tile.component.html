@@ -13,6 +13,7 @@
         class="input" 
         type="number"
         [(ngModel)]="cartItem.quantity" 
+        (ngModelChange)="updateQuantity($event)"
         min="1" 
         oninput="validity.valid||(value='1')">
     </td>   

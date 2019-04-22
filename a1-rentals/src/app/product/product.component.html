@@ -16,15 +16,15 @@
       <div>
         <table class="table is-striped is-fullwidth is-hoverable is-bordered">
           <thead>
-            <th *ngFor="let col of columnDefs">{{col}}</th>
-            <th>Quantity</th>
+            <th *ngFor="let col of columnDefs">{{col | titlecase}}</th>
           </thead>
           <tbody>
             <tr *ngFor="let row of rowData">
-              <td *ngFor="let product of row; index as i">
-                <div *ngIf="i < row.length - 2">{{product}}</div>
-                <div *ngIf="i == row.length - 2">${{product}}</div>
-                <input class="input" *ngIf="i == row.length - 1" [(ngModel)]="row[i]" (ngModelChange)="updatePriceEstimate()" type="number" min="0">
+              <td *ngFor="let col of columnDefs">
+                <div *ngIf="col != 'price' && col != 'quantity'">{{row.get(col)}}</div>
+                <div *ngIf="col == 'price'">{{row.get(col) | currency:'USD'}}</div>
+                <div *ngIf="col == 'quantity' && row.get('price') !> 0"></div>
+                <input class="input" *ngIf="col == 'quantity' && row.get('price') > 0" [ngModel]="row.get(col)" (ngModelChange)="updatePriceEstimate($event, row)" type="number" min="0">
               </td>
             </tr>
           </tbody>
@@ -32,10 +32,10 @@
       </div>
       <div class="columns is-centered buffer-large">
         <div class="column is-two-thirds">
-          <h2 class="is-size-4 has-text-weight-bold is-pulled-right">Selected Item Total: ${{quoteTotal}}</h2>
+          <h2 class="is-size-4 has-text-weight-bold is-pulled-right">Selected Item Total: {{quoteTotal | currency}}</h2>
         </div>
         <div class="column is-one-third">
-          <button class="button is-success is-pulled-right" onclick=""><strong>Add Selection to Quote</strong></button>
+          <button class="button is-success is-pulled-right" (click)="addSelectionToCart()"><strong>Add Selection to Quote</strong></button>
         </div>
       </div>
     </div>

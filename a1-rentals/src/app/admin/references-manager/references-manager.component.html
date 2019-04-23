@@ -2,6 +2,7 @@
 <table class="table is-striped is-hoverable is-fullwidth">
   <thead>
     <tr>
+      <th></th>
       <th>#</th>
       <th>Name</th>
       <th>Options</th>
@@ -10,6 +11,11 @@
   <tbody cdkDropList (cdkDropListDropped)="drop($event)">
     <ng-container *ngFor="let reference of references; let i = index;">
       <tr cdkDrag>
+        <td>
+          <span class="icon has-text-grey-lighter">
+            <i class="fa fa-bars"></i>
+          </span>
+        </td>
         <th>{{reference.order_num}}</th>
         <td>{{reference.name}}</td>
         <td>

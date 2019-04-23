@@ -24,8 +24,10 @@ export class DatabaseManagerComponent implements OnInit {
           name: element['display_name'],
           db_name: element['collection_name'],
           hidden: element['hidden'],
-          display_order: element['display_order']};
-        });
+          display_order: element['display_order'],
+          description: element['description']
+        };
+      });
       this.products = temp;
       if (this.currentGroupSelection === undefined) {
         this.currentGroupSelection = this.products.length === 0 ? {name: ''} : this.products[0];

@@ -92,9 +92,18 @@
     <button class="delete" aria-label="close" (click)="closeModal('editProductGroupModal')"></button>
   </header>
   <section class="modal-card-body">
-    <label class="label is-large">Enter a new name for {{newProductGroupName.old}}</label>
-    <div class="field is-grouped">
+    <div class="field">
+      <label class="label">Name</label>
+      <div class="control">
         <input [(ngModel)]="newProductGroupName.new" class="input is-medium" type="text" placeholder="New Group Name">
+      </div>
+    </div>
+    <div class="field">
+      <label class="label">Description</label>
+      <div class="control">
+        <textarea [(ngModel)]="newProductGroupName.newDescription" class="textarea" [rows]="newProductGroupName.newDescription.length/30 + 2" type="text" placeholder="New Group Description">
+        </textarea>
+      </div>
     </div>
   </section>
   <footer class="modal-card-foot">

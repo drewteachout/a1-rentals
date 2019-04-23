@@ -2,7 +2,7 @@
   <h1 class="is-size-1 has-text-centered has-text-weight-bold">{{productName}}</h1>
   <div class="columns is-centered">
     <div class="column buffer">
-      <div class="slideshow">
+      <div *ngIf="images !== undefined && images.length > 0" class="slideshow">
         <slideshow [imageUrls]="images"
                   [height]="'400px'"
                   [autoPlay]="true"

@@ -118,6 +118,7 @@ export class ProductComponent implements OnInit {
           this.columnDefs = newColDefs;
           this.rowData = newRowData;
           this.images = newImageUrls;
+          console.log(this.images);
         } else {
           this.loadRentalProducts(category);
         }
@@ -162,6 +163,7 @@ export class ProductComponent implements OnInit {
         this.columnDefs = newColDefs;
         this.rowData = newRowData;
         this.images = newImageUrls;
+        console.log(this.images);
       });
   }
 
@@ -175,13 +177,12 @@ export class ProductComponent implements OnInit {
           const key = Math.floor(Number(i / this.numColumns));
           let data = this.productData[key];
           if (data === undefined) {
-            this.productData.push([])
+            this.productData.push([]);
             data = this.productData[key];
           }
           data.push([orderedProducts[i].display_name, orderedProducts[i].image_url, orderedProducts[i].collection_name]);
           this.productData[key] = data;
         }
-        console.log(this.productData);
       });
   }
 
@@ -190,12 +191,14 @@ export class ProductComponent implements OnInit {
     this.db.collection('/' + category.replace('/', '-')).valueChanges()
       .subscribe((products: any[]) => {
         this.productData = [];
-        for (let i = 0; i < this.numColumns; i++) {
-          this.productData.push([]);
-        }
-        for (let i = 0; i < products.length; i++) {
-          const key = i % this.numColumns;
-          const data = this.productData[key];
+        const orderedProducts = products.sort((a: any, b: any) => a.display_order - b.display_order);
+        for (let i = 0; i < orderedProducts.length; i++) {
+          const key = Math.floor(Number(i / this.numColumns));
+          let data = this.productData[key];
+          if (data === undefined) {
+            this.productData.push([]);
+            data = this.productData[key];
+          }
           data.push([products[i].display_name, products[i].image_url, category + '/' + products[i].db_name]);
           this.productData[key] = data;
         }

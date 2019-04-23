@@ -11,7 +11,16 @@ export class LoginComponent implements OnInit {
 
   email = '';
   password = '';
+  newUserEmail = '';
+  newUserPassword = '';
+  newUserPassword2 = '';
+  newPassword = '';
+  newPassword2 = '';
+  newPasswordStatus = '';
+  newUserStatus = '';
   authStatus = false;
+  forgotPasswordEmail: string = '';
+  forgotPasswordStatus: string = '';
   constructor(private authService: AngularFireAuth, private modalService: ModalService) {
     this.authService.authState.subscribe((state) => {
       if (state !== null) {
@@ -41,6 +50,51 @@ export class LoginComponent implements OnInit {
         alert('Login Unsuccessful');
       });
     }
+  }
+
+  openAddNewUser() {
+    this.openModal('addNewUserModal');
+    this.newUserEmail = '';
+    this.newUserPassword = '';
+    this.newUserPassword2 = '';
+  }
+
+  submitAddNewUser() {
+    if (this.newUserPassword == this.newUserPassword2) {
+      console.log('found identical passwords');
+      this.newUserStatus = 'Passwords were not identical';
+      this.authService.auth.createUserWithEmailAndPassword(this.newUserEmail, this.newUserPassword).then(success => {
+        console.log(success);
+        this.newUserStatus = 'Success';
+      },
+      error => {
+        console.log(error);
+        this.newUserStatus = error.message;
+      });
+    } else {
+      this.newUserStatus = 'Passwords were not identical';
+    }
+  }
+
+  openForgotPassword() {
+    this.openModal('forgotPasswordModal')
+  }
+
+  submitForgotPassword() {
+    this.authService.auth.sendPasswordResetEmail(this.forgotPasswordEmail).then(success => {
+      console.log(success);
+      this.forgotPasswordStatus = 'Email has been sent to ' + this.forgotPasswordEmail + '.';
+    },
+    error => {
+      console.log(error)
+      this.forgotPasswordStatus = 'Email address not found.';
+    });
+  }
+
+  closeForgotPassword() {
+    this.forgotPasswordEmail = '';
+    this.forgotPasswordStatus = '';
+    this.closeModal('forgotPasswordModal');
   }
 
   logout() {

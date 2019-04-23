@@ -20,8 +20,12 @@
       <button [disabled]="!authStatus" class="level-item button is-danger is-medium" (click)="logout()">
         Sign out
       </button>
+      <button [disabled]="!authStatus" class="level-item button is-info is-medium" (click)="openAddNewUser()">
+        Authorize new users
+      </button>
     </div>
   </div>
+  <a (click)="openForgotPassword()">Forgot Password?</a>
 <div>
 <app-modal id="loginSuccessModal">
   <header class="modal-card-head has-background-success">
@@ -29,8 +33,99 @@
     <button class="delete" aria-label="close" (click)="closeModal('loginSuccessModal')"></button>
   </header>
   <footer class="modal-card-foot">
-    <div class="right-submit">
-      <button class="button is-large is-success" (click)="closeModal('loginSuccessModal')">Dismiss</button>
+    <button class="button is-large is-success" (click)="closeModal('loginSuccessModal')">Dismiss</button>
+  </footer>
+</app-modal>
+
+<app-modal id="forgotPasswordModal">
+  <header class="modal-card-head">
+    <p class="modal-card-title title is-2">Forgot Password</p>
+    <button class="delete" aria-label="close" (click)="closeForgotPassword()"></button>
+  </header>
+  <section class="modal-card-body">
+    <div class="field">
+      <label class="label">Enter your email address</label>
+      <p class="control has-icons-left level-item">
+        <input class="input" [(ngModel)]="forgotPasswordEmail" type="email" placeholder="Email">
+        <span class="icon is-small is-left">
+          <i class="fas fa-envelope"></i>
+        </span>
+      </p>
+      <p class="help">{{forgotPasswordStatus}}</p>
     </div>
+  </section>
+  <footer class="modal-card-foot">
+    <button class="button is-success" (click)="submitForgotPassword()">Send Email</button>
+  </footer>
+</app-modal>
+
+<app-modal id="addNewUserModal">
+  <header class="modal-card-head">
+    <p class="modal-card-title title is-2">Add New User</p>
+    <button class="delete" aria-label="close" (click)="closeModal('addNewUserModal')"></button>
+  </header>
+  <section class="modal-card-body">
+    <div class="field">
+      <label class="label">Enter the new user's email address</label>
+      <p class="control has-icons-left level-item">
+        <input class="input" [(ngModel)]="newUserEmail" type="email" placeholder="Email">
+        <span class="icon is-small is-left">
+          <i class="fas fa-envelope"></i>
+        </span>
+      </p>
+    </div>
+    <div class="field">
+      <label class="label">Enter the new user's password</label>
+      <p class="control has-icons-left level-item">
+        <input class="input" [(ngModel)]="newUserPassword" type="password" placeholder="Password">
+        <span class="icon is-small is-left">
+          <i class="fas fa-lock"></i>
+        </span>
+      </p>
+    </div>
+    <div class="field">
+      <label class="label">Confirm the new user's password</label>
+      <p class="control has-icons-left level-item">
+        <input class="input" [(ngModel)]="newUserPassword2" type="password" placeholder="Re-enter Password">
+        <span class="icon is-small is-left">
+          <i class="fas fa-lock"></i>
+        </span>
+      </p>
+      <p class="help">{{newUserStatus}}</p>
+    </div>
+  </section>
+  <footer class="modal-card-foot">
+    <button class="button is-success" (click)="submitAddNewUser()">Add User</button>
+  </footer>
+</app-modal>
+
+<app-modal id="changePasswordModal">
+  <header class="modal-card-head">
+    <p class="modal-card-title title is-2">Change Password</p>
+    <button class="delete" aria-label="close" (click)="closeModal('changePasswordModal')"></button>
+  </header>
+  <section class="modal-card-body">
+    <div class="field">
+      <label class="label">Enter your new password</label>
+      <p class="control has-icons-left level-item">
+        <input class="input" [(ngModel)]="newUserPassword" type="password" placeholder="Password">
+        <span class="icon is-small is-left">
+          <i class="fas fa-lock"></i>
+        </span>
+      </p>
+    </div>
+    <div class="field">
+      <label class="label">Confirm your new password</label>
+      <p class="control has-icons-left level-item">
+        <input class="input" [(ngModel)]="newUserPassword2" type="password" placeholder="Re-enter Password">
+        <span class="icon is-small is-left">
+          <i class="fas fa-lock"></i>
+        </span>
+      </p>
+      <p class="help">{{newPasswordStatus}}</p>
+    </div>
+  </section>
+  <footer class="modal-card-foot">
+    <button class="button is-success" (click)="submitChangePassword()">Add User</button>
   </footer>
 </app-modal>

@@ -35,7 +35,7 @@
           <td>
             <div class="columns">
               <div class="column">
-                <div class="dropdown is-hoverable" [attr.id]="'packageDropdown' + i">
+                <div class="dropdown is-hoverable">
                   <div class="dropdown-trigger">
                     <button class="button" aria-haspopup="true" aria-controls="dropdown-menu2">
                       <span>Options</span>
@@ -52,7 +52,7 @@
                       <a (click)="deletePackage(package)" class="dropdown-item">
                         Delete
                       </a>
-                      <a (click)="openManageImages(package)" class="dropdown-item">
+                      <a *ngIf="package.image_urls.length >= 1" (click)="openManageImages(package)" class="dropdown-item">
                         Remove Images
                       </a>
                       <a (click)="openAddImage(package)" class="dropdown-item">

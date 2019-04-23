@@ -54,6 +54,10 @@ export class AdminComponent implements OnInit {
     });
   }
 
+  signout() {
+    this.authService.auth.signOut();
+  }
+
   openChangePassword() {
     this.newPassword = '';
     this.newPassword2 = '';

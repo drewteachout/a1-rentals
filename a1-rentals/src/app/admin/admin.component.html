@@ -47,7 +47,7 @@
           {{authStatus}}
         </a>
         <div *ngIf="authStatus !== 'Not logged in'; else not" class="navbar-dropdown">
-          <a href="admin/login" class="navbar-item">
+          <a (click)="signout()" class="navbar-item">
             Sign Out
           </a>
           <a (click)="openChangeEmail()" class="navbar-item">

@@ -57,7 +57,6 @@ export class LoginComponent implements OnInit {
 
   submitAddNewUser() {
     if (this.newUserPassword === this.newUserPassword2) {
-      this.newUserStatus = 'Passwords were not identical';
       this.authService.auth.createUserWithEmailAndPassword(this.newUserEmail, this.newUserPassword).then(success => {
         this.newUserStatus = 'Success';
       },

@@ -12,7 +12,7 @@
     <ng-container *ngFor="let group of productGroups; let i = index;let first = first">
       <tr *ngIf="group !== undefined" [attr.id]="'productGroupRow' + i" (click)="productGroupRowSelected(group, i)" [class.is-selected]="first" cdkDrag>
         <td>
-          <span class="icon is-large has-text-grey-lighter">
+          <span class="icon has-text-grey-lighter">
             <i class="fa fa-bars"></i>
           </span>
         </td>

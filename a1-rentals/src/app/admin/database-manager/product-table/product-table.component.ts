@@ -14,7 +14,7 @@ export class ProductTableComponent implements OnInit {
   @Input() columnDefs: any[] = [];
   @Input() currentGroupSelection: any;
   @Input() currentSubgroupSelection: any;
-  newProductObjects: any[] = [{key: 'name', value: ''}];
+  newProductObjects: any[] = [{key: 'name', value: ''}, {key: 'price', value: 0}, {key: '', value: ''}];
   constructor(private modalService: ModalService, private db: AngularFirestore) { }
 
   ngOnInit() {
@@ -29,6 +29,7 @@ export class ProductTableComponent implements OnInit {
   }
 
   openAddProduct() {
+    console.log(this.newProductObjects);
     this.openModal('addProductModal');
   }
 
@@ -52,7 +53,7 @@ export class ProductTableComponent implements OnInit {
       .collection(this.currentSubgroupSelection['db_name'])
       .doc(id).set(newObj);
     }
-    this.newProductObjects = [{key: 'name', value: ''}];
+    this.newProductObjects = [{key: 'name', value: ''}, {key: 'price', value: 0}, {key: '', value: ''}];
     this.closeModal('addProductModal');
   }
 
@@ -61,7 +62,7 @@ export class ProductTableComponent implements OnInit {
   }
 
   clearNewProduct() {
-    this.newProductObjects = [{'name': ''}];
+    this.newProductObjects = [{key: 'name', value: ''}, {key: 'price', value: 0}, {key: '', value: ''}];
   }
 
   switchDropdown(className: string, i: number, $event: MouseEvent) {
@@ -119,9 +120,14 @@ export class ProductTableComponent implements OnInit {
   }
 
   openEditProductModal(product: any) {
-    this.newProductObjects.pop();
     Object.keys(product).forEach((key) => {
-      this.newProductObjects.push({key: key, value: product[key]});
+      if (key === 'name') {
+        this.newProductObjects[0].value = product.name;
+      } else if (key === 'price') {
+        this.newProductObjects[1].value = product.price;
+      } else {
+        this.newProductObjects.push({key: key, value: product[key]});
+      }
     });
     this.openModal('editProductModal');
   }

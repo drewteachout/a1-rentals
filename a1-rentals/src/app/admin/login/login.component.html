@@ -1,32 +1,50 @@
 <div class="container">
-  <h1> Admin Portal</h1>
-  <div class="level">
-    <div class="level-left">
-      <p class="control has-icons-left level-item">
-        <input class="input" [(ngModel)]="email" type="email" placeholder="Email">
-        <span class="icon is-small is-left">
-          <i class="fas fa-envelope"></i>
-        </span>
-      </p>
-      <p class="control has-icons-left level-item">
-        <input class="input" [(ngModel)]="password" (keydown)="login($event)" type="password" placeholder="Password">
-        <span class="icon is-small is-left">
-          <i class="fas fa-lock"></i>
-        </span>
-      </p>
-      <button [disabled]="authStatus" class="level-item button is-success is-medium" (click)="login(undefined)">
-        Sign in
-      </button>
-      <button [disabled]="!authStatus" class="level-item button is-danger is-medium" (click)="logout()">
-        Sign out
-      </button>
-      <button [disabled]="!authStatus" class="level-item button is-info is-medium" (click)="openAddNewUser()">
-        Authorize new users
-      </button>
+  <h1 class="title"> Admin Portal</h1>
+  <div class="columns">
+    <div class="column is-3">
+      <div class="field">
+        <label class="label">Email</label>
+        <p class="control has-icons-left">
+          <input class="input" [(ngModel)]="email" type="email" placeholder="Email">
+          <span class="icon is-small is-left">
+            <i class="fas fa-envelope"></i>
+          </span>
+        </p>
+      <div class="field">
+        <label class="label">Password</label>
+        <p class="control has-icons-left">
+          <input class="input" [(ngModel)]="password" (keydown)="login($event)" type="password" placeholder="Password">
+          <span class="icon is-small is-left">
+            <i class="fas fa-lock"></i>
+          </span>
+        </p>
+      </div>
+      <div class="field is-grouped">
+        <div class="control">
+          <button [disabled]="authStatus" class="button is-success is-medium" (click)="login(undefined)">
+            Sign in
+          </button>
+        </div>
+        <div class="control">
+          <button [disabled]="!authStatus" class="button is-danger is-medium" (click)="logout()">
+            Sign out
+          </button>
+        </div>
+        <div class="control">
+          <button [disabled]="!authStatus" class="button is-info is-medium" (click)="openAddNewUser()">
+            Authorize new users
+          </button>
+        </div>
+      </div>
+      <div class="level is-mobile">
+        <div class="level-left">
+          <a class="level-item" (click)="openForgotPassword()">Forgot Password?</a>
+        </div>
+      </div>
     </div>
   </div>
-  <a (click)="openForgotPassword()">Forgot Password?</a>
 <div>
+
 <app-modal id="loginSuccessModal">
   <header class="modal-card-head has-background-success">
     <p class="modal-card-title title is-2">Successfully Logged In</p>
@@ -96,36 +114,5 @@
   </section>
   <footer class="modal-card-foot">
     <button class="button is-success" (click)="submitAddNewUser()">Add User</button>
-  </footer>
-</app-modal>
-
-<app-modal id="changePasswordModal">
-  <header class="modal-card-head">
-    <p class="modal-card-title title is-2">Change Password</p>
-    <button class="delete" aria-label="close" (click)="closeModal('changePasswordModal')"></button>
-  </header>
-  <section class="modal-card-body">
-    <div class="field">
-      <label class="label">Enter your new password</label>
-      <p class="control has-icons-left level-item">
-        <input class="input" [(ngModel)]="newUserPassword" type="password" placeholder="Password">
-        <span class="icon is-small is-left">
-          <i class="fas fa-lock"></i>
-        </span>
-      </p>
-    </div>
-    <div class="field">
-      <label class="label">Confirm your new password</label>
-      <p class="control has-icons-left level-item">
-        <input class="input" [(ngModel)]="newUserPassword2" type="password" placeholder="Re-enter Password">
-        <span class="icon is-small is-left">
-          <i class="fas fa-lock"></i>
-        </span>
-      </p>
-      <p class="help">{{newPasswordStatus}}</p>
-    </div>
-  </section>
-  <footer class="modal-card-foot">
-    <button class="button is-success" (click)="submitChangePassword()">Add User</button>
   </footer>
 </app-modal>

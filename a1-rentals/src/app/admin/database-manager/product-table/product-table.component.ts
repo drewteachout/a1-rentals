@@ -29,7 +29,7 @@ export class ProductTableComponent implements OnInit {
   }
 
   openAddProduct() {
-    console.log(this.newProductObjects);
+    this.newProductObjects = [{key: 'name', value: ''}, {key: 'price', value: 0}, {key: '', value: ''}];
     this.openModal('addProductModal');
   }
 
@@ -53,16 +53,11 @@ export class ProductTableComponent implements OnInit {
       .collection(this.currentSubgroupSelection['db_name'])
       .doc(id).set(newObj);
     }
-    this.newProductObjects = [{key: 'name', value: ''}, {key: 'price', value: 0}, {key: '', value: ''}];
     this.closeModal('addProductModal');
   }
 
   addProductField() {
     this.newProductObjects.push({key: '', value: ''});
-  }
-
-  clearNewProduct() {
-    this.newProductObjects = [{key: 'name', value: ''}, {key: 'price', value: 0}, {key: '', value: ''}];
   }
 
   switchDropdown(className: string, i: number, $event: MouseEvent) {
@@ -103,10 +98,13 @@ export class ProductTableComponent implements OnInit {
         id = obj.value;
         editedProduct[obj.key] = obj.value;
       } else {
-        editedProduct[obj.key] = obj.value;
+        if (isNaN(Number(obj.value))) {
+          editedProduct[obj.key] = obj.value;
+        } else {
+          editedProduct[obj.key] = Number(obj.value);
+        }
       }
     });
-    console.log(editedProduct);
     if (this.currentSubgroupSelection === null) {
       this.db.collection(this.currentGroupSelection['db_name']).doc(id).set(editedProduct);
     } else {
@@ -115,11 +113,11 @@ export class ProductTableComponent implements OnInit {
       .collection(this.currentSubgroupSelection['db_name'])
       .doc(id).set(editedProduct);
     }
-    this.clearNewProduct();
     this.closeModal('editProductModal');
   }
 
   openEditProductModal(product: any) {
+    this.newProductObjects = [{key: 'name', value: ''}, {key: 'price', value: 0}];
     Object.keys(product).forEach((key) => {
       if (key === 'name') {
         this.newProductObjects[0].value = product.name;
@@ -129,6 +127,7 @@ export class ProductTableComponent implements OnInit {
         this.newProductObjects.push({key: key, value: product[key]});
       }
     });
+    console.log(this.newProductObjects);
     this.openModal('editProductModal');
   }
 

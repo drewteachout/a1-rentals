@@ -44,18 +44,17 @@ export class ProductComponent implements OnInit {
 
   handleData(route: ActivatedRoute) {
     this.rowData = [];
-    this.productData = [];
-    for (let i = 0; i < this.numColumns; i++) {
-      this.productData.push([]);
-    }
     route.paramMap.subscribe((urlParamMap: ParamMap) => {
       const name = urlParamMap.get('productName');
       const category = urlParamMap.get('productCategory');
       this.category = category;
+      console.log(category, name);
       if (category === '' && name == null) {
+        console.log('all');
         this.isProducts = true;
         this.loadAllRentalProducts();
       } else if (name == null || name.length === 0) {
+        console.log('data category');
         this.isProducts = false;
         this.productName = category;
         this.db.collection('products').doc(category).valueChanges()
@@ -64,6 +63,7 @@ export class ProductComponent implements OnInit {
         });
         this.loadDataCategory(category);
       } else {
+        console.log('data subcategory');
         this.isProducts = false;
         this.productName = name;
         this.db.collection('/' + category.replace('/', '-'))
@@ -87,10 +87,12 @@ export class ProductComponent implements OnInit {
         products.forEach((product: any) => {
           myMap = new Map();
           Object.keys(product).forEach((key) => {
-            if (key === 'array') {
+            if (key === 'array' && product['array']) {
               hasSubCategories = true;
             } else {
-              myMap.set(key, product[key.toString()]);
+              if (key !== 'array') {
+                myMap.set(key, product[key.toString()]);
+              }
               if (key === 'image_urls') {
                 product[key.toString()].forEach(imgUrl => {
                   newImageUrls.push({ url: imgUrl, caption: product['caption']});

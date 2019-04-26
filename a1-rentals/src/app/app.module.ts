@@ -32,8 +32,7 @@ import { ModalService } from './services/modal.service';
 import { PackagesComponent } from './packages/packages.component';
 import { ReferencesComponent } from './references/references.component';
 import { UploadService } from './services/upload.service';
-import { DropZoneDirective } from './dropZone.directive';
-import { FileSizePipe } from './util/file-size.pipe';
+import { ReactiveFormsModule } from '@angular/forms';
 import { StorageServiceModule } from 'angular-webstorage-service';
 
 const appRoutes: Routes = [
@@ -77,6 +76,7 @@ const appRoutes: Routes = [
       //{ enableTracing: true } // <-- debugging purposes only
     ),
     BrowserModule,
+    ReactiveFormsModule,
     AgGridModule.withComponents([]),
     NgImageSliderModule,
     FormsModule,

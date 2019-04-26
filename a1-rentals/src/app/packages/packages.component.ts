@@ -33,13 +33,10 @@ export class PackagesComponent implements OnInit {
       packages.forEach(pck => {
         packageMap.set(pck['display_order'], pck);
       });
-      console.log(packageMap);
       for (let i = 0; i < packages.length; i++) {
         const key = i % this.numColumns;
         const data = this.packageData[key];
         const imageUrls = [];
-        console.log(i + 1);
-        console.log(packageMap.get(i + 1));
         packageMap.get(i + 1).image_urls.forEach(imgUrl => {
           imageUrls.push({ url: imgUrl });
         });
@@ -47,7 +44,6 @@ export class PackagesComponent implements OnInit {
           packageMap.get(i + 1).price, packageMap.get(i + 1).items]);
         this.packageData[key] = data;
       }
-      console.log(this.packageData);
     });
   }
 

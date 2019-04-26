@@ -6,6 +6,7 @@
         <slideshow [imageUrls]="images"
                   [height]="'400px'"
                   [autoPlay]="true"
+                  [lazyLoad]="true"
                   [showArrows]="false"
                   [showDots]="true">
         </slideshow> 
@@ -55,5 +56,6 @@
         </ng-template>
       </ng-container>
     </div>
+    <p class="has-text-centered">{{productDescription}}</p>
   </div>
 </ng-template>

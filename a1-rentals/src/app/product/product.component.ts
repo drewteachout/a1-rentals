@@ -48,13 +48,10 @@ export class ProductComponent implements OnInit {
       const name = urlParamMap.get('productName');
       const category = urlParamMap.get('productCategory');
       this.category = category;
-      console.log(category, name);
       if (category === '' && name == null) {
-        console.log('all');
         this.isProducts = true;
         this.loadAllRentalProducts();
       } else if (name == null || name.length === 0) {
-        console.log('data category');
         this.isProducts = false;
         this.productName = category;
         this.db.collection('products').doc(category).valueChanges()
@@ -63,7 +60,6 @@ export class ProductComponent implements OnInit {
         });
         this.loadDataCategory(category);
       } else {
-        console.log('data subcategory');
         this.isProducts = false;
         this.productName = name;
         this.db.collection('/' + category.replace('/', '-'))
@@ -106,7 +102,7 @@ export class ProductComponent implements OnInit {
           let priceLabel = 'price';
           myMap.forEach((value, key) => {
             if (key !== 'db_name' && key !== 'description' && key !== 'image_urls'
-                && key !== 'price' && key !== 'rental fee' && key !== 'name') {
+                && key !== 'price' && key !== 'rental fee') {
               newColDefs.push(key);
             } else if (key === 'price') {
               priceLabel = key.toString();
@@ -120,7 +116,6 @@ export class ProductComponent implements OnInit {
           this.columnDefs = newColDefs;
           this.rowData = newRowData;
           this.images = newImageUrls;
-          console.log(this.images);
         } else {
           this.loadRentalProducts(category);
         }
@@ -151,7 +146,7 @@ export class ProductComponent implements OnInit {
         let priceLabel = 'price';
         myMap.forEach((value, key) => {
           if (key !== 'db_name' && key !== 'description' && key !== 'image_urls'
-              && key !== 'price' && key !== 'rental fee' && key !== 'name') {
+              && key !== 'price' && key !== 'rental fee') {
             newColDefs.push(key);
           } else if (key === 'price' || key === 'rental fee') {
             priceLabel = key.toString();
@@ -165,7 +160,6 @@ export class ProductComponent implements OnInit {
         this.columnDefs = newColDefs;
         this.rowData = newRowData;
         this.images = newImageUrls;
-        console.log(this.images);
       });
   }
 

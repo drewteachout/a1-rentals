@@ -47,10 +47,8 @@ export class AdminComponent implements OnInit {
 
   submitChangeEmail() {
     this.authService.auth.currentUser.updateEmail(this.newEmail).then(success => {
-      console.log(success);
       this.changeEmailStatus = 'Successfully changed email to ' + this.newEmail;
     }, error => {
-      console.log(error);
     });
   }
 

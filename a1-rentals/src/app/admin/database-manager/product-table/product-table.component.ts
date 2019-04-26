@@ -93,7 +93,6 @@ export class ProductTableComponent implements OnInit {
   submitEditProduct() {
     let id = '';
     const editedProduct = {};
-    console.log(this.newProductObjects);
     this.newProductObjects.forEach((obj) => {
       if (obj.key === 'db_name') {
         id = obj.value;
@@ -129,7 +128,6 @@ export class ProductTableComponent implements OnInit {
         this.newProductObjects.push({key: key, value: product[key]});
       }
     });
-    console.log(this.newProductObjects);
     this.openModal('editProductModal');
   }
 

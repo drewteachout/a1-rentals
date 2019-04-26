@@ -87,7 +87,6 @@ const appRoutes: Routes = [
       appRoutes,
       //{ enableTracing: true } // <-- debugging purposes only
     ),
-    AgGridModule.withComponents([]),
     AngularFireModule,
     DragDropModule,
   ],

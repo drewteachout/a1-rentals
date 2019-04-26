@@ -105,13 +105,11 @@ export class PackageManagerComponent implements OnInit {
     this.currentChangePackage = pack;
     this.productDummy.db_name = pack.db_name;
     this.openModal('addPackageImageModal');
-    console.log('Add image selected');
   }
 
   openManageImages(pack: any) {
     this.currentChangePackage = pack;
     this.openModal('changePackageImagesModal');
-    console.log('Manage images selected');
   }
 
   deletePackageImage(url: string) {
@@ -132,12 +130,10 @@ export class PackageManagerComponent implements OnInit {
     }
     const batch = this.db.firestore.batch();
     for (let i = 0; i < this.packages.length; i++) {
-      console.log(this.packages[i]);
       if (this.packages[i].display_order !== i + 1) {
         batch.update(this.db.collection('packages').doc(this.packages[i].db_name).ref, {display_order: i + 1});
       }
     }
-    console.log(batch);
     batch.commit();
   }
 

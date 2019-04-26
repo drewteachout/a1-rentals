@@ -94,7 +94,6 @@ export class PopularProductsManagerComponent implements OnInit {
         const last = this.editPopularProductPath.lastIndexOf('/');
         if (last === -1) {
           // second choice should be none or undefined
-          console.log('second choice should be none or undefined')
           if (docList.length === 0) {
             this.selectedProductSubgroup = undefined;
           } else {
@@ -113,16 +112,13 @@ export class PopularProductsManagerComponent implements OnInit {
   }
 
   editPopularProductSelected($event: any[]) {
-    console.log($event);
     this.selectedProductGroup = undefined;
     this.selectedProductSubgroup = undefined;
     this.editPopularProductPath = $event[1];
     this.editPopularProductDB_Name = $event[2];
     this.newPopularProductTitle = $event[0];
     const first = this.editPopularProductPath.indexOf('/');
-    console.log(first);
     if (first === -1) {
-      console.log(this.editPopularProductPath);
       this.productGroups.forEach((element) => {
         if (element.collection_name === this.editPopularProductPath) {
           this.selectedProductGroup = element;
@@ -145,10 +141,8 @@ export class PopularProductsManagerComponent implements OnInit {
     let path: string;
     if (this.selectedProductSubgroup === undefined || this.selectedProductSubgroup.display_name === 'None') {
       path = this.selectedProductGroup.collection_name;
-      console.log("no here");
     } else {
       path = this.selectedProductGroup.collection_name + '/' + this.selectedProductSubgroup.db_name;
-      console.log("here");
     }
     this.db.collection('popular').doc(this.editPopularProductDB_Name).update({
       path: path,
@@ -166,10 +160,8 @@ export class PopularProductsManagerComponent implements OnInit {
     let path: string;
     if (this.selectedProductSubgroup === undefined || this.selectedProductSubgroup.display_name === 'None') {
       path = this.selectedProductGroup.collection_name;
-      console.log("no here");
     } else {
       path = this.selectedProductGroup.collection_name + '/' + this.selectedProductSubgroup.db_name;
-      console.log("here");
     }
     const id = this.db.createId();
     this.db.collection('popular').doc(id).set({
@@ -187,7 +179,6 @@ export class PopularProductsManagerComponent implements OnInit {
   }
 
   popularProductImageChangeSelected($event) {
-    console.log($event);
     this.subgroupDummy.db_name = $event[2];
     this.groupDummy.image_url = $event[0];
     this.openModal('changePopularProductImageModal');

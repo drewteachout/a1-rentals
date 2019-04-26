@@ -38,8 +38,6 @@ export class PictureDropComponent {
 
   startUpload(event: FileList) {
     // The File object
-    console.log(event);
-    console.log(this.group, this.subgroup, this.product);
     if (event.length === 0) {
       return;
     }
@@ -83,7 +81,6 @@ export class PictureDropComponent {
     this.snapshot = this.task.snapshotChanges().pipe(
       tap(snap => {
         if (snap.bytesTransferred === snap.totalBytes) {
-          console.log(this.group, this.subgroup, this.product);
         }
       }),
       finalize(() => {

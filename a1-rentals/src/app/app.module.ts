@@ -15,7 +15,6 @@ import { QuoteCartComponent } from './quote-cart/quote-cart.component';
 import { ContactComponent } from './contact/contact.component';
 
 import { QuoteCartServiceService } from './services/quote-cart-service.service';
-import { environment } from 'src/environments/environment.prod';
 
 import { AgGridModule } from 'ag-grid-angular';
 import { NgImageSliderModule} from 'ng-image-slider';
@@ -34,6 +33,7 @@ import { ReferencesComponent } from './references/references.component';
 import { UploadService } from './services/upload.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { StorageServiceModule } from 'angular-webstorage-service';
+import { environment } from 'src/environments/environment';
 
 const appRoutes: Routes = [
   { path: 'Popular Products', component: HomepageComponent},

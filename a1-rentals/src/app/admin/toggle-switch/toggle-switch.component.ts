@@ -11,7 +11,6 @@ export class ToggleSwitchComponent implements ICellRendererAngularComp, OnInit {
     state: boolean;
 
     ngOnInit() {
-      console.log(this.state);
     }
     agInit(params: any): void {
         this.params = params;

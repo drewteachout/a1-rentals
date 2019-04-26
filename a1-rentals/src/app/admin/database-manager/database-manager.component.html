@@ -6,14 +6,14 @@
       [productGroups]="products">
     </app-product-group-table>
   </div>
-  <div *ngIf="subgroups.length > 0" class="column is-size-6">
+  <div *ngIf="subgroups.length > 0" class="column is-3">
     <app-product-subgroup-table 
       (subgroupValueChanged)="subgroupValueChanged($event)"
       [productSubgroups]="subgroups"
       [currentGroupSelection]="currentGroupSelection">
     </app-product-subgroup-table>
   </div>
-  <div class="column is-size-6">
+  <div class="column">
     <app-product-table
       [currentGroupSelection]="currentGroupSelection"
       [currentSubgroupSelection]="currentSubgroupSelection"

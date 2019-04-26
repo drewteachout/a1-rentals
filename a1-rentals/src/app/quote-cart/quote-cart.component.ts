@@ -22,7 +22,6 @@ export class QuoteCartComponent implements OnInit {
     this.loadQuotes();
     this.db.collection('Contact').valueChanges().subscribe((docList) => {
       this.contact_email = docList[0]['contact_email'];
-      console.log(this.contact_email);
     });
   }
 

@@ -48,13 +48,11 @@ export class ProductPictureTableComponent implements OnInit {
 
   openAddImages(product: any) {
     this.currentChangeProduct = product;
-    console.log(this.currentChangeProduct);
     this.openModal('addProductImageModal');
   }
 
   openRemoveImages(product: any) {
     this.currentChangeProduct = product;
-    console.log(this.currentChangeProduct);
     this.openModal('removeProductImageModal');
   }
 

@@ -112,7 +112,6 @@ export class ProductGroupTableComponent implements OnInit, OnChanges {
     this.newProductGroupName.old = group.name;
     this.newProductGroupName.new = group.name;
     this.newProductGroupName.db_name = group.db_name;
-    console.log(this.newProductGroupName);
   }
 
   openDeleteProductGroup(group: any) {
@@ -133,12 +132,10 @@ export class ProductGroupTableComponent implements OnInit, OnChanges {
   }
 
   async submitDeleteProductGroup() {
-    console.log(this.deleteProductGroup);
     const batch = this.db.firestore.batch();
     const qs = await this.db.collection(this.deleteProductGroup['db_name']).ref.get();
     qs.forEach(doc => batch.delete(doc.ref));
     batch.delete(this.db.collection('products').doc(this.deleteProductGroup['db_name']).ref);
-    console.log(this.productGroups[this.deleteProductGroup['display_order'] - 1]);
     for (let i = this.deleteProductGroup['display_order']; i < this.productGroups.length; i++) {
       batch.update(this.db.collection('products').doc(this.productGroups[i].db_name).ref,
       {display_order: this.productGroups[i].display_order - 1});

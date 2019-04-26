@@ -32,7 +32,6 @@ export class BannerManagerComponent implements OnInit {
       new Date(this.newBanner.end_date),
       this.newBanner.db_name);
     this.closeModal('createBannerModal');
-    console.log(b);
     this.db.collection('banners').doc(b.db_name).set({
       title: b.title,
       message: b.message,

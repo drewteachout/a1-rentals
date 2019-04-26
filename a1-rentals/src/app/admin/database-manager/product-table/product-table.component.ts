@@ -93,12 +93,14 @@ export class ProductTableComponent implements OnInit {
   submitEditProduct() {
     let id = '';
     const editedProduct = {};
+    console.log(this.newProductObjects);
     this.newProductObjects.forEach((obj) => {
       if (obj.key === 'db_name') {
         id = obj.value;
         editedProduct[obj.key] = obj.value;
       } else {
-        if (isNaN(Number(obj.value))) {
+        if (isNaN(Number(obj.value)) || obj.value.hasOwnProperty('length')) {
+          // length property check is because Number([]) evaluates to 0 for some unknown reason
           editedProduct[obj.key] = obj.value;
         } else {
           editedProduct[obj.key] = Number(obj.value);

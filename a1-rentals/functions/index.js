@@ -17,22 +17,44 @@ const mailTransport = nodemailer.createTransport(`smtps://${gmailEmail}:${gmailP
 exports.sendContactMessage = functions.firestore.document('messages/{msgId}').onCreate(event => {
     
     const data = event.data();
-    console.log(data);
+    functions.firestore.document()
 
     const mailOptions = {
-      to: 'samloop16@gmail.com',
-      subject: `Contact Info`,
-      subject: `Contact Form Submitted`,
-      text:`The following Contact Info was submitted: ` + "\n" + data.email
-      + "\n" + data.firstName +
-      + "\n" + data.lastName +
-      + "\n" + data.message +
-      + "\n" + data.phoneNumber +
-      + "\n" + data.subject
+      to: data.toEmail,
+      subject: data.subject === '' ? data.firstName + ' ' + data.lastName : data.subject,
+      html: "<p>" + data.firstName + " " + data.lastName + " wants to be contacted" + "<br/></p>"
+      + "<p>Message: " + data.message + "<br/></p>"
+      + "<p>Phone: " + data.phoneNumber + "<br/></p>"
+      + "<p>email: " + data.email + "<br/></p>"
     };
     
     return mailTransport.sendMail(mailOptions).then((stuff) => {
-      console.log(stuff);
-      console.log('Mail sent to: samloop16@gmail.com');
+      console.log('Mail sent to: ' + data.toEmail);
     });
   });
+
+exports.sendQuoteMessage = functions.firestore.document('quotes/{msgId}').onCreate(event => {
+  
+  const data = event.data();
+  const cart = data.cart;
+  let cartString = "<table><tr><th>Name</th><th>Quantity</th><th>Price</th></tr>";
+  for (let i = 0; i < cart.length; i++) {
+    cartString += cart[i]
+  }
+  cartString += "</table>"
+
+  const mailOptions = {
+    to: data.toEmail,
+    subject: data.subject === '' ? data.firstName + ' ' + data.lastName : data.subject,
+    html: "<p>" + data.firstName + " " + data.lastName + " wants to be contacted about their cart" + "<br/></p>"
+    + "<p>Message: " + data.message + "<br/></p>"
+    + "<p>Phone: " + data.phoneNumber + "<br/></p>"
+    + "<p>email: " + data.email + "<br/></p>"
+    + "<p>Items in Cart: <br/></p>"
+    + cartString
+  };
+  
+  return mailTransport.sendMail(mailOptions).then((stuff) => {
+    console.log('Mail sent to: ' + data.toEmail);
+  });
+});

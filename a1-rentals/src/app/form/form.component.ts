@@ -2,6 +2,8 @@ import { Component, OnInit, Input, Output, OnChanges } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { ModalService } from 'src/app/services/modal.service';
 import { Contact } from './contact';
+import { QuoteCartServiceService } from '../services/quote-cart-service.service';
+import { CartItem } from '../util/CartItem';
 
 @Component({
   selector: 'app-form',
@@ -11,55 +13,50 @@ import { Contact } from './contact';
 
 export class FormComponent implements OnInit {
 
-  databaseName = 'a1-rentals';
-  email = '';
-  phoneNumber = '';
-  firstName = '';
-  lastName = '';
-  subject = '';
-  message = '';
+  model = new Contact(0, '', '', '', '', '', '');
 
-  constructor(private db: AngularFirestore, private modalService: ModalService) {
+  constructor(private db: AngularFirestore, private cart: QuoteCartServiceService) {
   }
 
   @Input() submitLocation: string;
-
-  model = new Contact(18, '', '', '', '', '','');
+  @Input() contactEmail: string;
   submitted = false;
 
   ngOnInit() {  }
 
-  newContact() {
-    this.model = new Contact(42, '', '', '', '', '', '');
-  }
-
-  openModal(id: string) {
-    this.modalService.open(id);
-  }
-
-  closeModal(id: string) {
-    this.modalService.close(id);
-  }
-
-  getInfo() {
-    this.email = (<HTMLInputElement>document.getElementById('email')).value;
-    this.phoneNumber = (<HTMLInputElement>document.getElementById('phoneNumber')).value;
-    this.firstName = (<HTMLInputElement>document.getElementById('firstName')).value;
-    this.lastName = (<HTMLInputElement>document.getElementById('lastName')).value;
-    this.subject = (<HTMLInputElement>document.getElementById('subject')).value;
-    this.message = (<HTMLInputElement>document.getElementById('message')).value;
-  }
-
   onSubmit() {
-    console.log(this.submitLocation);
     if (this.submitLocation === 'quote') {
-      console.log('Quote');
+      const cart = this.cart.getCart();
+      const newCart = [];
+      cart.forEach((element: CartItem) => {
+        newCart.push('<tr>' + '<td>' + element.productName + '</td>'
+        + '<td>' + element.quantity + '</td>'
+        + '<td>' + element.price + '</td></tr>');
+      });
+      alert('Your quote information has been sent to our agents');
+      this.db.collection('quotes').doc(this.db.createId()).set({
+        firstName: this.model.firstName,
+        lastName: this.model.lastName,
+        email: this.model.email,
+        phoneNumber: this.model.phoneNumber,
+        subject: this.model.subject,
+        message: this.model.message,
+        toEmail: this.contactEmail,
+        cart: newCart
+      });
+      this.cart.updateCart([]);
     } else {
-      console.log('Contact Us');
+      alert('Your contact information has been sent to our agents');
+      this.db.collection('messages').doc(this.db.createId()).set({
+        firstName: this.model.firstName,
+        lastName: this.model.lastName,
+        email: this.model.email,
+        phoneNumber: this.model.phoneNumber,
+        subject: this.model.subject,
+        message: this.model.message,
+        toEmail: this.contactEmail
+      });
     }
-    this.getInfo();
-    this.db.collection('messages').doc(this.db.createId()).set({'firstName': this.firstName,
-      'lastName': this.lastName, 'email': this.email, 'phoneNumber': this.phoneNumber, 
-      'subject': this.subject, 'message': this.message});
+    this.model = new Contact(0, '', '', '', '', '', '');
   }
 }

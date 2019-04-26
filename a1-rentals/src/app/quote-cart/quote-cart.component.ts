@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { CartItem } from '../util/CartItem';
 import { QuoteCartServiceService } from '../services/quote-cart-service.service';
+import { AngularFirestore } from 'angularfire2/firestore';
 
 @Component({
   selector: 'app-quote-cart',
@@ -13,11 +14,16 @@ export class QuoteCartComponent implements OnInit {
   cart: CartItem[] = [];
   quote: String = 'quote';
   quoteTotal: number;
+  contact_email = '';
 
-  constructor(cartService: QuoteCartServiceService) {
+  constructor(cartService: QuoteCartServiceService, private db: AngularFirestore) {
     this.cartService = cartService;
     this.quoteTotal = 0;
     this.loadQuotes();
+    this.db.collection('Contact').valueChanges().subscribe((docList) => {
+      this.contact_email = docList[0]['contact_email'];
+      console.log(this.contact_email);
+    });
   }
 
   ngOnInit() {

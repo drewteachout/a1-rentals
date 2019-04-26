@@ -1,3 +1,14 @@
-<p>
-  quote-email-manager works!
-</p>
+<div class="container">
+  <div class="field">
+    <label class="label">Quote Email</label>
+    <div class="field is-grouped">
+      <div class="control">
+        <input type="email" class="input" placeholder="Quote Email" [(ngModel)]="quoteEmail">
+      </div>
+      <div class="control">
+        <button (click)="changeEmail()" class="button is-info">Change</button>
+      </div>
+    </div>
+    <p class="help">This is the email quotes and contact us information will be sent to</p>
+  </div>
+</div>

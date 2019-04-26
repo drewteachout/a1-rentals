@@ -12,10 +12,12 @@ import { Contact } from './contact';
 export class FormComponent implements OnInit {
 
   databaseName = 'a1-rentals';
-  email = 'samloop16@gmail.com';
-  functions = require('firebase-functions');
-  nodemailer = require('nodemailer');
-  mailTransport = this.nodemailer.createTransport();
+  email = "";
+  phoneNumber = "";
+  firstName = "";
+  lastName = "";
+  subject = "";
+  message = "";
 
   constructor(private db: AngularFirestore, private modalService: ModalService) {
   }
@@ -39,24 +41,24 @@ export class FormComponent implements OnInit {
     this.modalService.close(id);
   }
 
+  getInfo() {
+    this.email = (<HTMLInputElement>document.getElementById("email")).value;
+    this.phoneNumber = (<HTMLInputElement>document.getElementById("phoneNumber")).value;
+    this.firstName = (<HTMLInputElement>document.getElementById("firstName")).value;
+    this.lastName = (<HTMLInputElement>document.getElementById("lastName")).value;
+    this.subject = (<HTMLInputElement>document.getElementById("subject")).value;;
+    this.message = (<HTMLInputElement>document.getElementById("message")).value;
+  }
+
   onSubmit() {
     if (this.submitLocation == "quote") {
       console.log("Quote")
     } else {
       console.log("Contact Us")
     }
-    this.submitted = true; }
-
-  async sendEmail() {
-    const mailOptions = {
-      from: `${this.databaseName} <noreply@firebase.com>`,
-      to: this.email,
-      subject: `Contact Form Submitted`,
-      text:`The following Contact Info was submitted: ` + "\n" + this.model.toString()
-    };
-
-    await this.mailTransport.sendMail(mailOptions);
-    console.log('New welcome email sent to:', this.email);
-    return null;
+    this.getInfo();
+    this.db.collection('contact_info').doc(this.db.createId()).set({'firstName': this.firstName,
+      'lastName': this.lastName, 'email': this.email, 'phoneNumber': this.phoneNumber, 
+      'subject': this.subject, 'message': this.message});
   }
 }

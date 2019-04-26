@@ -16,6 +16,7 @@ export class AdminProductTileComponent implements OnInit {
   @Input() productSource: string;
   @Input() path: string;
   @Input() db_name: string;
+  @Input() display_order: number;
   @Output() edit: EventEmitter<any[]> = new EventEmitter<any[]>();
   @Output() changeImage: EventEmitter<any[]> = new EventEmitter<any[]>();
 
@@ -39,7 +40,14 @@ export class AdminProductTileComponent implements OnInit {
   }
 
   deletePopularProductSelected() {
-    this.db.collection('popular').doc(this.db_name).delete();
+    const batch = this.db.firestore.batch();
+    this.db.collection('popular').ref.orderBy('display_order').where('display_order', '>', this.display_order).get().then((docList) => {
+      docList.docs.forEach((doc) => {
+        batch.update(doc.ref, {display_order: doc.get('display_order') - 1});
+      });
+    });
+    batch.delete(this.db.collection('popular').doc(this.db_name).ref);
+    batch.commit();
   }
 
   deletePopularProductImage() {

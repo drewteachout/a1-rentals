@@ -15,6 +15,7 @@
               [productSource]="products[i][1]" 
               [path]="products[i][2]" 
               [db_name]="products[i][3]"
+              [display_order]="products[i][4]"
               (changeImage)="popularProductImageChangeSelected($event)"
               (edit)="editPopularProductSelected($event)"></app-admin-product-tile>
             </div>

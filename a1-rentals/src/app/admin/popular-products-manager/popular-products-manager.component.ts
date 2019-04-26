@@ -67,7 +67,8 @@ export class PopularProductsManagerComponent implements OnInit {
         data.push([popular_items_sorted[i].name,
           popular_items_sorted[i].image_url,
           popular_items_sorted[i].path,
-          popular_items_sorted[i].db_name]);
+          popular_items_sorted[i].db_name,
+          popular_items_sorted[i].display_order]);
         this.popularProducts[key] = data;
       }
     });
@@ -89,7 +90,7 @@ export class PopularProductsManagerComponent implements OnInit {
         });
       }
       if ($event === undefined) {
-        //Sent here from an edit
+        // Sent here from an edit
         const last = this.editPopularProductPath.lastIndexOf('/');
         if (last === -1) {
           // second choice should be none or undefined
@@ -182,6 +183,7 @@ export class PopularProductsManagerComponent implements OnInit {
     this.selectedProductGroup = undefined;
     this.selectedProductSubgroup = undefined;
     this.productSubgroups = [];
+    this.closeModal('addPopularProductModal');
   }
 
   popularProductImageChangeSelected($event) {

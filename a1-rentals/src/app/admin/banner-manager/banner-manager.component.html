@@ -11,7 +11,6 @@
       <tr>
         <th>Title</th>
         <th>Message</th>
-        <th>Color</th>
         <th>Start Date</th>
         <th>End Date</th>
         <th>Options</th>
@@ -22,7 +21,6 @@
         <tr>
           <td>{{banner.title}}</td>
           <td>{{banner.message}}</td>
-          <td class="has-text-white" [style.background-color]="banner.color">{{banner.color}}</td>
           <td>{{banner.start_date.toDate() | date}}</td>
           <td>{{banner.end_date.toDate() | date}}</td>
           <td>
@@ -70,12 +68,6 @@
       <label class="label">Message: </label>
       <div class="control">
         <textarea [(ngModel)]="newBanner.message" class="textarea" rows="{{newBanner.message.length/20 + 2}}" placeholder="New Banner Message"></textarea>
-      </div>
-    </div>
-    <div class="field">
-      <label class="label">Color: </label>
-      <div class="control">
-        <input [(ngModel)]="newBanner.color" class="input" type="color" placeholder="Black">
       </div>
     </div>
     <div class="field">

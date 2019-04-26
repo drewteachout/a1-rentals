@@ -2,6 +2,8 @@ import { Component, OnInit, Input, Output, OnChanges } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { ModalService } from 'src/app/services/modal.service';
 import { Contact } from './contact';
+import { QuoteCartComponent } from '../quote-cart/quote-cart.component';
+
 
 @Component({
   selector: 'app-form',
@@ -11,6 +13,7 @@ import { Contact } from './contact';
 
 export class FormComponent implements OnInit {
 
+  quoteCart: QuoteCartComponent;
   databaseName = 'a1-rentals';
   email = "";
   phoneNumber = "";
@@ -46,8 +49,17 @@ export class FormComponent implements OnInit {
     this.phoneNumber = (<HTMLInputElement>document.getElementById("phoneNumber")).value;
     this.firstName = (<HTMLInputElement>document.getElementById("firstName")).value;
     this.lastName = (<HTMLInputElement>document.getElementById("lastName")).value;
-    this.subject = (<HTMLInputElement>document.getElementById("subject")).value;;
+    this.subject = (<HTMLInputElement>document.getElementById("subject")).value;
     this.message = (<HTMLInputElement>document.getElementById("message")).value;
+  }
+
+  clearInfo() {
+    (<HTMLInputElement>document.getElementById("email")).value = "";
+    (<HTMLInputElement>document.getElementById("phoneNumber")).value = "";
+    (<HTMLInputElement>document.getElementById("firstName")).value = "";
+    (<HTMLInputElement>document.getElementById("lastName")).value = "";
+    (<HTMLInputElement>document.getElementById("subject")).value = "";
+    (<HTMLInputElement>document.getElementById("message")).value = "";
   }
 
   onSubmit() {
@@ -56,9 +68,18 @@ export class FormComponent implements OnInit {
     } else {
       console.log("Contact Us")
     }
-    this.getInfo();
-    this.db.collection('contact_info').doc(this.db.createId()).set({'firstName': this.firstName,
-      'lastName': this.lastName, 'email': this.email, 'phoneNumber': this.phoneNumber, 
-      'subject': this.subject, 'message': this.message});
-  }
+     this.getInfo();
+     console.log(this.quoteCart.cart);
+     if (this.quoteCart.cart.length > 0) {
+       this.quoteCart.submitQuote();
+     }
+     this.db.collection('contact_info').doc(this.db.createId()).set({
+       'firstName': this.firstName,
+       'lastName': this.lastName, 
+       'email': this.email, 
+       'phoneNumber': this.phoneNumber, 
+       'subject': this.subject, 
+       'message': this.message});
+     this.clearInfo();
+   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Cart_Item } from '../util/Cart_Item';
 import { QuoteCartServiceService } from '../services/quote-cart-service.service';
+import { AngularFirestore } from 'angularfire2/firestore';
 
 @Component({
   selector: 'app-quote-cart',
@@ -11,9 +12,12 @@ export class QuoteCartComponent implements OnInit, AfterViewInit {
 
   cartService: QuoteCartServiceService;
   cart: Cart_Item[] = [];
-  quote: String = 'qoute';
+  quote: String = 'quote';
+  products: String[] = [];
+  quantities: number[] = [];
+  totalCost = 0;
 
-  constructor(cartService: QuoteCartServiceService) {
+  constructor(cartService: QuoteCartServiceService, private db: AngularFirestore) {
     this.cartService = cartService;
     this.cartService.get().subscribe((newCart: Cart_Item[]) => {
       this.cart = [];
@@ -41,4 +45,19 @@ export class QuoteCartComponent implements OnInit, AfterViewInit {
     console.log(cartItem.productName);
   }
 
+  convertToLists() {
+    for (let i = 0; i < this.cart.length; i++) {
+      this.products[i] = this.cart[i].productName;
+      this.quantities[i] = this.cart[i].quantity;
+      this.totalCost += this.cart[i].getTotalCost();
+    }
+  }
+
+  submitQuote() {
+    this.convertToLists();
+    this.db.collection('quote_cart').doc(this.db.createId()).set({
+      'products': this.products.toString(),
+      'quantities': this.quantities.toString(),
+      'totalCost': this.totalCost});
+  }
 }

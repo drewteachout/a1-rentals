@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "a1-rentals"
+    "default": "a1-rentals",
+    "development": "a1-rentals"
   }
 }

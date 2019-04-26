@@ -32,11 +32,8 @@ import { ModalService } from './services/modal.service';
 import { PackagesComponent } from './packages/packages.component';
 import { ReferencesComponent } from './references/references.component';
 import { UploadService } from './services/upload.service';
-import { DropZoneDirective } from './dropZone.directive';
-import { FileSizePipe } from './util/file-size.pipe';
 import { ReactiveFormsModule } from '@angular/forms';
-
-declare var require: any;
+import { StorageServiceModule } from 'angular-webstorage-service';
 
 const appRoutes: Routes = [
   { path: 'Popular Products', component: HomepageComponent},
@@ -90,7 +87,8 @@ const appRoutes: Routes = [
     AngularFirestoreModule,
     AngularFireModule.initializeApp(environment.firebase),
     SlideshowModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    StorageServiceModule
   ],
   providers: [QuoteCartServiceService, ModalService, UploadService, AngularFireDatabase, { provide: FirestoreSettingsToken, useValue: {} }],
   bootstrap: [AppComponent]

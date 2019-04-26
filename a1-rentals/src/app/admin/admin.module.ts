@@ -31,6 +31,8 @@ import { UploadService } from '../services/upload.service';
 import { PictureDropComponent } from './picture-manager/picture-drop/picture-drop.component';
 import { FileSizePipe } from '../util/file-size.pipe';
 import { DropZoneDirective } from '../dropZone.directive';
+import { AdminProductTileComponent } from './popular-products-manager/admin-product-tile/admin-product-tile.component';
+import { PackageManagerComponent } from './package-manager/package-manager.component';
 
 const appRoutes: Routes = [
   { path: '',
@@ -40,6 +42,7 @@ const appRoutes: Routes = [
   { path: '', component: AdminComponent, children: [
     { path: 'database management', component: DatabaseManagerComponent, canActivate: [AuthGuardService]},
     { path: 'popular products', component: PopularProductsManagerComponent, canActivate: [AuthGuardService]},
+    { path: 'packages', component: PackageManagerComponent, canActivate: [AuthGuardService]},
     { path: 'banners', component: BannerManagerComponent, canActivate: [AuthGuardService]},
     { path: 'references', component: ReferencesManagerComponent, canActivate: [AuthGuardService]},
     { path: 'contact', component: ContactInfoManagerComponent, canActivate: [AuthGuardService]},
@@ -71,7 +74,9 @@ const appRoutes: Routes = [
     ProductPictureTableComponent,
     PictureDropComponent,
     FileSizePipe,
-    DropZoneDirective
+    DropZoneDirective,
+    AdminProductTileComponent,
+    PackageManagerComponent
   ],
   imports: [
     CommonModule,

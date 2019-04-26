@@ -1,24 +1,26 @@
-<div class="columns">
-  <div class="column is-4">
-    <app-product-group-picture-table
-      (groupValueChanged)="groupValueChanged($event)"
-      [productGroups]="products">
-    </app-product-group-picture-table>
-  </div>
-  <div *ngIf="subgroups.length > 0" class="column">
-    <app-product-subgroup-picture-table 
-      (subgroupValueChanged)="subgroupValueChanged($event)"
-      [productSubgroups]="subgroups"
-      [currentGroupSelection]="currentGroupSelection">
-    </app-product-subgroup-picture-table>
-  </div>
-  <div class="column">
-    <app-product-picture-table
-      [currentGroupSelection]="currentGroupSelection"
-      [currentSubgroupSelection]="currentSubgroupSelection"
-      [subgroups]="subgroups"
-      [rowData]="rowData"
-      [columnDefs]="columnDefs">
-    </app-product-picture-table>
+<div class="container is-fluid">
+  <div class="columns">
+    <div class="column is-4">
+      <app-product-group-picture-table
+        (groupValueChanged)="groupValueChanged($event)"
+        [productGroups]="products">
+      </app-product-group-picture-table>
+    </div>
+    <div *ngIf="subgroups.length > 0" class="column">
+      <app-product-subgroup-picture-table 
+        (subgroupValueChanged)="subgroupValueChanged($event)"
+        [productSubgroups]="subgroups"
+        [currentGroupSelection]="currentGroupSelection">
+      </app-product-subgroup-picture-table>
+    </div>
+    <div class="column">
+      <app-product-picture-table
+        [currentGroupSelection]="currentGroupSelection"
+        [currentSubgroupSelection]="currentSubgroupSelection"
+        [subgroups]="subgroups"
+        [rowData]="rowData"
+        [columnDefs]="columnDefs">
+      </app-product-picture-table>
+    </div>
   </div>
 </div>

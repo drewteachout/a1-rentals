@@ -1,3 +1,7 @@
-.dropdown-item:hover {
-    background-color: lightblue;
+.is-selected a {
+    color: black;
+}
+
+.indent-subgroups {
+    margin-left: 3%;
 }

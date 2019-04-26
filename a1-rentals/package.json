@@ -12,22 +12,23 @@
   "private": true,
   "dependencies": {
     "@agm/core": "^1.0.0-beta.5",
-    "@angular/animations": "~7.0.0",
+    "@angular/animations": "~7.2.13",
     "@angular/cdk": "~7.3.6",
-    "@angular/common": "~7.0.0",
-    "@angular/compiler": "~7.0.0",
-    "@angular/core": "~7.0.0",
-    "@angular/forms": "~7.0.0",
-    "@angular/http": "~7.0.0",
+    "@angular/common": "~7.2.13",
+    "@angular/compiler": "~7.2.13",
+    "@angular/core": "~7.2.13",
+    "@angular/forms": "~7.2.13",
+    "@angular/http": "~7.2.13",
     "@angular/material": "^7.3.6",
-    "@angular/platform-browser": "~7.0.0",
-    "@angular/platform-browser-dynamic": "~7.0.0",
-    "@angular/router": "~7.0.0",
+    "@angular/platform-browser": "~7.2.13",
+    "@angular/platform-browser-dynamic": "~7.2.13",
+    "@angular/router": "~7.2.13",
     "@ng-bootstrap/ng-bootstrap": "^4.0.4",
     "ag-grid": "^18.1.2",
     "ag-grid-angular": "^20.1.0",
     "ag-grid-community": "^20.1.0",
     "ag-grid-enterprise": "^20.1.0",
+    "angular-webstorage-service": "^1.0.2",
     "angularfire2": "^5.1.1",
     "bulma": "^0.7.4",
     "core-js": "^2.6.5",
@@ -36,14 +37,23 @@
     "ng-image-slider": "^1.2.1",
     "ng-simple-slideshow": "^1.2.8",
     "nodemailer": "^6.1.0",
+<<<<<<< HEAD
     "rxjs": "~6.3.3",
+=======
+    "rxjs": "~6.4.0",
+>>>>>>> c4d22a286117a37abe8fea49dd76209b157bb395
     "zone.js": "^0.8.29"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.13.8",
     "@angular/cli": "^7.3.8",
+<<<<<<< HEAD
     "@angular/compiler-cli": "^7.2.6",
     "@angular/language-service": "~7.0.0",
+=======
+    "@angular/compiler-cli": "^7.2.13",
+    "@angular/language-service": "~7.2.13",
+>>>>>>> c4d22a286117a37abe8fea49dd76209b157bb395
     "@types/jasmine": "^2.8.16",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
@@ -58,6 +68,6 @@
     "protractor": "^5.4.2",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
-    "typescript": "~3.1.6"
+    "typescript": "~3.2.4"
   }
 }

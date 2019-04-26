@@ -1,12 +1,12 @@
 <div *ngIf="subgroups.length === 0 && rowData.length === 0" class="columns">
   <div class="column">
-    <button (click)="openAddProductSubgroup()" class="button is-large is-fullwidth primary">Add Subgroup +</button>
+    <button (click)="openAddProductSubgroup()" class="button is-large is-fullwidth is-success">Add Subgroup +</button>
   </div>
   <div class="column">
-    <button (click)="openAddProduct()" class="button is-large is-fullwidth primary">Add Product +</button>
+    <button (click)="openAddProduct()" class="button is-large is-fullwidth is-success">Add Product +</button>
   </div>
 </div>
-<button *ngIf="subgroups.length !== 0 || rowData.length !== 0" (click)="openAddProduct()" class="button is-large is-fullwidth primary">Add Product +</button>
+<button *ngIf="subgroups.length !== 0 || rowData.length !== 0" (click)="openAddProduct()" class="button is-large is-fullwidth is-success">Add Product +</button>
 <table class="table is-striped is-hoverable is-fullwidth">
   <tr>
     <th>#</th>
@@ -19,7 +19,7 @@
         <th>{{i + 1}}</th>
         <td *ngFor="let col of columnDefs">{{product[col.field]}}</td>
         <td>
-          <div class="dropdown" [attr.id]="'productDropdown' + i" (click)="switchDropdown('productDropdown', i, $event)">
+          <div class="dropdown is-hoverable" [attr.id]="'productDropdown' + i">
             <div class="dropdown-trigger">
               <button class="button" aria-haspopup="true" aria-controls="dropdown-menu2">
                 <span>Options</span>
@@ -30,13 +30,13 @@
             </div>
             <div class="dropdown-menu" id="dropdown-menu2" role="menu">
               <div class="dropdown-content">
-                <div (click)="openEditProductModal(product)" class="dropdown-item">
-                    <p class="is-size-3">Edit</p>
-                </div>
+                <a (click)="openEditProductModal(product)" class="dropdown-item">
+                  Edit
+                </a>
                 <hr class="dropdown-divider">
-                <div (click)="deleteProduct(product)" class="dropdown-item">
-                  <p class="is-size-3">Delete</p>
-                </div>
+                <a (click)="deleteProduct(product)" class="dropdown-item">
+                  Delete
+                </a>
               </div>
             </div>
           </div>
@@ -49,21 +49,45 @@
 <app-modal id="addProductModal">
   <header class="modal-card-head">
     <p class="modal-card-title title is-2">Add Product</p>
-    <button class="delete" aria-label="close" (click)="clearNewProduct();closeModal('addProductModal')"></button>
+    <button class="delete" aria-label="close" (click)="closeModal('addProductModal')"></button>
   </header>
   <section class="modal-card-body">
-    <div *ngFor="let obj of newProductObjects; let i = index;" class="level">
-      <div class="level-left">
-        <input [(ngModel)]="newProductObjects[i].key" class="level-item field-input" type="text" placeholder="New Field Name">
-        <input [(ngModel)]="newProductObjects[i].value" class="level-item field-input" type="text" placeholder="Product Name">
-        <button *ngIf="i !== 0" class="button level-item delete is-medium is-danger" (click)='removeProductObject(i)'></button>
-        <button *ngIf="i===(newProductObjects.length - 1)" (click)="addProductField()" class="level-item button is-large primary">Add Field</button>
+    <div class="field">
+      <label class="label">Product Name</label>
+      <div class="control">
+        <input [(ngModel)]="newProductObjects[0].value" class="input" type="text" placeholder="Name">
+      </div>
+    </div>
+    <div class="field">
+      <label class="label">Product Price</label>
+      <div class="control">
+        <input [(ngModel)]="newProductObjects[1].value" class="input" type="number" placeholder="0" min=0>
+      </div>
+    </div>
+    <div class="field">
+      <label class="label">Additional Fields</label>
+      <div class="control">
+        <button (click)="addProductField()" class="button is-medium is-primary">Add Field</button>
+      </div>
+    </div>
+    <div *ngFor="let obj of newProductObjects; let i = index;" class="field">
+      <div class="field is-grouped" *ngIf="obj.key !== 'name' && obj.key !== 'price' && obj.key !== 'db_name' && obj.key !== 'image_urls'">
+        <div class="control">
+          <input [(ngModel)]="newProductObjects[i].key" class="input" type="text" placeholder="New Field Name">
+        </div>
+        <div class="control is-expanded">
+          <textarea [(ngModel)]="newProductObjects[i].value" class="textarea" type="text" placeholder="Field Value" cols="20" rows="{{('' + newProductObjects[i].value).length/18 + 1}}">
+          </textarea>
+        </div>
+        <div class="control">
+          <button *ngIf="newProductObjects.length > 3" class="button level-item delete is-medium is-danger" (click)='removeProductObject(i)'></button>
+        </div>
       </div>
     </div>
   </section>
   <footer class="modal-card-foot">
     <div class="right-submit">
-      <button class="button-std primary" (click)="addNewProduct()">Submit</button>
+      <button class="button is-success" (click)="addNewProduct()">Submit</button>
     </div>
   </footer>
 </app-modal>
@@ -71,21 +95,45 @@
 <app-modal id="editProductModal">
   <header class="modal-card-head">
     <p class="modal-card-title title is-2">Edit Product</p>
-    <button class="delete" aria-label="close" (click)="clearNewProduct();closeModal('editProductModal')"></button>
+    <button class="delete" aria-label="close" (click)="closeModal('editProductModal')"></button>
   </header>
   <section class="modal-card-body">
-    <div *ngFor="let obj of newProductObjects; let i = index;" class="level">
-      <div *ngIf="obj.key != 'db_id'" class="level-left">
-        <input [(ngModel)]="newProductObjects[i].key" class="level-item field-input" type="text" placeholder="New Field Name">
-        <input [(ngModel)]="newProductObjects[i].value" class="level-item field-input" type="text" placeholder="Product Name">
-        <button *ngIf="i !== 0" class="button level-item delete is-medium is-danger" (click)='removeProductObject(i)'></button>
-        <button *ngIf="i === (newProductObjects.length - 1)" (click)="addProductField()" class="level-item button is-large primary">Add Field</button>
+    <div class="field">
+      <label class="label">Product Name</label>
+      <div class="control">
+        <input [(ngModel)]="newProductObjects[0].value" class="input" type="text" placeholder="Name">
+      </div>
+    </div>
+    <div class="field">
+      <label class="label">Product Price</label>
+      <div class="control">
+        <input [(ngModel)]="newProductObjects[1].value" class="input" type="number" placeholder="0" min=0>
+      </div>
+    </div>
+    <div class="field">
+      <label class="label">Additional Fields</label>
+      <div class="control">
+        <button (click)="addProductField()" class="button is-medium is-primary">Add Field</button>
+      </div>
+    </div>
+    <div *ngFor="let obj of newProductObjects; let i = index;" class="field">
+      <div class="field is-grouped" *ngIf="obj.key !== 'name' && obj.key !== 'price' && obj.key !== 'db_name' && obj.key !== 'image_urls'">
+        <div class="control">
+          <input [(ngModel)]="newProductObjects[i].key" class="input" type="text" placeholder="New Field Name">
+        </div>
+        <div class="control is-expanded">
+          <textarea [(ngModel)]="newProductObjects[i].value" class="textarea" type="text" placeholder="Field Value" cols="20" rows="{{('' + newProductObjects[i].value).length/18 + 1}}">
+          </textarea>
+        </div>
+        <div class="control">
+          <button *ngIf="newProductObjects.length > 3" class="button level-item delete is-medium is-danger" (click)='removeProductObject(i)'></button>
+        </div>
       </div>
     </div>
   </section>
   <footer class="modal-card-foot">
     <div class="right-submit">
-      <button class="button-std primary" (click)="submitEditProduct()">Submit Changes</button>
+      <button class="button is-success" (click)="submitEditProduct()">Submit Changes</button>
     </div>
   </footer>
 </app-modal>

@@ -1,30 +1,65 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Cart_Item } from '../util/Cart_Item';
+import { CartItem } from '../util/CartItem';
+import { SESSION_STORAGE, StorageService } from 'angular-webstorage-service';
+const STORAGE_KEY = 'INTENTS FOR TENTS';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class QuoteCartServiceService {
-  private _quote_cart_items: BehaviorSubject<Cart_Item[]>;
-  private dataStore: { 
-    quote_cart_items: Cart_Item[];
-  };
+  private _quote_CartItems: BehaviorSubject<CartItem[]>;
 
-  constructor() {
-    this.dataStore = { quote_cart_items: [] };
-    this._quote_cart_items = <BehaviorSubject<Cart_Item[]>>new BehaviorSubject([]);
-    this._quote_cart_items.next([new Cart_Item("Elite Pole Tent 1", 5, "The most elite pole tent money can buy buy buy buy buy buy buy buy buy", 100),
-    new Cart_Item("Elite Pole Tent 2", 5, "The most elite pole tent money can buy", 100),
-    new Cart_Item("Elite Pole Tent 3", 5, "The most elite pole tent money can buy", 100),
-    new Cart_Item("Elite Pole Tent 4", 5, "The most elite pole tent money can buy", 100)]);
+  constructor(@Inject(SESSION_STORAGE) private storage: StorageService) {
+    sessionStorage.setItem(STORAGE_KEY,  JSON.stringify([]));
   }
 
-  update(cart: Cart_Item[]) {
-    this._quote_cart_items.next(cart);
+  public addToCart(newItems: any) {
+    const oldData = JSON.parse(sessionStorage.getItem(STORAGE_KEY));
+    const newData = [];
+
+    oldData.forEach(item => {
+      const cartReady = new CartItem(item['productName'], item['productDescription'], item['quantity'], item['price']);
+      newData.push(cartReady);
+    });
+
+    newItems.forEach(item => {
+      let duplicate = false;
+      newData.forEach(oldItem => {
+        if (item['productName'] === oldItem['productName']) {
+          oldItem.setQuantity(item['quantity'] + oldItem['quantity']);
+          duplicate = true;
+        }
+      });
+      if (!duplicate) {
+        newData.push(item);
+      }
+    });
+    sessionStorage.setItem(STORAGE_KEY,  JSON.stringify(newData));
   }
 
-  get(): BehaviorSubject<Cart_Item[]>{
-    return this._quote_cart_items;
+  public getCart(): CartItem[] {
+    const cart = JSON.parse(sessionStorage.getItem(STORAGE_KEY));
+    const cartItems = [];
+    cart.forEach(item => {
+      const temp = new CartItem(item['productName'], item['productDescription'], item['quantity'], item['price']);
+      cartItems.push(temp);
+    });
+    return cartItems;
+  }
+
+  public updateCart(items: any) {
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+  }
+
+  public updateQuantity(updatedItem: CartItem) {
+    const oldData = JSON.parse(sessionStorage.getItem(STORAGE_KEY));
+    const newData = [];
+    oldData.forEach(item => {
+      if (item['productName'] === updatedItem['productName']) {
+        item['quantity'] = updatedItem['quantity'];
+      }
+      const cartReady = new CartItem(item['productName'], item['productDescription'], item['quantity'], item['price']);
+      newData.push(cartReady);
+    });
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(newData));
   }
 }

@@ -1,7 +1,13 @@
-<div class="columns is-centered margin">
-    <div class="column" *ngFor="let products of productData">
-        <div *ngFor="let product of products">
-            <app-product-tile [productName]=product[0] [productSource]=product[1]></app-product-tile>
-        </div>
+<div class="container is-fluid">
+    <div class="columns is-multiline" *ngFor="let products of productData">
+        <ng-container *ngFor="let dummy of [].constructor(numColumns); let i = index">
+            <div *ngIf="products[i] !== undefined; else empty" class="column is-one-half-mobile">
+                <app-product-tile [productName]="products[i][0]" [productSource]="products[i][1]" [path]="products[i][2]"></app-product-tile>
+            </div>
+            <ng-template #empty>
+                <div class="column">
+                </div>
+            </ng-template>
+        </ng-container>
     </div>
 </div>

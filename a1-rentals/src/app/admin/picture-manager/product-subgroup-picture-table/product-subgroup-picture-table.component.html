@@ -13,7 +13,7 @@
         </td>
         <td>{{subgroup.display_name}}</td>
         <td>
-          <div class="dropdown" [attr.id]="'productSubgroupDropdown' + i" (click)="switchDropdown('productSubgroupDropdown', i, $event)">
+          <div class="dropdown is-hoverable">
             <div class="dropdown-trigger">
               <button class="button" aria-haspopup="true" aria-controls="dropdown-menu2">
                 <span>Options</span>
@@ -24,16 +24,16 @@
             </div>
             <div class="dropdown-menu" id="dropdown-menu2" role="menu">
               <div class="dropdown-content">
-                <div *ngIf="subgroup.image_url !== ''" (click)="openChangeImage(subgroup)" class="dropdown-item">
-                    <p class="is-size-3">Change</p>
-                </div>
-                <div *ngIf="subgroup.image_url === ''" (click)="openAddImage(subgroup)" class="dropdown-item">
-                    <p class="is-size-3">Add</p>
-                  </div>
+                <a *ngIf="subgroup.image_url !== ''" (click)="openChangeImage(subgroup)" class="dropdown-item">
+                  Change
+                </a>
+                <a *ngIf="subgroup.image_url === ''" (click)="openAddImage(subgroup)" class="dropdown-item">
+                  Add
+                </a>
                 <hr class="dropdown-divider">
-                <div (click)="openDeleteImage(subgroup)" class="dropdown-item">
-                  <p class="is-size-3">Delete</p>
-                </div>
+                <a (click)="openDeleteImage(subgroup)" class="dropdown-item">
+                  Delete
+                </a>
               </div>
             </div>
           </div>
@@ -53,7 +53,7 @@
   </section>
   <footer class="modal-card-foot">
     <div class="right-submit">
-      <button class="button-std primary" (click)="closeModal('addProductSubgroupImageModal')">Close</button>
+      <button class="button is-success" (click)="closeModal('addProductSubgroupImageModal')">Close</button>
     </div>
   </footer>
 </app-modal>
@@ -68,7 +68,7 @@
   </section>
   <footer class="modal-card-foot">
     <div class="right-submit">
-      <button class="button-std primary" (click)="closeModal('changeProductSubgroupImageModal')">Close</button>
+      <button class="button is-success" (click)="closeModal('changeProductSubgroupImageModal')">Close</button>
     </div>
   </footer>
 </app-modal>

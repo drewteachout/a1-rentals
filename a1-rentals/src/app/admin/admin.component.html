@@ -18,7 +18,11 @@
       </a>
 
       <a href="admin/pictures" class="navbar-item">
-        Manage Pictures
+        Pictures
+      </a>
+
+      <a href="admin/packages" class="navbar-item">
+        Packages
       </a>
 
 
@@ -29,26 +33,101 @@
 
         <div class="navbar-dropdown">
           <a href="admin/contact" class="navbar-item">
-            Contact Information
+            Change Contact Information
           </a>
           <a href="admin/email" class="navbar-item">
             Change Quote Email Address
-          </a>
-          <a href="admin/login" class="navbar-item">
-            Sign out
-          </a>
-          <hr class="navbar-divider">
-          <a class="navbar-item">
-            Report an issue
           </a>
         </div>
       </div>
     </div>
     <div class="navbar-end">
-      <a href="admin/login" class="navbar-item">
-        {{authStatus}}
-      </a>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a href="admin/login" class="navbar-item">
+          {{authStatus}}
+        </a>
+        <div *ngIf="authStatus !== 'Not logged in'; else not" class="navbar-dropdown">
+          <a (click)="signout()" class="navbar-item">
+            Sign Out
+          </a>
+          <a (click)="openChangeEmail()" class="navbar-item">
+            Change Email Address
+          </a>
+          <a (click)="openChangePassword()" class="navbar-item">
+            Change Password
+          </a>
+        </div>
+        <ng-template #not>
+          <div class="navbar-dropdown">
+            <a href="admin/login" class="navbar-item">
+              Sign In
+            </a>
+          </div>
+        </ng-template>
+      </div>
     </div>
   </div>
 </nav>
 <router-outlet></router-outlet>
+
+<app-modal id="changePasswordModal">
+  <header class="modal-card-head">
+    <p class="modal-card-title title is-2">Change Password</p>
+    <button class="delete" aria-label="close" (click)="closeModal('changePasswordModal')"></button>
+  </header>
+  <section class="modal-card-body">
+    <div class="field">
+      <label class="label">Enter your old password</label>
+      <p class="control has-icons-left level-item">
+        <input class="input" [(ngModel)]="oldPassword" type="password" placeholder="Password">
+        <span class="icon is-small is-left">
+          <i class="fas fa-lock"></i>
+        </span>
+      </p>
+    </div>
+    <div class="field">
+      <label class="label">Enter your new password</label>
+      <p class="control has-icons-left level-item">
+        <input class="input" [(ngModel)]="newPassword" type="password" placeholder="Password">
+        <span class="icon is-small is-left">
+          <i class="fas fa-lock"></i>
+        </span>
+      </p>
+    </div>
+    <div class="field">
+      <label class="label">Confirm your new password</label>
+      <p class="control has-icons-left level-item">
+        <input class="input" [(ngModel)]="newPassword2" type="password" placeholder="Re-enter Password">
+        <span class="icon is-small is-left">
+          <i class="fas fa-lock"></i>
+        </span>
+      </p>
+      <p class="help">{{changePasswordStatus}}</p>
+    </div>
+  </section>
+  <footer class="modal-card-foot">
+    <button class="button is-success" (click)="submitChangePassword()">Change Password</button>
+  </footer>
+</app-modal>
+
+<app-modal id="changeEmailModal">
+  <header class="modal-card-head">
+    <p class="modal-card-title title is-2">Change Email Address</p>
+    <button class="delete" aria-label="close" (click)="closeModal('changeEmailModal')"></button>
+  </header>
+  <section class="modal-card-body">
+    <div class="field">
+      <label class="label">Enter your new email address</label>
+      <p class="control has-icons-left level-item">
+        <input class="input" [(ngModel)]="newEmail" type="email" placeholder="New Email">
+        <span class="icon is-small is-left">
+          <i class="fas fa-envelope"></i>
+        </span>
+      </p>
+      <p class="help">{{changeEmailStatus}}</p>
+    </div>
+  </section>
+  <footer class="modal-card-foot">
+    <button class="button is-success" (click)="submitChangeEmail()">Change Email</button>
+  </footer>
+</app-modal>

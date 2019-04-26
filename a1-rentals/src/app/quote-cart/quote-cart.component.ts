@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { Cart_Item } from '../util/Cart_Item';
+import { CartItem } from '../util/CartItem';
 import { QuoteCartServiceService } from '../services/quote-cart-service.service';
 
 @Component({
@@ -7,38 +7,37 @@ import { QuoteCartServiceService } from '../services/quote-cart-service.service'
   templateUrl: './quote-cart.component.html',
   styleUrls: ['./quote-cart.component.css']
 })
-export class QuoteCartComponent implements OnInit, AfterViewInit {
+export class QuoteCartComponent implements OnInit {
 
   cartService: QuoteCartServiceService;
-  cart: Cart_Item[] = [];
-  quote: String = 'qoute';
+  cart: CartItem[] = [];
+  quote: String = 'quote';
+  quoteTotal: number;
 
   constructor(cartService: QuoteCartServiceService) {
     this.cartService = cartService;
-    this.cartService.get().subscribe((newCart: Cart_Item[]) => {
-      this.cart = [];
-      for (let i = 0; i < newCart.length; i++) {
-        this.cart.push(newCart[i]);
-      }
-    });
+    this.quoteTotal = 0;
+    this.loadQuotes();
   }
 
   ngOnInit() {
-    console.log(this.cart);
   }
 
-  ngAfterViewInit() {
-    document.getElementById('Popular Products').className = 'button-tab primary';
-    document.getElementById('Rental Products').className = 'button-tab primary';
-    document.getElementById('Packages').className = 'button-tab primary';
-    document.getElementById('Contact Us').className = 'button-tab primary';
-  }
-
-  deleteTile(cartItem: Cart_Item) {
-    const newCart: Cart_Item[] = [];
+  deleteTile(cartItem: CartItem) {
     this.cart = this.cart.filter((a) => a.productName !== cartItem.productName);
-    this.cartService.update(this.cart);
-    console.log(cartItem.productName);
+    this.cartService.updateCart(this.cart);
+    this.updateQuote();
   }
 
+  loadQuotes() {
+    this.cart = this.cartService.getCart();
+    this.updateQuote();
+  }
+
+  updateQuote() {
+    this.quoteTotal = 0;
+    this.cart.forEach(item => {
+      this.quoteTotal += item['quantity'] * item['price'];
+    })
+  }
 }

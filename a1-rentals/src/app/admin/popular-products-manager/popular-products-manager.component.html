@@ -1,54 +1,118 @@
-<div *ngFor="let productRow of popularProducts; let i = index" class="columns tile is-ancestor">
-  <div *ngFor="let product of productRow" class="tile is-parent column is-2">
-    <div class="tile is-child card">
-      <header class="card-header">
-        <p class="card-header-title is-size-2">
-          {{product.name}}
-        </p>
-        <a class="card-header-icon" aria-label="more options">
-          <span class="icon">
-            <i class="fas fa-bars" style="font-size:24px" aria-hidden="true"></i>
-          </span>
-        </a>
-      </header>
-      <div class="card-content">
-        <figure class="image is-square">
-            <img src="../{{product.path}}">
-        </figure>
-      </div>
-      <footer class="card-footer">
-        <a (click)="editPopularProduct(product)" class="card-footer-item">Edit</a>
-        <a (click)="deletePopularProduct(product)" class="card-footer-item">Delete</a>
-      </footer>
+<div class="margin">
+  <div class="level is-mobile">
+    <div class="level-left">
+    </div>
+    <div class="level-right">
+      <button (click)="addProductSelected()" class="button is-success">Add Popular Product +</button>
     </div>
   </div>
-  <div *ngIf="productRow.length <= 3" class="tile is-parent column is-2">
-    <div class="tile is-child card">
-      <header class="card-header">
-        <p class="card-header-title is-size-2">
-          Add Product
-        </p>
-      </header>
-      <div (click)="addProductSelected()" class="middle card-content">
-        <i class="fas fa-plus" style="font-size:300px" aria-hidden="true"></i>
-      </div>
+  <div class="container is-fluid">
+    <div class="columns is-multiline" *ngFor="let products of popularProducts">
+        <ng-container *ngFor="let dummy of [].constructor(numColumns); let i = index">
+            <div *ngIf="products[i] !== undefined; else empty" class="column is-one-half-mobile">
+              <app-admin-product-tile 
+              [productName]="products[i][0]" 
+              [productSource]="products[i][1]" 
+              [path]="products[i][2]" 
+              [db_name]="products[i][3]"
+              (changeImage)="popularProductImageChangeSelected($event)"
+              (edit)="editPopularProductSelected($event)"></app-admin-product-tile>
+            </div>
+            <ng-template #empty>
+              <div class="column">
+              </div>
+            </ng-template>
+        </ng-container>
     </div>
   </div>
 </div>
-<div *ngIf="popularProducts[popularProducts.length - 1].length === 4" class="columns tile is-ancestor">
-  <div class="tile is-parent column is-2">
-    <div class="tile is-child card">
-      <header class="card-header">
-        <p class="card-header-title is-size-2">
-          Add Product
-        </p>
-      </header>
-      <div (click)="addProductSelected()" class="middle card-content">
-        <i class="fas fa-plus" style="font-size:300px" aria-hidden="true"></i>
+<app-modal id="addPopularProductModal">
+  <header class="modal-card-head">
+    <p class="modal-card-title title is-2">Add Popular Product</p>
+    <button class="delete" aria-label="close" (click)="closeModal('addPopularProductModal')"></button>
+  </header>
+  <section class="modal-card-body">
+    <div class="field">
+      <label class="label">Title</label>
+      <div class="control">
+        <input [(ngModel)]="newPopularProductTitle" class="input" type="text" placeholder="Popular Product Title">
       </div>
     </div>
-  </div>
-</div>
+    <div class="field">
+      <label class="label">Assosciated Group</label>
+      <div class="control">
+        <div class="select">
+          <select (change)="productGroupChanged($event)" [(ngModel)]="selectedProductGroup">
+            <option *ngFor="let productGroup of productGroups" [ngValue]="productGroup">{{productGroup.display_name}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="productSubgroups.length != 0" class="field">
+      <label class="label">Assosciated Subgroup</label>
+      <div class="control">
+        <div class="select">
+          <select [(ngModel)]="selectedProductSubgroup">
+            <option *ngFor="let productSubgroup of productSubgroups" [ngValue]="productSubgroup">{{productSubgroup.display_name}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer class="modal-card-foot">
+    <button class="button is-success" (click)="submitAddPopularProduct()">Submit Changes</button>
+  </footer>
+</app-modal>
 
-<app-modal id="popularEditModal">
+<app-modal id="editPopularProductModal">
+  <header class="modal-card-head">
+    <p class="modal-card-title title is-2">Edit Popular Product</p>
+    <button class="delete" aria-label="close" (click)="closeModal('editPopularProductModal')"></button>
+  </header>
+  <section class="modal-card-body">
+    <div class="field">
+      <label class="label">Title</label>
+      <div class="control">
+        <input [(ngModel)]="newPopularProductTitle" class="input" type="text" placeholder="Popular Product Title">
+      </div>
+    </div>
+    <div class="field">
+      <label class="label">Assosciated Group</label>
+      <div class="control">
+        <div class="select">
+          <select (change)="productGroupChanged($event)" [(ngModel)]="selectedProductGroup">
+            <option *ngFor="let productGroup of productGroups" [ngValue]="productGroup">{{productGroup.display_name}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="productSubgroups.length != 0" class="field">
+      <label class="label">Assosciated Subgroup</label>
+      <div class="control">
+        <div class="select">
+          <select [(ngModel)]="selectedProductSubgroup">
+            <option *ngFor="let productSubgroup of productSubgroups" [ngValue]="productSubgroup">{{productSubgroup.display_name}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer class="modal-card-foot">
+    <button class="button is-success" (click)="submitEditPopularProduct()">Submit Changes</button>
+  </footer>
+</app-modal>
+
+<app-modal id="changePopularProductImageModal">
+    <header class="modal-card-head">
+        <p class="modal-card-title title is-3">Add/Change Popular Product Image</p>
+        <button class="delete" aria-label="close" (click)="closeModal('changePopularProductImageModal')"></button>
+    </header>
+    <section class="modal-card-body">
+        <app-picture-drop [group]=groupDummy [subgroup]=subgroupDummy [product]=undefined></app-picture-drop>
+    </section>
+    <footer class="modal-card-foot">
+        <div class="right-submit">
+          <button class="button is-info is-medium" (click)="closeModal('changePopularProductImageModal')">Dismiss</button>
+        </div>
+    </footer>
 </app-modal>

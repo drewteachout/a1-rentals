@@ -1,8 +1,10 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Product } from 'src/app/util/Product';
 import { ProductsService } from 'src/app/services/products.service';
 import { Router} from '@angular/router';
 import { AngularFirestore } from 'angularfire2/firestore';
+import { map, filter, flatMap} from 'rxjs/operators';
+import { combineLatest, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-tabs',
@@ -21,32 +23,23 @@ export class TabsComponent implements OnInit {
   constructor(private prodServ: ProductsService, private router: Router, private db: AngularFirestore) {
     this.tab1 = ['Popular Products', []];
     this.tab2 = ['Rental Products', []];
-    this.db.collection('/products').valueChanges().subscribe((productNames: any[]) => {
-      this.tab2[1] = [];
-      productNames.forEach(product => {
-        if (!product['hidden']) {
-          this.db.collection('/' + product['collection_name']).valueChanges().subscribe((productInfo: any) => {
-            const nextProductList: any[] = [product['display_name'], []]
-            for (let i = 0; i < productInfo.length; i++) {
-              if (productInfo[i].hasOwnProperty('array') && productInfo[i]['array'] === true) {
-                if (!productInfo[i]['hidden']) {
-                  nextProductList[1].push(productInfo[i]['display_name']);
-                }
-              }
-            }
-            let flag = false;
-            for (let i = 0; i < this.tab2[1].length; i++) {
-              if (this.tab2[1][i][0] === nextProductList[0]) {
-                this.tab2[1][i] = nextProductList;
-                flag = true;
-              }
-            }
-            if (!flag) {
-              this.tab2[1].push(nextProductList);
-            }
-          });
-        }
+    this.db.collection('/products').valueChanges().pipe(map((docs: any[]) => {
+      const subgroups = Array<Observable<any[]>>(docs.length);
+      this.tab2[1] = Array(docs.length);
+      docs.forEach((doc) => {
+        this.tab2[1][doc.display_order - 1] = [doc, []];
+        subgroups[doc.display_order - 1] = this.db.collection(doc.collection_name).valueChanges();
       });
+      return subgroups;
+    }), flatMap(res =>  {
+      return combineLatest(res)
+    }))
+    .subscribe((subgroups) => {
+      for (let i = 0; i < subgroups.length; i++) {
+        if (subgroups[i].length > 0 && subgroups[i][0].hasOwnProperty('array')) {
+          this.tab2[1][i][1] = subgroups[i];
+        }
+      }
     });
     this.tab3 = ['Packages', []];
     this.tab4 = ['Contact Us', []];

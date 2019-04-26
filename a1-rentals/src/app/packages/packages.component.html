@@ -1,6 +1,3 @@
-<p>
-  This page is under construction
-</p>
 <div class="columns is-centered margin">
     <div class="column" *ngFor="let packages of packageData">
         <div *ngFor="let package of packages">
@@ -8,15 +5,26 @@
               <div class="tile is-parent">
                 <article class="tile is-child box">
                   <p class="title">{{package[0]}}</p>
-                  <figure class="image is-4by3">
-                      <img class="center" src="{{package[1]}}">
+                  <figure *ngIf="package[1].length == 1" class="image is-4by3">
+                      
+                      <img class="center" [src]="package[1][0]['url']">
                   </figure>
+                  <slideshow *ngIf="package[1].length > 1" [imageUrls]="package[1]"
+                                [height]="'300px'"
+                                [autoPlay]="true"
+                                [showArrows]="true">
+                  </slideshow>
                   <p>{{package[2]}}</p>
-                  <h3>Price: {{package[3]}}</h3>
+                  <h3>Price: ${{package[3]}}</h3>
+                  <div class="list">
+                      <a class="list-item has-text-black" *ngFor="let item of package[4]">
+                        {{item}}
+                      </a>
+                  </div>
+                  <button class="button is-success is-pulled-right" (click)="addSelectionToCart(package)"><strong>Add to Quote</strong></button> 
                 </article>
               </div>
             </div>
-            <!-- <app-product-tile productName={{package[0]}} productSource={{package[1]}}></app-product-tile> -->
         </div>
     </div>
 </div>

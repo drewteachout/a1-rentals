@@ -13,7 +13,7 @@ export class ProductSubgroupTableComponent implements OnInit {
   @Input() currentGroupSelection: any;
   @Output() subgroupValueChanged = new EventEmitter<any>();
   newSubgroupObjects: any[] = [{name: ''}];
-  editProductSubgroup: any = {newName: '', oldName: '', db_name: ''};
+  editProductSubgroup: any = {newName: '', oldName: '', db_name: '', description: '', newDescription: ''};
   currentSubgroupSelection: any;
   deleteProductSubgroup: any = {};
   constructor(private db: AngularFirestore, private modalService: ModalService) { }
@@ -102,7 +102,6 @@ export class ProductSubgroupTableComponent implements OnInit {
   }
 
   openModal(id: string) {
-    //console.log(id);
     this.modalService.open(id);
   }
 
@@ -113,7 +112,8 @@ export class ProductSubgroupTableComponent implements OnInit {
   openEditProductSubgroupModal(subgroup: any) {
     this.editProductSubgroup.oldName = subgroup.display_name;
     this.editProductSubgroup.db_name = subgroup.db_name;
-    this.editProductSubgroup.newName = '';
+    this.editProductSubgroup.newName = subgroup.display_name;
+    this.editProductSubgroup.newDescription = subgroup.description;
     this.openModal('editProductSubgroupModal');
   }
 
@@ -124,6 +124,7 @@ export class ProductSubgroupTableComponent implements OnInit {
   openDeleteProductSubgroupModal(subgroup: any) {
     this.deleteProductSubgroup.display_name = subgroup.display_name;
     this.deleteProductSubgroup.db_name = subgroup.db_name;
+    this.deleteProductSubgroup.typedName = '';
     this.openModal('deleteProductSubgroupModal');
   }
 

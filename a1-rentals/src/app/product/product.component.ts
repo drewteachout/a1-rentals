@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { IImage } from 'ng-simple-slideshow';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { ProductsService } from '../services/products.service';
-import { Product } from '../util/Product';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { AngularFirestore } from 'angularfire2/firestore';
+import { QuoteCartServiceService } from '../services/quote-cart-service.service';
+import { CartItem } from '../util/CartItem';
 
 @Component({
   selector: 'app-product',
@@ -12,9 +12,11 @@ import { AngularFirestore } from 'angularfire2/firestore';
 })
 export class ProductComponent implements OnInit {
 
-  private numColumns = 5;
-  private quoteTotal: number;
+  public numColumns = 5;
+  
+  public colSize = Math.floor(Number(12/this.numColumns));
 
+  public quoteTotal: number;
   public category: string;
   public isProducts: boolean;
   public columnDefs: any;
@@ -22,40 +24,19 @@ export class ProductComponent implements OnInit {
   public images: (string | IImage)[];
   public productDescription: string;
   public productName: string;
-  public total: string;
   public domLayout: string;
+  public productData = [];
 
-  productData = [];
+  cartService: QuoteCartServiceService;
 
-  constructor(private route: ActivatedRoute, private db: AngularFirestore) {
+  constructor(private route: ActivatedRoute, private db: AngularFirestore, cartService: QuoteCartServiceService) {
+    this.cartService = cartService;
 
-    for (let i = 0; i < this.numColumns; i++) {
-      this.productData.push([]);
-    }
-
-    this.images = [
-      { url: 'assets/images/blackChair.jpg', caption: 'Poly/metal chair rental - black'},
-      { url: 'assets/images/whiteChair.jpg', caption: 'Poly/metal chair rental - WEDDING white'},
-      { url: 'assets/images/resinChair.jpg', caption: 'Resin padded chair rental - white'},
-      { url: 'assets/images/ledBarStool.jpg', caption: 'L.E.D. Bar stool'},
-      { url: 'assets/images/ledBeanBagChair.jpg', caption: 'L.E.D. Beanbag chair'},
-      { url: 'assets/images/ledBench.jpg', caption: 'L.E.D. Bench'},
-      { url: 'assets/images/ledCube1.png', caption: 'L.E.D. Cube, 16" x 16"'},
-      { url: 'assets/images/ledCube2.jpg', caption: 'L.E.D. Cube, 20" x 20"'},
-    ];
-
-    this.productDescription = 'Our sturdy poly/metal chair rentals feature vinyl seats and back with a metal frame.' +
-    'The resin padded chair rentals are designed to be more comfortable and they look great for that traditional' +
-    ' wedding look. Both styles resist sinking into lawns. A-1 Rentals also have chair rentals designed for ' +
-    'the little ones. They can be used with our children\'s tables. They are good for children up to ' +
-    'approximately 6 or 7 years old. The solid resin chairs are red or blue. The metal framed children\'s chair' +
-    ' rentals feature a blue vinyl seat.';
-
-    this.domLayout = 'autoHeight';
+    this.images = [];
+    this.productDescription = '';
+    this.quoteTotal = 0;
     this.isProducts = false;
     this.handleData(route);
-    this.quoteTotal = 0.00;
-    this.total = '0.00';
    }
 
   ngOnInit() {
@@ -63,28 +44,29 @@ export class ProductComponent implements OnInit {
 
   handleData(route: ActivatedRoute) {
     this.rowData = [];
-    this.productData = [];
-    for (let i = 0; i < this.numColumns; i++) {
-      this.productData.push([]);
-    }
     route.paramMap.subscribe((urlParamMap: ParamMap) => {
       const name = urlParamMap.get('productName');
       const category = urlParamMap.get('productCategory');
       this.category = category;
-      console.log(urlParamMap);
-      console.log('Category: ', category);
-      console.log('Name: ', name);
-
       if (category === '' && name == null) {
         this.isProducts = true;
         this.loadAllRentalProducts();
       } else if (name == null || name.length === 0) {
         this.isProducts = false;
         this.productName = category;
+        this.db.collection('products').doc(category).valueChanges()
+            .subscribe(product => {
+              this.productDescription = product['description'];
+        });
         this.loadDataCategory(category);
       } else {
         this.isProducts = false;
         this.productName = name;
+        this.db.collection('/' + category.replace('/', '-'))
+            .doc(name.replace('/', '-')).valueChanges()
+            .subscribe(product => {
+              this.productDescription = product['description'];
+        });
         this.loadDataSubCategory(category, name);
       }
     });
@@ -93,46 +75,47 @@ export class ProductComponent implements OnInit {
   loadDataCategory(category) {
     this.db.collection('/' + category.replace('/', '-')).valueChanges()
       .subscribe((products: any[]) => {
-        const myMap = new Map();
+        let myMap = new Map();
         const newColDefs = [];
+        const newRowData = [];
+        const newImageUrls = [];
         let hasSubCategories = false;
-        console.log('Products', products);
         products.forEach((product: any) => {
+          myMap = new Map();
           Object.keys(product).forEach((key) => {
-            console.log(key === 'array');
-            if (key === 'array') {
+            if (key === 'array' && product['array']) {
               hasSubCategories = true;
             } else {
-              myMap.set(key, product[key.toString()]);
+              if (key !== 'array') {
+                myMap.set(key, product[key.toString()]);
+              }
+              if (key === 'image_urls') {
+                product[key.toString()].forEach(imgUrl => {
+                  newImageUrls.push({ url: imgUrl, caption: product['caption']});
+                });
+              }
             }
           });
+          newRowData.push(myMap);
         });
         if (!hasSubCategories) {
+          let priceLabel = 'price';
           myMap.forEach((value, key) => {
-            if (isNaN(value)) {
-              newColDefs.push({
-                field: key,
-                headerName: key.toString().charAt(0).toUpperCase() + key.toString().substr(1)
-              });
-            } else {
-              newColDefs.push({
-                field: key,
-                headerName: key.toString().charAt(0).toUpperCase() + key.toString().substr(1),
-                sortable: true,
-                type: 'numericColumn',
-                valueFormatter: numberFormatter,
-              });
+            if (key !== 'db_name' && key !== 'description' && key !== 'image_urls'
+                && key !== 'price' && key !== 'rental fee') {
+              newColDefs.push(key);
+            } else if (key === 'price') {
+              priceLabel = key.toString();
             }
           });
-          newColDefs.push({
-            headerName: 'Quantity',
-            field: 'quantity',
-            editable: true,
-            type: 'numericColumn',
-            valueParser: numberParser
+          newColDefs.push(priceLabel);
+          newColDefs.push('quantity');
+          newRowData.forEach(row => {
+            row.set('quantity', 0);
           });
-          this.rowData = products;
           this.columnDefs = newColDefs;
+          this.rowData = newRowData;
+          this.images = newImageUrls;
         } else {
           this.loadRentalProducts(category);
         }
@@ -144,53 +127,56 @@ export class ProductComponent implements OnInit {
       .doc(name.replace('/', '-'))
       .collection(name.replace('/', '-')).valueChanges()
       .subscribe((products: any[]) => {
-        const myMap = new Map();
+        let myMap = new Map();
         const newColDefs = [];
+        const newRowData = [];
+        const newImageUrls = [];
         products.forEach((product: any) => {
+          myMap = new Map();
           Object.keys(product).forEach((key) => {
             myMap.set(key, product[key.toString()]);
+            if (key === 'image_urls') {
+              product[key.toString()].forEach(imgUrl => {
+                newImageUrls.push({ url: imgUrl, caption: product['caption']});
+              });
+            }
           });
+          newRowData.push(myMap);
         });
+        let priceLabel = 'price';
         myMap.forEach((value, key) => {
-          if (isNaN(value)) {
-            newColDefs.push({
-              field: key,
-              headerName: key.toString().charAt(0).toUpperCase() + key.toString().substr(1)
-            });
-          } else {
-            newColDefs.push({
-              field: key,
-              headerName: key.toString().charAt(0).toUpperCase() + key.toString().substr(1),
-              sortable: true,
-              type: 'numericColumn',
-              valueFormatter: numberFormatter,
-            });
+          if (key !== 'db_name' && key !== 'description' && key !== 'image_urls'
+              && key !== 'price' && key !== 'rental fee') {
+            newColDefs.push(key);
+          } else if (key === 'price' || key === 'rental fee') {
+            priceLabel = key.toString();
           }
         });
-        newColDefs.push({
-          headerName: 'Quantity',
-          field: 'quantity',
-          editable: true,
-          type: 'numericColumn',
-          valueParser: numberParser
+        newColDefs.push(priceLabel);
+        newColDefs.push('quantity');
+        newRowData.forEach(row => {
+          row.set('quantity', 0);
         });
-        this.rowData = products;
         this.columnDefs = newColDefs;
+        this.rowData = newRowData;
+        this.images = newImageUrls;
       });
   }
 
   loadAllRentalProducts() {
     this.isProducts = true;
-    this.productData = [];
-    for (let i = 0; i < this.numColumns; i++) {
-      this.productData.push([]);
-    }
     this.db.collection('/products').valueChanges()
       .subscribe((products: any[]) => {
-        for (let i = 0; i < products.length; i++) {
-          const key = i % this.numColumns;
-          const data = this.productData[key];
-          data.push([products[i].display_name, products[i].image_url]);
+        this.productData = [];
+        const orderedProducts = products.sort((a: any, b: any) => a.display_order - b.display_order);
+        for (let i = 0; i < orderedProducts.length; i++) {
+          const key = Math.floor(Number(i / this.numColumns));
+          let data = this.productData[key];
+          if (data === undefined) {
+            this.productData.push([]);
+            data = this.productData[key];
+          }
+          data.push([orderedProducts[i].display_name, orderedProducts[i].image_url, orderedProducts[i].collection_name]);
           this.productData[key] = data;
         }
       });
@@ -198,61 +184,41 @@ export class ProductComponent implements OnInit {
 
   loadRentalProducts(category) {
     this.isProducts = true;
-    this.productData = [];
-    for (let i = 0; i < this.numColumns; i++) {
-      this.productData.push([]);
-    }
     this.db.collection('/' + category.replace('/', '-')).valueChanges()
       .subscribe((products: any[]) => {
-        for (let i = 0; i < products.length; i++) {
-          const key = i % this.numColumns;
-          const data = this.productData[key];
-          data.push([products[i].display_name, products[i].image_url]);
+        this.productData = [];
+        const orderedProducts = products.sort((a: any, b: any) => a.display_order - b.display_order);
+        for (let i = 0; i < orderedProducts.length; i++) {
+          const key = Math.floor(Number(i / this.numColumns));
+          let data = this.productData[key];
+          if (data === undefined) {
+            this.productData.push([]);
+            data = this.productData[key];
+          }
+          data.push([products[i].display_name, products[i].image_url, category + '/' + products[i].db_name]);
           this.productData[key] = data;
         }
       });
   }
 
-  onCellValueChanged(event) {
-    if (!isNaN(event.newValue)) {
-      const price = event.data.price;
-      const oldItemTotal = event.oldValue * price;
-      const newItemTotal = event.newValue * price;
-      if (!isNaN(newItemTotal)) {
-        if (!isNaN(oldItemTotal)) {
-          this.quoteTotal = this.quoteTotal - oldItemTotal;
-        }
-        this.quoteTotal = this.quoteTotal + newItemTotal;
-      }
-    }
-    this.total = this.currencyConverter(this.quoteTotal);
-  }
-
   addSelectionToCart() {
-    // TODO: Push table data to database
+    const selection = [];
+    this.rowData.forEach(product => {
+      if (product.get('quantity') > 0) {
+        selection.push(new CartItem(product.get('name'), product.get('description'),
+                                    product.get('quantity'), product.get('price')));
+        product.set('quantity', 0);
+      }
+    });
+    this.quoteTotal = 0;
+    this.cartService.addToCart(selection);
   }
 
-  currencyConverter(value: number): string {
-    let val = value.toString();
-    const index = val.indexOf('.');
-    const len = val.length;
-    if (index >= 0 && index === len - 1) {
-      val = val + '0';
-    } else if (index === -1) {
-      val = val + '.00';
-    }
-    return val;
+  updatePriceEstimate(event, row) {
+    row.set('quantity', event);
+    this.quoteTotal = 0;
+    this.rowData.forEach(product => {
+      this.quoteTotal += +product.get('price') * product.get('quantity');
+    });
   }
-}
-
-function numberFormatter(params) {
-  return formatNumber(params.value);
-}
-function numberParser(params) {
-  return Number(params.newValue);
-}
-function formatNumber(number) {
-  return '$' + Math.floor(number)
-    .toString()
-    .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 }

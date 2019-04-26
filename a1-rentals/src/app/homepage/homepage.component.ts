@@ -9,14 +9,11 @@ import { AngularFirestore } from 'angularfire2/firestore';
 })
 export class HomepageComponent implements OnInit {
 
-  private numColumns = 5;
+  public numColumns = 5;
 
   productData = [];
 
   constructor(private db: AngularFirestore) {
-    for (let i = 0; i < this.numColumns; i++) {
-      this.productData.push([]);
-    }
     this.loadData();
   }
 
@@ -25,10 +22,16 @@ export class HomepageComponent implements OnInit {
 
   loadData() {
     this.db.collection('/popular').valueChanges().subscribe((popular_items: any[]) => {
-      for (let i = 0; i < popular_items.length; i++) {
-        const key = i % this.numColumns;
-        const data = this.productData[key];
-        data.push([popular_items[i].name, popular_items[i].storage_path]);
+      this.productData = [];
+      const popular_items_sorted = popular_items.sort((a: any, b: any) => a.display_order - b.display_order)
+      for (let i = 0; i < popular_items_sorted.length; i++) {
+        const key = Math.floor(i / this.numColumns);
+        let data = this.productData[key];
+        if (data === undefined) {
+          this.productData.push([]);
+          data = this.productData[key];
+        }
+        data.push([popular_items_sorted[i].name, popular_items_sorted[i].image_url, popular_items_sorted[i].path]);
         this.productData[key] = data;
       }
     });

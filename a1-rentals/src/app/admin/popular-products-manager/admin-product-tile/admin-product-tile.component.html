@@ -1,0 +1,53 @@
+<div class="tile is-ancestor">
+    <div class="tile is-parent">
+        <article class="tile is-child box">
+            <div class="level">
+                <div class="level-left">
+                    <div class="dropdown is-hoverable">
+                        <div class="dropdown-trigger">
+                          <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                            <span>Edit</span>
+                            <span class="icon is-small">
+                              <i class="fas fa-angle-down" aria-hidden="true"></i>
+                            </span>
+                          </button>
+                        </div>
+                        <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                          <div class="dropdown-content">
+                            <a (click)="changePopularProductImageSelected()" *ngIf="productSource === ''" class="dropdown-item">
+                                Add Picture
+                            </a>
+                            <a (click)="changePopularProductImageSelected()" *ngIf="productSource !== ''" class="dropdown-item">
+                              Change Picture
+                            </a>
+                            <a (click)="deletePopularProductImage()" *ngIf="productSource !== ''" class="dropdown-item">
+                              Delete Picture
+                            </a>
+                            <a (click)="editPopularProductSelected()" class="dropdown-item">
+                              Edit Information
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+                <div class="level-right">
+                    <button (click)="deletePopularProductSelected()" class="delete is-medium has-background-danger"></button>
+                </div>
+            </div>
+            <p class="title">{{productName}}</p>
+            <figure class="centered image is-4by3">
+                <img [src]="productSource"/>
+            </figure>
+            <div class="field">
+                <label class="label">Site Link</label>
+                <div class="field-body">
+                    <div class="field">
+                        <p class="control">
+                            <a href="Rental Products/{{path}}">Rental Products/{{path}}</a>
+                        </p>
+                    </div>
+                </div>
+                </div>
+        </article>
+    </div>
+</div>

@@ -1,20 +1,25 @@
-    <a class="navbar-item has-dropdown is-hoverable" *ngFor="let tabName of tabs">
+    <ng-content></ng-content>
+    <a class="zhigh navbar-item has-dropdown is-hoverable" *ngFor="let tabName of tabs">
         <div class="navbar-item" [routerLink]="'/' + tabName[0]" id="{{tabName[0]}}">
             <strong>{{tabName[0]}}</strong>
         </div>
-        <div class="navbar-dropdown" *ngIf="tabName[1].length > 0">
-        <a class="navbar-item dropdown is-hoverable" *ngFor="let subTabName of tabName[1]; index as i" (click)="subtabClicked(subTabName[0], '', $event)">
-            <div class="dropdown-trigger">
-            {{subTabName[0]}}
-            </div>
-            <div *ngIf="subTabName[1].length > 0">
-                <div class="dropdown-menu">
-                    <div class="dropdown-content">
-                        <a class="dropdown-item" *ngFor="let title of subTabName[1];" (click)="subtabClicked(subTabName[0], title, $event)">
-                            {{title}}</a>
+        <div class="zhigh navbar-dropdown" *ngIf="tabName[1].length > 0">
+            <ng-container *ngFor="let subTabName of tabName[1]; index as i">
+                <a class="zhigh navbar-item dropdown is-hoverable" *ngIf="subTabName !==undefined && !subTabName[0].hidden" (click)="subtabClicked(subTabName[0].collection_name, '', $event)">
+                    <div class="zhigh dropdown-trigger">
+                    {{subTabName[0].display_name}}
                     </div>
-                </div>
-            </div>
-        </a>
+                    <div *ngIf="subTabName[1].length > 0">
+                        <div class="zhigh dropdown-menu">
+                            <div class="zhigh dropdown-content">
+                                <ng-container *ngFor="let subSubTab of subTabName[1];">
+                                    <a class="zhigh dropdown-item"  *ngIf="!subSubTab.hidden" (click)="subtabClicked(subTabName[0].collection_name, subSubTab.db_name, $event)">
+                                        {{subSubTab.display_name}}</a>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </ng-container>
         </div>
     </a >  

@@ -1,10 +1,29 @@
 <div class="margin">
-  <button (click)="addProductSelected()" class="button is-success">Add Popular Product +</button>
-  <div class="columns is-centered">
-    <div class="column" *ngFor="let products of popularProducts">
-      <div *ngFor="let product of products">
-        <app-admin-product-tile (changeImage)="popularProductImageChangeSelected($event)" (edit)="editPopularProductSelected($event)" [db_name]="product[3]" [path]="product[2]" [productName]=product[0] [productSource]=product[1]></app-admin-product-tile>
-      </div>
+  <div class="level is-mobile">
+    <div class="level-left">
+    </div>
+    <div class="level-right">
+      <button (click)="addProductSelected()" class="button is-success">Add Popular Product +</button>
+    </div>
+  </div>
+  <div class="container is-fluid">
+    <div class="columns is-multiline" *ngFor="let products of popularProducts">
+        <ng-container *ngFor="let dummy of [].constructor(numColumns); let i = index">
+            <div *ngIf="products[i] !== undefined; else empty" class="column is-one-half-mobile">
+              <app-admin-product-tile 
+              [productName]="products[i][0]" 
+              [productSource]="products[i][1]" 
+              [path]="products[i][2]" 
+              [db_name]="products[i][3]"
+              [display_order]="products[i][4]"
+              (changeImage)="popularProductImageChangeSelected($event)"
+              (edit)="editPopularProductSelected($event)"></app-admin-product-tile>
+            </div>
+            <ng-template #empty>
+              <div class="column">
+              </div>
+            </ng-template>
+        </ng-container>
     </div>
   </div>
 </div>

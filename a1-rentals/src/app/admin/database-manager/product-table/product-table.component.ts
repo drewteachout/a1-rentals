@@ -14,7 +14,7 @@ export class ProductTableComponent implements OnInit {
   @Input() columnDefs: any[] = [];
   @Input() currentGroupSelection: any;
   @Input() currentSubgroupSelection: any;
-  newProductObjects: any[] = [{key: 'name', value: ''}];
+  newProductObjects: any[] = [{key: 'name', value: ''}, {key: 'price', value: 0}, {key: '', value: ''}];
   constructor(private modalService: ModalService, private db: AngularFirestore) { }
 
   ngOnInit() {
@@ -29,6 +29,7 @@ export class ProductTableComponent implements OnInit {
   }
 
   openAddProduct() {
+    this.newProductObjects = [{key: 'name', value: ''}, {key: 'price', value: 0}, {key: '', value: ''}];
     this.openModal('addProductModal');
   }
 
@@ -52,16 +53,11 @@ export class ProductTableComponent implements OnInit {
       .collection(this.currentSubgroupSelection['db_name'])
       .doc(id).set(newObj);
     }
-    this.newProductObjects = [{key: 'name', value: ''}];
     this.closeModal('addProductModal');
   }
 
   addProductField() {
     this.newProductObjects.push({key: '', value: ''});
-  }
-
-  clearNewProduct() {
-    this.newProductObjects = [{'name': ''}];
   }
 
   switchDropdown(className: string, i: number, $event: MouseEvent) {
@@ -102,10 +98,14 @@ export class ProductTableComponent implements OnInit {
         id = obj.value;
         editedProduct[obj.key] = obj.value;
       } else {
-        editedProduct[obj.key] = obj.value;
+        if (isNaN(Number(obj.value)) || obj.value.hasOwnProperty('length')) {
+          // length property check is because Number([]) evaluates to 0 for some unknown reason
+          editedProduct[obj.key] = obj.value;
+        } else {
+          editedProduct[obj.key] = Number(obj.value);
+        }
       }
     });
-    console.log(editedProduct);
     if (this.currentSubgroupSelection === null) {
       this.db.collection(this.currentGroupSelection['db_name']).doc(id).set(editedProduct);
     } else {
@@ -114,14 +114,19 @@ export class ProductTableComponent implements OnInit {
       .collection(this.currentSubgroupSelection['db_name'])
       .doc(id).set(editedProduct);
     }
-    this.clearNewProduct();
     this.closeModal('editProductModal');
   }
 
   openEditProductModal(product: any) {
-    this.newProductObjects.pop();
+    this.newProductObjects = [{key: 'name', value: ''}, {key: 'price', value: 0}];
     Object.keys(product).forEach((key) => {
-      this.newProductObjects.push({key: key, value: product[key]});
+      if (key === 'name') {
+        this.newProductObjects[0].value = product.name;
+      } else if (key === 'price') {
+        this.newProductObjects[1].value = product.price;
+      } else {
+        this.newProductObjects.push({key: key, value: product[key]});
+      }
     });
     this.openModal('editProductModal');
   }

@@ -11,7 +11,7 @@ import { ModalService } from 'src/app/services/modal.service';
 export class BannerManagerComponent implements OnInit {
 
   activeBanners: any[] = [];
-  newBanner: any = {title: '', message: '', color: '', start_date: '',  end_date: ''};
+  newBanner: any = {title: '', message: '', start_date: '',  end_date: ''};
   constructor(private db: AngularFirestore, private modalService: ModalService) {
     this.db.collection('/banners').valueChanges().subscribe((banners: any[]) => {
       this.activeBanners = banners;
@@ -22,22 +22,19 @@ export class BannerManagerComponent implements OnInit {
   }
 
   addNewBanner() {
-    if (this.newBanner.db_name === undefined) {
+    if (this.newBanner.db_name === undefined || this.newBanner.db_name === '') {
       this.newBanner.db_name = this.db.createId();
     }
     const b = new Banner(
       this.newBanner.title,
       this.newBanner.message,
-      this.newBanner.color,
       new Date(this.newBanner.start_date),
       new Date(this.newBanner.end_date),
       this.newBanner.db_name);
-    console.log(b);
     this.closeModal('createBannerModal');
-    this.db.collection('/banners').doc(b.db_name).set({
+    this.db.collection('banners').doc(b.db_name).set({
       title: b.title,
       message: b.message,
-      color: b.color,
       start_date: b.startDateToTimestamp(),
       end_date: b.endDateToTimestamp(),
       db_name: b.db_name
@@ -46,7 +43,7 @@ export class BannerManagerComponent implements OnInit {
   }
 
   clearNewBanner() {
-    this.newBanner = new Banner('', '', '', new Date(), new Date(), '');
+    this.newBanner = new Banner('', '', new Date(), new Date(), '');
   }
 
   editBanner(banner: any) {
@@ -60,16 +57,13 @@ export class BannerManagerComponent implements OnInit {
     const end_day = Number(end[1]) < 10 ? '0' + end[1] : end[1];
     start_date = start[2] + '-' + start_month + '-' + start_day;
     end_date = end[2] + '-' + end_month + '-' + end_day;
-    console.log(start_date, end_date);
     this.newBanner = new Banner(
       banner.title,
       banner.message,
-      banner.color,
       start_date as any,
       end_date as any,
       banner.db_name);
-    this.openModal('createBannerModal')
-    console.log(banner.end_date.toDate().toISOString().split('T')[0]);
+    this.openModal('createBannerModal');
   }
 
   openModal(id: string) {

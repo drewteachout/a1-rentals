@@ -11,6 +11,7 @@ import { map } from 'rxjs/operators';
 export class PopularProductsManagerComponent implements OnInit {
 
   popularProducts: any[] = [];
+  numPopularProducts = 0;
   productGroups: any[] = [];
   productSubgroups: any[] = [];
   selectedProductGroup: any = undefined;
@@ -44,22 +45,30 @@ export class PopularProductsManagerComponent implements OnInit {
   }
 
   addProductSelected() {
+    this.selectedProductGroup = undefined;
+    this.selectedProductSubgroup = undefined;
+    this.newPopularProductTitle = '';
+    this.productSubgroups = [];
     this.openModal('addPopularProductModal');
   }
 
   loadData() {
     this.db.collection('/popular').valueChanges().subscribe((popular_items: any[]) => {
       this.popularProducts = []
-      for (let i = 0; i < this.numColumns; i++) {
-        this.popularProducts.push([]);
-      }
-      for (let i = 0; i < popular_items.length; i++) {
-        const key = i % this.numColumns;
-        const data = this.popularProducts[key];
-        data.push([popular_items[i].name,
-          popular_items[i].image_url,
-          popular_items[i].path,
-          popular_items[i].db_name]);
+      this.numPopularProducts = popular_items.length;
+      const popular_items_sorted = popular_items.sort((a: any, b: any) => a.display_order - b.display_order)
+      for (let i = 0; i < popular_items_sorted.length; i++) {
+        const key = Math.floor(i / this.numColumns);
+        let data = this.popularProducts[key];
+        if (data === undefined) {
+          this.popularProducts.push([]);
+          data = this.popularProducts[key];
+        }
+        data.push([popular_items_sorted[i].name,
+          popular_items_sorted[i].image_url,
+          popular_items_sorted[i].path,
+          popular_items_sorted[i].db_name,
+          popular_items_sorted[i].display_order]);
         this.popularProducts[key] = data;
       }
     });
@@ -81,9 +90,9 @@ export class PopularProductsManagerComponent implements OnInit {
         });
       }
       if ($event === undefined) {
-        //Sent here from an edit
+        // Sent here from an edit
         const last = this.editPopularProductPath.lastIndexOf('/');
-        if (last === this.editPopularProductPath.length - 1) {
+        if (last === -1) {
           // second choice should be none or undefined
           if (docList.length === 0) {
             this.selectedProductSubgroup = undefined;
@@ -103,22 +112,40 @@ export class PopularProductsManagerComponent implements OnInit {
   }
 
   editPopularProductSelected($event: any[]) {
+    this.selectedProductGroup = undefined;
+    this.selectedProductSubgroup = undefined;
     this.editPopularProductPath = $event[1];
     this.editPopularProductDB_Name = $event[2];
     this.newPopularProductTitle = $event[0];
-    const first = this.editPopularProductPath.slice(0, this.editPopularProductPath.indexOf('/'));
-    this.productGroups.forEach((element) => {
-      if (element.collection_name === first) {
-        this.selectedProductGroup = element;
-        this.productGroupChanged(undefined);
-      }
-    });
+    const first = this.editPopularProductPath.indexOf('/');
+    if (first === -1) {
+      this.productGroups.forEach((element) => {
+        if (element.collection_name === this.editPopularProductPath) {
+          this.selectedProductGroup = element;
+          this.productGroupChanged(undefined);
+        }
+      });
+    } else {
+      const temp = this.editPopularProductPath.slice(0, this.editPopularProductPath.indexOf('/'));
+      this.productGroups.forEach((element) => {
+        if (element.collection_name === temp) {
+          this.selectedProductGroup = element;
+          this.productGroupChanged(undefined);
+        }
+      });
+    }
     this.openModal('editPopularProductModal');
   }
 
   submitEditPopularProduct() {
+    let path: string;
+    if (this.selectedProductSubgroup === undefined || this.selectedProductSubgroup.display_name === 'None') {
+      path = this.selectedProductGroup.collection_name;
+    } else {
+      path = this.selectedProductGroup.collection_name + '/' + this.selectedProductSubgroup.db_name;
+    }
     this.db.collection('popular').doc(this.editPopularProductDB_Name).update({
-      path: this.selectedProductGroup.collection_name + '/' + this.selectedProductSubgroup.db_name,
+      path: path,
       name: this.newPopularProductTitle
     });
     this.closeModal('editPopularProductModal');
@@ -141,16 +168,17 @@ export class PopularProductsManagerComponent implements OnInit {
       db_name: id,
       image_url: '',
       name: this.newPopularProductTitle,
-      path: path
+      path: path,
+      display_order: this.numPopularProducts + 1
     });
     this.newPopularProductTitle = '';
     this.selectedProductGroup = undefined;
     this.selectedProductSubgroup = undefined;
     this.productSubgroups = [];
+    this.closeModal('addPopularProductModal');
   }
 
   popularProductImageChangeSelected($event) {
-    console.log($event);
     this.subgroupDummy.db_name = $event[2];
     this.groupDummy.image_url = $event[0];
     this.openModal('changePopularProductImageModal');

@@ -37,14 +37,13 @@ export class PackagesComponent implements OnInit {
         const key = i % this.numColumns;
         const data = this.packageData[key];
         const imageUrls = [];
-        packageMap.get(String(i + 1)).image_urls.forEach(imgUrl => {
+        packageMap.get(i + 1).image_urls.forEach(imgUrl => {
           imageUrls.push({ url: imgUrl });
         });
-        data.push([packageMap.get(String(i + 1)).name, imageUrls, packageMap.get(String(i + 1)).description,
-          packageMap.get(String(i + 1)).price, packageMap.get(String(i + 1)).items]);
+        data.push([packageMap.get(i + 1).name, imageUrls, packageMap.get(i + 1).description,
+          packageMap.get(i + 1).price, packageMap.get(i + 1).items]);
         this.packageData[key] = data;
       }
-      console.log(this.packageData);
     });
   }
 

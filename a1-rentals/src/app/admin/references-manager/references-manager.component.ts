@@ -11,7 +11,7 @@ import { ModalService } from 'src/app/services/modal.service';
 export class ReferencesManagerComponent implements OnInit {
 
   references: any[] = [];
-  currentEditReference: any = {newName: '', name: ''};
+  currentEditReference: any = {name: ''};
   currentDeleteReference: any;
   constructor(private db: AngularFirestore, private modalService: ModalService) {
     this.db.collection('References').valueChanges().subscribe((references: any[]) => {
@@ -41,41 +41,10 @@ export class ReferencesManagerComponent implements OnInit {
     batch.commit();
   }
 
-  fixReferences() {
-    console.log('fix references clicked');
-    this.db.collection('References').ref.get().then((docs) => {
-      let i = 1;
-      docs.forEach((doc) => {
-        doc.ref.update({
-          order_num: i,
-          db_name: doc.id
-        });
-        i++;
-      });
-    });
-  }
-
-  switchDropdown(className: string, i: number, $event: MouseEvent) {
-    $event.stopPropagation();
-    const selected = document.getElementById(className + i).classList;
-    if (selected.contains('is-active')) {
-      selected.remove('is-active');
-    } else {
-      const activeDropdowns = document.getElementsByClassName('is-active');
-      for (let j = 0; j < activeDropdowns.length; j++) {
-        const currentElement = activeDropdowns.item(j);
-        if (currentElement.id.includes(className)) {
-          currentElement.classList.remove('is-active');
-        }
-      }
-      selected.add('is-active');
-    }
-  }
-
   submitAddReference() {
     const id = this.db.createId();
     this.db.collection('References').doc(id).set({
-      name: this.currentEditReference.newName,
+      name: this.currentEditReference.name,
       order_num: this.references.length + 1,
       db_name: id
     });
@@ -84,14 +53,14 @@ export class ReferencesManagerComponent implements OnInit {
 
   submitEditReference() {
     this.db.collection('References').doc(this.currentEditReference.db_name).update({
-      name: this.currentEditReference.newName
+      name: this.currentEditReference.name
     });
     this.closeModal('editReferenceModal');
   }
 
   openEditReference(reference: any) {
-    this.currentEditReference = reference;
-    this.currentEditReference.newName = '';
+    this.currentEditReference.name = reference.name;
+    this.currentEditReference.db_name = reference.db_name;
     this.openModal('editReferenceModal');
   }
 
@@ -106,7 +75,7 @@ export class ReferencesManagerComponent implements OnInit {
   }
 
   openAddReference() {
-    this.currentEditReference.newName = '';
+    this.currentEditReference.name = '';
     this.openModal('addReferenceModal');
   }
 

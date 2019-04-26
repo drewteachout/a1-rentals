@@ -3,7 +3,6 @@
   <tr>
     <th>#</th>
     <th>Name</th>
-    <th>Description</th>
     <th>Options</th>
   </tr>
   <tbody>
@@ -11,7 +10,6 @@
       <tr (click)="productSubgroupRowSelected(subgroup, i)" [attr.id]="'productSubgroupRow' + i" [class.is-selected]="first">
         <td>{{i + 1}}</td>
         <td>{{subgroup.display_name}}</td>
-        <td>{{subgroup.description}}</td>
         <td>
           <div class="dropdown is-hoverable" [attr.id]="'productSubgroupDropdown' + i">
             <div class="dropdown-trigger">

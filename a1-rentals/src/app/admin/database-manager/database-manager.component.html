@@ -1,19 +1,19 @@
 <div class="columns">
-  <div class="column is-4 is-size-4 y-fixed">
+  <div class="column is-4 y-fixed">
     <app-product-group-table
       (groupOrderChanged)="groupOrderChanged($event)"
       (groupValueChanged)="groupValueChanged($event)"
       [productGroups]="products">
     </app-product-group-table>
   </div>
-  <div *ngIf="subgroups.length > 0" class="column is-size-6">
+  <div *ngIf="subgroups.length > 0" class="column is-3">
     <app-product-subgroup-table 
       (subgroupValueChanged)="subgroupValueChanged($event)"
       [productSubgroups]="subgroups"
       [currentGroupSelection]="currentGroupSelection">
     </app-product-subgroup-table>
   </div>
-  <div class="column is-size-6">
+  <div class="column">
     <app-product-table
       [currentGroupSelection]="currentGroupSelection"
       [currentSubgroupSelection]="currentSubgroupSelection"

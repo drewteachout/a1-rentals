@@ -7,6 +7,6 @@ export class Contact {
         public email: string,
         public subject: string,
         public message: string,
-        public phoneNumber?: string
+        public phoneNumber: string
     ) { }
 }

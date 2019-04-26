@@ -21,7 +21,6 @@ export class ModalComponent implements OnInit, OnDestroy {
 
         // ensure id attribute exists
         if (!this.id) {
-            console.error('modal must have an id');
             return;
         }
 
@@ -33,9 +32,7 @@ export class ModalComponent implements OnInit, OnDestroy {
         });
 
         // add self (this modal instance) to the modal service so it's accessible from controllers
-        //console.log(this);
         this.modalService.add(this);
-        //console.log(this.modalService);
     }
 
     // remove self from modal service when directive is destroyed

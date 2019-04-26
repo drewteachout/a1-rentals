@@ -2,11 +2,13 @@
   <h1 class="is-size-1 has-text-centered has-text-weight-bold">{{productName}}</h1>
   <div class="columns is-centered">
     <div class="column buffer">
-      <div class="slideshow">
+      <div *ngIf="images !== undefined && images.length > 0">
         <slideshow [imageUrls]="images"
                   [height]="'400px'"
                   [autoPlay]="true"
-                  [showArrows]="true">
+                  [lazyLoad]="true"
+                  [showArrows]="false"
+                  [showDots]="true">
         </slideshow> 
       </div>
       <h1 class="is-size-3 has-text-centered has-text-weight-semibold">Product Description</h1>
@@ -42,15 +44,18 @@
   </div>
 </div>
 <ng-template #category>
-    <div class="columns is-centered">
-        <div class="column is-centered is-11">
-            <div class="columns is-multiline">
-                <ng-container *ngFor="let products of productData">
-                    <div class="column is-one-quarter" *ngFor="let product of products">
-                        <app-product-tile [productName]="product[0]" [productSource]="product[1]" [path]="product[2]"></app-product-tile>
-                    </div>
-                </ng-container>
-            </div>
+  <div class="container is-fluid">
+    <div class="columns is-multiline" *ngFor="let products of productData">
+      <ng-container *ngFor="let dummy of [].constructor(numColumns); let i = index">
+        <div *ngIf="products[i] !== undefined; else empty" class="column is-one-half-mobile">
+          <app-product-tile [productName]="products[i][0]" [productSource]="products[i][1]" [path]="products[i][2]"></app-product-tile>
         </div>
+        <ng-template #empty>
+          <div class="column">
+          </div>
+        </ng-template>
+      </ng-container>
     </div>
+    <p class="has-text-centered">{{productDescription}}</p>
+  </div>
 </ng-template>

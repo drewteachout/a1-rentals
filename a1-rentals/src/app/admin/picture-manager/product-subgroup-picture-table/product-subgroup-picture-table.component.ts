@@ -84,7 +84,6 @@ export class ProductSubgroupPictureTableComponent implements OnInit {
 
   deleteProductSubgroupImage() {
     this.closeModal('deleteProductSubgroupImageModal');
-    console.log(this.currentDeleteSubgroup);
     this.storage.storage.refFromURL(this.currentDeleteSubgroup.image_url).delete();
     this.db.doc(`${this.currentGroupSelection.db_name}/${this.currentDeleteSubgroup.db_name}`)
       .update({image_url: ''});

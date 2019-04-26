@@ -33,27 +33,17 @@
     "bulma": "^0.7.4",
     "core-js": "^2.6.5",
     "firebase": "^5.8.4",
-    "firebase-functions": "^2.3.0",
     "ng-image-slider": "^1.2.1",
     "ng-simple-slideshow": "^1.2.8",
     "nodemailer": "^6.1.0",
-<<<<<<< HEAD
-    "rxjs": "~6.3.3",
-=======
     "rxjs": "~6.4.0",
->>>>>>> c4d22a286117a37abe8fea49dd76209b157bb395
     "zone.js": "^0.8.29"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.13.8",
     "@angular/cli": "^7.3.8",
-<<<<<<< HEAD
-    "@angular/compiler-cli": "^7.2.6",
-    "@angular/language-service": "~7.0.0",
-=======
     "@angular/compiler-cli": "^7.2.13",
     "@angular/language-service": "~7.2.13",
->>>>>>> c4d22a286117a37abe8fea49dd76209b157bb395
     "@types/jasmine": "^2.8.16",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",

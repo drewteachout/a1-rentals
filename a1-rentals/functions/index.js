@@ -14,24 +14,25 @@ const gmailEmail = encodeURIComponent(functions.config().gmail.email);
 const gmailPassword = encodeURIComponent(functions.config().gmail.password);
 const mailTransport = nodemailer.createTransport(`smtps://${gmailEmail}:${gmailPassword}@smtp.gmail.com`);
 
-exports.sendContactMessage = functions.database.ref('/messages/{pushKey}').onWrite(event => {
-    const snapshot = event.data;
-  // Only send email for new messages.
-    if (snapshot.previous.val() || !snapshot.val().name) {
-      return;
-    }
+exports.sendContactMessage = functions.firestore.document('messages/{msgId}').onCreate(event => {
     
-    const val = snapshot.val();
-    
+    const data = event.data
+    console.log(data);
+
     const mailOptions = {
       to: 'samloop16@gmail.com',
-      subject: `Contact Info: ${val.name}`,
-      html: val.html,
+      subject: `Contact Info`,
       subject: `Contact Form Submitted`,
-      text:`The following Contact Info was submitted: ` + "\n" + this.model.toString()
+      text:`The following Contact Info was submitted: ` + "\n" + data.email
+      + "\n" + data.firstName +
+      + "\n" + data.lastName +
+      + "\n" + data.message +
+      + "\n" + data.phoneNumber +
+      + "\n" + data.subject
     };
     
-    return mailTransport.sendMail(mailOptions).then(() => {
-      return console.log('Mail sent to: samloop16@gmail.com')
+    return mailTransport.sendMail(mailOptions).then((stuff) => {
+      console.log(stuff);
+      console.log('Mail sent to: samloop16@gmail.com');
     });
   });

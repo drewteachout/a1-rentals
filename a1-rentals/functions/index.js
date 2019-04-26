@@ -16,7 +16,7 @@ const mailTransport = nodemailer.createTransport(`smtps://${gmailEmail}:${gmailP
 
 exports.sendContactMessage = functions.firestore.document('messages/{msgId}').onCreate(event => {
     
-    const data = event.data
+    const data = event.data();
     console.log(data);
 
     const mailOptions = {

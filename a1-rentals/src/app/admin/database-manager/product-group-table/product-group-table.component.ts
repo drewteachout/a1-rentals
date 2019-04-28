@@ -18,7 +18,7 @@ export class ProductGroupTableComponent implements OnInit, OnChanges {
   newSubGroups: any[] = [];
   deleteProductGroup = {};
   newProductGroup = '';
-  newProductGroupName = {old: '', new: '', db_name: ''};
+  newProductGroupName = {old: '', new: '', db_name: '', newDescription: ''};
   currentGroupSelection: any;
   constructor(private db: AngularFirestore, private modalService: ModalService) {
   }
@@ -90,23 +90,6 @@ export class ProductGroupTableComponent implements OnInit, OnChanges {
     this.newSubGroups = [{name: '', }];
   }
 
-  switchDropdown(className: string, i: number, $event: MouseEvent) {
-    $event.stopPropagation();
-    const selected = document.getElementById(className + i).classList;
-    if (selected.contains('is-active')) {
-      selected.remove('is-active');
-    } else {
-      const activeDropdowns = document.getElementsByClassName('is-active');
-      for (let j = 0; j < activeDropdowns.length; j++) {
-        const currentElement = activeDropdowns.item(j);
-        if (currentElement.id.includes(className)) {
-          currentElement.classList.remove('is-active');
-        }
-      }
-      selected.add('is-active');
-    }
-  }
-
   productGroupRowSelected(group: any, index: number) {
     this.currentGroupSelection = group;
     this.groupValueChanged.emit(this.currentGroupSelection);
@@ -125,8 +108,11 @@ export class ProductGroupTableComponent implements OnInit, OnChanges {
 
   openEditProductGroup(group) {
     this.openModal('editProductGroupModal');
+    this.newProductGroupName.newDescription = group.description;
     this.newProductGroupName.old = group.name;
+    this.newProductGroupName.new = group.name;
     this.newProductGroupName.db_name = group.db_name;
+    console.log(this.newProductGroupName);
   }
 
   openDeleteProductGroup(group: any) {
@@ -136,7 +122,10 @@ export class ProductGroupTableComponent implements OnInit, OnChanges {
   }
 
   submitEditProductGroup() {
-    this.db.collection('/products').doc(this.newProductGroupName.db_name).update({display_name: this.newProductGroupName.new});
+    this.db.collection('/products').doc(this.newProductGroupName.db_name).update({
+      display_name: this.newProductGroupName.new,
+      description: this.newProductGroupName.newDescription
+    });
     this.closeModal('editProductGroupModal');
     this.newProductGroupName.db_name = '';
     this.newProductGroupName.old = '';

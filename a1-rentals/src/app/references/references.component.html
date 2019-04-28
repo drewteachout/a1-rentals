@@ -1,10 +1,9 @@
-<div class="container is-fluid">
-  <h1 class="level-item">References</h1>
-  <p>The following is a partial list of recent 
-    satisfied prominent businesses and organizations that have used our services:</p>
-  <div class="level is-mobile">
-    <div>
-      <h4 *ngFor="let reference of references">{{reference}}</h4>
+<div class="columns is-centered">
+    <div class="column is-8 has-text-centered">
+            <div class="title is-3">References</div>
+            <div class="subtitle">The following is a partial list of recent 
+              satisfied prominent businesses and organizations that have used our services:
+            </div>
+            <div *ngFor="let reference of references">{{reference}}</div>
     </div>
-  </div>
 </div>

@@ -12,7 +12,9 @@ import { CartItem } from '../util/CartItem';
 })
 export class ProductComponent implements OnInit {
 
-  private numColumns = 5;
+  public numColumns = 5;
+  
+  public colSize = Math.floor(Number(12/this.numColumns));
 
   public quoteTotal: number;
   public category: string;
@@ -30,10 +32,6 @@ export class ProductComponent implements OnInit {
   constructor(private route: ActivatedRoute, private db: AngularFirestore, cartService: QuoteCartServiceService) {
     this.cartService = cartService;
 
-    for (let i = 0; i < this.numColumns; i++) {
-      this.productData.push([]);
-    }
-
     this.images = [];
     this.productDescription = '';
     this.quoteTotal = 0;
@@ -46,18 +44,17 @@ export class ProductComponent implements OnInit {
 
   handleData(route: ActivatedRoute) {
     this.rowData = [];
-    this.productData = [];
-    for (let i = 0; i < this.numColumns; i++) {
-      this.productData.push([]);
-    }
     route.paramMap.subscribe((urlParamMap: ParamMap) => {
       const name = urlParamMap.get('productName');
       const category = urlParamMap.get('productCategory');
       this.category = category;
+      console.log(category, name);
       if (category === '' && name == null) {
+        console.log('all');
         this.isProducts = true;
         this.loadAllRentalProducts();
       } else if (name == null || name.length === 0) {
+        console.log('data category');
         this.isProducts = false;
         this.productName = category;
         this.db.collection('products').doc(category).valueChanges()
@@ -66,6 +63,7 @@ export class ProductComponent implements OnInit {
         });
         this.loadDataCategory(category);
       } else {
+        console.log('data subcategory');
         this.isProducts = false;
         this.productName = name;
         this.db.collection('/' + category.replace('/', '-'))
@@ -89,10 +87,12 @@ export class ProductComponent implements OnInit {
         products.forEach((product: any) => {
           myMap = new Map();
           Object.keys(product).forEach((key) => {
-            if (key === 'array') {
+            if (key === 'array' && product['array']) {
               hasSubCategories = true;
             } else {
-              myMap.set(key, product[key.toString()]);
+              if (key !== 'array') {
+                myMap.set(key, product[key.toString()]);
+              }
               if (key === 'image_urls') {
                 product[key.toString()].forEach(imgUrl => {
                   newImageUrls.push({ url: imgUrl, caption: product['caption']});
@@ -120,6 +120,7 @@ export class ProductComponent implements OnInit {
           this.columnDefs = newColDefs;
           this.rowData = newRowData;
           this.images = newImageUrls;
+          console.log(this.images);
         } else {
           this.loadRentalProducts(category);
         }
@@ -164,6 +165,7 @@ export class ProductComponent implements OnInit {
         this.columnDefs = newColDefs;
         this.rowData = newRowData;
         this.images = newImageUrls;
+        console.log(this.images);
       });
   }
 
@@ -172,13 +174,15 @@ export class ProductComponent implements OnInit {
     this.db.collection('/products').valueChanges()
       .subscribe((products: any[]) => {
         this.productData = [];
-        for (let i = 0; i < this.numColumns; i++) {
-          this.productData.push([]);
-        }
-        for (let i = 0; i < products.length; i++) {
-          const key = i % this.numColumns;
-          const data = this.productData[key];
-          data.push([products[i].display_name, products[i].image_url, products[i].collection_name]);
+        const orderedProducts = products.sort((a: any, b: any) => a.display_order - b.display_order);
+        for (let i = 0; i < orderedProducts.length; i++) {
+          const key = Math.floor(Number(i / this.numColumns));
+          let data = this.productData[key];
+          if (data === undefined) {
+            this.productData.push([]);
+            data = this.productData[key];
+          }
+          data.push([orderedProducts[i].display_name, orderedProducts[i].image_url, orderedProducts[i].collection_name]);
           this.productData[key] = data;
         }
       });
@@ -189,12 +193,14 @@ export class ProductComponent implements OnInit {
     this.db.collection('/' + category.replace('/', '-')).valueChanges()
       .subscribe((products: any[]) => {
         this.productData = [];
-        for (let i = 0; i < this.numColumns; i++) {
-          this.productData.push([]);
-        }
-        for (let i = 0; i < products.length; i++) {
-          const key = i % this.numColumns;
-          const data = this.productData[key];
+        const orderedProducts = products.sort((a: any, b: any) => a.display_order - b.display_order);
+        for (let i = 0; i < orderedProducts.length; i++) {
+          const key = Math.floor(Number(i / this.numColumns));
+          let data = this.productData[key];
+          if (data === undefined) {
+            this.productData.push([]);
+            data = this.productData[key];
+          }
           data.push([products[i].display_name, products[i].image_url, category + '/' + products[i].db_name]);
           this.productData[key] = data;
         }

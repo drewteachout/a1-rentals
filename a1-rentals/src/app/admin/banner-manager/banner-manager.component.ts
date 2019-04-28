@@ -32,7 +32,6 @@ export class BannerManagerComponent implements OnInit {
       new Date(this.newBanner.start_date),
       new Date(this.newBanner.end_date),
       this.newBanner.db_name);
-    console.log(b);
     this.closeModal('createBannerModal');
     this.db.collection('/banners').doc(b.db_name).set({
       title: b.title,
@@ -60,7 +59,6 @@ export class BannerManagerComponent implements OnInit {
     const end_day = Number(end[1]) < 10 ? '0' + end[1] : end[1];
     start_date = start[2] + '-' + start_month + '-' + start_day;
     end_date = end[2] + '-' + end_month + '-' + end_day;
-    console.log(start_date, end_date);
     this.newBanner = new Banner(
       banner.title,
       banner.message,
@@ -68,8 +66,7 @@ export class BannerManagerComponent implements OnInit {
       start_date as any,
       end_date as any,
       banner.db_name);
-    this.openModal('createBannerModal')
-    console.log(banner.end_date.toDate().toISOString().split('T')[0]);
+    this.openModal('createBannerModal');
   }
 
   openModal(id: string) {

@@ -43,7 +43,6 @@ export class AdminProductTileComponent implements OnInit {
   }
 
   deletePopularProductImage() {
-    console.log(this.productSource);
     this.db.collection('popular').doc(this.db_name).update({
       image_url: ''
     })

@@ -13,7 +13,7 @@ export class ProductSubgroupTableComponent implements OnInit {
   @Input() currentGroupSelection: any;
   @Output() subgroupValueChanged = new EventEmitter<any>();
   newSubgroupObjects: any[] = [{name: ''}];
-  editProductSubgroup: any = {newName: '', oldName: '', db_name: ''};
+  editProductSubgroup: any = {newName: '', oldName: '', db_name: '', description: '', newDescription: ''};
   currentSubgroupSelection: any;
   deleteProductSubgroup: any = {};
   constructor(private db: AngularFirestore, private modalService: ModalService) { }

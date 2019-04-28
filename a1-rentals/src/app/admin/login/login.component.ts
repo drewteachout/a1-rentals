@@ -11,7 +11,16 @@ export class LoginComponent implements OnInit {
 
   email = '';
   password = '';
+  newUserEmail = '';
+  newUserPassword = '';
+  newUserPassword2 = '';
+  newPassword = '';
+  newPassword2 = '';
+  newPasswordStatus = '';
+  newUserStatus = '';
   authStatus = false;
+  forgotPasswordEmail = '';
+  forgotPasswordStatus = '';
   constructor(private authService: AngularFireAuth, private modalService: ModalService) {
     this.authService.authState.subscribe((state) => {
       if (state !== null) {
@@ -19,7 +28,6 @@ export class LoginComponent implements OnInit {
       } else {
         this.authStatus = false;
       }
-      console.log(this.authStatus);
     });
   }
 
@@ -27,20 +35,56 @@ export class LoginComponent implements OnInit {
   }
 
   login($event) {
-    console.log($event);
     if ($event === undefined || $event.keyCode === 13) {
       this.authService.auth.signInWithEmailAndPassword(this.email, this.password).then(res => {
-        console.log(res);
         this.email = '';
         this.password = '';
         this.openModal('loginSuccessModal');
       }, err => {
         this.email = '';
         this.password = '';
-        console.log('Could not log in');
         alert('Login Unsuccessful');
       });
     }
+  }
+
+  openAddNewUser() {
+    this.openModal('addNewUserModal');
+    this.newUserEmail = '';
+    this.newUserPassword = '';
+    this.newUserPassword2 = '';
+  }
+
+  submitAddNewUser() {
+    if (this.newUserPassword === this.newUserPassword2) {
+      this.authService.auth.createUserWithEmailAndPassword(this.newUserEmail, this.newUserPassword).then(success => {
+        this.newUserStatus = 'Success';
+      },
+      error => {
+        this.newUserStatus = error.message;
+      });
+    } else {
+      this.newUserStatus = 'Passwords were not identical';
+    }
+  }
+
+  openForgotPassword() {
+    this.openModal('forgotPasswordModal')
+  }
+
+  submitForgotPassword() {
+    this.authService.auth.sendPasswordResetEmail(this.forgotPasswordEmail).then(success => {
+      this.forgotPasswordStatus = 'Email has been sent to ' + this.forgotPasswordEmail + '.';
+    },
+    error => {
+      this.forgotPasswordStatus = 'Email address not found.';
+    });
+  }
+
+  closeForgotPassword() {
+    this.forgotPasswordEmail = '';
+    this.forgotPasswordStatus = '';
+    this.closeModal('forgotPasswordModal');
   }
 
   logout() {

@@ -1,12 +1,13 @@
-<div class="margin">
+<div class="container is-fluid">
   <div class="level is-mobile">
     <div class="level-left">
+      <button (click)="openChangePopularProductOrder()" class="button is-info">Change Popular Product Order</button>
     </div>
     <div class="level-right">
       <button (click)="addProductSelected()" class="button is-success">Add Popular Product +</button>
     </div>
   </div>
-  <div class="container is-fluid">
+  <div>
     <div class="columns is-multiline" *ngFor="let products of popularProducts">
         <ng-container *ngFor="let dummy of [].constructor(numColumns); let i = index">
             <div *ngIf="products[i] !== undefined; else empty" class="column is-one-half-mobile">
@@ -116,4 +117,42 @@
           <button class="button is-info is-medium" (click)="closeModal('changePopularProductImageModal')">Dismiss</button>
         </div>
     </footer>
+</app-modal>
+
+<app-modal id="changePopularProductOrderModal">
+  <header class="modal-card-head">
+      <p class="modal-card-title title is-3">Change Popular Products Order</p>
+      <button class="delete" aria-label="close" (click)="closeModal('changePopularProductOrderModal')"></button>
+  </header>
+  <section class="modal-card-body">
+    <table class="table is-striped is-hoverable is-fullwidth is-bordered">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Old display order</th>
+          <th>Popular Product Name</th>
+        </tr>
+      </thead>
+      <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+        <ng-container *ngFor="let product of newOrder">
+          <tr *ngIf="product !== undefined" cdkDrag>
+            <td>
+              <span class="icon has-text-grey-lighter">
+                <i class="fa fa-bars"></i>
+              </span>
+            </td>
+            <td>
+              {{product.display_order}}
+            </td>
+            <td>
+              {{product.name}}
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </section>
+  <footer class="modal-card-foot">
+    <button class="button is-success" (click)="submitChangePopularProductOrder()">Submit Changes</button>
+  </footer>
 </app-modal>

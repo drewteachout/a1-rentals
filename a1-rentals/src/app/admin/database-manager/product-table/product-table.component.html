@@ -8,11 +8,13 @@
 </div>
 <button *ngIf="subgroups.length !== 0 || rowData.length !== 0" (click)="openAddProduct()" class="button is-large is-fullwidth is-success">Add Product +</button>
 <table class="table is-striped is-hoverable is-fullwidth">
-  <tr>
-    <th>#</th>
-    <th *ngFor="let col of columnDefs">{{ col.field | titlecase }}</th>
-    <th>Options</th>
-  </tr>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th *ngFor="let col of columnDefs">{{ col.field | titlecase }}</th>
+      <th>Options</th>
+    </tr>
+  </thead>
   <tbody>
     <ng-container *ngFor="let product of rowData; let i = index;">
       <tr [class.is-selected]="first">
